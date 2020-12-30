@@ -100,8 +100,8 @@ ol {
 /*---------------------
   Header
 -----------------------*/
-.log-in {
-    font-size: 24px;
+.menu-item .log-in {
+    font-size: 20px;
     padding-left: 4px;
 }
 .header-section.header-normal .menu-item {

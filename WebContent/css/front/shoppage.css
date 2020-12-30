@@ -1,3 +1,29 @@
+/* 覆蓋MAIN CSS */
+a:focus {
+    color: black;
+    
+}
+body {
+	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.menu-item {
+   background-color: rgb(34, 39, 54);
+}
+.menu-item .nav-menu .mainmenu li {
+	max-height: 100%;
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	
+}
+.menu-item .nav-menu .mainmenu li a {
+	font-size:12px;
+	padding:0px;
+}
+.menu-item .nav-menu .mainmenu li a:after {
+	top:110%;
+}
+/* 覆蓋MAIN CSS  */
 
 .close {
     margin-top: 5px;
@@ -206,17 +232,15 @@
 .icon {
     font-size: 20px;
 }
-.pagepic {
-    margin-top: 148px;
-    margin-bottom: 0px;
-    padding: 0px;
-}
 .pageslider {
     z-index: -1;
     position: relative;
 }
 .menu-item {
     z-index: 99;
+}
+.pageheader {
+	padding:140px 60px 20px 60px;
 }
 .pageheader .shopitem-section {
     height: 480px;
@@ -274,7 +298,7 @@
     border: 1px solid rgb(235, 232, 232);
     margin-top: 0px;
     position: fixed;
-    top: 78px;
+    top: 60px;
     background-color: white;
     z-index: 98;
 }
@@ -350,392 +374,6 @@
 }
 .menu-item .nav-menu .mainmenu{
 	padding-right:0px;
-}
-/*---------------------
-  跳出登入視窗
------------------------*/
-.login-window {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-}
-
-.login-window-overlay {
-    position: fixed;
-    left: 0;
-    top: 0;
-    background: rgba(0, 0, 0, 0.438);
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-	z-index: -99;
-    -webkit-transition: 0.5s;
-    -o-transition: 0.5s;
-    transition: 0.5s linear;
-}
-
-.login-window-overlay.active {
-    opacity: 1;
-    z-index: 998;
-}
-
-.hide-login-window {
-	z-index: -99;
-    opacity: 0;
-    transition: 0.5s linear;
-}
-
-.show-login-window {
-    z-index: 999;
-    opacity: 1;
-    transition: 0.5s linear;
-}
-
-.cont input,
-button {
-    border: none;
-    outline: none;
-    background: none;
-}
-
-.cont {
-    overflow: hidden;
-    position: fixed;
-    width: 640px;
-    height: 80vh;
-    background: #fff;
-    right: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    min-height: 10em;
-}
-
-#login-form {
-    height: 100%;
-}
-
-#registration-form .sign-up {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 80vh;
-}
-
-.login-form {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 400px;
-    height: 100%;
-    -webkit-transition: -webkit-transform 1.2s ease-in-out;
-    transition: -webkit-transform 1.2s ease-in-out;
-    transition: transform 1.2s ease-in-out;
-    transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
-    padding: 50px 30px 0;
-}
-
-.sub-cont {
-    overflow: hidden;
-    position: absolute;
-    left: 400px;
-    top: 0;
-    width: 640px;
-    height: 100%;
-    padding-left: 240px;
-    background: #fff;
-    -webkit-transition: -webkit-transform 1.2s ease-in-out;
-    transition: -webkit-transform 1.2s ease-in-out;
-    transition: transform 1.2s ease-in-out;
-    transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
-}
-
-.sign-up h2 {
-    color: rgb(0, 0, 0);
-    margin-bottom: 20px;
-}
-
-.cont.s--signup .sub-cont {
-    -webkit-transform: translate3d(-400px, 0, 0);
-    transform: translate3d(-400px, 0, 0);
-}
-
-.img {
-    overflow: hidden;
-    z-index: 2;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 240px;
-    height: 100%;
-    padding-top: 360px;
-}
-
-.img:before {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 900px;
-    height: 100%;
-    background-image: url("../img/login-bg.jpg");
-    background-size: cover;
-    -webkit-transition: -webkit-transform 1.2s ease-in-out;
-    transition: -webkit-transform 1.2s ease-in-out;
-    transition: transform 1.2s ease-in-out;
-    transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
-}
-
-.img:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.178);
-}
-
-.cont.s--signup .img:before {
-    -webkit-transform: translate3d(640px, 0, 0);
-    transform: translate3d(640px, 0, 0);
-}
-
-.img__text {
-    z-index: 2;
-    position: absolute;
-    left: 0;
-    top: 50px;
-    width: 100%;
-    padding: 0 20px;
-    text-align: center;
-    color: #fff;
-    -webkit-transition: -webkit-transform 1.2s ease-in-out;
-    transition: -webkit-transform 1.2s ease-in-out;
-    transition: transform 1.2s ease-in-out;
-    transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
-}
-
-.img__text h2 {
-    margin-bottom: 10px;
-    font-weight: normal;
-}
-
-.img__text p {
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.cont.s--signup .img__text.m--up {
-    -webkit-transform: translateX(520px);
-    transform: translateX(520px);
-}
-
-.img__text.m--in {
-    -webkit-transform: translateX(-520px);
-    transform: translateX(-520px);
-}
-
-.cont.s--signup .img__text.m--in {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-}
-
-.img__btn {
-    overflow: hidden;
-    z-index: 2;
-    position: relative;
-    width: 100px;
-    height: 36px;
-    margin: 0 auto;
-    background: transparent;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 15px;
-    cursor: pointer;
-}
-
-.img__btn:after {
-    content: "";
-    z-index: 2;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #fff;
-    border-radius: 30px;
-}
-
-.img__btn span {
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    -webkit-transition: -webkit-transform 1.2s;
-    transition: -webkit-transform 1.2s;
-    transition: transform 1.2s;
-    transition: transform 1.2s, -webkit-transform 1.2s;
-}
-
-.img__btn span.m--in {
-    -webkit-transform: translateY(-72px);
-    transform: translateY(-72px);
-}
-
-.cont.s--signup .img__btn span.m--in {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-}
-
-.cont.s--signup .img__btn span.m--up {
-    -webkit-transform: translateY(72px);
-    transform: translateY(72px);
-}
-
-.cont h2 {
-    width: 100%;
-    font-size: 26px;
-    text-align: center;
-}
-
-.cont p {
-    color: rgb(199, 199, 199);
-}
-
-.img__text h2 {
-    color: white;
-}
-
-.cont .sign-in {
-    height: 100%;
-}
-
-.cont .sign-in label {
-    display: flex;
-    flex-direction: row;
-    width: 260px;
-    margin: 25px auto 0;
-    text-align: center;
-    position: relative;
-}
-
-.cont .sign-in label span {
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    font-size: 24px;
-    color: #cfcfcf;
-    text-transform: uppercase;
-}
-
-.cont .sign-in label:hover span {
-    color: black;
-}
-
-.cont .sign-up label {
-    display: block;
-    width: 260px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.cont .sign-up label span {
-    font-size: 14px;
-    color: #cfcfcf;
-    width: 30px;
-}
-
-.cont input {
-    display: block;
-    width: 100%;
-    margin-top: 5px;
-    padding-bottom: 5px;
-    font-size: 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-    text-align: center;
-}
-
-.cont input:hover {
-    border-bottom: 2px solid rgba(0, 0, 0, 1);
-}
-
-.cont input:focus {
-    border-bottom: 2px solid rgba(0, 0, 0, 1);
-}
-
-.forgot-pass {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 12px;
-    color: #000000;
-}
-
-.forgot-pass a:hover {
-    color: #8f4040;
-}
-
-.fb-btn {
-    border: 2px solid #d3dae9;
-    color: #8fa1c7;
-}
-
-.sign-in {
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-}
-
-.cont.s--signup .sign-in {
-    -webkit-transition-timing-function: ease-in-out;
-    transition-timing-function: ease-in-out;
-    -webkit-transition-duration: 1.2s;
-    transition-duration: 1.2s;
-    -webkit-transform: translate3d(300px, 0, 0);
-    transform: translate3d(300px, 0, 0);
-}
-
-.sign-up {
-    -webkit-transform: translate3d(-300px, 0, 0);
-    transform: translate3d(-300px, 0, 0);
-}
-
-.cont.s--signup .sign-up {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
-
-.icon-link {
-    position: absolute;
-    left: 5px;
-    bottom: 5px;
-    width: 32px;
-}
-
-.icon-link img {
-    width: 100%;
-    vertical-align: top;
-}
-
-.icon-link--twitter {
-    left: auto;
-    right: 5px;
-}
-
-button.login-button {
-    width: 100px;
-    height: 30px;
-    border: 1px solid black;
-    border-radius: 20px;
-    margin: 0 auto;
 }
 
 /* 購物車商品 */
