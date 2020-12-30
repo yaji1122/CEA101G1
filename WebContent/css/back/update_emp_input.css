@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+
+* {
+    margin: 1px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    background: white;
+    height: 100%;
+    
+}
+
+.card {
+    border-radius: 20px;
+    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: 650px !important;
+    padding-botton:20px;
+}
+
+.card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #d6d6d6, #ffffff);
+    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+}
+
+a {
+    text-align: right;
+    font-size: 18px;
+}
+.button {
+    text-align: center;
+}
+header {
+    padding: 10px;
+    text-align: center;
+    color: black;
+    font-size: 22px;
+    font-family: "Raleway", sans-serif;
+}
+.display-show {
+    z-index: 99;
+    opacity: 1;
+}
+.listOne {
+    margin: 0 90px;
+    display: inline-block;
+    margin-bottom:30px;
+}
+.left {
+    width: 250px;
+    float: left;
+    margin-right: 10px;
+    font-size:18px;
+}
+.right {
+    float: left;
+    margin: 0 auto;
+    vertical-align: middle;
+    width: 200px;
+    margin-left: 7px;
+    font-size:15px;
+}
+.checkbox {
+    margin: 0 auto;
+    margin-top: 30px;
+    display: grid;
+    text-align: left;
+}

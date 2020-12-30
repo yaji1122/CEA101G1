@@ -1,0 +1,6 @@
+<script src="https://kit.fontawesome.com/dc3c868026.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/back/backend_sidebar.js"></script>
+<script src="${pageContext.request.contextPath}/js/back/backend.js"></script>

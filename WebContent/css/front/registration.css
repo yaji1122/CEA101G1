@@ -1,0 +1,550 @@
+p {
+    color: grey;
+}
+label {
+    /* padding-bottom: 5px; */
+    font-size: 13px;
+}
+label b {
+    color: red;
+}
+input {
+    margin-top: 3px;
+    padding: 10px;
+    font-size: 8px;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #dcdcdc;
+}
+.iti {
+    display: block;
+}
+#heading {
+    text-transform: uppercase;
+    color: #ffd341;
+    font-weight: normal;
+}
+
+#msform {
+    min-width: 90vw;
+    min-height: 80vh;
+    text-align: center;
+    position: relative;
+}
+
+#msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    height: max-content;
+    margin: 0;
+    position: relative;
+    min-height: 60vh;
+}
+
+#msform fieldset:not(:first-of-type) {
+    display: none;
+}
+
+#msform input {
+    padding: 8px 15px 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    margin-bottom: 25px;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2c3e50;
+    background-color: #eceff1;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.error_label:before {
+    content: "密碼確認錯誤";
+    color: red;
+    position: absolute;
+    left: 20px;
+}
+#msform input:focus,
+#msform textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #673ab7;
+    outline-width: 0;
+}
+
+#msform .action-button {
+    width: 100px;
+    background: #ffd341;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin-left: 5px;
+    float: right;
+    text-align: center;
+    align-self: flex-end;
+}
+
+#msform .action-button:hover,
+#msform .action-button:focus {
+    background-color: #311b92;
+}
+
+#msform .action-button-previous {
+    width: 100px;
+    background: #616161;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    float: left;
+}
+
+#msform .action-button-previous:hover,
+#msform .action-button-previous:focus {
+    background-color: #000000;
+}
+.form1 {
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.form1 .row {
+    width: 100%;
+    padding: 20px;
+}
+.form1 p {
+    text-align: left;
+    width: 60%;
+    margin: 0 auto;
+    padding: 10px 0px;
+}
+.form1 .row p {
+    text-align: center;
+}
+.form1 p.custom-checkbox {
+    text-align: center;
+}
+.form1 p.custom-checkbox label {
+    font-size: 18px;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+.form-card {
+    padding-top: 20px;
+    text-align: center;
+}
+.form-card h5 {
+    text-align: center;
+}
+.card {
+    z-index: 0;
+    border: none;
+    position: relative;
+}
+
+.fs-title {
+    font-size: 18px;
+    color: #ffd341;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.success-text {
+    color: #000000;
+    font-weight: normal;
+}
+.success-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70vh;
+}
+.steps {
+    position: absolute;
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 10px;
+    font-weight: normal;
+    text-align: center;
+    left: 50%;
+    top: -50px;
+    transform: translate(-50%);
+}
+
+.fieldlabels {
+    color: gray;
+    text-align: left;
+}
+
+#progressbar {
+    overflow: hidden;
+    color: lightgrey;
+}
+
+#progressbar .active {
+    color: #ffd341;
+}
+
+#progressbar li {
+    list-style-type: none;
+    font-size: 15px;
+    width: 25%;
+    float: left;
+    position: relative;
+    font-weight: 400;
+}
+
+#progressbar #welcome:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f073";
+}
+
+#progressbar #personal:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f007";
+}
+
+#progressbar #payment:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f09d";
+}
+
+#progressbar #confirm:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f058";
+}
+
+#progressbar li:before {
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    display: block;
+    font-size: 20px;
+    color: #ffffff;
+    background: lightgray;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    padding: 2px;
+}
+
+#progressbar li:after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background: lightgray;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    z-index: -1;
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+    background: #ffd341;
+}
+
+.progress {
+    height: 20px;
+}
+
+.progress-bar {
+    background-color: #ffd341;
+}
+
+.fit-image {
+    width: 100%;
+    object-fit: cover;
+}
+/* .pay-button {
+    width: 90%;
+    display: inline-flex;
+} */
+.pay-button img#add {
+    width: 40px;
+    height: 40px;
+}
+.custom-checkbox #customCheck1 {
+    width: 10px;
+}
+.custom-checkbox {
+    text-align: center;
+}
+/* Credit Card*/
+.form-container .field-container:first-of-type {
+    grid-area: name;
+    width: 100%;
+}
+
+.form-container .field-container:nth-of-type(2) {
+    grid-area: number;
+    width: 100%;
+}
+
+.form-container .field-container:nth-of-type(3) {
+    grid-area: expiration;
+    width: 100%;
+}
+
+.form-container .field-container:nth-of-type(4) {
+    grid-area: security;
+    width: 100%;
+}
+
+.field-container input {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.field-container {
+    position: relative;
+}
+
+.form-container {
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: auto auto;
+    grid-template-rows: 80px 80px 50px;
+    grid-template-areas: "name name" "number number" "expiration security";
+    /* padding: 20px; */
+    color: #707070;
+}
+.form3button {
+    position: absolute;
+    width: 100%;
+    bottom: -100px;
+}
+.ccicon {
+    height: 38px;
+    position: absolute;
+    right: 6px;
+    top: calc(50% - 17px);
+    width: 60px;
+}
+
+/* CREDIT CARD IMAGE STYLING */
+/* .preload * {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+} */
+.field-container input {
+    text-align-last: center;
+}
+.containers {
+    max-width: 400px;
+    min-height: 250px;
+    height: 15vw;
+    padding: 10px;
+}
+
+#ccsingle {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+}
+
+#ccsingle svg {
+    width: 100px;
+    max-height: 60px;
+}
+
+.creditcard svg#cardfront,
+.creditcard svg#cardback {
+    width: 100%;
+    -webkit-box-shadow: 1px 5px 6px 0px black;
+    box-shadow: 1px 5px 6px 0px black;
+    border-radius: 22px;
+}
+
+/* CHANGEABLE CARD ELEMENTS */
+.creditcard .lightcolor,
+.creditcard .darkcolor {
+    -webkit-transition: fill 0.5s;
+    transition: fill 0.5s;
+}
+
+.creditcard .grey {
+    fill: #bdbdbd;
+}
+
+.creditcard .greydark {
+    fill: #616161;
+}
+
+/* FRONT OF CARD */
+#svgname {
+    text-transform: uppercase;
+}
+
+#cardfront .st2 {
+    fill: #ffffff;
+}
+
+#cardfront .st3 {
+    font-family: "Source Code Pro", monospace;
+    font-weight: 600;
+}
+
+#cardfront .st4 {
+    font-size: 54.7817px;
+}
+
+#cardfront .st5 {
+    font-family: "Source Code Pro", monospace;
+    font-weight: 400;
+}
+
+#cardfront .st6 {
+    font-size: 33.1112px;
+}
+
+#cardfront .st7 {
+    opacity: 0.6;
+    fill: #ffffff;
+}
+
+#cardfront .st8 {
+    font-size: 24px;
+}
+
+#cardfront .st9 {
+    font-size: 36.5498px;
+}
+
+#cardfront .st10 {
+    font-family: "Source Code Pro", monospace;
+    font-weight: 300;
+}
+
+#cardfront .st11 {
+    font-size: 16.1716px;
+}
+
+#cardfront .st12 {
+    fill: #4c4c4c;
+}
+
+/* BACK OF CARD */
+#cardback .st0 {
+    fill: none;
+    stroke: #0f0f0f;
+    stroke-miterlimit: 10;
+}
+
+#cardback .st2 {
+    fill: #111111;
+}
+
+#cardback .st3 {
+    fill: #f2f2f2;
+}
+
+#cardback .st4 {
+    fill: #d8d2db;
+}
+
+#cardback .st5 {
+    fill: #c4c4c4;
+}
+
+#cardback .st6 {
+    font-family: "Source Code Pro", monospace;
+    font-weight: 400;
+}
+
+#cardback .st7 {
+    font-size: 27px;
+}
+
+#cardback .st8 {
+    opacity: 0.6;
+}
+
+#cardback .st9 {
+    fill: #ffffff;
+}
+
+#cardback .st10 {
+    font-size: 24px;
+}
+
+#cardback .st11 {
+    fill: #eaeaea;
+}
+
+#cardback .st12 {
+    font-family: "Rock Salt", cursive;
+}
+
+#cardback .st13 {
+    font-size: 37.769px;
+}
+
+/* FLIP ANIMATION */
+.creditcard {
+    width: 80%;
+    max-width: 400px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: -webkit-transform 0.6s;
+    -webkit-transition: -webkit-transform 0.6s;
+    transition: transform 0.6s;
+    transition: transform 0.6s, -webkit-transform 0.6s;
+    cursor: pointer;
+}
+
+.creditcard .front,
+.creditcard .back {
+    position: absolute;
+    width: 100%;
+    max-width: 400px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    color: #47525d;
+}
+
+.creditcard .back {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+.creditcard.flipped {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+/* overwrite settings*/
+.wrapper {
+    padding: 0px 20px;
+}
+.menu-item {
+    margin-bottom: 0px;
+    display: block;
+    position: static;
+}
+.menu-item .nav-menu .mainmenu li a {
+    color: black;
+}
+.container-fluid {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.container-fluid .row div {
+    margin: 0 auto;
+}

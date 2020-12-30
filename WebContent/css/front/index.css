@@ -1,0 +1,471 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    color: #111111;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 70px;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+h3 {
+    font-size: 30px;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+h5 {
+    font-size: 18px;
+}
+
+h6 {
+    font-size: 16px;
+}
+
+p {
+    font-size: 16px;
+    color: #6b6b6b;
+    font-weight: 400;
+    line-height: 26px;
+    margin: 0 0 15px 0;
+}
+/*---------------------
+  Sweet Alert
+-----------------------*/
+.swal-title {
+    margin: 0;
+    font-size: 24px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.21);
+    margin-bottom: 28px;
+}
+
+.swal-text {
+    color: #dfa974;
+    font-size: 20px;
+}
+/*---------------------
+  影片區塊
+-----------------------*/
+.homepage-video {
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.homepage-video video {
+    position: absolute;
+    display: inline-block;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+/*---------------------
+  首頁畫面區塊
+-----------------------*/
+.hero-section {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hero-section .container {
+    z-index: 1;
+}
+
+.hero-text {
+    margin-top: 100px;
+}
+
+.hero-text h1 {
+    font-size: 80px;
+    line-height: 90px;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.hero-text p {
+    font-size: 18px;
+    color: #ffffff;
+    line-height: 28px;
+    margin-bottom: 35px;
+}
+/*---------------------
+  查詢空房
+-----------------------*/
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 200px;
+    text-align: center;
+}
+
+.box input:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px black, 0px 0px 20px white;
+}
+
+.box .nice-select:hover {
+    box-shadow: 0px 0px 10px black, 0px 0px 20px white;
+}
+
+.booking {
+    position: sticky;
+    top: 0px;
+    z-index: 20;
+    margin-top: -80px;
+    padding: 10px 0px;
+}
+
+.booking-form {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.booking-form .check-date {
+    position: relative;
+    height: 40px;
+}
+
+.booking-form .check-date input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ebebeb;
+    border-radius: 0px;
+    font-size: 14px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: transparent;
+    text-align: center;
+    text-indent: -20px;
+}
+
+.booking-form .check-date input::placeholder {
+    color: white;
+}
+
+.booking-form .check-date i {
+    color: #dfa974;
+    position: absolute;
+    right: 18px;
+    bottom: 14px;
+}
+
+.booking-form .select-option .nice-select {
+    border-radius: 0px;
+    border: 1px solid white;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    width: 100%;
+    text-align-last: center;
+    float: none;
+    background-color: transparent;
+}
+
+.booking-form .select-option .nice-select:after {
+    border-bottom: 2px solid #dfa974;
+    border-right: 2px solid #dfa974;
+    height: 10px;
+    margin-top: 0;
+    right: 20px;
+    width: 10px;
+    top: 36%;
+}
+
+.booking-form .select-option .nice-select span {
+    font-size: 14px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.booking-form .select-option .nice-select .list {
+    margin-top: 0;
+    width: 100%;
+}
+
+.booking-form button {
+    position: relative;
+    font-size: 16px;
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    height: 100%;
+    letter-spacing: 5px;
+    padding: 0px 20px;
+    min-width: 140px;
+    text-indent: 5px;
+}
+
+.booking-form button:hover {
+    background-color: white;
+    color: black;
+    transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    text-shadow: 0px 0px 10px white;
+}
+/*---------------------
+  News Section
+-----------------------*/
+.news-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.about-text {
+    text-align: center;
+}
+
+.testimonial-slider .ts-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.testimonial-slider .ts-item p {
+    font-size: 20px;
+    color: #707079;
+    line-height: 30px;
+    margin-bottom: 50px;
+}
+
+.testimonial-slider .ts-item img {
+    width: 100px;
+}
+
+.testimonial-slider .ts-item .ti-author {
+    margin-bottom: 60px;
+}
+
+.testimonial-slider .ts-item .ti-author .rating {
+    display: inline-block;
+}
+
+.testimonial-slider .ts-item .ti-author .rating i {
+    color: #f5b917;
+    font-size: 16px;
+}
+
+.testimonial-slider .ts-item .ti-author h5 {
+    font-size: 20px;
+    font-style: bold;
+    color: #19191a;
+    display: inline-block;
+}
+
+/*---------------------
+  Service Section
+-----------------------*/
+.services-section {
+    padding-bottom: 60px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.services-section .section-title {
+    margin-bottom: 36px;
+}
+
+.service-item {
+    height: 100%;
+    text-align: center;
+    padding: 30px 35px 18px;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.service-item:hover {
+    background: #dfa974;
+}
+
+.service-item:hover i {
+    color: #ffffff;
+}
+
+.service-item:hover h4 {
+    color: #ffffff;
+}
+
+.service-item:hover p {
+    color: #ffffff;
+}
+
+.service-item i {
+    display: inline-block;
+    color: #dfa974;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.service-item h4 {
+    color: #19191a;
+    font-size: 22px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.service-item p {
+    color: #707079;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+/*------------------------
+  Home Page Room Section 
+-------------------------*/
+.hp-room-section {
+    box-shadow: 0px 0px 2px grey;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.hp-room-items {
+    margin-left: -15px;
+    margin-right: -15px;
+    overflow: hidden;
+}
+
+.hp-room-items .hp-room-item {
+    height: 600px;
+    margin-right: -15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hp-room-items .hp-room-item:hover .hr-text {
+    background-color: #22273680;
+    bottom: 100px;
+}
+
+.hp-room-items .hp-room-item:hover .hr-text h2 {
+    margin-bottom: 30px;
+}
+
+.hp-room-items .hp-room-item .hr-text {
+    padding: 5px;
+    position: absolute;
+    left: 40px;
+    bottom: -250px;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.hp-room-items .hp-room-item .hr-text h3 {
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.hp-room-items .hp-room-item .hr-text h2 {
+    color: #dfa974;
+    font-weight: 700;
+    margin-bottom: 50px;
+    -webkit-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+.hp-room-items .hp-room-item .hr-text h2 span {
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.hp-room-items .hp-room-item .hr-text table {
+    margin-bottom: 30px;
+}
+
+.hp-room-items .hp-room-item .hr-text table tbody tr td {
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 36px;
+}
+
+.hp-room-items .hp-room-item .hr-text table tbody tr td.r-o {
+    width: 120px;
+}
+
+.hp-room-items .hp-room-item .hr-text .primary-btn:after {
+    background: #ffffff;
+}
+
+
+/*---------------------
+  Footer Section
+-----------------------*/
+.footer-section {
+    background: #222736;
+}
+
+.footer-section .footer-text {
+    padding-top: 15px;
+}
+
+.footer-section .footer-text .ft-about .fa-social a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    color: black;
+    border: 1px solid #5a4d48;
+    border-radius: 50%;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    margin-right: 7px;
+}
+
+.footer-section .footer-text .ft-about .fa-social a:hover {
+    background: #dfa974;
+    border-color: #dfa974;
+}
+
+.footer-section .footer-text .ft-contact {
+    margin-bottom: 30px;
+}
+
+.footer-section .footer-text .ft-contact h6 {
+    font-size: 14px;
+    color: #dfa974;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.footer-section .footer-text .ft-contact ul li {
+    font-size: 16px;
+    color: #aaaab3;
+    line-height: 32px;
+    list-style: none;
+}
+
+@media only screen and (max-width: 766px) {
+	 .booking {
+        display: none;
+    }
+}

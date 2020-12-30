@@ -1,0 +1,114 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<div class="page-wrapper">
+            <div id="sidebar" class="sidebar-wrapper">
+                <div class="sidebar-brand">
+                    <img src="<%=request.getContextPath()%>/img/logo_vertical.png" />
+                </div>
+                <div class="sidebar-content">
+                    <div class="sidebar-header">
+                        <div class="user-pic">
+                           <img class="img-responsive img-rounded emp-pic" src="${pageContext.request.contextPath}/emp/emp.do?emp_id=${empVO.emp_id}&action=getEmpPic" />
+                        </div>
+                        <div class="user-info">
+                        <jsp:useBean id="titleSvc" scope="page" class="com.title.model.TitleService" />
+                            <span class="emp-name">${empVO.emp_name}<span class="emp-title">${titleSvc.getOneTitle(empVO.title_no).title}</span></span>
+
+                            <span class="user-status"> <i class="fa fa-circle"></i> <span>Online</span> </span>
+                            <a href="<%=request.getContextPath()%>/emp/emp.do?action=logout">登出</a>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-menu">
+                        <ul>
+                            <li class="header-menu"><span></span></li>
+                            <li>
+                                <a href="<%=request.getContextPath()%>/backend/emp/protected/updateByEmp.jsp"> <i class="fa fa-user"></i> <span>個人基本資料</span> </a>
+                            </li>
+                            <li class="header-menu"><span>戴蒙度假村系統</span></li>
+                            <li>
+                                <a href="<%=request.getContextPath()%>/backend/emp/protected/selectPage.jsp">
+                                    <i class="fa fa-users"></i> <span>員工管理</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<%=request.getContextPath()%>/backend/members/memberInfo.jsp">
+                                    <i class="fa fa-users"></i> <span>會員管理</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#"> <i class="fa fa-file-alt"></i> <span>基本資料管理</span> </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="<%=request.getContextPath()%>/backend/roomtype/roomTypeInfo.jsp"
+                                                >房型管理</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a href="<%=request.getContextPath()%>/backend/rooms/roomInfo.jsp"
+                                                >客房管理</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a href="<%=request.getContextPath()%>/backend/choppers/chopInfo.jsp"
+                                                >空中載具管理</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#"> <i class="fa fa-bell"></i> <span>前台房務系統</span> </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li><a href="<%=request.getContextPath()%>/backend/booking/counterSystem.jsp">住退房管理系統</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/pickup/pkupInfo.jsp">接送預約管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/booking/bookingInfo.jsp">住客訂單管理</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a> <i class="fa fa-user-tie"></i> <span>商城系統</span> </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li><a href="<%=request.getContextPath()%>/backend/item/itemInfo.jsp">商品管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/shop_order/select_shop_order.jsp">商品訂單管理</a></li>
+                                        <li><a href="#">商品促銷管理</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a> <i class="fas fa-utensils"></i> <span>餐點系統</span> </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li><a href="<%=request.getContextPath()%>/backend/meal/mealInfo.jsp">餐點管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/mealtype/mealTypeInfo.jsp">餐點種類管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/mealorder/mealOrderInfo.jsp">餐點訂單管理</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a> <i class="fa fa-user-tie"></i> <span>服務預約管理</span> </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li><a href="<%=request.getContextPath()%>/backend/services/servicesInfo.jsp">服務項目管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/serviceOrder/serviceOrderInfo.jsp">服務訂單管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/timeTable/TimeTableInfo.jsp">服務時刻表</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#"> <i class="fas fa-snowboarding"></i> <span>活動報名系統</span> </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li><a href="<%=request.getContextPath()%>/backend/act/backend-act_select_page.jsp">活動管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp">活動訂單管理</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>   

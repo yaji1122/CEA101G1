@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    background: #eee;
+    height: 100%;
+}
+
+.card {
+    border-radius: 20px;
+    background: #eeeeee;
+    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: 700px !important;
+    padding-botton:20px;
+}
+
+.card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #d6d6d6, #ffffff);
+    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+}
+
+.neo-button {
+    width: 50px;
+    height: 50px;
+    outline: 0 !important;
+    cursor: pointer;
+    color: #fff;
+    font-size: 15px;
+    border: none;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #d6d6d6, #ffffff);
+    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+}
+
+.neo-button:active {
+    border-radius: 50%;
+    background: linear-gradient(145deg, #d6d6d6, #ffffff);
+    box-shadow: inset 20px 20px 60px #cacaca, inset -20px -20px 60px #ffffff;
+}
+
+.fa-map-marker {
+    color: #3b5998;
+}
+
+.fa-check-circle {
+    color: green;
+}
+
+.fa-mobile {
+    color: #0077b5;
+}
+
+.fa-google {
+    color: #dc4e41;
+}
+
+.fa-bars {
+    color: #cd201f;
+}
+
+.fa-times-circle {
+    color: red;
+}
+
+.bottom {
+    font-size: 15px;
+    text-align: right;
+    bottom: 0;
+}
+a {
+    text-align: right;
+    font-size: 18px;
+}
+.button {
+    text-align: center;
+}
+
+.listOne {
+    margin: 0 90px;
+    display: inline-block;
+}
+.left {
+    width: 300px;
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+}
+.right {
+    float: left;
+    margin: 0 auto;
+    padding-top: 45px;
+    vertical-align: middle;
+    width: 200px;
+    margin-left: 7px;
+}
+.checkbox {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 30px;
+    display: grid;
+    text-align: left;
+}
+.side {
+	position:fixed;
+	z-index:-99;
+	background:white;
+	opacity: 0;
+    box-sizing: border-box;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    border: 1px solid gray;
+    width:55vw;
+    height:70vh;
+    min-width:300px;
+    min-height:400px;
+    padding: 2%;
+    min-width: 100px;
+    transition:0.5s linear;
+}
+.display-show{
+	z-index:99;
+	opacity:1;
+}
+.side.display-show{
+	background-color:black;
+	opacity:0.8;
+}
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px; 
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.email{
+	border:1px solid red;
+	width:35vw;
+	height:70vh;
+	display:none;
+}
+#change{
+	top:80%;
+	left:75%;
+}

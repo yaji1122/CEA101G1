@@ -1,0 +1,60 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<div class="login-window-overlay"></div>
+<div class="login-window hide-login-window">
+<div class="cont">
+			<form id="login-form" method="POST"
+				action="<%=request.getContextPath()%>/LoginHandler">
+				<div class="login-form sign-in">
+					<h2>Welcome Back</h2>
+					<label> <span><i class="fas fa-user-circle"></i></span> <input
+						type="email" id="mb_email" name="mb_email" autocomplete="false" />
+					</label> <label> <span><i class="fas fa-key"></i></span> <input
+						type="password" id="mb_pwd" name="mb_pwd" />
+					</label>
+					<p class="forgot-pass">
+						<a href="">忘記密碼?</a>
+					</p>
+					<input type="text" name="pass" value="pass" style="display: none;" />
+					<input type="text" name="action" value="member-login" style="display: none;" />
+					<input type="text" name="location" value="${pageContext.request.requestURI}" style="display: none;" />
+					<button type="submit" class="submit hover-shadow login-button">登入</button>
+				</div>
+			</form>
+			<div class="sub-cont">
+				<div class="img">
+					<div class="img__text m--up">
+						<h2>新訪客?</h2>
+						<p>加入戴蒙尊榮會員，開始享受您的奢華假期!</p>
+					</div>
+					<div class="img__text m--in">
+						<h2>會員？</h2>
+						<p>如果您已是會員，點選會員登入吧！We've missed you!</p>
+					</div>
+					<div class="img__btn">
+						<span class="m--up">註冊會員</span> <span class="m--in">會員登入</span>
+					</div>
+				</div>
+				<form id="registration-form"
+					action="/CEA101G1/frontend/registration.jsp"
+					method="POST"
+					target="_blank">
+					<div class="form sign-up">
+						<h2>期待您的加入</h2>
+						<label> <span>姓(Last Name)</span> <input type="text"
+							name="temp-lname" autocomplete="false" maxlength="20" required />
+						</label> <label> <span>名(First Name)</span> <input type="text"
+							name="temp-fname" autocomplete="false" maxlength="20" required />
+						</label> <label> <span>EMAIL</span> <input type="email"
+							id="temp-email" name="temp-email"
+							pattern="^.+[\x40]{1}.+[.]{1}.*$" autocomplete="false" required />
+						</label> <label> <span>密碼</span> <input type="password"
+							id="temp-password" name="temp-password" required />
+						</label> <label> <span>確認密碼</span> <input type="password"
+							id="temp-confirm-password" name="temp-confirm-password" required />
+						</label>
+						<button type="submit" class="submit hover-shadow login-button">立即註冊</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>

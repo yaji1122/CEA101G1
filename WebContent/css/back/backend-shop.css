@@ -1,0 +1,57 @@
+.page{
+    margin-left: 300px;
+  }
+ #titlename{
+   width: 100%;
+   height: 50px;
+   margin-top: 15px;
+   background-color: rgb(204, 202, 202);
+   border: 1px solid;
+   font-size: 30px;
+   text-align: center;
+   padding-top: 5px;
+ }
+ .subtitle{
+    
+ }
+ .selectoption{
+   width: 450px;
+ }
+ .error{
+    width: 300px;
+    height: 87px;
+    position: fixed;
+    border: 1px solid;
+	background-color:rgb(240, 232, 232);
+    left: 0px;
+    right: 0px;
+    top: 50px;
+    bottom: 0px;
+    margin: auto;
+   
+ }
+ .error-off{
+  visibility: hidden;
+ }
+ .icon {
+    font-size: 20px;
+}
+.closeerror :after {
+    content: "✖";
+}
+.closeerror:hover{
+ cursor: pointer;
+}
+.closeerror{
+margin-left:280px;
+margin-top:2px;
+}
+.errorfix{
+float:left;
+margin-top:2px;
+margin-left:2px;
+}
+
+.chtype{
+	font-size:30px;
+}

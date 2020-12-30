@@ -1,0 +1,106 @@
+ @import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            #closeBtn {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin-right: 5px;
+                color: orange;
+                z-index: 100;
+            }
+
+            .fa-times {
+                font-size: 40px !important;
+            }
+
+            #closeBtn:hover {
+                color: #000;
+            }
+
+            .contactForm {
+                width: 280px;
+                right: 7px;
+                top: 35px;
+                bottom: 15px;
+                height: 417px;
+                background: #fff;
+                z-index: 99;
+                padding-top: 10px;
+                position: fixed;
+                border: 2px solid #fff;
+                border-radius: 5px;
+                overflow: hidden;
+                font-family: "Raleway", sans-serif;
+                animation: slide 2s forwards;
+                box-shadow: 0px 0px 6px 2px rgba(255, 255, 255, 1);
+            }
+
+            .contactForm h3 {
+                font-size: 32px;
+                text-align: center;
+            }
+
+            form {
+                display: block;
+                position: absolute;
+                margin: 0 auto !important;
+                top: 40%;
+                left: 50%;
+                padding-top: 40px;
+                margin-right: -50%;
+                transform: translate(-50%, -50%);
+            }
+
+            input:focus::-webkit-input-placeholder {
+                color: orange;
+                font-weight: bold;
+                font-family: "Raleway", sans-serif;
+                font-size: 15px;
+            }
+
+            input:focus {
+                border: 3px solid #000;
+                outline: none;
+            }
+
+            #emailname {
+                width: 250px;
+                height: 30px;
+                margin-top: 15px;
+                font-family: "Raleway", sans-serif;
+                font-size: 15px;
+                padding: 5px;
+                border: 2px solid lightgray;
+            }
+
+            #emailname:hover,
+            {
+                border: 2px solid orange;
+            }
+
+            #btn {
+                margin-top: 17px;
+                padding: 10px 25px;
+                border: none;
+                background: #f0f0f5;
+                cursor: pointer;
+                font-family: "Raleway", sans-serif;
+            }
+
+            #btn:hover {
+                background: orange;
+            }
+
+            @keyframes slide {
+                from {
+                    right: -700px;
+                }
+                to {
+                    right: 7px;
+                }
+            }

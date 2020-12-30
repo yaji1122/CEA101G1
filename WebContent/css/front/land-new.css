@@ -1,0 +1,301 @@
+/* @import url("https://fonts.googleapis.com/css?family=Questrial"); */
+html {
+  min-height: 100%;
+}
+
+body {
+  width: 100%;
+    height: 100%;
+    background-position: center;
+    background-image: url("<%=request.getContextPath()%>/img/sun1.png");
+    background-size: cover;
+    background-attachment: fixed;
+}
+#slick{
+  width:100%;
+  height:400px;
+  margin: auto;
+}
+#slick div{
+  width:100%;
+  height:400px
+}
+#slick div img{
+	object-fit:cover;
+/*   background-size:contain; */
+  width: 100%;
+  margin: auto;
+  max-height : 100%;
+}
+
+.box {
+  width: 1200px;
+  height:0px;
+  margin: 10% auto;
+  position: relative;
+}
+
+#card-container {
+  position: relative;
+  margin: 30px;
+  width: 300px;
+  height: 200px;
+  z-index: 1;
+  float: left;
+  perspective: 1000px;
+  margin-left: 60px;
+}
+
+.box img {
+  width: 300px;
+  height: 200px;
+  border-radius:20px;
+  padding: 3px;
+  border: 2px ridge rgb(250, 211, 85);
+}
+
+#card, #card2, #card3 {
+  position: relative;
+  border-radius:20px;
+  margin-left:15px;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  margin-right: 50px;
+  transform-style: preserve-3d;
+  transition: all .8s linear;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#card:hover {
+  transform: rotateY(180deg);
+  box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#card2:hover {
+  transform: rotateY(-180deg);
+  box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#card3:hover {
+  transform: rotateX(180deg);
+  box-shadow: 5px -5px 15px rgba(0, 0, 0, 0.3);
+}
+#card3 .back {
+  transform: rotateX(-180deg);
+  
+}
+.back-face-one{
+  border:2px double;
+  padding: 10px;
+  margin-top: 90px;
+  padding: 5px;
+  opacity: 0;
+  background-color: rgb(0, 0, 0,0.3);
+}
+.back-face-one:hover{
+  opacity: 1;
+}
+.back-face-one p{
+  font-family: ;
+  font-style: oblique;
+  color: rgb(255, 255, 255);
+  
+}
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+.back {
+  display: block;
+  transform: rotateY(180deg);
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  opacity: .7;
+  background: #faeac1;
+  border-radius:20px;
+}
+
+h1, p {
+  font-family: "Questrial", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px; 
+}
+h1 {
+  font-size: 1.2em;
+  padding-top: 15px;
+  color: #DD899E;
+}
+
+p {
+  font-size: .5em;
+}
+
+.date {
+  color: #D0B2AF;
+}
+/* angle-ICON */
+.angle-double-down{
+    position: absolute;
+    bottom: 20px;
+}
+
+/*SHARE-ICON*/
+.icon-share{
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  opacity: 0.4;
+}
+.icon-share a:hover{
+  opacity: 1;
+  color:rgb(237, 240, 72);
+}
+
+/* �����(撌虫�) */
+#contentWalll{
+  width:350px;
+  height:280px;
+  margin: 10px auto;
+  margin-top: 600px;
+  position: absolute;
+  margin-left: 20px;
+  
+}
+#pic1{
+  width:350px;
+  height:150px;
+  margin: 0px auto;
+  position: relative;
+  background-image: url("../img/surf2.png");
+  background-size: cover;
+  
+}
+#pic1 #p1{
+  width:350px;
+  height:150px;
+  margin: 0px auto;
+  text-align: center;
+  position: absolute;
+  opacity: 0;
+  top:-15px;
+  text-align: center;
+  padding-top: 120px;
+  
+}
+#pic1 #p1:hover{
+  opacity: 0.5;
+  border:5px solid;
+  background-color: white;
+}
+/* �����(銝�) */
+#contentWall2{
+  width:350px;
+  height:280px;
+  margin:10px auto;
+  margin-top: 738px;
+  margin-right: 480px;
+}
+#pic2{
+  width:350px;
+  height:280px;
+  margin: 10px auto;
+  position: relative;
+  margin-top: 10px;
+  background-image: url("../img/wh01.jpg");
+  background-size: cover;
+  margin-top: 0px;
+}
+#pic2 #p2{
+  border:solid 5px;
+  width:290px;
+  height:150px;
+  margin: 10px auto;
+  text-align: center;
+  position: absolute;
+  opacity: 0;
+  top:-10px;
+  text-align: center;
+  padding-top: 120px;
+}
+#pic2 #p2:hover{
+  opacity: 0.5;
+  border:5px solid;
+  background-color: white;
+}
+
+/* �����(�) */
+#contentWall3{
+  width:350px;
+  height:250px;
+  margin:10px auto;
+  right: 15px;
+}
+#pic3 {
+  width:350px;
+  height:250px;
+  margin: 10px auto;
+  position: relative;
+  padding: 3px;
+  background-image: url("../img/night4.png");
+  background-size: cover;
+  margin-right: 20px;
+  margin-top: -290px;
+}
+
+#contentWall-3 #p3{
+  width:350px;
+  height:150px;
+  margin: 10px auto;
+  text-align: center;
+  padding-top: 120px;
+  position: relative;
+  border: solid 5px;
+  margin-right: 20px;
+  right:4px;
+  top:-15px;
+  opacity: 0;
+  overflow: hidden;
+ 
+}
+#pic3 #p3:hover{
+  opacity: 0.5;
+  border:5px solid;
+  background-color: white;
+}
+
+/* 銝����con */
+#pic1 #p1 .icon-start{
+  position: absolute;
+  bottom:10px;
+  left:10px;
+}
+#pic1 #p1 .icon-thumb{
+  position: absolute;
+  bottom:10px;
+  right:10px;
+}
+#pic2 #p2 .icon-start{
+  position: absolute;
+  bottom:10px;
+  left:10px;
+}
+#pic2 #p2 .icon-thumb{
+  position: absolute;
+  bottom:10px;
+  right:10px;
+  opacity: 0.9;
+}
+#pic3 #p3 .icon-start{
+  position: absolute;
+  bottom:10px;
+  left:10px;
+}
+#pic3 #p3 .icon-thumb{
+   position: absolute;
+   bottom:10px;
+   right:10px;
+}

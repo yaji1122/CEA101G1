@@ -1,0 +1,41 @@
+body {
+    background-color: #ebeff2;
+}
+
+.card {
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    width: 650px;
+    height: 450px;
+}
+
+.head {
+    color: #97989a;
+    font-size: 12px;
+}
+
+.bottom {
+    color: grey;
+    font-size: 14px;
+}
+
+.checkbox {
+    width: 90%;
+    margin: 0 auto;
+ /*   margin-top: 20%;*/
+    display: grid;
+ /*   grid-template-columns: 50% 50%;*/
+    text-align: left;
+    font-size:15px;
+}
+
+.px-3{
+	margin-top:50px;
+}
+
+select {
+	width:190px;
+	height:30px;
+}

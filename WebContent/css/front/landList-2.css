@@ -1,0 +1,397 @@
+body {
+    width: 100%;
+    height: 100vh;
+    background-position: center;
+    /* background-image: url("../img/bg4.png"); */
+    background-size: cover;
+    background-attachment: fixed;
+}
+#wrapper{
+    width:100%;
+    height:100%;
+    position: relative;
+}
+
+/* 日期、搜索列 */
+#wrapper #reg{
+    width:100%;
+    height:80px;
+    margin: auto;
+    margin-top: 20px;
+    border-bottom: black 2px;
+}
+ul#dateSle{
+    width:700px;
+    height:100%;
+    margin: auto;
+    /* border:solid 2px; */
+    
+}
+.startSle h5{
+    font-size: 5px;
+}
+#dateSle li{
+    width:175px;
+    height:30px;
+    list-style: none;
+    /* border:solid 2px; */
+    float: left;
+    display:block;
+}
+#start-day-label{
+     font-family: Arial, Helvetica, sans-serif;
+     padding: 3px; 
+}
+input.start-day{
+    width:100px;
+    height:30px;
+
+}
+
+#reg select{
+    margin:0px auto;
+
+}
+button.searchbtn{
+    width:50px;
+    height:40px;
+    font-size: small;
+}
+.ui-datepicker-trigger{
+    width:10px;
+    height:10px;
+    border:1px solid;
+}
+
+
+/* 內容第一列 */
+#wrapper .line{
+    border: 1px solid;
+    border-color: rgb(24, 23, 23);
+    /* margin:0px auto; */
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+#wrapper .content{
+width:100%;
+height:100%;
+
+margin-top: 100px;
+margin:50px auto;
+
+}
+#wrapper .content-1{
+    width:68%;
+    height:25vh;
+    /* border:outset 2px; */
+   
+    margin:0px auto;
+    margin-top: 20px;
+    text-align: center;
+    
+}
+#wrapper .content-img{
+    width:200px;
+    height:140px;
+    border:outset 2px;
+    border-color: darkgray;
+    padding: 2px;
+    margin-left: 10px;
+    border-radius: 20px;
+}
+#wrapper img{
+    width:200px;
+    height:132px;
+    border-radius: 20px;
+}
+.content-img:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+/* 活動內容-1 */
+
+#wrapper .content-text{
+    width: 420px;
+    height:140px;
+    border:outset 2px;
+    /* margin-right:200; */
+    float: right;;
+    display: block;
+    margin-top: -140px;
+    margin-right:310px;
+    padding: 2px;
+}
+#wrapper .top-row{
+    width: 420px;
+    height:90px;
+    margin:-4px auto;
+    margin-left: -4px;
+    font-size: 10px;
+    padding: 5px;
+    text-align: left;
+}
+.top-row p{
+  font-size: 3px;
+  float: left;
+}
+.bottom-row i{
+width:10px;
+height:10px;
+}
+/* 價格與人數 */
+#wrapper .price{
+    width:140px;
+    height:140px;
+    border:outset 2px;
+    margin:-140px auto;
+    margin-right: 150px;
+    float: right;
+}
+#wrapper h2{
+font-size: 35px;
+font-family:cursive;
+text-align: left ;
+padding: 5px;
+margin-top: 20px;
+}
+
+#wrapper p{
+    float: right;
+    margin-top: -30px;
+    padding: 2px;
+    font-size: x-small 5px;
+}
+
+#wrapper #participant{
+    margin: -50px auto;
+    margin-right:190px;
+    float: right;
+}
+/* 我要預約BUTTON */
+.content-1 button{
+    margin: auto;
+    margin-top: -170px;
+    margin-right:-800px;
+}
+/* 內容第2列 */
+    #wrapper .content-2{
+        width:68%;
+        height:25vh;
+        /* border:outset 2px; */
+        margin:0px auto;
+        margin-top: 200px;
+        text-align: center;
+        
+    }
+    #wrapper .content-img{
+        width:200px;
+        height:140px;
+        border:outset 2px;
+        border-color: darkgray;
+        padding: 2px;
+        margin-left: 10px;
+    }
+    
+    #wrapper .img{
+        width:200px;
+        height:140px;
+        /* border:solid 2px; */
+        margin-left: 50px;
+        
+    }
+    #wrapper img{
+        width:200px;
+        height:132px;
+    }
+    .content-img:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    .content-2 button{
+        margin: auto;
+        margin-top: -170px;
+        margin-right:-800px;
+    }
+
+    /* 內容第3列 */
+    #wrapper .content-3{
+        width:68%;
+        height:25vh;
+        /* border:outset 2px; */
+        margin:0px auto;
+        margin-top: 40px;
+        text-align: center;
+        
+    }
+    #wrapper .content-img{
+        width:200px;
+        height:140px;
+        border:outset 2px;
+        border-color: darkgray;
+        padding: 2px;
+        margin-left: 10px;
+    }
+    
+    #wrapper .img{
+        width:200px;
+        height:140px;
+        /* border:solid 2px; */
+        margin-left: 50px;
+        
+    }
+    #wrapper img{
+        width:200px;
+        height:132px;
+    }
+    .content-img:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    .content-3 button{
+        margin: auto;
+        margin-top: -170px;
+        margin-right:-800px;
+    }
+    /* 內容第四列 */
+    #wrapper .content-4{
+        width:68%;
+        height:25vh;
+        /* border:outset 2px; */
+        margin:0px auto;
+        margin-top: 40px;
+        text-align: center;
+        
+    }
+    #wrapper .content-img{
+        width:200px;
+        height:140px;
+        border:outset 2px;
+        border-color: darkgray;
+        padding: 2px;
+        margin-left: 10px;
+    }
+    
+    #wrapper .img{
+        width:200px;
+        height:140px;
+        /* border:solid 2px; */
+        margin-left: 50px;
+        
+    }
+    #wrapper img{
+        width:200px;
+        height:132px;
+    }
+    .content-img:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    .content-4 button{
+        margin: auto;
+        margin-top: -170px;
+        margin-right:-800px;
+    }
+    /* 內容第五列 */
+    #wrapper .content-5{
+        width:68%;
+        height:25vh;
+        /* border:outset 2px; */
+        margin:0px auto;
+        margin-top: 40px;
+        text-align: center;
+        
+    }
+    #wrapper .content-img{
+        width:200px;
+        height:140px;
+        border:outset 2px;
+        border-color: darkgray;
+        padding: 2px;
+        margin-left: 10px;
+    }
+    
+    #wrapper .img{
+        width:200px;
+        height:140px;
+        /* border:solid 2px; */
+        margin-left: 50px;
+        
+    }
+    #wrapper img{
+        width:200px;
+        height:132px;
+    }
+    .content-img:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    .content-5 button{
+        margin: auto;
+        margin-top: -170px;
+        margin-right:-800px;
+    }
+    /* 內容第六列 */
+    #wrapper .content-6{
+        width:68%;
+        height:25vh;
+        /* border:outset 2px; */
+        margin:0px auto;
+        margin-top: 40px;
+        text-align: center;
+        
+    }
+    #wrapper .content-img{
+        width:200px;
+        height:140px;
+        border:outset 2px;
+        border-color: darkgray;
+        padding: 2px;
+        margin-left: 10px;
+    }
+    
+    #wrapper .img{
+        width:200px;
+        height:140px;
+        /* border:solid 2px; */
+        margin-left: 50px;
+        
+    }
+    #wrapper img{
+        width:200px;
+        height:132px;
+    }
+    .content-img:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    .content-6 button{
+        margin: auto;
+        margin-top: -80px;
+        margin-right:-220px;
+    }
+    /* 分頁選項 */
+    nav .pagination{
+        margin: auto;
+        margin-top: 3%;
+        float: left;
+        margin-left: 40%;
+    }
+
+/* bottom-Icon */
+.bottom-row span{
+    float: left;
+    width:30px;
+    height:20px;
+    margin: auto;
+}
+.bottom-row i{
+    margin:0px auto;
+    
+}
+
+
+
+
+
+

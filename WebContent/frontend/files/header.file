@@ -1,0 +1,98 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	 <!-- preloader -->
+	<div id="preloder">
+		<img id="preloaderpic"
+			src="${pageContext.request.contextPath}/img/loading.png" />
+		<div class="loader"></div>
+	</div>
+	 <!-- preloader -->
+	
+	
+	 <!-- offcanvas menu start -->
+	 
+	<div class="offcanvas-menu-overlay"></div>
+	<div class="canvas-open">
+		<i class="icon_menu"></i>
+	</div>
+	<i class="fas fa-user-circle offcanvs-log-in"></i>
+	<div class="offcanvas-menu-wrapper">
+		<div class="canvas-close">
+			<i class="icon_close"></i>
+		</div>
+		<div class="header-configure-area">
+			<a href="#" class="bk-btn">立刻訂房</a>
+		</div>
+		<nav class="mainmenu mobile-menu">
+			<ul>
+				<li><a class="nav-event">住客專區</a>
+					<ul class="dropdown">
+						<li><a href="./activity.html">活動報名</a></li>
+						<li><a href="">預約服務</a></li>
+						<li><a href="">訂購餐點</a></li>
+					</ul></li>
+				<li><a href="shop.html" class="nav-evnet">戴蒙商城</a></li>
+				<li><a class="nav-event" href="./rooms.html">客房介紹</a></li>
+				<li><a class="nav-event log-in">會員登入</a></li>
+				<li><a href="" class="nav-event"
+					style="color: rgb(240, 218, 162)">加入會員</a></li>
+			</ul>
+		</nav>
+		<div id="mobile-menu-wrap"></div>
+		<div class="top-social">
+			<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
+				class="fa fa-twitter"></i></a> <a href="#"><i
+				class="fa fa-tripadvisor"></i></a> <a href="#"><i
+				class="fa fa-instagram"></i></a>
+		</div>
+		<ul class="top-widget">
+			<li><i class="fa fa-phone"></i> (12) 345 67890</li>
+			<li><i class="fa fa-envelope"></i> info.colorlib@gmail.com</li>
+		</ul>
+	</div>
+	
+	 <!-- offcanvas menu end -->
+	 
+	 <!-- header menu -->
+	<header class="header-section">
+		<div class="menu-item">
+			<div class="nav-menu">
+				<nav class="mainmenu">
+					<ul class="mainmenu-row">
+					<li  class="nav-list"><a href="#" class="nav-evnet">最新消息</a></li>
+						<li class="nav-list"><a class="nav-event">住客專區</a>
+							<ul class="dropdown">
+								<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
+								<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
+								<li><a href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
+							</ul></li>
+						<li  class="nav-list"><a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" class="nav-evnet">戴蒙商城</a></li>
+						<div class="logobox">
+							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
+								src="${pageContext.request.contextPath}/img/logo.png"/>
+							</a>
+						</div>
+						<li  class="nav-list"><a class="nav-event"
+							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房</a>
+						</li>
+						<li class="nav-list"><a class="nav-event"> <c:choose>
+									<c:when test="${member != null}"><i class="far fa-gem"></i></i>會員中心</a>
+							<ul class="dropdown">
+								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
+								<li><a href="#">我的假期</a></li>
+								<li><a href="#">歷史訂單</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
+							</ul></li>
+						</c:when>
+						<c:otherwise>
+							<i class="fas fa-user-circle log-in"></i>
+							</a>
+						</c:otherwise>
+						</c:choose>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+	 <!-- header menu -->
