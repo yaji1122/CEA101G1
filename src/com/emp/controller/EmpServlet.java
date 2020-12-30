@@ -24,7 +24,7 @@ public class EmpServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action =req.getParameter("action");
-		
+		InputStream is = null;
 		if ("getEmpPic".equals(action)) {
 			String emp_id = req.getParameter("emp_id");
 			res.setContentType("image/jpg, image/png, image/jpeg, image/gif");
@@ -32,7 +32,16 @@ public class EmpServlet extends HttpServlet {
 			EmpVO empVO= empSvc.getOnePic(emp_id);
 			
 			byte[] emp_pic= empVO.getEmp_pic();
-			res.getOutputStream().write(emp_pic);
+			if (emp_pic != null) {
+				res.getOutputStream().write(emp_pic);
+			} else {
+				is = req.getServletContext().getResourceAsStream("/img/nodata.png");
+				byte[] pic = new byte[is.available()];
+				is.read(pic);
+				res.getOutputStream().write(pic);
+				is.close();
+			}
+			return;
 		}
 		
 		
