@@ -17,6 +17,7 @@
 	}
 	pageContext.setAttribute("list", list);
 	pageContext.setAttribute("item_type_no", item_type_no);
+	System.out.print(list.size());
 %>
 
 <!DOCTYPE html>
