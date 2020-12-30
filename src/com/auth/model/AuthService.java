@@ -50,4 +50,7 @@ public class AuthService {
 		dao.delete(emp_id, func_no);
 	} 
 	
+	public void deleteAllAuth(String emp_id) {
+		dao.deleteAll(emp_id);
+	}
 }

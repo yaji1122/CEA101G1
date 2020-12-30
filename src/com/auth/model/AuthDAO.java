@@ -35,6 +35,8 @@ public class AuthDAO implements AuthDAO_interface {
 	    "SELECT * FROM EMP_AUTH WHERE FUNC_NO=?";
 		private static final String DELETE =
 		"DELETE FROM EMP_AUTH where emp_id=? and func_no=?";
+		private static final String DELETE_ALL =
+		"DELETE FROM EMP_AUTH where emp_id=?";
 		
 	@Override
 		public List<AuthVO> findByFunc(String func_no) {
@@ -393,5 +395,53 @@ public class AuthDAO implements AuthDAO_interface {
 		}
 		
 	}
+	@Override
+    public void deleteAll(String emp_id) {
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	
+	try {
+		con = ds.getConnection();
+
+		// 1●設定於 pstm.executeUpdate()之前
+		con.setAutoCommit(false);
+		
+		// 刪除
+		pstmt = con.prepareStatement(DELETE_ALL);
+		pstmt.setString(1, emp_id);
+		ResultSet  rs = pstmt.executeQuery();
+		
+		con.commit();
+		con.setAutoCommit(true);
+	} catch (SQLException se) {
+		if (con != null) {
+			try {
+				// 3●設定於當有exception發生時之catch區塊內
+				con.rollback();
+			} catch (SQLException excep) {
+				throw new RuntimeException("rollback error occured. "
+						+ excep.getMessage());
+			}
+		}
+		throw new RuntimeException("A database error occured. "
+				+ se.getMessage());
+	} finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		}
+	}
+
+}
 
 }

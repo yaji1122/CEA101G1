@@ -15,4 +15,5 @@ public interface AuthDAO_interface {
 	public List <AuthVO> findByFunc(String func_no);
     //同時新增員工與權限 
     public void insert2 (AuthVO authVO , java.sql.Connection con);
+    public void deleteAll(String emp_id);
 }
