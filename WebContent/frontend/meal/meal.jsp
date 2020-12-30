@@ -27,6 +27,7 @@
 
 <body>
 	<div class="black"></div>
+	<%@ include file="/frontend/files/loginCSS.file" %>
 	<%@ include file="/frontend/files/login.file" %>
 	<%@ include file="/frontend/files/loginbox.file" %>
 	<%@ include file="/frontend/files/header.file" %>
