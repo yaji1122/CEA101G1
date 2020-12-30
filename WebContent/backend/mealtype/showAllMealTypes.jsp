@@ -81,9 +81,8 @@
 		</c:otherwise>
 	</c:choose>
 
-	<form class="update-display" method="post"
+	<form class="update-display update-display-div" method="post"
 		action="${pageContext.request.contextPath}/MealTypeServlet">
-		<div class="update-display-div">
 			<div class="close-icon">
 				<i class="fas fa-times icon"></i>
 			</div>
@@ -99,7 +98,6 @@
 				name="update-mealtype-no" id="update-mealtype-to-servlet">
 			<button type="submit" class="btn btn-success"
 				style="width: 100px; margin: 50px auto; background-color: pink;">更新資料</button>
-		</div>
 	</form>
 
 	<script>
@@ -108,6 +106,7 @@
 			$(".black").css("display", "block");
 			$(".black").click(function() {
 				$(".black").css("display", "none");
+				$(".update-display").removeClass("display-show");
 			})
 			let tr = $(this).parents("tr");
 			let children = tr.children();
