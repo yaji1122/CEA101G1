@@ -249,6 +249,9 @@ body {
     display: flex;
     justify-content: space-around;
 }
+.pageheader .pageslider img {
+	max-width: 100%;
+}
 .shopitem {
     width: 100%;
     height: 475px;
