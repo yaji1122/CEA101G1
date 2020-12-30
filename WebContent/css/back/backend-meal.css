@@ -68,6 +68,12 @@ td {
 	visibility: hidden;
 	display: flex;
 	overflow: hidden;
+	position: fixed;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	margin:auto;
 }
 .pic-display-div{
 	z-index: 999;
@@ -92,13 +98,7 @@ td {
 	border: 2px solid;
 }
 .update-display-div {
-	z-index: 999;
-	position: fixed;
-	left:0;
-	top:0;
-	right:0;
-	bottom:0;
-	margin:auto;
+	z-index: 999;	
 	display:flex;
 	flex-direction:column;
 	justify-content:space-evenly;

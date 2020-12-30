@@ -40,6 +40,11 @@ public class MealDAO implements MealDAO_interface {
 			"SELECT * FROM MEAL WHERE MEAL_STATUS = 1";
 	private static final String LET_MEAL_ON=
 			"UPDATE MEAL SET MEAL_STATUS=1 WHERE MEAL_STATUS=0";
+	private static final String UPDATE_ON_MEALSTATUS=
+			"UPDATE MEAL SET MEAL_STATUS=1 WHERE MEAL_NO=?";
+	private static final String UPDATE_OFF_MEALSTATUS=
+			"UPDATE MEAL SET MEAL_STATUS=0 WHERE MEAL_NO=?";
+
 
 
 	public void insert(MealVO mealVO) {
@@ -152,8 +157,72 @@ public class MealDAO implements MealDAO_interface {
 		}
 	}
 
-	
 
+	@Override
+	public void updateOnMealStatus(MealVO mealVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_ON_MEALSTATUS);
+			
+			pstmt.setString(1, mealVO.getMeal_no());
+			
+			pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		}finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	public void updateOffMealStatus(MealVO mealVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_OFF_MEALSTATUS);
+			
+			pstmt.setString(1, mealVO.getMeal_no());
+			
+			pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		}finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void delete(String meal_no) {
 		Connection con = null;

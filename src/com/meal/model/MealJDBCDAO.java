@@ -28,6 +28,10 @@ public class MealJDBCDAO implements MealDAO_interface {
 			"SELECT * FROM MEAL WHERE MEAL_STATUS = 1";
 	private static final String LET_MEAL_ON=
 			"UPDATE MEAL SET MEAL_STATUS=1 WHERE MEAL_STATUS=0";
+	private static final String UPDATE_ON_MEALSTATUS=
+			"UPDATE MEAL SET MEAL_STATUS='1' WHERE MEAL_NO=?";
+	private static final String UPDATE_OFF_MEALSTATUS=
+			"UPDATE MEAL SET MEAL_STATUS='0' WHERE MEAL_NO=?";
 	
 	public void insert(MealVO mealVO) {
 		Connection con = null;
@@ -149,6 +153,79 @@ public class MealJDBCDAO implements MealDAO_interface {
 		}
 	}
 
+
+	public void updateOnMealStatus(MealVO mealVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			pstmt = con.prepareStatement(UPDATE_ON_MEALSTATUS);
+					
+			pstmt.setString(1, mealVO.getMeal_no());
+			
+			pstmt.executeUpdate();
+			
+		}catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		}finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	public void updateOffMealStatus(MealVO mealVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			pstmt = con.prepareStatement(UPDATE_OFF_MEALSTATUS);
+			
+			pstmt.setString(1, mealVO.getMeal_no());
+			
+			pstmt.executeUpdate();
+			
+		}catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		}finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void delete(String meal_no) {
 		Connection con = null;
@@ -428,19 +505,24 @@ public class MealJDBCDAO implements MealDAO_interface {
 	public static void main(String[] args) throws IOException{
 		MealJDBCDAO dao = new MealJDBCDAO();
 		
+		MealVO mealVO = new MealVO();
+		mealVO.setMeal_no("M0001");
+		
+		dao.updateOnMealStatus(mealVO);
+		System.out.println("修改成功");
 		//新增
-		MealVO mealVO1 = new MealVO();
-		
-		mealVO1.setMeal_type_no("TYP01");
-		mealVO1.setMeal_name("超好吃義大利麵");
-		byte[] pic = getPictureByteArray("C:/Users/CEA101_07/Desktop/CEA101G1/front-end/template/img/card-img.jpg");
-		mealVO1.setMeal_pic(pic);
-		mealVO1.setMeal_info("真的超好吃！");
-		mealVO1.setMaking_time(10);
-		
-		dao.insert(mealVO1);
-		
-		System.out.println("新增成功");
+//		MealVO mealVO1 = new MealVO();
+//		
+//		mealVO1.setMeal_type_no("TYP01");
+//		mealVO1.setMeal_name("超好吃義大利麵");
+//		byte[] pic = getPictureByteArray("C:/Users/CEA101_07/Desktop/CEA101G1/front-end/template/img/card-img.jpg");
+//		mealVO1.setMeal_pic(pic);
+//		mealVO1.setMeal_info("真的超好吃！");
+//		mealVO1.setMaking_time(10);
+//		
+//		dao.insert(mealVO1);
+//		
+//		System.out.println("新增成功");
 		
 		//修改
 //		MealVO mealVO2 = new MealVO();

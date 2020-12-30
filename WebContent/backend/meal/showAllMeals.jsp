@@ -27,6 +27,7 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>
 <script src='${pageContext.request.contextPath}/js/datatables.min.js'></script>
+<script src='${pageContext.request.contextPath}/js/sweetalert.js'></script>
 <title>showAllMeals</title>
 </head>
 
@@ -80,11 +81,29 @@
 								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.meal_info}</td>
 							<td
 								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.making_time}</td>
-							<td
-								style="font-size: 16px; text-align: center; padding-top: 1.5%;"><c:choose>
-									<c:when test="${mealVO.meal_status.equals('0')}">	下架</c:when>
-									<c:when test="${mealVO.meal_status.equals('1')}">	上架</c:when>
-								</c:choose></td>
+							<td>
+							<c:choose>
+									<c:when test="${mealVO.meal_status.equals('0')}">
+									<form method="post" action="${pageContext.request.contextPath}/MealServlet">
+									<input type="hidden" name="off" value="${mealVO.meal_no}">
+									<input type="hidden" name="action" value="off">
+									<button id="offbutton"type="submit" class="btn btn-secondary" style="margin-left: 22%;">
+										下架
+										</button>
+										</form>
+
+										</c:when>
+									<c:when test="${mealVO.meal_status.equals('1')}">	
+									<form method="post" action="${pageContext.request.contextPath}/MealServlet">
+									<input type="hidden" name="on" value="${mealVO.meal_no}">
+									<input type="hidden" name="action" value="on">
+									<button type="submit" class="btn btn-secondary" style="margin-left: 22%;">
+									上架
+									</button>
+									</form>
+									</c:when>									
+								</c:choose>
+								</td>
 							<td>
 								<button class="showpic btn btn-info" name="meal_pic"
 									value="${pageContext.request.contextPath}/MealServlet?action=view_mealpic&meal_no=${mealVO.meal_no}">
