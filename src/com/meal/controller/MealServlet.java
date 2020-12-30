@@ -177,6 +177,42 @@ public class MealServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		if("on".equals(action)) {
+			try {
+				String meal_no = req.getParameter("on").trim();
+				
+				MealVO mealVO = new MealVO();
+				mealVO.setMeal_no(meal_no);
+				
+				MealService mealSvc = new MealService();
+				mealVO = mealSvc.updateOffMealStatus(meal_no);
+				req.setAttribute("mealVO", mealVO);
+				String url = "/backend/meal/mealInfo.jsp";
+				RequestDispatcher dispatcher = req.getRequestDispatcher(url);
+				dispatcher.forward(req, res);
+				}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if("off".equals(action)) {
+			try {
+				String meal_no = req.getParameter("off").trim();
+				
+				MealVO mealVO = new MealVO();
+				mealVO.setMeal_no(meal_no);
+				
+				MealService mealSvc = new MealService();
+				mealVO = mealSvc.updateOnMealStatus(meal_no);
+				req.setAttribute("mealVO", mealVO);
+				String url = "/backend/meal/mealInfo.jsp";
+				RequestDispatcher dispatcher = req.getRequestDispatcher(url);
+				dispatcher.forward(req, res);
+				}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 		if ("delete_meal".equals(action)) {
 			try {
@@ -204,7 +240,7 @@ public class MealServlet extends HttpServlet {
 		if(meal_pic != null) {
 		res.getOutputStream().write(meal_pic);
 		}else {
-			is = req.getServletContext().getResourceAsStream("/images/nodata/nodata.png");
+			is = req.getServletContext().getResourceAsStream("/img/nodata.png");
 			byte[] pic = new byte[is.available()];
 			is.read(pic);
 			res.getOutputStream().write(pic);

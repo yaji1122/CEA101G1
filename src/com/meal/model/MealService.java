@@ -50,6 +50,22 @@ public class MealService {
 		return mealVO;
 	}
 
+	public MealVO updateOnMealStatus(String meal_no) {
+		MealVO mealVO = new MealVO();
+		
+		mealVO.setMeal_no(meal_no);
+		dao.updateOnMealStatus(mealVO);
+		return mealVO;
+	}
+	
+	public MealVO updateOffMealStatus(String meal_no) {
+		MealVO mealVO = new MealVO();
+		
+		mealVO.setMeal_no(meal_no);
+		dao.updateOffMealStatus(mealVO);
+		return mealVO;
+	}
+	
 	public void deleteMeal(String meal_no) {
 		dao.delete(meal_no);
 	}
