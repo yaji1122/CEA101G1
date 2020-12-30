@@ -39,7 +39,7 @@ public class ActServlet extends HttpServlet{
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/act/backend-act_select_page.jsp");
+								.getRequestDispatcher("/backend/act/backend-act_select_page.jsp");
 						failureView.forward(req, res);
 						return;//嚙緹嚙踝蕭嚙踝蕭嚙稻
 					}
@@ -53,7 +53,7 @@ public class ActServlet extends HttpServlet{
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/act/backend-act_select_page.jsp");
+								.getRequestDispatcher("/backend/act/backend-act_select_page.jsp");
 						failureView.forward(req, res);
 						return;//嚙緹嚙踝蕭嚙踝蕭嚙稻
 					}
@@ -67,14 +67,14 @@ public class ActServlet extends HttpServlet{
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/act/backend-act_select_page.jsp");
+								.getRequestDispatcher("/backend/act/backend-act_select_page.jsp");
 						failureView.forward(req, res);
 						return;//嚙緹嚙踝蕭嚙踝蕭嚙稻
 					}
 					
 					/***************************3.嚙範嚙賠改蕭嚙踝蕭,嚙褒喉蕭嚙踝蕭嚙�(Send the Success view)*************/
 					req.setAttribute("actVO", actVO); // 嚙踝蕭w嚙踝蕭嚙碼嚙踝蕭actEventVO嚙踝蕭嚙踝蕭,嚙編嚙皚req
-					String url = "/back-end/act/backend-act_listOne.jsp";
+					String url = "/backend/act/backend-act_listOne.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 嚙踝蕭嚙穀嚙踝蕭嚙� listOneAct.jsp
 					successView.forward(req, res);
 
@@ -82,7 +82,7 @@ public class ActServlet extends HttpServlet{
 				} catch (Exception e) {
 					errorMsgs.add("嚙盤嚙糊嚙踝蕭嚙緻嚙踝蕭嚙�:" + e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/act/backend-act_select_page.jsp");
+							.getRequestDispatcher("/backend/act/backend-act_select_page.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -170,7 +170,7 @@ public class ActServlet extends HttpServlet{
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("actVO", actVO); // 嚙緣嚙踝蕭嚙踝蕭J嚙賣式嚙踝蕭嚙羯嚙踝蕭actEventVO嚙踝蕭嚙踝蕭,嚙稽嚙編嚙皚req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/act/backend-act_add.jsp");
+								.getRequestDispatcher("/backend/act/backend-act_add.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -181,7 +181,7 @@ public class ActServlet extends HttpServlet{
 							actDate, deadLine, actTime, participant, act_price);
 					
 					/***************************3.嚙編嚙磕嚙踝蕭嚙踝蕭,嚙褒喉蕭嚙踝蕭嚙�(Send the Success view)***********/
-					String url = "/back-end/act/backend-act_listAll.jsp";
+					String url = "/backend/act/backend-act_listAll.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 嚙編嚙磕嚙踝蕭嚙穀嚙踝蕭嚙踝蕭嚙締istAllEmp.jsp
 					successView.forward(req, res);				
 					
@@ -190,7 +190,7 @@ public class ActServlet extends HttpServlet{
 					errorMsgs.add("嚙踝蕭J嚙踝蕭嚙踝蕭嚙踝蕭躑嚙�");
 					e.printStackTrace();
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/act/backend-act_add.jsp");
+							.getRequestDispatcher("/backend/act/backend-act_add.jsp");
 					failureView.forward(req, res);
 				}
 			} 
@@ -212,7 +212,7 @@ public class ActServlet extends HttpServlet{
 					actSvc.deleteAct(actNo);
 					
 					/***************************3.嚙磋嚙踝蕭嚙踝蕭嚙踝蕭,嚙褒喉蕭嚙踝蕭嚙�(Send the Success view)***********/								
-					String url = "/back-end/act/act_listAll.jsp";
+					String url = "/backend/act/act_listAll.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);// 嚙磋嚙踝蕭嚙踝蕭嚙穀嚙踝蕭,嚙踝蕭嚙稷嚙箴嚙碼嚙磋嚙踝蕭嚙踝蕭嚙諉瘀蕭嚙踝蕭嚙踝蕭
 					successView.forward(req, res);
 					
@@ -220,7 +220,7 @@ public class ActServlet extends HttpServlet{
 				} catch (Exception e) {
 					errorMsgs.add("嚙磋嚙踝蕭嚙踝蕭嚙踝蕭嚙�:"+e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/act/act_listAll.jsp");
+							.getRequestDispatcher("/backend/act/act_listAll.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -243,7 +243,7 @@ public class ActServlet extends HttpServlet{
 	  								
 	  				/***************************3.嚙範嚙賠改蕭嚙踝蕭,嚙褒喉蕭嚙踝蕭嚙�(Send the Success view)************/
 	  				req.setAttribute("actVO", actVO);         // 嚙踝蕭w嚙踝蕭嚙碼嚙踝蕭empVO嚙踝蕭嚙踝蕭,嚙編嚙皚req
-	  				String url = "/back-end/act/backend-act_update.jsp";
+	  				String url = "/backend/act/backend-act_update.jsp";
 	  				RequestDispatcher successView = req.getRequestDispatcher(url);// 嚙踝蕭嚙穀嚙踝蕭嚙� update_emp_input.jsp
 	  				successView.forward(req, res);
 
@@ -251,7 +251,7 @@ public class ActServlet extends HttpServlet{
 	  			} catch (Exception e) {
 	  				errorMsgs.add("嚙盤嚙糊嚙踝蕭嚙緻嚙緯嚙論改的嚙踝蕭嚙�:" + e.getMessage());
 	  				RequestDispatcher failureView = req
-	  						.getRequestDispatcher("/back-end/act/backend-act_update.jsp");
+	  						.getRequestDispatcher("/backend/act/backend-act_update.jsp");
 	  				failureView.forward(req, res);
 	  			}
 	  		}
@@ -340,7 +340,7 @@ public class ActServlet extends HttpServlet{
 	  				if (!errorMsgs.isEmpty()) {
 	  					req.setAttribute("actVO", actVO); // 嚙緣嚙踝蕭嚙踝蕭J嚙賣式嚙踝蕭嚙羯嚙踝蕭actTypeVO嚙踝蕭嚙踝蕭,嚙稽嚙編嚙皚req
 	  					RequestDispatcher failureView = req
-	  							.getRequestDispatcher("/back-end/act/backend-act_update.jsp");
+	  							.getRequestDispatcher("/backend/act/backend-act_update.jsp");
 	  					failureView.forward(req, res);
 	  					return; //嚙緹嚙踝蕭嚙踝蕭嚙稻
 	  				}
@@ -351,7 +351,7 @@ public class ActServlet extends HttpServlet{
 	  				
 	  				/***************************3.嚙論改完嚙踝蕭,嚙褒喉蕭嚙踝蕭嚙�(Send the Success view)*************/
 	  				req.setAttribute("actVO", actVO); // 嚙踝蕭wupdate嚙踝蕭嚙穀嚙踝蕭,嚙踝蕭嚙確嚙踝蕭嚙踝蕭actTypeVO嚙踝蕭嚙踝蕭,嚙編嚙皚req
-	  				String url = "/back-end/act/backend-act_listAll.jsp";
+	  				String url = "/backend/act/backend-act_listAll.jsp";
 	  				RequestDispatcher successView = req.getRequestDispatcher(url); // 嚙論改成嚙穀嚙踝蕭,嚙踝蕭嚙締istOneEmp.jsp
 	  				successView.forward(req, res);
 
@@ -359,7 +359,7 @@ public class ActServlet extends HttpServlet{
 	  			} catch (Exception e) {
 	  				errorMsgs.add("嚙論改蕭嚙複伐蕭嚙踝蕭:"+e.getMessage());
 	  				RequestDispatcher failureView = req
-	  						.getRequestDispatcher("/back-end/act/backend-act_update.jsp");
+	  						.getRequestDispatcher("/backend/act/backend-act_update.jsp");
 	  				failureView.forward(req, res);
 	  			}
 	  		}

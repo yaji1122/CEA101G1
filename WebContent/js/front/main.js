@@ -53,7 +53,7 @@ $(document).ready(function() {
 		data.append("email", email);
 		data.append("action", "email_confirm");
 		let xhr = new XMLHttpRequest();
-		xhr.open("post", "http://localhost:8080/CEA101G1/MembersServlet");
+		xhr.open("post", "/CEA101G1/MembersServlet");
 		xhr.onload = function() {
 			if (xhr.readyState === xhr.DONE) {
 				if (xhr.status === 200) {
@@ -81,7 +81,7 @@ $(document).ready(function() {
 		data.append("mb_pwd", mb_pwd);
 		data.append("action", "member-login");
 		let xhr = new XMLHttpRequest();
-		xhr.open("post", "http://localhost:8080/CEA101G1/LoginHandler");
+		xhr.open("post", "/CEA101G1/LoginHandler");
 		xhr.onload = function() {
 			if (xhr.readyState === xhr.DONE) {
 				if (xhr.status === 200) {
