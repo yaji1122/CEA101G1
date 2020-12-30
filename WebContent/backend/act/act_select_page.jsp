@@ -5,9 +5,9 @@
 <head>
 <title>CEA101G1-ACT</title>
 <title>Diamond Resort 後台管理</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css//bootstrap.min.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend.css" type="text/css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-select_page.css" type="text/css" /> 
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-add.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery-ui.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-select_page.css" type="text/css" /> 
 
 </head>
 <body bgcolor='white'>
@@ -23,16 +23,16 @@
 	<ul id="search-table">
 		<nav class="navbar-top navbar-light" style="margin-left: 150px;">
 			<form class="form-inline">
-				<button class="btn btn-outline-success" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/back-end/act/backend-act_listAll.jsp?action=getAll'">
+				<button class="btn btn-outline-dark" type="button" 
+				onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_listAll.jsp?action=getAll'">
 				  查詢全部活動
 				</button>
-				<button class="btn btn-outline-success" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/back-end/act/backend-act_add.jsp'">
+				<button class="btn btn-outline-dark" type="button" 
+				onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_add.jsp'">
 				  新增活動
 				</button>
-				<button class="btn btn-outline-success" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/back-end/actpic/backend-act_pic_add.jsp'">
+				<button class="btn btn-outline-dark" type="button" 
+				onclick="location.href='<%=request.getContextPath()%>/backend/actpic/backend-act_pic_add.jsp'">
 				  新增照片
 				</button>
 			</form>
