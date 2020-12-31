@@ -10,7 +10,7 @@
 <body>
  <div class="container">
  <button class="btn"><i class="fa fa-home">
-                           <a href="<%=request.getContextPath()%>/backend/emp/protected/Backend.jsp" >Home</a></i></button>
+                           <a href="<%=request.getContextPath()%>/backend/backend_index.jsp" >Home</a></i></button>
             <div class="card">
                 <div clss="head">
                     <p><b>Diamond Resort Employee</b></p>

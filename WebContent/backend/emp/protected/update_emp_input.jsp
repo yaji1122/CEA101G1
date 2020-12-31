@@ -70,7 +70,7 @@
 	                   <span class="mt-4"><input type="text" name="emp_town" size= "10" placeholder="Town" value="${empVO.emp_town}"></span>
 	                   <span class="mt-4"><input type="text" name="emp_address" size= "24" placeholder="Address" value="${empVO.emp_address}"></span>
                        <div><span class="mt-4">員工狀態:</span>
-		                 <input type="radio" name="emp_status" id="emp" size="45" value="1"/>已啟用
+		                 <input type="radio" name="emp_status" id="emp" size="45" value="1" checked/>已啟用
 		                 <input type="radio" name="emp_status" id="emp" size="45" value="2"/>已離職
 		               </div>
                        <div>
