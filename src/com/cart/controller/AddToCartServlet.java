@@ -47,7 +47,7 @@ public class AddToCartServlet extends HttpServlet {
 				}
 			}
 			session.setAttribute("cart", buylist);
-			String url = "/frontend/meal.jsp";
+			String url = "/frontend/meal/meal.jsp";
 			RequestDispatcher dispatcher = req.getRequestDispatcher(url);
 			dispatcher.forward(req, res);
 		}

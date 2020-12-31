@@ -80,7 +80,7 @@ pageContext.setAttribute("infoJson", infoJson);
                 <h4 id="room-cart-empty">尚未選取商品</h4>
                 </c:if>
                 <h3 class="total-price">總價：<span>$</span></h3>
-                <a href="<%=request.getContextPath()%>/frontend/roomrsv/checkout.jsp" id="check-out">前往結賬</a>
+                <a href="<%=request.getContextPath()%>/frontend/roomrsv/checkout.jsp?<%=request.getQueryString()%>" id="check-out">前往結賬</a>
             </div>
         </header>
         <div class="banner-pic">

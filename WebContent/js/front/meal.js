@@ -15,6 +15,11 @@ $(".close-display-box").click(function() {
 });
 })
 
+$(".display-close").click(function(){
+    $(".shopping-cart-box").removeClass("display-box-show");
+    $(".black").css("display", "none");
+})
+
 $(".display-qty").each(function(index){
 $("#display-icon-plus" + index + "").click(function(e) {
 	e.preventDefault();

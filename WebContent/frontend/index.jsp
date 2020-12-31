@@ -42,7 +42,7 @@
 	</div>
 	<!-- Hero Section End -->
 	<div class="booking">
-		<form action="<%=request.getContextPath()%>/booking/Available?action=booking" method="POST">
+		<form action="<%=request.getContextPath()%>/frontend/roomrsv/available.jsp" method="POST">
 			<div class="booking-form">
 				<div class="box">
 					<div class="check-date">
