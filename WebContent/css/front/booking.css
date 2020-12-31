@@ -12,6 +12,9 @@ a:focus,
 button:focus {
     outline: none;
 }
+h1, h2, h3, h4, h5, h6, p {
+	margin:0px;
+}
 /* Preloder */
 #preloder {
     position: fixed;
@@ -283,7 +286,7 @@ div.curtain-show {
 }
 .booking-header .cart-list .total-price {
     position: absolute;
-    bottom: 40px;
+    bottom: 50px;
     right: 10px;
     font-size: 12px;
     color: #5c636e;
@@ -365,8 +368,9 @@ div.curtain-show {
 .main-wrapper .show-all-booking .room-card {
     width: 100%;
     padding: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     background-color: #f7f7f7;
+	position: relative;
 }
 .main-wrapper .available-rooms .room-card .room-pic {
     width: 100%;
@@ -778,12 +782,179 @@ a.calendar-today .calendar-date {
     color: rgb(228, 104, 104);
 }
 /* 結帳頁面 */
-h2.checkout-title  {
+.checkout-title  {
 	font-weight:400;
 	letter-spacing:3px;
 	text-align: center;
+	padding:20px;
+}
+.checkout-title i {
+	margin-right: 5px;
+}
+.checkout-title i.medal {
+	color:gold;
+}
+.main-wrapper .available-rooms .room-card, .main-wrapper .show-all-booking .room-card {
+	padding-top:60px;
+}
+.show-all-booking .room-card .booking-item-title {
+	text-align: center;
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:40px;
+	margin-bottom: 20px;
+	padding:5px 0px;
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color:#433d3c;
+}
+.show-all-booking .room-card .booking-item-title h4 {
+	font-weight: 400;
+	letter-spacing: 3px;
+	font-size: 16px;
+	color:white;
 }
 
+.show-all-booking .room-card .booking-date,
+.show-all-booking .room-card .booking-guest {
+	margin-bottom: 15px;
+	display:flex;
+	flex-direction: row;
+	height:fit-content;
+}
 
-
-
+.show-all-booking .room-card h4 {
+	height:fit-content;
+	font-weight: 300;
+	margin:0;
+	padding-left: 10px;
+	font-size: 17px;
+	
+}
+.show-all-booking .room-card .booking-icons {
+	height:17px;
+}
+.show-all-booking .room-card .booking-short-intro h3 {
+	letter-spacing: 5px;
+}
+.show-all-booking .room-card .booking-short-intro img {
+	max-width: 100%;
+	padding: 10px 0px;
+}
+.show-all-booking .room-card .cancel-rules {
+	background-color: white;
+	padding:10px;
+	letter-spacing: 2px;
+}
+.show-all-booking .room-card .cancel-rules h5 {
+	margin-bottom: 10px;
+	font-weight: 400;
+}
+.show-all-booking .room-card .cancel-rules .rule {
+	display:flex;
+	flex-direction: row;
+	margin-bottom:10px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #e8e8e8;
+}
+.show-all-booking .room-card .cancel-rules .rule p {
+	width:50%;
+	font-size: 10px;
+	font-weight: 300;
+}
+.show-all-booking .room-card .booking-total-price {
+	display:flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding:10px;
+	letter-spacing: 2px;
+}
+.show-all-booking .room-card .booking-total-price .etc {
+	font-size: 10px;
+}
+.show-all-booking .room-card .remove-booking {
+	cursor:pointer;
+	width: 100px;
+	background-color: white;
+	border:0.5px solid #a9294f;
+	color:#a9294f;
+	padding:5px;
+	border-radius: 1px;
+	letter-spacing: 2px;
+	box-shadow: 0px 1px 2px black;
+	margin-top:10px;
+}
+.show-all-booking .room-card .remove-booking i {
+	margin-right: 2px;
+}
+.show-all-booking .room-card .remove-button {
+	text-align: right;
+}
+.main-wrapper .variables.booking-confirm {
+	border:none;
+	padding: 10px 20px;
+}
+.main-wrapper .variables.booking-confirm p {
+	font-size:12px;
+	font-weight: 300;
+	margin-bottom: 10px;
+	letter-spacing: 1px;
+}
+.main-wrapper .booking-confirm a {
+	width: 100%;
+}
+.main-wrapper .booking-confirm div.last-price {
+	width:100%;
+	height:80px;
+	border: 1px solid black;
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	padding:5px 10px;
+	margin-bottom: 20px;
+}
+.main-wrapper .booking-confirm .last-price p,
+.main-wrapper .booking-confirm .last-price h3 {
+	height:fit-content;
+	display:inline-block;
+}
+.main-wrapper .booking-confirm .last-price h3 span {
+	font-family: "Noto Sans",sans-serif;;
+	font-size: 24px;
+	margin-left: 5px;
+}
+.main-wrapper .booking-confirm .booking-confirm-actions {
+	display:flex;
+	flex-direction: column;
+}
+.main-wrapper .booking-confirm .booking-confirm-actions a {
+	width: 100%;
+	text-decoration: none;
+	text-align: center;
+	margin: 5px 0px;
+}
+.main-wrapper .booking-confirm .booking-confirm-actions a:hover {
+	transform:scale(1.01);
+	box-shadow: 0px 1px 1px grey;
+} 
+.main-wrapper .booking-confirm .booking-confirm-actions a:nth-child(1) {
+	height:80px;
+	line-height: 80px;
+	background-color: #008891;
+	border-radius: 2px;
+	font-size: 20px;
+	letter-spacing: 3px;
+	color:white
+}
+.main-wrapper .booking-confirm .booking-confirm-actions a:nth-child(2) {
+	height:40px;
+	line-height: 40px;
+	color: black;
+	border: 1px solid black;
+	letter-spacing: 2px;
+	font-size: 16px;
+	border-radius: 2px;
+}
