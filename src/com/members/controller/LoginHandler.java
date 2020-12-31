@@ -91,13 +91,12 @@ public class LoginHandler extends HttpServlet {
 			res.setCharacterEncoding("UTF-8");
 			Cookie user_email = new Cookie("user_email", "");
 			Cookie user_session_id = new Cookie("user_session_id", "");
-			String location = req.getParameter("location");
 			req.getSession().removeAttribute("member");
 			user_email.setMaxAge(0);
 			user_session_id.setMaxAge(0);
 			res.addCookie(user_email);
 			res.addCookie(user_session_id);
-			res.sendRedirect(location);
+			res.sendRedirect(req.getContextPath() + "/frontend/index.jsp");
 		}
 	}
 
