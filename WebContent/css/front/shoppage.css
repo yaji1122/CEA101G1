@@ -1,4 +1,4 @@
-/* 覆蓋MAIN CSS */
+/* 閬�AIN CSS */
 a:focus {
     color: black;
     
@@ -23,7 +23,7 @@ body {
 .menu-item .nav-menu .mainmenu li a:after {
 	top:110%;
 }
-/* 覆蓋MAIN CSS  */
+/* 閬�AIN CSS  */
 
 .close {
     margin-top: 5px;
@@ -209,7 +209,7 @@ body {
     opacity: 0.6;
 }
 .close :before {
-    content: "✖";
+    content: "���";
 }
 .subtotal {
     display: flex;
@@ -332,7 +332,7 @@ body {
      font-family:verdana;
     letter-spacing:2px;
 }
-.itempic {
+.itempic img{
     height: 320px;
     width: 300px;
 }
@@ -379,7 +379,7 @@ body {
 	padding-right:0px;
 }
 
-/* 購物車商品 */
+/* 購物車頁面*/
 .shopCartTitle{
 	margin-left:30px;
 }

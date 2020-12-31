@@ -141,11 +141,11 @@ position: fixed;
 <body bgcolor='white'>
 <div class="black"></div>
 	<jsp:useBean id="itemVO" scope="page" class="com.item.model.ItemVO" />
-
+	<jsp:useBean id="itemSvc" scope="page" class="com.item.model.ItemService" />
 	<div id="titlePic">
 
 		<div class="titleAllPic">
-			商品照片資料<a><%=item_no%></a>
+			商品照片資料<a><%=item_no%><%=itemSvc.getOneItem(item_no).getItem_name()%></a>
 		</div>
 
 		<FORM style="margin-bottom: 0px;">
