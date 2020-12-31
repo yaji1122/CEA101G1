@@ -261,6 +261,7 @@ if (bookingCart != null) {
 	            },
 	        });
 	    });
+	    //顯示付款頁面
 	    $(".pay-now").click(function () {
 	        if ('<%=session.getAttribute("member")%>' == "null") {
 	            $(".login-window-overlay").addClass("active");
@@ -269,6 +270,7 @@ if (bookingCart != null) {
 	            $("#payment-info").addClass("show-payment-info");
 	        }
 	    });
+	    //離開付款選單
 	    $("button.leave-payment").click(function () {
 	        $("#payment-info").removeClass("show-payment-info");
 	    });
@@ -282,6 +284,7 @@ if (bookingCart != null) {
 	            $("#creditCard-input-view").css("z-index", "-1");
 	        });
 	    });
+	    //新增信用卡
 	    $("#insertnewcard").click(function () {
 	        let cardname = $("#name").val();
 	        let cardno = $("#cardnumber").val();
@@ -351,7 +354,9 @@ if (bookingCart != null) {
 	            },
 	        });
 	    });
-
+		$(".creditcard").click(function(){
+			
+		})
 	    function totalPrice() {
 	        let prices = $("span.subtotal");
 	        let total = 0;
