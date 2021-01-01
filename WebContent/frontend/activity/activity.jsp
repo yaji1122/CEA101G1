@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/owl.carousel.min.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/nice-select.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery-ui.min.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/template.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/Activity.css" type="text/css" />
 <title>Insert title here</title>
@@ -194,8 +193,8 @@
     <script src="<%=request.getContextPath()%>/js/jquery-ui.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/jquery.slicknav.js"></script>
     <script src="<%=request.getContextPath()%>/js/owl.carousel.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/template.js"></script>
-    <script src="<%=request.getContextPath()%>/js/sweetalert.js"></script>
+    <script src="<%=request.getContextPath()%>/js/front/template.js"></script>
+    
 </body>
 
 </html>

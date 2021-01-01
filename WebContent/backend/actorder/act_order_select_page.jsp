@@ -25,7 +25,7 @@
 	
 
 	<ul id="search-table">
-		<nav class="navbar-top navbar-light" style="width:400px;">
+		<nav class="navbar-top navbar-light" style="width:400px; margin-left:150px;">
 			<form class="form-inline">
 				<button class="btn btn-outline-success" type="button" 
 				onclick="location.href='<%=request.getContextPath()%>/backend/actorder/backend-order_listAll.jsp?action=getAll'">

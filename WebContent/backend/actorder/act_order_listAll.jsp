@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend.css" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-search.css" type="text/css" />
-   
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-add.css" type="text/css" />
 </head>
 <body bgcolor='white'>
 
@@ -28,19 +28,19 @@
 		</c:forEach>
 	</ul>
 </c:if>
-       <div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+       <div class="logo" >
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left:450px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>活動查詢</h2>
+			<h2 style="margin-left:80px;">訂單查詢</h2>
 		</div>
 
 	
 			<div class="dropdown">
 				<div class="btn1">
 				     <button type="button" class="btn btn-outline-danger" 
-                      onclick="location.href='<%=request.getContextPath()%>/back-end/actorder/backend-order_select_page.jsp?action=getAll'">
+                      onclick="location.href='<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp?action=getAll'">
                                                           回首頁</button>
 					<a class="btn btn-secondary dropdown-toggle" href="#" role="button"
 						id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
@@ -106,8 +106,8 @@
               </c:forEach>
          </tbody>
      </table>
-     <nav id="pagination-1" aria-label="Page navigation example">
-		<ul class="pagination">
+     <nav id="pagination-1" aria-label="Page navigation example" >
+		<ul class="pagination" style="magrin-left:150px;">
 			<li class="page-item"><a class="page-link" href="#"
 				aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 			</a></li>

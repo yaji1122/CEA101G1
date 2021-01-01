@@ -24,19 +24,16 @@
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet" />
     <!-- Css Styles -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/elegant-icons.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/flaticon.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/owl.carousel.min.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/nice-select.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/jquery-ui.min.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/slicknav.min.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/template.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/all.min.css" type=”image/x-icon”> 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/slick.css" type="text/css"/>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/slick-theme.min.css" type="text/css"/> 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/frontend_css/land-new.css" /> 
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/flaticon.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/nice-select.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/template.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.css" type="text/css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick-theme.min.css" type="text/css"/> 
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/land-new.css" /> 
 </head>
 
 <body>
@@ -298,16 +295,15 @@
 
     <!-- Footer Section End -->
     <!-- Js Plugins -->
-    <script src="<%=request.getContextPath()%>/js/frontend_js/jquery-3.5.1.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/bootstrap.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/jquery.nice-select.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/jquery-ui.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/jquery.slicknav.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/owl.carousel.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/template.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/sweetalert.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/slick.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/frontend_js/land.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery.nice-select.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery-ui.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery.slicknav.js"></script>
+    <script src="<%=request.getContextPath()%>/js/owl.carousel.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/template.js"></script>
+    <script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/front/land.js"></script>
 </body>
 
 </html>

@@ -52,10 +52,10 @@
                   <button type="submit" class="btn btn-primary">新增</button>
                   <button type="reset" class="btn btn-primary">重設</button>
                   <button type="button" class="btn btn-outline-danger" 
-                  onclick="location.href='<%=request.getContextPath()%>/back-end/actorder/backend-order_select_page.jsp?action=getAll'">
+                  onclick="location.href='<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp?action=getAll'">
                                                 回首頁</button>
                   <button type="button" class="btn btn-outline-danger" 
-                  onclick="location.href='<%=request.getContextPath()%>/back-end/actpic/backend-act_pic_listAll.jsp?action=getAll'">
+                  onclick="location.href='<%=request.getContextPath()%>/backend/actpic/backend-act_pic_listAll.jsp?action=getAll'">
                                                 全部照片</button>
          </div>
  </div>

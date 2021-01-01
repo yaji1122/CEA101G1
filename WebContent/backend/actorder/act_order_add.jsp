@@ -30,11 +30,11 @@
 </c:if>
 
        <div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left:450px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>活動查詢</h2>
+			<h2 style="margin-left:80px;">活動查詢</h2>
 		</div>
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/actorder/ActOrderServlet" name="form1">
@@ -77,12 +77,12 @@
             </li>
       </div> 
         
-	    <div class="message" style="margin-top:320px;">
+	    <div class="message" style="margin:320px auto; margin-left:650px;">
 	              <input type="hidden" name="action" value="insert">
                   <button type="submit" class="btn btn-primary">新增</button>
                   <button type="reset" class="btn btn-primary">重設</button>
                   <button type="button" class="btn btn-outline-danger"
-                  onclick="location.href='<%=request.getContextPath()%>/back-end/actorder/backend-order_select_page.jsp?action=getAll'">
+                  onclick="location.href='<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp?action=getAll'">
                                                  回首頁</button>
          </div>
     

@@ -9,11 +9,11 @@
 	<!-- 頁面內容開始-->
 
 		<div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left: 460px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>新增照片</h2>
+			<h2 style="margin-left: 80px;">新增照片</h2>
 		</div>
     <!-- Example single danger button -->
     <%@ include file="/backend/actpic/act_pic_add.jsp"%>

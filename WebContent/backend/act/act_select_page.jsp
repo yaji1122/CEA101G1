@@ -13,15 +13,15 @@
 <body bgcolor='white'>
 
      <div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+			<img src="<%=request.getContextPath()%>/img/logo.png"  style="margin-left: 450px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>活動查詢</h2>
+			<h2 style="margin-left: 80px;">活動查詢</h2>
 	</div>
 
 	<ul id="search-table">
-		<nav class="navbar-top navbar-light" style="margin-left: 150px;">
+		<nav class="navbar-top navbar-light" style="margin-left: 180px;">
 			<form class="form-inline">
 				<button class="btn btn-outline-dark" type="button" 
 				onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_listAll.jsp?action=getAll'">
