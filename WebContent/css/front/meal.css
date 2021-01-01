@@ -122,6 +122,10 @@ body {
     font-size: 25px;
 }
 
+.shopping-cart-icon:hover{
+	cursor: pointer;
+}
+
 .scrollspy-example {
 	position: relative;
 }
@@ -277,6 +281,7 @@ body {
 .display-button-word {
 	text-align: center;
 	color: white;
+	margin-top: 10px;
 }
 
 .display-icon-plus {

@@ -68,7 +68,14 @@ $("#display-icon-minus" + index + "").click(function(e) {
   });
 })
 
-
+$(function(){
+	var totalprice = 0;
+	$(".cart-name").each(function(index){
+		var price = parseInt($("#cart-price" + index + "").html());	
+		totalprice = totalprice + price;
+	})
+	$("#totalprice").html(totalprice);
+})
 
   $(".hover").mouseleave(
     function () {
