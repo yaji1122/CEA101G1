@@ -4,20 +4,13 @@
 <%@ page import="com.bookingorder.model.*"%>
 <%@ page import="com.bookingdetail.model.*"%>
 <%@ page import="java.util.*"%>
-<%@ page import="java.text.DateFormat"%>
-<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.time.LocalDate"%>
 <%@ page import="com.members.model.*"%>
-<%@ page import="java.util.List"%>
 <%
 List<BookingOrderVO> bkodList = (List<BookingOrderVO>) request.getAttribute("bkodList");
-Calendar rightnow = Calendar.getInstance();
-String todayStr = rightnow.get(Calendar.YEAR) + "-" + (rightnow.get(Calendar.MONTH) + 1) + "-"
-		+ rightnow.get(Calendar.DATE);
 if(bkodList == null){
 	BookingOrderService bkodSvc = new BookingOrderService();
-	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	java.sql.Date today = new java.sql.Date(df.parse(todayStr).getTime());
-	bkodList = bkodSvc.getAllByDateIn(today);
+	bkodList = bkodSvc.getAllByDateIn(LocalDate.now());
 }
 pageContext.setAttribute("bkodList", bkodList);
 %>
@@ -69,7 +62,7 @@ font-size:16px;
 <body>
 	<div class="conditions">
 		<form method="post" class="bkod_mbid_query_form"
-			action="<%=request.getContextPath()%>/BookingOrderServlet?action=getone_bymbid">
+			action="<%=request.getContextPath()%>/bookingServlet?action=getone_bymbid">
 			<div class="form-parts">
 				<label for="bkod_mbid_query">會員編號：</label> <input type="text"
 					placeholder="輸入會員編號" name="bkod_mbid_query" id="bkod_mbid_query">
@@ -77,7 +70,7 @@ font-size:16px;
 			</div>
 		</form>
 		<form method="post" class="bkod_bkno_query_form"
-			action="<%=request.getContextPath()%>/BookingOrderServlet?action=getone_bybkno">
+			action="<%=request.getContextPath()%>/bookingServlet?action=getone_bybkno">
 			<div class="form-parts">
 				<label for="bkod_bkno_query">訂單編號：</label> <input type="text"
 					placeholder="輸入訂單編號" name="bkod_bkno_query" id="bkod_bkno_query">
@@ -103,8 +96,8 @@ font-size:16px;
 			</div>
 		
 		<div>
-			<a class="btn btn-light" href="<%=request.getContextPath()%>/BookingOrderServlet?action=getall_bydatein&date_in=<%=todayStr%>">查看今日入住訂單</a>
-			<a class="btn btn-light" href="<%=request.getContextPath()%>/BookingOrderServlet?action=getall_bkod">查看所有訂單</a>
+			<a class="btn btn-light" href="<%=request.getContextPath()%>/bookingServlet?action=getall_bydatein&date_in=<%=LocalDate.now().toString()%>">查看今日入住訂單</a>
+			<a class="btn btn-light" href="<%=request.getContextPath()%>/bookingServlet?action=getall_bkod">查看所有訂單</a>
 		</div>
 	</div>
 	<jsp:useBean id="pkupSvc" scope="page"
@@ -170,8 +163,7 @@ font-size:16px;
 									</c:otherwise>
 								</c:choose>
 						</td>
-						<td><a class="update booking-detail" type="button" href="<%=request.getContextPath()%>/BookingOrderServlet?bk_no=${bkodvo.bk_no}&action=getone_bybkno_forupdate"
-							<c:if test="${bkodvo.bk_status == '4'}">disabled</c:if>><i class="fas fa-edit"></i></a>
+						<td>
 						
 						<a class="cancel" type="button"
 							<c:if test="${bkodvo.bk_status == '4'}">disabled</c:if>><i class="fas fa-trash-alt"></i></a>

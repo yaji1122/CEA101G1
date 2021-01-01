@@ -57,55 +57,17 @@ public class RoomRsvServlet extends HttpServlet {
 		res.setContentType("text; charset=utf-8");
 		PrintWriter out = null;
 		String action = req.getParameter("action").trim();
-
-		if ("insert_n_update_rsv".equals(action)) {  //如果房客預定房型的日期沒有資料，則進入此判斷式
-			try {
-				String rsv_str = req.getParameter("rsv_date").trim();
-				LocalDate rsv_date = LocalDate.parse(rsv_str);
-				RoomRsvService rsvSvc = new RoomRsvService();
-				rsvSvc.insertRsvDate(rsv_date); //新增該天的客房預訂表
-				
-				String rm_type = req.getParameter("rm_type"); //取得該房客訂購的房型
-				RoomRsvVO rsvvo = rsvSvc.getOneByDateNRmType(rsv_date, rm_type); //取得該天的訂房剩餘資訊
-				Integer bk_qty = Integer.valueOf(req.getParameter("bk_qty")); //取得房客訂購房型的數量
-				Integer rmLeft = rsvvo.getRm_left() - bk_qty; //剩餘數量 - 訂購數量
-				rsvSvc.updateRmLeft(rsv_date, rm_type, rmLeft); //更新該天的房型數量
-				return;
-			} catch (Exception e) {
-				e.printStackTrace(System.err);
-			}
-		}
-
-		if ("update_rsv".equals(action)) {
-			try {
-				String rsv_str = req.getParameter("rsv_date").trim();
-				LocalDate rsv_date = LocalDate.parse(rsv_str);
-				String rm_type = req.getParameter("rm_type"); //取得該房客訂購的房型
-				RoomRsvService rsvSvc = new RoomRsvService();
-				RoomRsvVO rsvvo = rsvSvc.getOneByDateNRmType(rsv_date, rm_type); //取得該天的訂房剩餘資訊
-				Integer bk_qty = Integer.valueOf(req.getParameter("bk_qty")); //取得房客訂購房型的數量
-				Integer rmLeft = rsvvo.getRm_left() - bk_qty; //剩餘數量 - 訂購數量
-				rsvSvc.updateRmLeft(rsv_date, rm_type, rmLeft); //更新該天的房型數量
-				return;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		
-		if ("getall_rsv".equals(action)) {
-			try {
-				int nights = Integer.parseInt(req.getParameter("night"));
-				int adult = Integer.parseInt(req.getParameter("adult"));
-				int currentMonth = Integer.parseInt(req.getParameter("currentMonth"));
-				int currentYear = Integer.parseInt(req.getParameter("currentYear"));
-				RoomRsvService rsvSvc = new RoomRsvService();
-				List<RoomRsvVO> list = rsvSvc.getAll();
-				req.setAttribute("rsvList", list);
-				return;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		if ("getall_rsv".equals(action)) {
+//			try {
+//				RoomRsvService rsvSvc = new RoomRsvService();
+//				List<RoomRsvVO> list = rsvSvc.getAll();
+//				req.setAttribute("rsvList", list);
+//				return;
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 		if("roomCheck".equals(action)) {
 			out = res.getWriter();
@@ -209,6 +171,7 @@ public class RoomRsvServlet extends HttpServlet {
 				roomCard.put("subtotal", req.getParameter("subtotal"));
 				roomCard.put("rmtype", rmtype);
 				roomCard.put("roomCardId", rmtype + "-" + startDate + "-" + stay);
+				roomCard.put("group", startDateStr+ "/" + leaveDate.toString());
 				bookingCart.add(roomCard);
 				req.getSession().setAttribute("bookingCart", bookingCart); //不管是不是會員都存在session，限定時間內結帳，不存資料庫
 				out.print("success");

@@ -354,9 +354,9 @@ if (bookingCart != null) {
 	            },
 	        });
 	    });
-		$(".creditcard").click(function(){
-			
-		})
+	    $(document).on("click", ".creditcard", function(){  //點擊信用卡後付款
+	    	window.location.href = "<%=request.getContextPath()%>/bookingServlet?action=insert_bkod";
+	    })
 	    function totalPrice() {
 	        let prices = $("span.subtotal");
 	        let total = 0;

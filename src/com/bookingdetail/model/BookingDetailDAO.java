@@ -8,6 +8,11 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.json.JSONObject;
+
+import com.bookingorder.model.BookingOrderVO;
+import com.roomrsv.model.RoomRsvService;
+
 public class BookingDetailDAO implements BookingDetailDAO_interface {
 
 	private static DataSource ds = null;
@@ -21,40 +26,39 @@ public class BookingDetailDAO implements BookingDetailDAO_interface {
 		}
 	}
 
-	private static final String INSERT = "INSERT INTO BOOKING_DETAIL (BK_NO, RM_TYPE, RM_PRICE, QTY) VALUES (?, ?, ?, ?)";
+	private static final String INSERT = "INSERT INTO BOOKING_DETAIL (BK_NO, RM_TYPE, RM_SUBTOTAL, RM_GUEST) VALUES (?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE BOOKING_DETAIL SET QTY = ? WHERE BK_NO = ? AND RM_TYPE = ?";
 	private static final String GETALLBYBKNO = "SELECT * FROM BOOKING_DETAIL WHERE BK_NO = ?";
 
+	
 	@Override
-	public void insert(BookingDetailVO bkdetailvo) {
-		Connection conn = null;
+	public void insert(BookingOrderVO bkodvo, JSONObject bkitem, Connection conn) {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(INSERT);
-			String bk_no = bkdetailvo.getBk_no();
-			String rm_type = bkdetailvo.getRm_type();
-			Integer rm_price = bkdetailvo.getRm_price();
-			Integer qty = bkdetailvo.getQty();
-			pstmt.setString(1, bk_no);
-			pstmt.setString(2, rm_type);
-			pstmt.setInt(3, rm_price);
-			pstmt.setInt(4, qty);
+			pstmt.setString(1, bkodvo.getBk_no());
+			pstmt.setString(2, bkitem.getString("rmtype"));
+			pstmt.setInt(3, Integer.parseInt(bkitem.getString("subtotal")));
+			pstmt.setInt(4, Integer.parseInt(bkitem.getString("guest")));
 			pstmt.executeUpdate();
+			RoomRsvService rsvSvc = new RoomRsvService();
+			rsvSvc.updateRmLeft(bkitem, conn);
 		} catch (SQLException e) {
-			e.printStackTrace(System.err);
+			if (conn != null) {
+				try {
+					System.err.print("有內鬼，交易撤回");
+					conn.rollback();
+				} catch (SQLException re){
+					throw new RuntimeException("rollback發生錯誤:" + re.getMessage());
+				}
+			}
+			e.printStackTrace();
+			throw new RuntimeException("A database error occured:" + e.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -72,8 +76,8 @@ public class BookingDetailDAO implements BookingDetailDAO_interface {
 			pstmt = conn.prepareStatement(UPDATE);
 			String bk_no = bkdetailvo.getBk_no();
 			String rm_type = bkdetailvo.getRm_type();
-			Integer qty = bkdetailvo.getQty();
-			pstmt.setInt(1, qty);
+			Integer rm_guest = bkdetailvo.getRm_guest();
+			pstmt.setInt(1, rm_guest);
 			pstmt.setString(2, bk_no);
 			pstmt.setString(3, rm_type);
 			pstmt.executeUpdate();
@@ -112,8 +116,8 @@ public class BookingDetailDAO implements BookingDetailDAO_interface {
 				BookingDetailVO bkdetailvo = new BookingDetailVO();
 				bkdetailvo.setBk_no(rs.getString("BK_NO"));
 				bkdetailvo.setRm_type(rs.getString("RM_TYPE"));
-				bkdetailvo.setRm_price(rs.getInt("RM_PRICE"));
-				bkdetailvo.setQty(rs.getInt("QTY"));
+				bkdetailvo.setRm_subtotal(rs.getInt("RM_SUBTOTAL"));
+				bkdetailvo.setRm_guest(rs.getInt("RM_GUEST"));
 				bkdetailvoList.add(bkdetailvo);
 			}
 		} catch (SQLException e) {

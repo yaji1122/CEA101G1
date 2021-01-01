@@ -2,14 +2,15 @@ package com.bookingorder.model;
 
 import java.io.Serializable;
 import java.sql.*;
+import java.time.LocalDate;
 
 public class BookingOrderVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String bk_no;
 	private String mb_id;
 	private Date bk_date;
-	private Date dateIn;
-	private Date dateOut;
+	private LocalDate dateIn;
+	private LocalDate dateOut;
 	private Date checkIn;
 	private Date checkOut;
 	private String bk_status;
@@ -19,8 +20,7 @@ public class BookingOrderVO implements Serializable {
 	
 	public BookingOrderVO() {};
 	
-	public BookingOrderVO(String bk_no, String mb_id, Date bk_date, Date dateIn, Date dateOut, String bk_status, 
-			Integer total_price) {
+	public BookingOrderVO(String bk_no, String mb_id, Date bk_date, LocalDate dateIn, LocalDate dateOut, String bk_status, Integer total_price) {
 		super();
 		this.bk_no = bk_no;
 		this.mb_id = mb_id;
@@ -55,19 +55,19 @@ public class BookingOrderVO implements Serializable {
 		this.bk_date = bk_date;
 	}
 
-	public Date getDateIn() {
+	public LocalDate getDateIn() {
 		return dateIn;
 	}
 
-	public void setDateIn(Date dateIn) {
+	public void setDateIn(LocalDate dateIn) {
 		this.dateIn = dateIn;
 	}
 
-	public Date getDateOut() {
+	public LocalDate getDateOut() {
 		return dateOut;
 	}
 
-	public void setDateOut(Date dateOut) {
+	public void setDateOut(LocalDate dateOut) {
 		this.dateOut = dateOut;
 	}
 
@@ -102,8 +102,7 @@ public class BookingOrderVO implements Serializable {
 	public void setTotal_price(Integer total_price) {
 		this.total_price = total_price;
 	}
-	
-	
+
 	
 	
 }

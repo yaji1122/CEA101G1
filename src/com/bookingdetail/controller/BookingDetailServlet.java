@@ -34,44 +34,6 @@ public class BookingDetailServlet extends HttpServlet {
 		PrintWriter out = null;
 		RequestDispatcher dispatcher = null;
 		
-		if ("insert_bkdetail".equals(action)) {
-			out = res.getWriter();
-			try {
-				res.setContentType("text; charset=utf-8");
-				String bk_no = req.getParameter("bk_no");
-				String rm_type = req.getParameter("rm_ypte");
-				RoomTypeService rmtypeSvc = new RoomTypeService();
-				RoomTypeVO rmtypevo = rmtypeSvc.getOne(rm_type);
-				Integer rm_price = rmtypevo.getRm_price();
-				Integer qty = Integer.parseInt(req.getParameter("qty"));
-				BookingDetailService bkdetailSvc = new BookingDetailService();
-				bkdetailSvc.addBkDetail(bk_no, rm_type, rm_price, qty);
-				out.print("sucess");
-			} catch (Exception e) {
-				e.printStackTrace();
-				out.print("fail");
-			} finally {
-				if (out != null) out.close();
-			}
-		}
-		
-		if ("update_bkdetail".equals(action)) {
-			out = res.getWriter();
-			try {
-				res.setContentType("text; charset=utf-8");
-				String bk_no = req.getParameter("update_bk_no");
-				String rm_type = req.getParameter("update_rm_ypte");
-				Integer qty = Integer.parseInt(req.getParameter("update_qty"));
-				BookingDetailService bkdetailSvc = new BookingDetailService();
-				bkdetailSvc.updateBkDetail(bk_no, rm_type, qty);
-				out.print("sucess");
-			} catch (Exception e) {
-				e.printStackTrace();
-				out.print("fail");
-			} finally {
-				if (out != null) out.close();
-			}
-		}
 		
 		if ("getall_bybkno".equals(action)) {
 			dispatcher = req.getRequestDispatcher("/backend/booking/bkdetail.jsp");

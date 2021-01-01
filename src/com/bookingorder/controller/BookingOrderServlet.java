@@ -4,8 +4,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.sql.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,11 +21,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
+
 import com.bookingdetail.model.*;
 import com.bookingorder.model.*;
+import com.members.model.MembersVO;
 
 @MultipartConfig
-@WebServlet("/BookingOrderServlet")
+@WebServlet("/bookingServlet")
 public class BookingOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,20 +52,42 @@ public class BookingOrderServlet extends HttpServlet {
 		
 		if ("insert_bkod".equals(action)) {
 			out = res.getWriter();
+			
 			try {
-				String mb_id = req.getParameter("mb_id");
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				String dateInStr = req.getParameter("datein");
-				String dateOutStr = req.getParameter("dateout");
-				Date dateIn = new Date(df.parse(dateInStr).getTime());
-				Date dateOut = new Date(df.parse(dateOutStr).getTime());
-				Integer total_price = Integer.parseInt(req.getParameter("total_price"));
+				MembersVO member = (MembersVO) req.getSession().getAttribute("member");
+				String mb_id = member.getMb_id();
+				List<JSONObject> bookingCart = (List<JSONObject>) req.getSession().getAttribute("bookingCart");
+				
+				Collections.sort(bookingCart, new Comparator<JSONObject>() { //日期排序
+					@Override
+					public int compare(JSONObject o1, JSONObject o2) {
+						LocalDate startDate1 = LocalDate.parse(o1.getString("startDate"));
+						LocalDate startDate2 = LocalDate.parse(o2.getString("startDate"));
+						return startDate1.compareTo(startDate2);
+					}
+				});
+				
+				
+				Map<String, List<JSONObject>> groupMap = new HashMap<>(); //依照日期建立訂單，相同日期的房型在同個訂單
+				groupMap = bookingCart.stream().collect(Collectors.groupingBy( e -> e.getString("group")));
+				Set<String> group =  groupMap.keySet();
 				BookingOrderService bkodSvc = new BookingOrderService();
-				BookingOrderVO bkodvo = bkodSvc.addBkOd(mb_id, dateIn, dateOut, total_price);
-				out.print(bkodvo.getBk_no());
+				for (String date: group) { //依照日期不同建立訂單細項
+					Integer totalPrice = 0;
+					List<JSONObject> dateGroup = groupMap.get(date);
+					LocalDate dateIn = LocalDate.parse(date.split("/")[0]);
+					LocalDate dateOut = LocalDate.parse(date.split("/")[1]);
+					totalPrice = dateGroup.stream()
+								.mapToInt(e -> Integer.parseInt(e.getString("subtotal")))
+								.sum();
+					bkodSvc.addBkOd(mb_id, dateIn, dateOut, totalPrice, dateGroup);
+				}
+				req.getSession().removeAttribute("bookingCart");
+				res.sendRedirect(req.getContextPath() + "/frontend/booking/bookingResult.jsp");
+			
 			} catch (Exception e){
 				e.printStackTrace();
-				out.print("fail");
+				res.sendRedirect(req.getContextPath() + "/frontend/booking/bookingResult.jsp");
 			} finally {
 				if (out != null) out.close();
 			}
@@ -67,10 +100,24 @@ public class BookingOrderServlet extends HttpServlet {
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String dateInStr = req.getParameter("datein");
 				String dateOutStr = req.getParameter("dateout");
-				Date dateIn = new Date(df.parse(dateInStr).getTime());
-				Date dateOut = new Date(df.parse(dateOutStr).getTime());
+				LocalDate dateIn = LocalDate.parse(dateInStr);
+				LocalDate dateOut = LocalDate.parse(dateOutStr);
 				BookingOrderService bkodSvc = new BookingOrderService();
 				bkodSvc.updateDateInOut(bk_no, dateIn, dateOut);
+				out.print("success");
+			} catch (Exception e){
+				e.printStackTrace();
+				out.print("fail");
+			} finally {
+				if (out != null) out.close();
+			}
+		}
+		
+		if("cancel_booking".equals(action)) {
+			out = res.getWriter();
+			try {
+				String bk_no = req.getParameter("bk_no");
+				BookingOrderService bkodSvc = new BookingOrderService();
 				out.print("success");
 			} catch (Exception e){
 				e.printStackTrace();
@@ -88,13 +135,11 @@ public class BookingOrderServlet extends HttpServlet {
 				String dateOutStr = req.getParameter("date_out");
 				String rm_type = req.getParameter("rm_type");
 				Integer qty = Integer.valueOf(req.getParameter("qty"));
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				Date dateIn = new Date(df.parse(dateInStr).getTime());
-				Date dateOut = new Date(df.parse(dateOutStr).getTime());
+				LocalDate dateIn = LocalDate.parse(dateInStr);
+				LocalDate dateOut = LocalDate.parse(dateOutStr);
 				BookingOrderService bkodSvc = new BookingOrderService();
 				BookingDetailService bkdetailSvc = new BookingDetailService();
 				bkodSvc.updateDateInOut(bk_no, dateIn, dateOut);
-				bkdetailSvc.updateBkDetail(bk_no, rm_type, qty);
 				out.print("success");
 			} catch (Exception e){
 				e.printStackTrace();
@@ -216,9 +261,8 @@ public class BookingOrderServlet extends HttpServlet {
 		if ("getall_bydatein".equals(action)) {
 			dispatcher = req.getRequestDispatcher("/backend/booking/bookingInfo.jsp");
 			try {
-				String datein = req.getParameter("date_in");
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				Date dateIn = new Date(df.parse(datein).getTime());
+				String dateInStr = req.getParameter("date_in");
+				LocalDate dateIn = LocalDate.parse(dateInStr); 
 				BookingOrderService bkodSvc = new BookingOrderService();
 				List<BookingOrderVO> bkodList = bkodSvc.getAllByDateIn(dateIn);
 				req.setAttribute("bkodList", bkodList);

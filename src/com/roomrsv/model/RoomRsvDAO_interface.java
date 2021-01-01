@@ -1,5 +1,6 @@
 package com.roomrsv.model;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -7,11 +8,11 @@ import java.util.Map;
 import org.json.JSONObject;
 
 public interface RoomRsvDAO_interface {
-	public void insert(LocalDate rsvDate);
-	public void update(LocalDate rsvDate, String rmType ,Integer rmLeft);
+	public void insert(LocalDate rsvDate, Connection conn);
+	public void update(JSONObject bkitem, Connection conn);
 	public void delete(LocalDate rsvDate);
 	public Integer roomCheck(LocalDate rsvDate, Integer stay, String rmType);
-	public RoomRsvVO getOneByDateNRmType(LocalDate rsvDate, String rm_ype);
+	public RoomRsvVO getOneByDateNRmType(LocalDate rsvDate, String rm_ype, Connection conn);
 	public List<RoomRsvVO> getOneDayByDate(LocalDate rsvDate);
 	public List<RoomRsvVO> getAll();
 	public List<RoomRsvVO> getAllByRmType(String rmType);
