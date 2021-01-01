@@ -39,7 +39,7 @@ public class ActOrderServlet extends HttpServlet{
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
 							RequestDispatcher failureView = req
-									.getRequestDispatcher("/back-end/actorder/backend-order_select_page.jsp");
+									.getRequestDispatcher("/backend/actorder/backend-order_select_page.jsp");
 							failureView.forward(req, res);
 							return;//�{�����_
 						}
@@ -70,14 +70,14 @@ public class ActOrderServlet extends HttpServlet{
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
 							RequestDispatcher failureView = req
-									.getRequestDispatcher("/back-end/actorder/backend-order_select_page.jsp");
+									.getRequestDispatcher("/backend/actorder/backend-order_select_page.jsp");
 							failureView.forward(req, res);
 							return;//�{�����_
 						}
 						
 						/***************************3.�d�ߧ���,�ǳ����(Send the Success view)*************/
 						req.setAttribute("actOrderVO", actOrderVO); // ��Ʈw���X��actTypeVO����,�s�Jreq
-						String url = "/back-end/actorder/backend-order_listOne.jsp";
+						String url = "/backend/actorder/backend-order_listOne.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOneAct.jsp
 						successView.forward(req, res);
 
@@ -85,7 +85,7 @@ public class ActOrderServlet extends HttpServlet{
 					} catch (Exception e) {
 						errorMsgs.add("�L�k���o���:" + e.getMessage());
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/actorder/backend-order_select_page.jsp");
+								.getRequestDispatcher("/backend/actorder/backend-order_select_page.jsp");
 						failureView.forward(req, res);
 					}
 					
@@ -109,7 +109,7 @@ public class ActOrderServlet extends HttpServlet{
 										
 						/***************************3.�d�ߧ���,�ǳ����(Send the Success view)************/
 						req.setAttribute("actOrderVO", actOrderVO);         // ��Ʈw���X��empVO����,�s�Jreq
-						String url = "/back-end/actorder/backend-order_update.jsp";
+						String url = "/backend/actorder/backend-order_update.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url);// ���\��� update_emp_input.jsp
 						successView.forward(req, res);
 
@@ -117,7 +117,7 @@ public class ActOrderServlet extends HttpServlet{
 					} catch (Exception e) {
 						errorMsgs.add("�L�k���o�n�ק諸���:" + e.getMessage());
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/actorder/backend-order_listAll.jsp");
+								.getRequestDispatcher("/backend/actorder/backend-order_listAll.jsp");
 						failureView.forward(req, res);
 					}
 				}
@@ -159,7 +159,7 @@ public class ActOrderServlet extends HttpServlet{
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
 							RequestDispatcher failureView = req
-									.getRequestDispatcher("/back-end/actorder/backend-order_update.jsp");
+									.getRequestDispatcher("/backend/actorder/backend-order_update.jsp");
 							failureView.forward(req, res);
 							return;//�{�����_
 						}
@@ -190,7 +190,7 @@ public class ActOrderServlet extends HttpServlet{
 							// Send the use back to the form, if there were errors
 							if (!errorMsgs.isEmpty()) {
 								RequestDispatcher failureView = req
-										.getRequestDispatcher("/back-end/actorder/backend-order_update.jsp");
+										.getRequestDispatcher("/backend/actorder/backend-order_update.jsp");
 								failureView.forward(req, res);
 								return;//�{�����_
 							}
@@ -210,7 +210,7 @@ public class ActOrderServlet extends HttpServlet{
 						if (!errorMsgs.isEmpty()) {
 							req.setAttribute("actOrderVO", actOrderVO); // �t����J�榡���~��actTypeVO����,�]�s�Jreq
 							RequestDispatcher failureView = req
-									.getRequestDispatcher("/back-end/actorder/backend-order_update.jsp");
+									.getRequestDispatcher("/backend/actorder/backend-order_update.jsp");
 							failureView.forward(req, res);
 							return; //�{�����_
 						}
@@ -221,7 +221,7 @@ public class ActOrderServlet extends HttpServlet{
 						
 						/***************************3.�ק粒��,�ǳ����(Send the Success view)*************/
 						req.setAttribute("actOrderVO", actOrderVO); // ��Ʈwupdate���\��,���T����actOrderVO����,�s�Jreq
-						String url = "/back-end/actorder/backend-order_listAll.jsp";
+						String url = "/backend/actorder/backend-order_listAll.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // �ק令�\��,���listOneEmp.jsp
 						successView.forward(req, res);
 
@@ -229,7 +229,7 @@ public class ActOrderServlet extends HttpServlet{
 					} catch (Exception e) {
 						errorMsgs.add("�ק��ƥ���:"+e.getMessage());
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/actorder/backend-order_update.jsp");
+								.getRequestDispatcher("/backend/actorder/backend-order_update.jsp");
 						failureView.forward(req, res);
 					}
 				}
@@ -274,7 +274,7 @@ public class ActOrderServlet extends HttpServlet{
 							// Send the use back to the form, if there were errors
 							if (!errorMsgs.isEmpty()) {
 								RequestDispatcher failureView = req
-										.getRequestDispatcher("/back-end/actorder/backend-order_add.jsp");
+										.getRequestDispatcher("/backend/actorder/backend-order_add.jsp");
 								failureView.forward(req, res);
 								return;//�{�����_
 							}
@@ -305,7 +305,7 @@ public class ActOrderServlet extends HttpServlet{
 								// Send the use back to the form, if there were errors
 								if (!errorMsgs.isEmpty()) {
 									RequestDispatcher failureView = req
-											.getRequestDispatcher("/back-end/actorder/backend-order_add.jsp");
+											.getRequestDispatcher("/backend/actorder/backend-order_add.jsp");
 									failureView.forward(req, res);
 									return;//�{�����_
 								}
@@ -324,7 +324,7 @@ public class ActOrderServlet extends HttpServlet{
 		        			if (!errorMsgs.isEmpty()) {
 		        				req.setAttribute("actOrderVO", actOrderVO); // �t����J�榡���~��actEventVO����,�]�s�Jreq
 		        				RequestDispatcher failureView = req
-		        						.getRequestDispatcher("/back-end/actorder/backend-order_add.jsp");
+		        						.getRequestDispatcher("/backend/actorder/backend-order_add.jsp");
 		        				failureView.forward(req, res);
 		        				return;
 		        			}
@@ -334,7 +334,7 @@ public class ActOrderServlet extends HttpServlet{
 		        			actOrderVO = ActOrderSvc.addActOrder(actOdno, actNo, mbId, odtime, odStatus, Numppl, total_price);
 		        			
 		        			/***************************3.�s�W����,�ǳ����(Send the Success view)***********/
-		        			String url = "/back-end/actorder/backend-order_listAll.jsp";
+		        			String url = "/backend/actorder/backend-order_listAll.jsp";
 		        			RequestDispatcher successView = req.getRequestDispatcher(url); // �s�W���\�����listAll.jsp
 		        			successView.forward(req, res);				
 		        			
@@ -343,7 +343,7 @@ public class ActOrderServlet extends HttpServlet{
 		        			errorMsgs.add("��J����Ƭ��ŭ�");
 		        			e.printStackTrace();
 		        			RequestDispatcher failureView = req
-		        					.getRequestDispatcher("/back-end/actorder/backend-order_add.jsp");
+		        					.getRequestDispatcher("/backend/actorder/backend-order_add.jsp");
 		        			failureView.forward(req, res);
 		        		}
 		        	} 

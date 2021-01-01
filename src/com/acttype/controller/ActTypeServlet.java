@@ -22,8 +22,8 @@ public class ActTypeServlet extends HttpServlet{
 		String action = req.getParameter("action");
 		
 		
-        //¬d¸ß
-		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ð¨D
+        //ï¿½dï¿½ï¿½
+		if ("getOne_For_Display".equals(action)) { // ï¿½Ó¦ï¿½select_page.jspï¿½ï¿½ï¿½Ð¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -31,66 +31,66 @@ public class ActTypeServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/***************************1.±µ¦¬½Ð¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z**********************/
 				String str = req.getParameter("actTypeNo");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("½Ð¿ï¾Ü¬¡°Ê¦WºÙ");
+					errorMsgs.add("ï¿½Ð¿ï¿½Ü¬ï¿½ï¿½Ê¦Wï¿½ï¿½");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/acttype/select_page.jsp");
+							.getRequestDispatcher("/backend/acttype/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 				
 				String actTypeno = null;
 				try {
 					actTypeno = new String(str);
 				} catch (Exception e) {
-					errorMsgs.add("½s¸¹®æ¦¡¤£¥¿½T");
+					errorMsgs.add("ï¿½sï¿½ï¿½ï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½T");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/acttype/select_page.jsp");
+							.getRequestDispatcher("/backend/acttype/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ*****************************************/
+				/***************************2.ï¿½}ï¿½lï¿½dï¿½ß¸ï¿½ï¿½*****************************************/
 				ActTypeService actTypeSvc = new ActTypeService();
 				ActTypeVO actTypeVO =  actTypeSvc.getOneActType(actTypeno);
 				
 				if (actTypeVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("ï¿½dï¿½Lï¿½ï¿½ï¿½");
 				}
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/acttype/select_page.jsp");
+							.getRequestDispatcher("/backend/acttype/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 				
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("actTypeVO", actTypeVO); // ¸ê®Æ®w¨ú¥XªºactTypeVOª«¥ó,¦s¤Jreq
-				String url = "/back-end/acttype/listOneAct.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneAct.jsp
+				/***************************3.ï¿½dï¿½ß§ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view)*************/
+				req.setAttribute("actTypeVO", actTypeVO); // ï¿½ï¿½Æ®wï¿½ï¿½ï¿½Xï¿½ï¿½actTypeVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
+				String url = "/backend/acttype/listOneAct.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ listOneAct.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ï¿½Lï¿½kï¿½ï¿½ï¿½oï¿½ï¿½ï¿½:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/acttype/select_page.jsp");
+						.getRequestDispatcher("/backend/acttype/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		//§ó·s
-		if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllAct.jspªº½Ð¨D
+		//ï¿½ï¿½s
+		if ("getOne_For_Update".equals(action)) { // ï¿½Ó¦ï¿½listAllAct.jspï¿½ï¿½ï¿½Ð¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -98,29 +98,29 @@ public class ActTypeServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			try {
-				/***************************1.±µ¦¬½Ð¨D°Ñ¼Æ****************************************/
+				/***************************1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½****************************************/
 				String actTypeno = new String(req.getParameter("ActTypeNo"));
 				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ****************************************/
+				/***************************2.ï¿½}ï¿½lï¿½dï¿½ß¸ï¿½ï¿½****************************************/
 				ActTypeService acttypeSvc = new ActTypeService();
 				ActTypeVO actTypeVO = acttypeSvc.getOneActType(actTypeno);
 								
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)************/
-				req.setAttribute("actTypeVO", actTypeVO);         // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
-				String url = "/back-end/acttype/update_act_type_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_emp_input.jsp
+				/***************************3.ï¿½dï¿½ß§ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view)************/
+				req.setAttribute("actTypeVO", actTypeVO);         // ï¿½ï¿½Æ®wï¿½ï¿½ï¿½Xï¿½ï¿½empVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
+				String url = "/backend/acttype/update_act_type_input.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ update_emp_input.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+				/***************************ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z**********************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ï¿½Lï¿½kï¿½ï¿½ï¿½oï¿½nï¿½×§ïªºï¿½ï¿½ï¿½:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/acttype/listAllAct.jsp");
+						.getRequestDispatcher("/backend/acttype/listAllAct.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-            if ("update".equals(action)) { // ¨Ó¦Ûupdate_act_type_input.jspªº½Ð¨D
+            if ("update".equals(action)) { // ï¿½Ó¦ï¿½update_act_type_input.jspï¿½ï¿½ï¿½Ð¨D
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -128,16 +128,16 @@ public class ActTypeServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ð¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z**********************/
 				String actTypeno = new String(req.getParameter("ActTypeNo").trim());
 				if(actTypeno == null || actTypeno.trim().length() == 0) {
-					errorMsgs.add("½Ð¿é¤JºØÃþ½s¸¹");
+					errorMsgs.add("ï¿½Ð¿ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½");
 				}
 				
 				String actTypeName = req.getParameter("ActTypeName");
 //				String actNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (actTypeName == null || actTypeName.trim().length() == 0) {
-					errorMsgs.add("¬¡°ÊÃþ«¬¦WºÙ: ½Ð¤ÅªÅ¥Õ");
+					errorMsgs.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½: ï¿½Ð¤ÅªÅ¥ï¿½");
 				} 
 				
 				ActTypeVO actTypeVO = new ActTypeVO();
@@ -147,34 +147,34 @@ public class ActTypeServlet extends HttpServlet{
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("actTypeVO", actTypeVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºactTypeVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("actTypeVO", actTypeVO); // ï¿½tï¿½ï¿½ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½~ï¿½ï¿½actTypeVOï¿½ï¿½ï¿½ï¿½,ï¿½]ï¿½sï¿½Jreq
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/acttype/update_act_type_input.jsp");
+							.getRequestDispatcher("/backend/acttype/update_act_type_input.jsp");
 					failureView.forward(req, res);
-					return; //µ{¦¡¤¤Â_
+					return; //ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 				
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.ï¿½}ï¿½lï¿½×§ï¿½ï¿½ï¿½*****************************************/
 				ActTypeService ActTypeSvc = new ActTypeService();
 				actTypeVO = ActTypeSvc.updateActType(actTypeno,actTypeName);
 				
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("actTypeVO", actTypeVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºactTypeVOª«¥ó,¦s¤Jreq
-				String url = "/back-end/acttype/listAllAct.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ï¿½×§ï§¹ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view)*************/
+				req.setAttribute("actTypeVO", actTypeVO); // ï¿½ï¿½Æ®wupdateï¿½ï¿½ï¿½\ï¿½ï¿½,ï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½ï¿½actTypeVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
+				String url = "/backend/acttype/listAllAct.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½×§ï¦¨ï¿½\ï¿½ï¿½,ï¿½ï¿½ï¿½listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ï¿½×§ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/update_act_type_input.jsp");
+						.getRequestDispatcher("/backend/update_act_type_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
             
-            //·s¼W
-            if ("insert".equals(action)) { // ¨Ó¦ÛaddAct.jspªº½Ð¨D  
+            //ï¿½sï¿½W
+            if ("insert".equals(action)) { // ï¿½Ó¦ï¿½addAct.jspï¿½ï¿½ï¿½Ð¨D  
     			
     			List<String> errorMsgs = new LinkedList<String>();
     			// Store this set in the request scope, in case we need to
@@ -182,15 +182,15 @@ public class ActTypeServlet extends HttpServlet{
     			req.setAttribute("errorMsgs", errorMsgs);
 
     			try {
-    				/***********************1.±µ¦¬½Ð¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z*************************/
+    				/***********************1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z*************************/
 //    				String actTypeno = req.getParameter("ActTypeNo").trim();
 //    				if (actTypeno == null || actTypeno.trim().length() == 0) {
-//    					errorMsgs.add("½Ð¶ñ¼g·s¬¡°ÊºØÃþªº½s¸¹");
+//    					errorMsgs.add("ï¿½Ð¶ï¿½gï¿½sï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½");
 //    				} 
     				
     				String actTypeName = req.getParameter("ActTypeName");
     				if (actTypeName == null || actTypeName.trim().length() == 0) {
-    					errorMsgs.add("¬¡°ÊÃþ«¬¦WºÙ: ½Ð¤ÅªÅ¥Õ");
+    					errorMsgs.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½: ï¿½Ð¤ÅªÅ¥ï¿½");
     				}
     				
     				String actTypeno = new String(req.getParameter("ActTypeNo").trim());
@@ -202,35 +202,35 @@ public class ActTypeServlet extends HttpServlet{
 
     				// Send the use back to the form, if there were errors
     				if (!errorMsgs.isEmpty()) {
-    					req.setAttribute("actTypeVO", actTypeVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºactTypeVOª«¥ó,¤]¦s¤Jreq
+    					req.setAttribute("actTypeVO", actTypeVO); // ï¿½tï¿½ï¿½ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½~ï¿½ï¿½actTypeVOï¿½ï¿½ï¿½ï¿½,ï¿½]ï¿½sï¿½Jreq
     					RequestDispatcher failureView = req
-    							.getRequestDispatcher("/back-end/acttype/addAct.jsp");
+    							.getRequestDispatcher("/backend/acttype/addAct.jsp");
     					failureView.forward(req, res);
     					return;
     				}
     				
-    				/***************************2.¶}©l·s¼W¸ê®Æ***************************************/
+    				/***************************2.ï¿½}ï¿½lï¿½sï¿½Wï¿½ï¿½ï¿½***************************************/
     				ActTypeService ActTypeSvc = new ActTypeService();
     				actTypeVO = ActTypeSvc.addActType(actTypeno, actTypeName);
     				
-    				/***************************3.·s¼W§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)***********/
-    				String url = "/back-end/acttype/listAllAct.jsp";
-    				RequestDispatcher successView = req.getRequestDispatcher(url); // ·s¼W¦¨¥\«áÂà¥ælistAllEmp.jsp
+    				/***************************3.ï¿½sï¿½Wï¿½ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view)***********/
+    				String url = "/backend/acttype/listAllAct.jsp";
+    				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½sï¿½Wï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½listAllEmp.jsp
     				successView.forward(req, res);				
     				
-    				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+    				/***************************ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z**********************************/
     			} catch (Exception e) {
-    				errorMsgs.add("¿é¤Jªº¸ê®Æ¬°ªÅ­È");
+    				errorMsgs.add("ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½Æ¬ï¿½ï¿½Å­ï¿½");
     				e.printStackTrace();
     				RequestDispatcher failureView = req
-    						.getRequestDispatcher("/back-end/acttype/addAct.jsp");
+    						.getRequestDispatcher("/backend/acttype/addAct.jsp");
     				failureView.forward(req, res);
     			}
     		} 
             
             
-            //§R°£
-            if ("delete".equals(action)) { // ¨Ó¦ÛlistAllAct.jsp
+            //ï¿½Rï¿½ï¿½
+            if ("delete".equals(action)) { // ï¿½Ó¦ï¿½listAllAct.jsp
 
     			List<String> errorMsgs = new LinkedList<String>();
     			// Store this set in the request scope, in case we need to
@@ -238,23 +238,23 @@ public class ActTypeServlet extends HttpServlet{
     			req.setAttribute("errorMsgs", errorMsgs);
     	
     			try {
-    				/***************************1.±µ¦¬½Ð¨D°Ñ¼Æ***************************************/
+    				/***************************1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½***************************************/
     				String actTypeno = req.getParameter("ActTypeno");
     				
-    				/***************************2.¶}©l§R°£¸ê®Æ***************************************/
+    				/***************************2.ï¿½}ï¿½lï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½***************************************/
     				ActTypeService ActTypeSvc = new ActTypeService();
     				ActTypeSvc.deleteActType(actTypeno);
     				
-    				/***************************3.§R°£§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)***********/								
-    				String url = "/back-end/acttype/listAllAct.jsp";
-    				RequestDispatcher successView = req.getRequestDispatcher(url);// §R°£¦¨¥\«á,Âà¥æ¦^°e¥X§R°£ªº¨Ó·½ºô­¶
+    				/***************************3.ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view)***********/								
+    				String url = "/backend/acttype/listAllAct.jsp";
+    				RequestDispatcher successView = req.getRequestDispatcher(url);// ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½,ï¿½ï¿½ï¿½^ï¿½eï¿½Xï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½
     				successView.forward(req, res);
     				
-    				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+    				/***************************ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z**********************************/
     			} catch (Exception e) {
-    				errorMsgs.add("§R°£¸ê®Æ¥¢±Ñ:"+e.getMessage());
+    				errorMsgs.add("ï¿½Rï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½:"+e.getMessage());
     				RequestDispatcher failureView = req
-    						.getRequestDispatcher("/eback-end/acttype/listAllAct.jsp");
+    						.getRequestDispatcher("/backend/acttype/listAllAct.jsp");
     				failureView.forward(req, res);
     			}
     		}

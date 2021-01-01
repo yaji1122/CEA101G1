@@ -168,7 +168,7 @@ th, td {
 			type="hidden" name="item_no" value="<%=itemVO.getItem_no()%>">
 		<input type="submit" value="送出修改" class="inputItem">
 	</FORM>
-	<script src="${pageContext.request.contextPath}/js/front/backShopItem.js"></script>
+	<script src="${pageContext.request.contextPath}/js/back/backShopItem.js"></script>
 	<%@ include file="/backend/files/backend_footer.file" %>
 </body>
 </html>

@@ -27,6 +27,7 @@
 
 <body>
 	<div class="black"></div>
+	<%@ include file="/frontend/files/loginCSS.file" %>
 	<%@ include file="/frontend/files/login.file" %>
 	<%@ include file="/frontend/files/loginbox.file" %>
 	<%@ include file="/frontend/files/header.file" %>
@@ -110,8 +111,15 @@
 
 								<h2 class="title" id="list-item-${j.index}"
 									style="visibility: hidden;">${mealTypeVO.type_name}</h2>
-								<hr style="width: 831px;">
+								<hr style="width: 800px;">
+								<div class="row">
+								<div class="col-lg-4">
 								<h2 class="title">${mealTypeVO.type_name}</h2>
+								</div>
+								<div class="col-lg-8">
+								<i class="fas fa-shopping-cart shopping-cart shopping-cart-icon"></i>
+								</div>
+								</div>
 								<div class="row ">
 									<jsp:useBean id="mealSvc" scope="page"
 										class="com.meal.model.MealService" />
@@ -200,6 +208,36 @@
 
 <%
 	Vector<CartItem> buylist = (Vector<CartItem>)session.getAttribute("cart");
+	if (buylist == null){
+%>
+		<div class="shopping-cart-box">
+		<a class="close-display-box"> <i class="fas fa-window-close"></i>
+		</a>
+
+		<div class="display-wrapper">
+			<h2 style="text-align: center;">
+				<b>購物車</b>
+			</h2>
+			<div class="shopping-cart-detail">
+				<div class="container">
+					<div class="row" style="height: 300px;">
+						<div class="col-12">
+							<h4 style="text-align: center;">您目前還沒添加商品至購物車唷！</h4>
+						</div>
+					</div>
+					<div class="row" style="height: 70px;">
+						<div class="col-12">
+							<button class="display-button display-close" style="margin: 10px auto;"
+								type="submit">
+								<h5 id="totalprice" class="display-button-word" style="margin: auto;">關閉</h5>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>				
+		</div>
+		<% } %>
+<%
 	if (buylist != null && buylist.size() > 0){
 %>
 

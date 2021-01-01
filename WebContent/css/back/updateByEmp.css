@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+
+.card {
+    border-radius: 20px;
+    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: 650px !important;
+    padding-botton:20px;
+    position: absolute;
+	left:25%;
+	padding-top: 20px;
+}
+
+.card img {
+    width: 250px;
+    height: 250px;
+    border-radius: 30%;
+    background: linear-gradient(145deg, #d6d6d6, #ffffff);
+    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+}
+input{
+	width:200px;
+}
+.listOne {
+    margin: 0 90px;
+    display: inline-block;
+    margin-bottom:30px;
+}
+.left {
+    width: 250px;
+    float: left;
+    margin-right: 10px;
+    font-size:18px;
+}
+.right {
+    float: left;
+    margin: 0 auto;
+    vertical-align: middle;
+    width: 200px;
+    margin-left: 7px;
+    font-size:15px;
+}
+.checkbox {
+    margin: 0 auto;
+    margin-top: 30px;
+    display: grid;
+    text-align: left;
+}
+#emp-form {
+	min-height:100vh
+}
+.btn{
+	margin-top:10px;
+}
