@@ -82,22 +82,22 @@
 							<td
 								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.making_time}</td>
 							<td>
-							<c:choose>
+								<c:choose>
 									<c:when test="${mealVO.meal_status.equals('0')}">
 									<form method="post" action="${pageContext.request.contextPath}/MealServlet">
 									<input type="hidden" name="off" value="${mealVO.meal_no}">
 									<input type="hidden" name="action" value="off">
-									<button id="offbutton"type="submit" class="btn btn-secondary" style="margin-left: 22%;">
-										下架
-										</button>
-										</form>
+									<button id="offbutton"type="submit" class="btn btn-secondary">
+									下架
+									</button>
+									</form>
 
 										</c:when>
 									<c:when test="${mealVO.meal_status.equals('1')}">	
 									<form method="post" action="${pageContext.request.contextPath}/MealServlet">
 									<input type="hidden" name="on" value="${mealVO.meal_no}">
 									<input type="hidden" name="action" value="on">
-									<button type="submit" class="btn btn-secondary" style="margin-left: 22%;">
+									<button type="submit" class="btn btn-secondary">
 									上架
 									</button>
 									</form>
@@ -180,7 +180,7 @@
 					<h6>
 						<i class="icon fas fa-cloud-upload-alt"></i>上傳照片
 					</h6>
-					<input type="file" name="update-mealpic" accept="image/*" required />
+					<input type="file" name="update-mealpic" accept="image/*" />
 				</div> </label>
 			<div>
 				<input type="hidden" name="action" value="update_meal"> <input
