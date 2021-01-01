@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Set;
 
+import com.shop_order.model.Shop_orderVO;
+
 public interface Shop_order_detailDAO_interface {
 
 	public void insert(Shop_order_detailVO shop_order_detailVO);

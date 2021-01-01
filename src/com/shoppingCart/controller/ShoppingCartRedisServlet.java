@@ -210,7 +210,7 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 				req.setAttribute("poamount", poamount);
 				session.setAttribute("buylist", buylist);
 				
-				String url = "/frontend/shop/shopCheckout.jsp";
+				String url = "/frontend/shop/shopCheckOut.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
 

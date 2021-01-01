@@ -234,7 +234,7 @@
 						ItemVO order = RedisBuylist.get(index);
 						total += (cartSvc.getValueByItem_no(mb_id, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price());
 					%>
-						<tr>
+						<tr class="itBorTop">
 							<td>
 								<label class="checklabel">
 									<input id="boxchecked<%= index %>" type="checkbox" name="checkact" value="<%= index %>">
@@ -244,27 +244,26 @@
 								</label>
 							</td>
 							<td class="imgframe"><img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"></td>
-							<td>
+						<td>
 								<div class="cartborderFi">
 									<div class="cartItemName"><%=itemSvc.getOneItem(order.getItem_no()).getItem_name()%></div>
-									<div class="cartItemPrice"><span>$ </span><%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%></div>
 									<div class="number-input">
-									
-										<div id="btn<%= index %>" class="addqua" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></div>
-										<input id="qty<%= index %>" class="quantity" min="0" name="quantity" value="<%=cartSvc.getValueByItem_no(mb_id, order.getItem_no())%>" type="number">
-										<div id="btn<%= index + "_1" %>" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></div>
-										
+                                           <!--數量選單 -->
+                                         <div class="qIn">																							
+                                         	<span id="btn<%= index + "_1" %>" class="minusIn" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ><i class="fas fa-minus"></i></span>
+											<input id="qty<%= index %>" class="quantity" min="0" name="quantity" value="<%=cartSvc.getValueByItem_no(mb_id, order.getItem_no())%>" type="number">						
+											<span id="btn<%= index %>" class="plusIn" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i class="fas fa-plus"></i></span>
+										</div>  
 									    <input type="hidden" name="action"  value="deleteSelected"> 
 										<input type="hidden" name="item_no"  value="<%=order.getItem_no()%>"> 
 										<input type="hidden" name="item_price"  value="<%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%>"> 
 										<input type="hidden" name="quantity" value="1" id="qty<%= index + "_1"%>">
-										<input type="button" value="刪 除" class="button" 
-											onclick="location.href='<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=DELETE&del=<%=index%>&item_no=<%=order.getItem_no()%>&quantity=<%=cartSvc.getValueByItem_no(mb_id, order.getItem_no())%>'" >
-									
-									</div>	
-									
+										<input type="hidden" name="points" value="<%=itemSvc.getOneItem(order.getItem_no()).getPoints()%>" >
+										<input type="button" value="刪 除" class="deOnIt" 
+											onclick="location.href='<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=DELETE&del=<%=index%>&item_no=<%=order.getItem_no()%>&quantity=<%=cartSvc.getValueByItem_no(mb_id, order.getItem_no())%>'" >									
+									</div>										
 								</div>
-							</td>					
+							</td>							
 							<td id="td<%= index %>">
 								<div class="priceItemCart">
 									<span>$ </span><span id="span<%= index %>" class="cartPrSi"><%= (cartSvc.getValueByItem_no(mb_id, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price())%></span>
@@ -283,8 +282,7 @@
 					<br>
 					<input type="button" value="清除勾選" class="paybtn cleanbtn" 
 									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=deleteSelected')">
-					<input type="button" value="前往結帳" class="paybtn"
-									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=CHECKOUT')" > 
+					<input type="button" value="前往結帳" class="goPay">
 				</form>
 			</div>
 			<% }%>
@@ -422,6 +420,7 @@ $(function(){
 	
 	var mem = <%="\"" + mb_id + "\""%>;
 	var checkact = document.getElementsByName('checkact');
+	console.log("checkact= "+checkact);
 		console.log("mb_id= "+mem);
 		$(".goPay").click(function(event){
 			if(mem==null){

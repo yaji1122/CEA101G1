@@ -3,6 +3,7 @@ package com.shop_order.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,11 +13,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.item.model.ItemService;
 import com.item.model.ItemVO;
+import com.members.model.MembersService;
 import com.shop_order.model.Shop_orderService;
 import com.shop_order.model.Shop_orderVO;
+import com.shop_order_detail.model.Shop_order_detailVO;
+import com.shoppingCart.model.CartService;
 
 
 public class Shop_orderServlet extends HttpServlet {
@@ -27,6 +32,7 @@ public class Shop_orderServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		HttpSession session = req.getSession();
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -312,6 +318,73 @@ public class Shop_orderServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("insertWithOrder_details".equals(action)) {
+			 List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+	
+			try {
+				/***************************1.接收請求參數***************************************/
+				@SuppressWarnings("unchecked")
+				List<ItemVO> buylist = (List<ItemVO>) session.getAttribute("buylist");
+				System.out.println(buylist.size());
+				
+				String mb_id = req.getParameter("mb_id");
+				Double total_price = new Double(req.getParameter("total_price"));
+				Integer points_total = new Integer(req.getParameter("points_total"));
+				
+				System.out.println("總金額" + total_price);
+								
+				List<Shop_order_detailVO> list = new ArrayList<Shop_order_detailVO>(); // 準備置入訂單明細
+				
+				for(int i = 0; i < buylist.size(); i++) {
+					Shop_order_detailVO order_detail = new Shop_order_detailVO();   // 訂單明細
+					ItemVO order = buylist.get(i);
+					String item_no = order.getItem_no();
+					Double od_pr = order.getItem_price();
+					Integer od_qty = order.getQuantity();
+					Integer od_points = order.getPoints();
+					System.out.println("商品名稱=" + item_no + " ,金額=" + od_pr + " ,數量=" + od_qty + " ,積分=" + od_points);
+					order_detail.setItem_no(item_no);
+					order_detail.setQty(od_qty);
+					order_detail.setItem_price((double)Math.round(od_pr*od_qty));
+					order_detail.setPoints((int)Math.round(od_points*od_qty));
+					list.add(order_detail);
+				}
+				
+				Shop_orderVO shop_orderVO = new Shop_orderVO();
+				shop_orderVO.setMb_id(mb_id);
+				shop_orderVO.setTotal_price(total_price);
+				shop_orderVO.setPoints_total(points_total);
+				
+				/***************************2.開始新增訂單***************************************/
+				Shop_orderService shop_orderSvc = new Shop_orderService();
+				shop_orderSvc.addShop_orderWithShop_order_detail(shop_orderVO, list);
+				
+				/**更改新增會員積分**/			
+				MembersService membersSvc=new MembersService();
+				membersSvc.updateMemPoint(mb_id, points_total);
+				
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/								
+				String url = "/frontend/shop/shopAllOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+				CartService cartSVC = new CartService();
+				for(int i = 0; i < buylist.size(); i++) {
+					ItemVO order = buylist.get(i);
+					String item_no = order.getItem_no();
+					Integer quantity = order.getQuantity();
+					cartSVC.deleteCart(mb_id, item_no, quantity);
+				}
+				session.removeAttribute("buylist");
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add("增加訂單資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/shop/shopCheckout.jsp");
+				failureView.forward(req, res);
+			}
+		 }
 	}
 
 }
