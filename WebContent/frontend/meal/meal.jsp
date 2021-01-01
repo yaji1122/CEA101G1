@@ -208,7 +208,6 @@
 
 <%
 	Vector<CartItem> buylist = (Vector<CartItem>)session.getAttribute("cart");
-	if (buylist.size() == 0){
 %>
 		<div class="shopping-cart-box">
 		<a class="close-display-box"> <i class="fas fa-window-close"></i>
@@ -237,7 +236,6 @@
 			</div>				
 		</div>
 		</div>
-	<% } %>
 <%
 	if (buylist != null && buylist.size() > 0){
 %>
