@@ -120,7 +120,7 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 					ItemVO aitem = getItemVO(req);
 					// 取得後來新增的商品
 					if (RedisBuylist == null) {
-						System.out.println("ADD新增購物車");
+						System.out.println("新增購物車");
 						String item_no = aitem.getItem_no();
 						Integer quantity = new Integer(aitem.getQuantity());
 						cartSVC.insertCart(mb_id, item_no, quantity);
@@ -128,13 +128,13 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 					} else {
 
 						if (RedisBuylist.contains(aitem)) {
-							System.out.println("ADD新增加量");
+							System.out.println("增加數量");
 							String item_no = aitem.getItem_no();
 							Integer quantity = new Integer(aitem.getQuantity());
 							cartSVC.updateCart(mb_id, item_no, quantity);
 
 						} else {
-							System.out.println("ADD else新增商品");
+							System.out.println("新增商品");
 							String item_no = aitem.getItem_no();
 							Integer quantity = new Integer(aitem.getQuantity());
 							cartSVC.insertCart(mb_id, item_no, quantity);
@@ -154,11 +154,10 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 			// 非會員
 			if (mb_id == null) {
 
-
-				String loginLocation = req.getParameter("loginLocation");
-				String URL = req.getContextPath() + "/frontend/members/Login.jsp?requestURI=" + loginLocation;
-				res.sendRedirect(URL);
-				return;
+//				String loginLocation = req.getParameter("loginLocation");
+//				String URL = req.getContextPath() + "/frontend/members/Login.jsp?requestURI=" + loginLocation;
+//				res.sendRedirect(URL);
+//				return;
 
 				// 會員
 			} else if (req.getParameterValues("checkact") != null) {
@@ -168,11 +167,12 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 
 				String[] delArray = req.getParameterValues("checkact");
 				String[] item_noArray = req.getParameterValues("item_no");
-				String[] quantityArray = req.getParameterValues("quantity");
 				String[] item_priceArray = req.getParameterValues("item_price");
+				String[] pointArray = req.getParameterValues("points");
 		
-				double total = 0;
-
+				double totalPrice = 0;
+				Integer totalPoints = 0;
+				
 				for (int i = 0; i < delArray.length; i++) {
 					ItemVO aitem = new ItemVO();
 					int d = Integer.parseInt(delArray[i]);
@@ -182,28 +182,40 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 					aitem.setQuantity(quantity);
 					Double item_price = Double.parseDouble(item_priceArray[d]);
 					aitem.setItem_price(item_price);
+					Integer points = Integer.parseInt(pointArray[d]);
+					aitem.setPoints(points);
 					buylist.add(aitem);
 
 				
 
 //					Double item_price = itemSVC.getOneItem(order.getItem_no()).getItem_price();
 //					Integer quantity = cartSVC.getValueByItem_no(mb_id, order.getItem_no());
-					total += (Math.round(item_price * quantity));
+					totalPrice += (Math.round(item_price * quantity));
+					totalPoints += (Math.round(points * quantity));
 				}
 
 				for (ItemVO itemVO : buylist) {
 					System.out.println(" Item_no:" + itemVO.getItem_no());
+					System.out.println(" Item_name:" + itemVO.getItem_name());
+					System.out.println(" Item_price:" + itemVO.getItem_price());
+					System.out.println(" Points:" + itemVO.getPoints());
+					System.out.println(" Quantity:" + itemVO.getQuantity());
 				}
-
-				Integer amount = (int) total;
+				System.out.println(totalPrice);
+				System.out.println(totalPoints);
+				
+				Double amount = (double) totalPrice;
+				Integer poamount = (int) totalPoints;
 				req.setAttribute("amount", amount);
+				req.setAttribute("poamount", poamount);
 				session.setAttribute("buylist", buylist);
+				
 				String url = "/frontend/shop/shopCheckout.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
 
 			} else {
-				System.out.println("沒勾選，回原畫面");
+				System.out.println("沒勾選,回Cart");
 				req.setAttribute("buylist", (List<ItemVO>) cartSVC.getAllItem_noByMb_id(mb_id));
 				String url = "/frontend/shop/shopCartRedis.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
