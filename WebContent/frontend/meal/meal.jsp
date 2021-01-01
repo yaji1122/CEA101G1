@@ -237,7 +237,7 @@
 			</div>				
 		</div>
 		</div>
-		<% } %>
+	<% } %>
 <%
 	if (buylist != null && buylist.size() > 0){
 %>
