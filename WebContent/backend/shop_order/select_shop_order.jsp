@@ -67,8 +67,8 @@
 		<c:if test="${not empty errorMsgs}">
 			<div style="color: red" class="error">
 				<div class="errorfix">請修正以下錯誤</div>
-				<div class="close">✖</div>
-				<ul>
+				<div class="closeerror">✖</div>
+				<ul style=list-style-type:none>
 					<c:forEach var="message" items="${errorMsgs}">
 						<li style="color: red">${message}</li>
 					</c:forEach>

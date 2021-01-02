@@ -42,7 +42,7 @@ public class ItemServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/item/select_item.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/item/itemInfo.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -55,7 +55,7 @@ public class ItemServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/select_item.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/itemInfo.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -68,7 +68,7 @@ public class ItemServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/select_item.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/itemInfo.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -82,7 +82,7 @@ public class ItemServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/select_item.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/itemInfo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -131,7 +131,7 @@ public class ItemServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/select_item.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/itemInfo.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -144,7 +144,7 @@ public class ItemServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/select_item.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/itemInfo.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -158,7 +158,7 @@ public class ItemServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/select_item.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/itemInfo.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -172,7 +172,7 @@ public class ItemServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/select_item.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/item/itemInfo.jsp");
 				failureView.forward(req, res);
 			}
 		}

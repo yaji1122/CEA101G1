@@ -84,7 +84,7 @@ th, td {
 
 		<div class="titleAll">商品類別新增</div>
 		<div>
-			<a href="<%=request.getContextPath()%>/backend/item/select_item.jsp"
+			<a href="<%=request.getContextPath()%>/backend/item/itemInfo.jsp"
 				class="home">回商品管理</a>
 		</div>
 
