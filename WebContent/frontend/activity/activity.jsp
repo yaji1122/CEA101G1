@@ -167,7 +167,7 @@
         <div class="land">
             <img src="<%=request.getContextPath()%>/img/sheet4.png">
             <figure>
-                <figcaption><a href="<%=request.getContextPath()%>/front-end/Land_page.jsp" >Land</a></figcaption>
+                <figcaption><a href="<%=request.getContextPath()%>/frontend/activity/Land_page.jsp" >Land</a></figcaption>
             </figure>
         </div>
         <div class="sea">

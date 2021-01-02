@@ -1,12 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.actpic.model.*"%>
+<%@ page import="com.act.model.*"%>
 <%
 	ActPicService actPicSvc = new ActPicService();
 	List<ActPicVO> list = actPicSvc.getAll();
 	pageContext.setAttribute("list", list);
+%>
+<%
+    ActVO actVO = (ActVO) request.getAttribute("ActVO"); 
 %>
 
 <html>
@@ -200,11 +203,13 @@
                                                         我的活動
                     </label>
                     <span>
-                        <a href="#"><i class="fas fa-cart-arrow-down fa-2x"></i></a>
+                        <a href="<%=request.getContextPath()%>/frontend/activity/Act_Checkout.jsp">
+                        <i class="fas fa-cart-arrow-down fa-2x"></i></a>
                     </span>
                 </li>
              </ul>
              <!-- 第一列 -->
+             <form name="ActReserveForm" action="<%=request.getContextPath()%>/ActReserveServlet" method="POST">
              <div class="content-1">
                 <div class="line"></div>
                  <div class="content-img">
@@ -244,11 +249,15 @@
                         <option value="5">5人</option>
                     </select>
                  </div>
-                 <button type="button" class="btn btn-outline-primary">
+                 <input type="hidden" name="actNo" value="${actVO.getActNo()}">
+                 <button type="submit" class="btn btn-outline-primary" style="margin-top:-80px;">
                                                  我要預約
                 </button>
              </div>
+             </form>
            </div>
+           
+           
            
     <script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>

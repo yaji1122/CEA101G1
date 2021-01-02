@@ -49,7 +49,7 @@
 
 <ul>
   
-  <li><a href='listAllAct.jsp?action=getAll'> List</a> all ActType    <h4>(getFromSession).</h4> <br><br><br></li>
+  <li><a href='<%=request.getContextPath()%>/backend/acttype/listAllAct.jsp?action=getAll'> List</a> all ActType    <h4>(getFromSession).</h4> <br><br><br></li>
   
 
    <jsp:useBean id="ActTypeSvc" scope="page" class="com.acttype.model.ActTypeService" />

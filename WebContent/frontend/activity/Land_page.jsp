@@ -301,7 +301,7 @@
     <script src="<%=request.getContextPath()%>/js/jquery-ui.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/jquery.slicknav.js"></script>
     <script src="<%=request.getContextPath()%>/js/owl.carousel.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/template.js"></script>
+    <script src="<%=request.getContextPath()%>/js/front/template.js"></script>
     <script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/front/land.js"></script>
 </body>
