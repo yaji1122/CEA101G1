@@ -18,16 +18,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+	<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/datatables.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.metro-dark.min.css" />
-<link href='${pageContext.request.contextPath}/css/datatables.min.css'
-	rel='stylesheet' />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/back/backend-meal.css" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>
-<script src='${pageContext.request.contextPath}/js/datatables.min.js'></script>
-<script src='${pageContext.request.contextPath}/js/sweetalert.js'></script>
+<script src="${pageContext.request.contextPath}/js/datatables.min.js"></script>
 <title>showAllMeals</title>
 </head>
 
@@ -45,11 +44,14 @@
 
 	<c:choose>
 		<c:when test="${mealList.size() > 0}">
-		<form method="post" action="${pageContext.request.contextPath}/MealServlet">
-		<input type="hidden" name="meal_status" value="${mealVO.meal_status}">
-		<input type="hidden" name=action value="update-allmealstatus">
-		<button type="submit" class="btn btn-dark" style="float: right; margin-bottom: 13px;">一鍵上架</button>		 
-		</form>
+			<form method="post"
+				action="${pageContext.request.contextPath}/MealServlet">
+				<input type="hidden" name="meal_status"
+					value="${mealVO.meal_status}"> <input type="hidden"
+					name=action value="update-allmealstatus">
+				<button type="submit" class="btn btn-dark"
+					style="float: right; margin-bottom: 13px;">一鍵上架</button>
+			</form>
 			<table id="myTable" class="table tablesorter">
 				<thead>
 					<tr>
@@ -81,29 +83,26 @@
 								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.meal_info}</td>
 							<td
 								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.making_time}</td>
-							<td>
-								<c:choose>
+							<td><c:choose>
 									<c:when test="${mealVO.meal_status.equals('0')}">
-									<form method="post" action="${pageContext.request.contextPath}/MealServlet">
-									<input type="hidden" name="off" value="${mealVO.meal_no}">
-									<input type="hidden" name="action" value="off">
-									<button id="offbutton"type="submit" class="btn btn-secondary">
-									下架
-									</button>
-									</form>
+										<form method="post"
+											action="${pageContext.request.contextPath}/MealServlet">
+											<input type="hidden" name="off" value="${mealVO.meal_no}">
+											<input type="hidden" name="action" value="off">
+											<button id="offbutton" type="submit"
+												class="btn btn-secondary" style="margin-left: 21%;">下架</button>
+										</form>
 
-										</c:when>
-									<c:when test="${mealVO.meal_status.equals('1')}">	
-									<form method="post" action="${pageContext.request.contextPath}/MealServlet">
-									<input type="hidden" name="on" value="${mealVO.meal_no}">
-									<input type="hidden" name="action" value="on">
-									<button type="submit" class="btn btn-secondary">
-									上架
-									</button>
-									</form>
-									</c:when>									
-								</c:choose>
-								</td>
+									</c:when>
+									<c:when test="${mealVO.meal_status.equals('1')}">
+										<form method="post"
+											action="${pageContext.request.contextPath}/MealServlet">
+											<input type="hidden" name="on" value="${mealVO.meal_no}">
+											<input type="hidden" name="action" value="on">
+											<button type="submit" class="btn btn-secondary" style="margin-left: 21%;">上架</button>
+										</form>
+									</c:when>
+								</c:choose></td>
 							<td>
 								<button class="showpic btn btn-info" name="meal_pic"
 									value="${pageContext.request.contextPath}/MealServlet?action=view_mealpic&meal_no=${mealVO.meal_no}">
@@ -127,68 +126,68 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			</c:when>
-			<c:otherwise>
-				<h3>查無資料</h3>
-			</c:otherwise>		
+		</c:when>
+		<c:otherwise>
+			<h3>查無資料</h3>
+		</c:otherwise>
 	</c:choose>
 	<%-- 	<%@ include file="page2.file"%> --%>
 
 	<form class="update-display update-display-div" method="post"
 		action="${pageContext.request.contextPath}/MealServlet"
 		enctype="multipart/form-data">
-		
-			<div class="close-icon">
-				<i class="fas fa-times icon" style="margin-top: 5%;"></i>
-			</div>
-			<h3>
-				餐點編號：<b id="update-meal-no"></b>
-			</h3>
 
-			<label for="update-mealtype-no"><p>
-					<b>種類編號</b>
-				</p> <input type="text" id="update-mealtype-no"
-				name="update-mealtype-no" placeholder="請輸入種類編號" maxlength="5"
-				required /> </label> <label for="update-mealname"><p>
-					<b>餐點名稱</b>
-				</p> <input type="text" id="update-mealname" name="update-mealname"
-				placeholder="請輸入餐點名稱" required /> </label> <label for="update-price"><p>
-					<b>單價</b>
-				</p> <input type="text" id="update-price" name="update-price"
-				placeholder="請輸入單價" required /> </label> <label for="update-mealinfo"><p>
-					<b>餐點介紹</b>
-				</p> <textarea name="update-mealinfo" id="update-mealinfo"
-					maxlength="500" placeholder="最多500字"></textarea> </label> <label
-				for="update-makingtime"><p>
-					<b>預計製作時間</b>
-				</p> <select class="custom-select custom-select-sm"
-				name="update-makingtime" id="update-makingtime" required>
-					<option value="0" selected>0</option>
-					<option value="5 ">5</option>
-					<option value="10 ">10</option>
-					<option value="15">15</option>
-			</select> </label> <label for="update-mealstatus"><p>
-					<b>餐點狀態</b>
-				</p> <select class="custom-select custom-select-sm"
-				name="update-mealstatus" id="update-mealstatus" required>
-					<option value="0" selected>下架</option>
-					<option value="1">上架</option>
-			</select> </label> <label for="update-mealpic"><p>
-					<b>上傳餐點照片</b>
-				</p>
-				<div class="pic-upload" name="pic-upload" for="update-mealpic">
-					<h6>
-						<i class="icon fas fa-cloud-upload-alt"></i>上傳照片
-					</h6>
-					<input type="file" name="update-mealpic" accept="image/*" />
-				</div> </label>
-			<div>
-				<input type="hidden" name="action" value="update_meal"> <input
-					type="hidden" name="update-meal-no" id="update-meal-to-servlet">
-				<button type="submit" class="btn btn-light"
-					style="width: 100px; margin: 50px auto; background-color: pink;">更新資料</button>
-			</div>
-		
+		<div class="close-icon">
+			<i class="fas fa-times icon" style="margin-top: 5%;"></i>
+		</div>
+		<h3>
+			餐點編號：<b id="update-meal-no"></b>
+		</h3>
+
+		<label for="update-mealtype-no"><p>
+				<b>種類編號</b>
+			</p> <input type="text" id="update-mealtype-no" name="update-mealtype-no"
+			placeholder="請輸入種類編號" maxlength="5" required /> </label> <label
+			for="update-mealname"><p>
+				<b>餐點名稱</b>
+			</p> <input type="text" id="update-mealname" name="update-mealname"
+			placeholder="請輸入餐點名稱" required /> </label> <label for="update-price"><p>
+				<b>單價</b>
+			</p> <input type="text" id="update-price" name="update-price"
+			placeholder="請輸入單價" required /> </label> <label for="update-mealinfo"><p>
+				<b>餐點介紹</b>
+			</p> <textarea name="update-mealinfo" id="update-mealinfo"
+				maxlength="500" placeholder="最多500字"></textarea> </label> <label
+			for="update-makingtime"><p>
+				<b>預計製作時間</b>
+			</p> <select class="custom-select custom-select-sm"
+			name="update-makingtime" id="update-makingtime" required>
+				<option value="0" selected>0</option>
+				<option value="5 ">5</option>
+				<option value="10 ">10</option>
+				<option value="15">15</option>
+		</select> </label> <label for="update-mealstatus"><p>
+				<b>餐點狀態</b>
+			</p> <select class="custom-select custom-select-sm"
+			name="update-mealstatus" id="update-mealstatus" required>
+				<option value="0" selected>下架</option>
+				<option value="1">上架</option>
+		</select> </label> <label for="update-mealpic"><p>
+				<b>上傳餐點照片</b>
+			</p>
+			<div class="pic-upload" name="pic-upload" for="update-mealpic">
+				<h6>
+					<i class="icon fas fa-cloud-upload-alt"></i>上傳照片
+				</h6>
+				<input type="file" name="update-mealpic" accept="image/*" />
+			</div> </label>
+		<div>
+			<input type="hidden" name="action" value="update_meal"> <input
+				type="hidden" name="update-meal-no" id="update-meal-to-servlet">
+			<button type="submit" class="btn btn-light"
+				style="width: 100px; margin: 50px auto; background-color: pink;">更新資料</button>
+		</div>
+
 	</form>
 
 	<div class="pic-display">
@@ -244,7 +243,7 @@
 			widgets : [ 'zebra' ]
 		});
 
-		$(function() {
+		$(document).ready(function() {
 			$('#myTable').DataTable();
 		});
 	</script>
