@@ -265,7 +265,7 @@
 			<input type="hidden" name="item_price" value="<%=itemSvc.getOneItem(item_no).getItem_price()%>"> 
 			<input type="hidden" name="item_name" value="<%=itemSvc.getOneItem(item_no).getItem_name()%>"> 
 			<input type="hidden" name="points" value="<%=itemSvc.getOneItem(item_no).getPoints()%>"> 
-			<input type="hidden" name="quantity" value="1" id="qty2">
+			<input type="hidden" name="quantity" value="1" >
 		</form>
 		<div id="itemsmprice">
 			$<%=itemSvc.getOneItem(item_no).getItem_price()%>
@@ -310,7 +310,7 @@
 					<input type="hidden" name="item_price" value="<%=itemSvc.getOneItem(item_no).getItem_price()%>">
 					<input type="hidden" name="item_name" value="<%=itemSvc.getOneItem(item_no).getItem_name()%>"> 
 					<input type="hidden" name="points" value="<%=itemSvc.getOneItem(item_no).getPoints()%>"> 
-					<input type="hidden" name="quantity" value="1" id="qty2">
+					<input type="hidden" name="quantity" value="1">
 				</FORM>
 			</div>
 		</div>
