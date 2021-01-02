@@ -384,7 +384,6 @@ body {
 	margin-left:30px;
 }
 .shopCartBorder{
-	margin-top:150px;
 	position: absolute;
 }
 .imgframe img{
@@ -395,7 +394,13 @@ body {
 	margin-left:55px;
 }
 .cartborderFi{
-	
+	margin:25px;
+}
+.addqty{
+	    cursor: pointer;
+}
+.disqty{
+	    cursor: pointer;
 }
 .cartItemName{
 	display:flex;
@@ -413,4 +418,46 @@ body {
 }
 .poCaSi{
 	font-size: 13px;
+}
+.qIn{
+	display: flex;
+}
+.quantity{
+	width:35px;
+}
+.minusIn:hover{
+	cursor:pointer;
+}
+.minusIn{
+	size:10px;
+	margin:2px;
+}
+.plusIn:hover{
+	cursor:pointer;
+}
+.plusIn{
+	size:10px;
+	margin:2px;
+}
+.deOnIt{
+	margin-top:10px;
+}
+.itBorTop{
+	border-top:1px solid gray;
+}
+.deCheItem{
+	margin-left:20px;
+}
+.goPay{
+	float:right;
+	width:180px;
+	background-color: black;
+	color:white;
+	cursor: pointer;
+	border: none;
+}
+.goPay:hover{
+	background-color: rgb(202, 202, 202);
+    color: black;
+    cursor: pointer;
 }

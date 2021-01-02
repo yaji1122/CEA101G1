@@ -52,6 +52,7 @@ DROP SEQUENCE SALE_SEQ;
 DROP SEQUENCE SERVODNO_SEQ;
 DROP SEQUENCE PAYNO_SEQ;
 DROP SEQUENCE CHOP_SEQ;
+DROP SEQUENCE BKDT_SEQ;
 
 ---------------------------------------------------------------------------------------------------------------
 --會員
@@ -109,13 +110,13 @@ CREATE TABLE EMP_DEPT(
 --員工
 CREATE TABLE EMPLOYEE(
     EMP_ID          CHAR(10) CHECK (LENGTH(TRIM(EMP_ID)) = 10) NOT NULL,
-    EMP_NAME        VARCHAR2(20) NOT NULL, 
-    EMP_PWD         VARCHAR2(20) NOT NULL, 
+    EMP_NAME        VARCHAR2(50) NOT NULL, 
+    EMP_PWD         VARCHAR2(50) NOT NULL, 
     EMP_PIC         BLOB, 
     EMP_PHONE       VARCHAR2(20),
-    EMP_EMAIL       VARCHAR2(20) NOT NULL,
-    EMP_CITY        VARCHAR2(20),
-    EMP_TOWN        VARCHAR2(20),
+    EMP_EMAIL       VARCHAR2(100) NOT NULL,
+    EMP_CITY        VARCHAR2(50),
+    EMP_TOWN        VARCHAR2(50),
     EMP_ADDRESS     VARCHAR2(100),
     EMP_STATUS      CHAR(1) DEFAULT '0' NOT NULL,
     EMP_DATE        DATE DEFAULT CURRENT_TIMESTAMP,
@@ -202,12 +203,13 @@ CREATE TABLE BOOKING_ORDER (
 -----------------------------------------------------------------------
 --訂房訂單細項
 CREATE TABLE BOOKING_DETAIL (
+    SEQ_NO          CHAR(10) NOT NULL,
     BK_NO           CHAR(10) NOT NULL,
     RM_TYPE         CHAR(1) NOT NULL,
-    RM_PRICE        NUMBER(10) NOT NULL,
-    QTY             NUMBER(2) NOT NULL,
+    RM_SUBTOTAL        NUMBER(10) NOT NULL,
+    RM_GUEST             NUMBER(2) NOT NULL,
     
-    CONSTRAINT PK_BKNO_RMTYPE PRIMARY KEY (BK_NO, RM_TYPE),
+    CONSTRAINT PK_SEQNO PRIMARY KEY (SEQ_NO),
     CONSTRAINT FK_BKDETAIL_BKNO FOREIGN KEY (BK_NO) REFERENCES BOOKING_ORDER(BK_NO),
     CONSTRAINT FK_BKDETAIL_RMTYPE FOREIGN KEY (RM_TYPE) REFERENCES ROOM_TYPE(RM_TYPE)
 );
@@ -545,7 +547,12 @@ CREATE SEQUENCE PAYNO_SEQ
     START WITH 1
     NOMAXVALUE
     NOCYCLE;
-
+--訂房細項自動編號(for BOOKING DETAIL)
+CREATE SEQUENCE BKDT_SEQ
+    INCREMENT BY 1
+    START WITH 1
+    MAXVALUE 999999
+    NOCYCLE;
 --員工自動編號(for Employee)
 CREATE SEQUENCE EMP_SEQ
     INCREMENT BY 1
@@ -776,54 +783,11 @@ Insert into ROOMS (RM_NO,RM_TYPE,RM_STATUS) values ('999','9','0');
 --CHOPPERS 直升機
 INSERT INTO CHOPPERS (CHOP_NO, CHOP_NAME) VALUES ('01', 'HAWK');
 
---BOOKING ORDER 訂房訂單
-INSERT INTO BOOKING_ORDER (BK_NO, MB_ID, DATEIN, DATEOUT, TOTAL_PRICE) VALUES ('BKNO' || LPAD(to_char(BK_SEQ.NEXTVAL), 6, '0'), 'MEM0000001', TO_DATE('2021-01-20','yyyy-MM-dd'), TO_DATE('2021-01-22','yyyy-MM-dd'), 1999998);
-INSERT INTO BOOKING_ORDER (BK_NO, MB_ID, DATEIN, DATEOUT, TOTAL_PRICE) VALUES ('BKNO' || LPAD(to_char(BK_SEQ.NEXTVAL), 6, '0'), 'MEM0000002', TO_DATE('2021-01-01','yyyy-MM-dd'), TO_DATE('2021-01-03','yyyy-MM-dd'), 2000000);
-
---BOOKING DETAIL 訂房細項
-INSERT INTO BOOKING_DETAIL (BK_NO, RM_TYPE, RM_PRICE, QTY) VALUES ('BKNO000001', '9', 999999, 1);
-INSERT INTO BOOKING_DETAIL (BK_NO, RM_TYPE, RM_PRICE, QTY) VALUES ('BKNO000002', '3', 500000, 2);
-
-
---房型預定表
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-25','YYYY-MM-DD'),'1',2);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-25','YYYY-MM-DD'),'2',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-25','YYYY-MM-DD'),'3',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-25','YYYY-MM-DD'),'9',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-26','YYYY-MM-DD'),'1',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-26','YYYY-MM-DD'),'2',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-26','YYYY-MM-DD'),'3',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-26','YYYY-MM-DD'),'9',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-27','YYYY-MM-DD'),'1',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-27','YYYY-MM-DD'),'2',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-27','YYYY-MM-DD'),'3',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-27','YYYY-MM-DD'),'9',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-30','YYYY-MM-DD'),'1',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-30','YYYY-MM-DD'),'2',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-30','YYYY-MM-DD'),'3',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2020-12-30','YYYY-MM-DD'),'9',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-15','YYYY-MM-DD'),'1',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-15','YYYY-MM-DD'),'2',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-15','YYYY-MM-DD'),'3',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-15','YYYY-MM-DD'),'9',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-16','YYYY-MM-DD'),'1',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-16','YYYY-MM-DD'),'2',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-16','YYYY-MM-DD'),'3',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-16','YYYY-MM-DD'),'9',1);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-05','YYYY-MM-DD'),'1',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-05','YYYY-MM-DD'),'2',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-05','YYYY-MM-DD'),'3',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-05','YYYY-MM-DD'),'9',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-06','YYYY-MM-DD'),'1',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-06','YYYY-MM-DD'),'2',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-06','YYYY-MM-DD'),'3',0);
-Insert into ROOM_RSV (RSV_DATE,RM_TYPE,RM_LEFT) values (to_date('2021-01-06','YYYY-MM-DD'),'9',0);
 
 --會員付款資訊
 Insert into PAYMENT (PAY_NO,MB_ID,CARD_NO,CARD_NAME,EXP_MON,EXP_YEAR,CSC) values ('CRDT' || LPAD(to_char(PAYNO_SEQ.NEXTVAL), 6, '0'),'MEM0000001','0000000000000001','YuaMikami','03','23','735');
 Insert into PAYMENT (PAY_NO,MB_ID,CARD_NO,CARD_NAME,EXP_MON,EXP_YEAR,CSC) values ('CRDT' || LPAD(to_char(PAYNO_SEQ.NEXTVAL), 6, '0'),'MEM0000001','0000000000000002','YuaMikami','01','22','465');
---PICKUP 接送訂單
-Insert into PICKUP (PKUP_NO,BK_NO,CHOP_NO,PKUP_TIME,ARRIVE_DATETIME,PKUP_STATUS) values ('PKNO' || LPAD(to_char(PKUP_SEQ.NEXTVAL), 6, '0'),'BKNO000001','01',null,to_timestamp('20-JAN-21 05.00.00.000000000 PM','DD-MON-RR HH.MI.SSXFF AM'),'0');
+
     -----------------------------------------------------------------------
     --商品訂單
     INSERT INTO SHOP_ORDER

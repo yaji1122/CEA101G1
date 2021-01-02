@@ -10,7 +10,7 @@
 <head>
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/backend-shop.css" />
+	href="${pageContext.request.contextPath}/css/back/backend-shop.css" />
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>商品資料新增 - addItem.jsp</title>
@@ -84,7 +84,7 @@ float:left;
 
 		<div class="titleAll">商品資料新增</div>
 		<div>
-			<a href="<%=request.getContextPath()%>/backend/item/select_item.jsp"
+			<a href="<%=request.getContextPath()%>/backend/item/itemInfo.jsp"
 				class="home">回商品管理</a>
 		</div>
 
@@ -163,7 +163,7 @@ float:left;
 			type="submit" value="送出新增" class="inputItem">
 	</FORM>
 	<%@ include file="/backend/files/backend_footer.file" %>
-	<script src="${pageContext.request.contextPath}/js/backShopItem.js"></script>
+	<script src="${pageContext.request.contextPath}/js/back/backShopItem.js"></script>
 </body>
 
 </html>

@@ -137,11 +137,45 @@ i.log-in {
     height: 100%;
 }
 .info-div .info-content .user-pic {
+	display:flex;
+	flex-direction: column;
     width: 300px;
     height: 100%;
     overflow: hidden;
     padding: 5px;
     float: left;
+}
+.info-div .info-content .user-pic div {
+	position:relative;
+	background-color: #ef4f4f;
+	min-width: 280px;
+	max-height: 40px;
+	padding:10px 0px;
+	margin-top:10px;
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+}
+.info-div .info-content .user-pic div i {
+	font-size: 20px;
+	margin-right: 20px;
+}
+.info-div .info-content .user-pic div p {
+	font-size: 16px;
+	letter-spacing: 1px;
+	padding:0px;
+	margin:0px;
+}
+.info-div .info-content .user-pic input {
+	cursor:pointer;
+	position:absolute;
+	height:40px;
+	width:100%;
+	opacity:0;
+	left:0;
+	top:0;
 }
 .info-div .info-content .user-pic img {
     box-shadow: 1px 1px 3px black;
@@ -301,7 +335,7 @@ i.log-in {
     position: relative;
     min-height: 70vh;
     min-width: 400px;
-    padding-top: 30px;
+    padding-top: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

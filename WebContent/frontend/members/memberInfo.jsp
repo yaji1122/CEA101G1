@@ -25,8 +25,9 @@ MembersVO member = (MembersVO)session.getAttribute("member");
 					<li><a
 						href="<%=request.getContextPath()%>/frontend/members/memberInfo.jsp"><i
 							class="far fa-user"></i> 個人資訊</a></li>
-					<li><a href="#"><i class="far fa-calendar-check"></i> 假期管理</a>
-					</li>
+					<li><a
+						href="<%=request.getContextPath()%>/frontend/members/memberBooking.jsp"><i
+							class="far fa-calendar-check"></i> 假期管理</a></li>
 					<li><a href="#"><i class="fas fa-clipboard-list"></i> 訂單管理</a>
 					</li>
 				</ul>
@@ -50,44 +51,45 @@ MembersVO member = (MembersVO)session.getAttribute("member");
 								<div class="user-pic">
 									<img
 										src="<%=request.getContextPath()%>/MembersServlet?mb_id=${member.mb_id}&action=getone_mbpic"
-										alt="" /> <input type="file" name="update-mbpic"
-										id="update-mbpic">
+										alt="" />
+									<div>
+										<i class="fas fa-cloud-upload-alt"></i>
+										<p>更換個人照片</p>
+										<input type="file" name="update-mbpic" id="update-mbpic">
+									</div>
 								</div>
 								<div class="user-infos">
 									<label for="mb_name">姓名</label> <input class="input-disabled"
 										type="text" name="update-mbname" id="mb_name"
-										value="${member.mb_name}" maxlength="20" placeholder="請填入姓名"
+										value="${member.mb_name}" maxlength="20" placeholder="未填寫"
 										required disabled />
 								</div>
 								<div class="user-infos">
 									<label for="mb_bd">生日</label> <input class="input-disabled"
 										type="text" name="update-mbbd" id="mb_bd" maxlength="10"
-										value="${member.mb_bd}" placeholder="請填入生日" required disabled />
+										value="${member.mb_bd}" placeholder="未填寫" required disabled />
 								</div>
 								<div class="user-infos">
 									<label for="mb_phone">聯絡電話</label> <input
 										class="input-disabled" type="tel" inputmode="numeric"
 										name="update-mbphone" id="mb_phone" maxlength="30"
-										value="${member.mb_phone}" placeholder="請填入電話號碼" required
-										disabled />
+										value="${member.mb_phone}" placeholder="未填寫" required disabled />
 								</div>
 								<div class="user-infos">
 									<label for="mb_city">居住縣市</label> <input class="input-disabled"
 										type="text" name="update-mbcity" id="mb_city" maxlength="30"
-										value="${member.mb_city}" placeholder="請填入居住城市" required
-										disabled />
+										value="${member.mb_city}" placeholder="未填寫" required disabled />
 								</div>
 								<div class="user-infos">
 									<label for="mb_town">居住鄉鎮</label> <input class="input-disabled"
 										type="text" name="update-mbtown" id="mb_town" maxlength="30"
-										value="${member.mb_town}" placeholder="請填入居住鄉鎮" required
-										disabled />
+										value="${member.mb_town}" placeholder="未填寫" required disabled />
 								</div>
 								<div class="user-infos">
 									<label for="mb_address">居住地址</label> <input
 										class="input-disabled" type="text" name="update-mbaddress"
 										id="mb_address" value="${member.mb_address}" maxlength="50"
-										placeholder="請填入居住地址" required disabled />
+										placeholder="未填寫" required disabled />
 								</div>
 								<input style="display: none;" value="${member.mb_id}"
 									name="update-mbid">
@@ -374,6 +376,7 @@ MembersVO member = (MembersVO)session.getAttribute("member");
         		$("#creditCard-input-view").css("z-index", "-1");
         	})
         })
+        //新增信用卡
         $("#insertnewcard").click(function(){
         	let cardname = $("#name").val();
         	let cardno = $("#cardnumber").val();
@@ -432,7 +435,8 @@ MembersVO member = (MembersVO)session.getAttribute("member");
         		}
         	})
         })
-        $(document.body).on("click", ".delete-creditcard",function () { //刪除信用卡
+        //刪除信用卡
+        $(document.body).on("click", ".delete-creditcard",function () { 
         	let thisCard = $(this).parent();
             Swal.fire({
                 title: "確認刪除嗎?",
@@ -467,9 +471,8 @@ MembersVO member = (MembersVO)session.getAttribute("member");
                 }
             });
         });
-
+      //變更基本資料
         $("#user-info-form").submit(function (e) {
-            //變更基本資料
             e.preventDefault();
             let form = document.getElementById("user-info-form");
             let divs = $("#user-info-form").children("div");
@@ -499,8 +502,32 @@ MembersVO member = (MembersVO)session.getAttribute("member");
                 },
             });
         });
+      //變更個人照片
+      $("#update-mbpic").change(function(){
+    	  let pic = $(this).parent().siblings("img");
+    	  let file = this.files[0];
+    	  let formData = new FormData();
+    	  formData.append("mb_pic", file);
+    	  formData.append("mb_id", "${member.mb_id}");
+    	  $.ajax({
+    		  url: "<%=request.getContextPath()%>/MembersServlet?action=update_picture",
+    	  	  data: formData,
+    	  	  type:"POST",
+    		  contentType: false,
+              processData: false,
+   			  success: function(msg){
+   				  let reader = new FileReader();
+   				  reader.addEventListener("load", (ex)=>{
+   					  pic.attr("src", ex.target.result);
+   				  });
+   				  reader.readAsDataURL(file);
+   			  } 
+    	  })
+    	  
+      })
+       //變更密碼
         $("#account-info-form").submit(function (e) {
-            //變更基本資料
+            
             e.preventDefault();
             let form = document.getElementById("account-info-form");
             let divs = $("#account-info-form").children("div");

@@ -8,7 +8,7 @@
 List<BookingDetailVO> bkdetailList = (List<BookingDetailVO>)request.getAttribute("bkdetailList");
 int totalPrice = 0;
 for (BookingDetailVO vo: bkdetailList){
-	totalPrice += vo.getRm_price() * vo.getQty();
+	totalPrice += vo.getRm_subtotal();
 }
 %>
 <!DOCTYPE html>
@@ -22,8 +22,8 @@ for (BookingDetailVO vo: bkdetailList){
 <c:forEach var="bkdetailvo" items="${bkdetailList}">
 <div>
 <h3>房型：${rmtypeSvc.getOne(bkdetailvo.rm_type).type_name}</h3>
-<h3>價格：${bkdetailvo.rm_price}</h3>
-<h3>預定間數：${bkdetailvo.qty}</h3>
+<h3>小計：${bkdetailvo.rm_subtotal}</h3>
+<h3>入住人數：${bkdetailvo.rm_guest}</h3>
 </div>
 </c:forEach>
 <h2>總價：<%=totalPrice %></h2>

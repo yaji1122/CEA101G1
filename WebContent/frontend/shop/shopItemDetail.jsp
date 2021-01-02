@@ -16,10 +16,7 @@
 	List<ItemVO> list = itemSvc.getAllItem();
 	pageContext.setAttribute("list", list);
 %>
-<%
-	String md_id = "MEM0000003";
-	session.setAttribute("mb_id", md_id);
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +40,18 @@
 <body>
 	<%@ include file="/frontend/files/login.file" %>
 	<%@ include file="/frontend/files/loginbox.file"%>
+	
+ 	<% 
+	String mb_id = (String)session.getAttribute("mb_id");
+	if(member!=null){
+	mb_id = member.getMb_id();
+	System.out.println("mb_id = "+mb_id);
+	session.setAttribute("mb_id", mb_id);
+	} else {
+		
+	}
+ 	%> 
+	
 	<div class="back"></div>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -256,7 +265,7 @@
 			<input type="hidden" name="item_price" value="<%=itemSvc.getOneItem(item_no).getItem_price()%>"> 
 			<input type="hidden" name="item_name" value="<%=itemSvc.getOneItem(item_no).getItem_name()%>"> 
 			<input type="hidden" name="points" value="<%=itemSvc.getOneItem(item_no).getPoints()%>"> 
-			<input type="hidden" name="quantity" value="1" id="qty2">
+			<input type="hidden" name="quantity" value="1" >
 		</form>
 		<div id="itemsmprice">
 			$<%=itemSvc.getOneItem(item_no).getItem_price()%>
@@ -301,7 +310,7 @@
 					<input type="hidden" name="item_price" value="<%=itemSvc.getOneItem(item_no).getItem_price()%>">
 					<input type="hidden" name="item_name" value="<%=itemSvc.getOneItem(item_no).getItem_name()%>"> 
 					<input type="hidden" name="points" value="<%=itemSvc.getOneItem(item_no).getPoints()%>"> 
-					<input type="hidden" name="quantity" value="1" id="qty2">
+					<input type="hidden" name="quantity" value="1">
 				</FORM>
 			</div>
 		</div>
