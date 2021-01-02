@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 
 import com.shoppingCart.model.CartService;
 import com.item.model.*;
+import com.members.model.MembersVO;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 500 * 1024 * 1024, maxRequestSize = 500 * 5 * 1024
 		* 1024)
@@ -26,11 +27,14 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 		ItemService itemSVC = new ItemService();
 
 		HttpSession session = req.getSession();
+		
+//		MembersVO member = (MembersVO) session.getAttribute("member");
+		
 		String mb_id = (String) session.getAttribute("mb_id");
 		String user_session_id = (String) session.getAttribute("user_session_id");
 		String action = req.getParameter("action");
 		System.out.println("會員編號"+mb_id);
-		System.out.println("sessionID"+user_session_id);
+		System.out.println("sessionID = "+user_session_id);
 		if (!action.equals("CHECKOUT")) {
 
 			// 針對非會員
