@@ -213,19 +213,19 @@
 						<div>
 							<h1>結帳前確認 Check</h1>
 						</div>
-						<table class="tabletitle">
-							<tr>
-								<th></th>
-								<th class="imgframe"></th>
-								<th>編號</th>
-								<th>名稱</th>
-								<th>價格</th>
-								<th>數量</th>
-								<th>積分</th>
-								<th>總積分</th>
-								<th>總額</th>
-							</tr>
-						</table>
+<!-- 						<table class="tabletitle"> -->
+<!-- 							<tr> -->
+<!-- 								<th></th> -->
+<!-- 								<th class="imgframe"></th> -->
+<!-- 								<th>編號</th> -->
+<!-- 								<th>名稱</th> -->
+<!-- 								<th>價格</th> -->
+<!-- 								<th>數量</th> -->
+<!-- 								<th>積分</th> -->
+<!-- 								<th>總積分</th> -->
+<!-- 								<th>總額</th> -->
+<!-- 							</tr> -->
+<!-- 						</table> -->
 						<% for (int i = 0; i < buylist.size(); i++) {
 							ItemVO order = buylist.get(i);
 						%>
