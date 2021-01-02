@@ -3,6 +3,8 @@ package com.shop_order.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.shop_order_detail.model.Shop_order_detailVO;
+
 public class Shop_orderService {
 	
 	private Shop_orderDAO_interface dao;
@@ -48,4 +50,9 @@ public class Shop_orderService {
 		return dao.getSp_odnoByMb_id(mb_id);
 	}
 
+	synchronized public void addShop_orderWithShop_order_detail(
+			Shop_orderVO shop_orderVO ,
+			List<Shop_order_detailVO> list) {
+		dao.insertWithShop_order_details(shop_orderVO, list);
+	}	
 }

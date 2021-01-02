@@ -16,8 +16,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.sale_event.model.Sale_eventJDBCDAO;
-import com.shop_order_detail.model.Shop_order_detailVO;
-
+import com.shop_order_detail.model.*;
 
 public class Shop_orderDAO implements Shop_orderDAO_interface{
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
@@ -301,4 +300,84 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 		}
 		return list;
 	}
+	
+	public void insertWithShop_order_details(Shop_orderVO shop_orderVO , List<Shop_order_detailVO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+			
+    		// 先新增訂單主檔
+			String cols[] = {"sp_odno"};
+			pstmt = con.prepareStatement(INSERT_STMT , cols);
+			
+			pstmt.setString(1, shop_orderVO.getMb_id());
+			pstmt.setString(2, shop_orderVO.getSp_status());
+			pstmt.setDouble(3, shop_orderVO.getTotal_price());
+			pstmt.setInt(4, shop_orderVO.getPoints_total());
+			pstmt.setString(5, shop_orderVO.getRm_no());
+						
+			pstmt.executeUpdate();
+			//掘取對應的自增主鍵值
+			String next_sp_odno = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_sp_odno = rs.getString(1); //第1欄位
+				System.out.println("自增主鍵值= " + next_sp_odno);
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			// 再同時新增訂單明細
+			Shop_order_detailDAO dao = new Shop_order_detailDAO();
+			System.out.println("list.size()(執行前)="+list.size());
+			for (Shop_order_detailVO newShop_order_detail : list) {
+				newShop_order_detail.setSp_odno(next_sp_odno);
+				dao.insertWhenShop_orderInsert(newShop_order_detail,con);
+			}
+			
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("新增訂單主檔編號" + next_sp_odno + " ,共有訂單明細" + list.size()
+					+ "同時被新增");
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("訂單主檔錯誤，rolled back");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 }
