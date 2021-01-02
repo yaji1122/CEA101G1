@@ -22,6 +22,10 @@ public class RoomRsvService {
 		dao.update(bkitem, conn);
 	}
 	
+	public void cancelNupdateRmLeft(Integer stay, LocalDate startDate, String rmType, Connection conn) {
+		dao.cancel(stay, startDate, rmType, conn);
+	}
+	
 	public void deleteRsvDate(LocalDate rsvDate) {
 		dao.delete(rsvDate);
 	}

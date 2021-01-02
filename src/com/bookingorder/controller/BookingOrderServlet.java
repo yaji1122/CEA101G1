@@ -83,11 +83,10 @@ public class BookingOrderServlet extends HttpServlet {
 					bkodSvc.addBkOd(mb_id, dateIn, dateOut, totalPrice, dateGroup);
 				}
 				req.getSession().removeAttribute("bookingCart");
-				res.sendRedirect(req.getContextPath() + "/frontend/booking/bookingResult.jsp");
-			
+				res.sendRedirect(req.getContextPath() + "/frontend/roomrsv/bookingResult.jsp");
 			} catch (Exception e){
 				e.printStackTrace();
-				res.sendRedirect(req.getContextPath() + "/frontend/booking/bookingResult.jsp");
+				res.sendRedirect(req.getContextPath() + "/frontend/roomrsv/bookingResult.jsp");
 			} finally {
 				if (out != null) out.close();
 			}
@@ -118,6 +117,7 @@ public class BookingOrderServlet extends HttpServlet {
 			try {
 				String bk_no = req.getParameter("bk_no");
 				BookingOrderService bkodSvc = new BookingOrderService();
+				bkodSvc.cancelBooking(bk_no);
 				out.print("success");
 			} catch (Exception e){
 				e.printStackTrace();

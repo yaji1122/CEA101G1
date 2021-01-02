@@ -43,7 +43,7 @@ public class BookingOrderService {
 	}
 	
 	public void cancelBooking(String bk_no) {
-		
+		dao.cancel(bk_no);
 	}
 	
 	public List<BookingOrderVO> getAllBooking(){

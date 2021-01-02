@@ -113,7 +113,45 @@ public class RoomRsvDAO implements RoomRsvDAO_interface {
 			}
 		}
 	}
-
+	
+	@Override
+	public void cancel(Integer stay, LocalDate startDate, String rmType, Connection conn) {
+		PreparedStatement pstmt = null;
+		RoomRsvVO rsvvo = null;
+		try {
+			pstmt = conn.prepareStatement(UPDATE);
+			for (int i = 0; i < stay; i++) { //訂幾天，就更新幾天的資料
+				startDate = startDate.plusDays(i);
+				rsvvo = getOneByDateNRmType(startDate, rmType, conn); //取得該天該房型的資料
+				Integer rmLeft = rsvvo.getRm_left() + 1;
+				pstmt.setInt(1, rmLeft);
+				pstmt.setDate(2, java.sql.Date.valueOf(startDate));
+				pstmt.setString(3, rmType);
+				pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			if (conn != null) {
+				try {
+					System.err.print("有內鬼，交易撤回");
+					conn.rollback();
+				} catch (SQLException re){
+					throw new RuntimeException("rollback發生錯誤:" + re.getMessage());
+				}
+			}
+			e.printStackTrace();
+			throw new RuntimeException("A database error occured:" + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void delete(LocalDate rsvDate) {
 		Connection conn = null;

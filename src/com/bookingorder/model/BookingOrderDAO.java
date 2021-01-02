@@ -11,6 +11,7 @@ import javax.sql.*;
 import org.json.JSONObject;
 
 import com.bookingdetail.model.BookingDetailService;
+import com.bookingdetail.model.BookingDetailVO;
 import com.roomrsv.model.RoomRsvService;
 
 public class BookingOrderDAO implements BookingOrderDAO_interface {
@@ -112,6 +113,14 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 			pstmt.setString(1, "4");
 			pstmt.setString(2, bk_no);
 			pstmt.executeUpdate();
+			BookingDetailService bkdetailSvc = new BookingDetailService();
+			RoomRsvService rsvService = new RoomRsvService();
+			List<BookingDetailVO> bkdetailList = bkdetailSvc.getAllByBkNo(bk_no);
+			BookingOrderVO bkodvo = getOneByBkNo(bk_no);
+			Integer stay = bkodvo.getDateOut().compareTo(bkodvo.getDateIn());
+			for (BookingDetailVO bkdetailvo: bkdetailList) {
+				rsvService.cancelNupdateRmLeft(stay, bkodvo.getDateIn(), bkdetailvo.getRm_type(), conn);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
 		} finally {

@@ -26,7 +26,7 @@ public class BookingDetailDAO implements BookingDetailDAO_interface {
 		}
 	}
 
-	private static final String INSERT = "INSERT INTO BOOKING_DETAIL (BK_NO, RM_TYPE, RM_SUBTOTAL, RM_GUEST) VALUES (?, ?, ?, ?)";
+	private static final String INSERT = "INSERT INTO BOOKING_DETAIL (SEQ_NO, BK_NO, RM_TYPE, RM_SUBTOTAL, RM_GUEST) VALUES ('BKDT'|| LPAD(to_char(BKDT_SEQ.NEXTVAL), 6, '0'), ?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE BOOKING_DETAIL SET QTY = ? WHERE BK_NO = ? AND RM_TYPE = ?";
 	private static final String GETALLBYBKNO = "SELECT * FROM BOOKING_DETAIL WHERE BK_NO = ?";
 

@@ -3,6 +3,8 @@ package com.bookingdetail.model;
 import java.io.Serializable;
 
 public class BookingDetailVO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private String seq_no;
 	private String bk_no;
 	private String rm_type;
 	private Integer rm_subtotal;
@@ -40,8 +42,13 @@ public class BookingDetailVO implements Serializable {
 
 	public void setRm_guest(Integer rm_guest) {
 		this.rm_guest = rm_guest;
+	}
+
+	public String getSeq_no() {
+		return seq_no;
+	}
+
+	public void setSeq_no(String seq_no) {
+		this.seq_no = seq_no;
 	};
-	
-	
-	
 }

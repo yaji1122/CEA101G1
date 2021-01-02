@@ -10,6 +10,7 @@ import org.json.JSONObject;
 public interface RoomRsvDAO_interface {
 	public void insert(LocalDate rsvDate, Connection conn);
 	public void update(JSONObject bkitem, Connection conn);
+	public void cancel(Integer stay, LocalDate startDate, String rmType, Connection conn);
 	public void delete(LocalDate rsvDate);
 	public Integer roomCheck(LocalDate rsvDate, Integer stay, String rmType);
 	public RoomRsvVO getOneByDateNRmType(LocalDate rsvDate, String rm_ype, Connection conn);
