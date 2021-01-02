@@ -7,8 +7,6 @@
 <%@ page import="com.item_pics.model.*"%>
 <%@ page import="com.members.model.*"%>
 
-<%@ include file="/frontend/files/login.file"%>
-
 <%
 	ItemService itemSvc = new ItemService();
 	String item_no = request.getParameter("item_no");
@@ -18,10 +16,7 @@
 	List<ItemVO> list = itemSvc.getAllItem();
 	pageContext.setAttribute("list", list);
 %>
-<%
-	String md_id = "MEM0000003";
-	session.setAttribute("mb_id", md_id);
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,42 +26,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>Diamond Resort</title>
-<!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap"
-	rel="stylesheet" />
-<link
-	href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap"
-	rel="stylesheet" />
-<!-- Css Styles -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-	integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/elegant-icons.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/flaticon.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/owl.carousel.min.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/nice-select.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/jquery-ui.min.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/slicknav.min.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/template.css"
-	type="text/css" />
+<%@ include file="/frontend/files/commonCSS.file" %>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/slick.css">
 <link rel="stylesheet"
@@ -76,8 +36,22 @@
 	type="text/css" />
 
 </head>
+<%@ include file="/frontend/files/loginCSS.file" %>
 <body>
+	<%@ include file="/frontend/files/login.file" %>
 	<%@ include file="/frontend/files/loginbox.file"%>
+	
+ 	<% 
+	String mb_id = (String)session.getAttribute("mb_id");
+	if(member!=null){
+	mb_id = member.getMb_id();
+	System.out.println("mb_id = "+mb_id);
+	session.setAttribute("mb_id", mb_id);
+	} else {
+		
+	}
+ 	%> 
+	
 	<div class="back"></div>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -209,34 +183,28 @@
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="menu-item">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-3">
-						<div class="logo">
-							<a href="./index.html"> <img
-								src="${pageContext.request.contextPath}/img/logo.png" alt="" />
+			<div class="nav-menu">
+				<nav class="mainmenu">
+					<ul class="mainmenu-row">
+						<div class="logobox">
+							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
+								src="${pageContext.request.contextPath}/img/logo.png"/>
 							</a>
 						</div>
-					</div>
-					<div class="col-lg-9">
-						<div class="nav-menu">
-
-							<jsp:useBean id="item_typeSvc" scope="page"
-								class="com.item_type.model.Item_typeService" />
-
-							<nav class="mainmenu">
-								<ul>
-									<li class="active"><a
-										href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp">HOME</a></li>
-									<li><a class="nav-event">DIAMOND CLASSIC</a>
+						<li  class="nav-list"><a class="nav-event" href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp">HOME</a></li>
+						
+						<li class="nav-list">
+						<a class="nav-event">DIAMOND CLASSIC</a>
 										<ul class="dropdown">
 											<c:forEach var="item_typeVO"
 												items="${item_typeSvc.allItem_type}" begin="0" end="2">
 												<li value="${item_typeVO.item_type_no}" class="chtype"><a
 													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
 											</c:forEach>
-										</ul></li>
-									<li><a class="nav-event">GIFTS & SOUVENIR</a>
+										</ul>
+						</li>
+						
+						<li class="nav-list"><a class="nav-event">GIFTS & SOUVENIR</a>
 										<ul class="dropdown">
 											<c:forEach var="item_typeVO"
 												items="${item_typeSvc.allItem_type}" begin="3" end="5">
@@ -244,7 +212,8 @@
 													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
 											</c:forEach>
 										</ul></li>
-									<li><a class="nav-evnet">SEASONAL GOODS</a>
+						
+						<li class="nav-list"><a class="nav-evnet">SEASONAL GOODS</a>
 										<ul class="dropdown">
 											<c:forEach var="item_typeVO"
 												items="${item_typeSvc.allItem_type}" begin="6">
@@ -252,47 +221,30 @@
 													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
 											</c:forEach>
 										</ul></li>
-									<li><a
-										href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp"><i
-											class="fas fa-shopping-cart icon"></i></a></li>
-									<li class="nav-list"><a class="nav-event"> <c:choose>
-												<c:when test="${member != null}">
-													<i class="far fa-gem"></i>
-													</i>會員中心</a>
-										<ul class="dropdown">
-											<li><a
-												href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
-											<li><a href="#">我的假期</a></li>
-											<li><a href="#">歷史訂單</a></li>
-											<li><a
-												href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
-										</ul></li>
-									</c:when>
-									<c:otherwise>
-										<i class="fas fa-user-circle log-in"></i>
-										</a>
-									</c:otherwise>
-									</c:choose>
-									</li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</div>
+						
+						<li class="nav-list"><a class="nav-event" href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp"><i class="fas fa-shopping-cart icon" ></i></a></li>
+						
+						<li class="nav-list"><a class="nav-event"> <c:choose>
+									<c:when test="${member != null}"><i class="far fa-gem"></i></i>會員中心</a>
+							<ul class="dropdown">
+								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
+								<li><a href="#">我的假期</a></li>
+								<li><a href="#">歷史訂單</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
+							</ul></li>
+						</c:when>
+						<c:otherwise>
+							<i class="fas fa-user-circle log-in"></i>
+							</a>
+						</c:otherwise>
+						</c:choose>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
-		<div class="itemtypeheader">
-			<div id="itemtype">
-				<%
-					Item_typeVO item_typeVO = new Item_typeVO();
-				%>
-				<div id="itemtypename">${(item_type_no==null)? "ALL SELECTION":(item_typeSvc.getOneItem_type(item_type_no).type_name)}</div>
-				<div id="itemtypeno"><%=list.size()%>
-					PRODUCTS
-				</div>
-			</div>
-		</div>
-	
+
 	<div class="itemtypeheader">
 		<div id="itemtype">
 
@@ -401,16 +353,8 @@
 
 	<!-- Footer Section End -->
 	<!-- Js Plugins -->
-	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/slick.js"></script>
-	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
-	<script src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/template.js"></script>
-	<script src="${pageContext.request.contextPath}/js/sweetalert.js"></script>
+	<%@ include file="/frontend/files/commonJS.file" %>
+	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/shopdetail.js"></script>
-	<script src="${pageContext.request.contextPath}/js/front/main.js"></script>
 </body>
 </html>

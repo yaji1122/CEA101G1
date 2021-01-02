@@ -39,7 +39,6 @@
 	href="${pageContext.request.contextPath}/css/front/shoppage.css"
 	type="text/css" />
 
-
 </head>
 <%@ include file="/frontend/files/loginCSS.file" %>
 <body>

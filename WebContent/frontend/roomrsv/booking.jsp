@@ -1,248 +1,323 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.List" %>
-<%@ page import="com.roomrsv.model.*" %>
-<%@ page import="com.members.model.*" %>
-<%@ page import="com.roomtype.model.*" %>
-<%@ page import="org.json.JSONObject" %>
-<%@ include file="/frontend/files/login.file" %>
+<%@ page import="java.util.List"%>
+<%@ page import="com.roomrsv.model.*"%>
+<%@ page import="com.members.model.*"%>
+<%@ page import="com.roomtype.model.*"%>
+<%@ page import="org.json.JSONObject"%>
+<%@ include file="/frontend/files/login.file"%>
 <%
 List<RoomRsvVO> rsvvoList = (List<RoomRsvVO>)request.getAttribute("rsvvoList");
 pageContext.setAttribute("rsvvoList", rsvvoList);
 JSONObject infoJson = (JSONObject) request.getAttribute("infoJson");
 pageContext.setAttribute("infoJson", infoJson);
 %>
-<jsp:useBean id="rmtypeSvc" scope="page" class="com.roomtype.model.RoomTypeService"/>
-<jsp:useBean id="rmpicSvc" scope="page" class="com.roompic.model.RoomPicService"/>
+<jsp:useBean id="rmtypeSvc" scope="page"
+	class="com.roomtype.model.RoomTypeService" />
+<jsp:useBean id="rmpicSvc" scope="page"
+	class="com.roompic.model.RoomPicService" />
 <!DOCTYPE html>
 <html>
 <head>
-		<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/img/loading.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-            integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-            crossorigin="anonymous"
-        />
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/nice-select.css" />
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick-theme.css" />
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.css" />
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/style-for-all.css" />
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/booking.css" />
-        <title>戴蒙訂房系統</title>
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/img/loading.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+	integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/nice-select.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/slick-theme.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/slick.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/front/style-for-all.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/front/booking.css" />
+<title>戴蒙訂房系統</title>
 </head>
-<%@ include file="/frontend/files/loginCSS.file" %>
+<%@ include file="/frontend/files/loginCSS.file"%>
 <body>
-	<%@ include file="/frontend/files/loginbox.file" %>
- 	<!-- preloader -->
+	<%@ include file="/frontend/files/loginbox.file"%>
+	<!-- preloader -->
 	<div id="preloder">
 		<img id="preloaderpic"
 			src="${pageContext.request.contextPath}/img/loading.png" />
 		<div class="loader"></div>
 	</div>
-	 <!-- preloader -->
+	<!-- preloader -->
 	<div class="curtain"></div>
-        <header class="booking-header">
-            <div class="logo">
-                <img src="<%=request.getContextPath()%>/img/logo.png" alt="" />
-            </div>
-            <div class="shopping-cart">
-                <i class="fas fa-luggage-cart"></i>
-                <div class="counter">${bookingCart.size()}</div>
-            </div>
-            <div class="cart-list">
-                <h3 class="cart-list-title">預訂清單</h3>
-                <div class="cart-view-range">
-	                <c:forEach var="roomCard" items="${bookingCart}">
-	                <div class="room-in-cart" >
-	                    <div class="booking-date-div">
-	                        <img class="cart-list-icons" src="<%=request.getContextPath()%>/img/icon/calendar.png" />
-	                        <p class="booking-date">${roomCard.getString("startDate")} - ${roomCard.getString("leaveDate")}</p>
-	                    </div>
-	                    <div class="pic-in-cart">
-	                        <c:forEach var="rmtypepic" items="${rmpicSvc.getAllByRoomType(roomCard.getString('rmtype'))}" begin="0" end="0">
-	                            <div><img src="<%=request.getContextPath()%>/RoomPicServlet?rmpicno=${rmtypepic.rm_pic_no}&action=getOneRmPic" /></div>
-	                        </c:forEach>
-	                    </div>
-	                    <h2>${rmtypeSvc.getOne(roomCard.getString('rmtype')).type_name}</h2>
-	                    <br />
-	                    <img class="cart-list-icons" src="<%=request.getContextPath()%>/img/icon/user.png" />
-	                    <p>${roomCard.getString("guest")} 成人</p>
-	                    <hr />
-	                    <img class="cart-list-icons" src="<%=request.getContextPath()%>/img/icon/bed.png" />
-	                    <p>1 間套房</p>
-	                    <h3 class="single-price"><button data-rmtype="${roomCard.getString('rmtype')}" data-id="${roomCard.getString('roomCardId')}" class="delete-room-card">移除</button><span>價格小計：</span>USD\$${roomCard.getString("subtotal")}</h3>
-	                </div>
-	                </c:forEach>
-                </div>
-                <c:if test="${bookingCart == null}">
-                <h4 id="room-cart-empty">尚未選取商品</h4>
-                </c:if>
-                <h3 class="total-price">總價：<span>$</span></h3>
-                <a href="<%=request.getContextPath()%>/frontend/roomrsv/checkout.jsp" id="check-out">前往結賬</a>
-            </div>
-        </header>
-        <div class="banner-pic">
-            <img src="<%=request.getContextPath()%>/img/booking-bg.jpeg" alt="" />
-        </div>
-        <!-- 主頁面 -->
-        <div class="main-wrapper">
-            <div class="content">
-                <div class="available-rooms">
-                	<c:if test="${rsvvoList.size() == 0 }">
-                		<div class="no-room-available">
-                			<h2>指定日期無符合條件之空房</h2>
-                		</div>
-                	</c:if>
-                    <c:forEach var="rsvvo" items="${rsvvoList}">
-                    <div class="room-card">
-                        <div class="room-pic">
-                        	<c:forEach var="rmtypepic" items="${rmpicSvc.getAllByRoomType(rsvvo.rm_type)}">
-                            <div><img src="<%=request.getContextPath()%>/RoomPicServlet?rmpicno=${rmtypepic.rm_pic_no}&action=getOneRmPic" /></div>
-                            </c:forEach>
-                        </div>
-                        <div class="room-infos">
-                            <h3 class="room-title">${rmtypeSvc.getOne(rsvvo.rm_type).type_name}</h3>
-                            <div class="room-cap room-info"><i class="fas fa-users"></i> 1~${rmtypeSvc.getOne(rsvvo.rm_type).rm_capacity} Guest</div>
-                            <div class="room-space room-info"><i class="fas fa-expand-arrows-alt"></i> 220㎡</div>
-                            <div class="room-bed room-info"><i class="fas fa-bed"></i> King Size</div>
-                        </div>
-                        <div class="room-price">
-                            <p class="per-ppl">一晚每人<span>USD</span><span>${rmtypeSvc.getOne(rsvvo.rm_type).rm_price}</span></p>
-                            <%
+	<header class="booking-header">
+		<div class="member-section">
+			<c:choose>
+				<c:when test="${member != null}">
+					<i class="far fa-gem"></i>
+					<ul class="dropdown">
+						<li><a
+							href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
+						<li><a href="#">我的假期</a></li>
+						<li><a href="#">歷史訂單</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<i class="far fa-user log-in"></i>
+					<ul class="dropdown">
+						<li><a
+							href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">登入會員</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/frontend/registration.jsp">註冊會員</a></li>
+					</ul>
+
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div class="logo">
+			<img src="<%=request.getContextPath()%>/img/logo.png" alt="" />
+		</div>
+		<div class="shopping-cart">
+			<i class="fas fa-luggage-cart"></i>
+			<div class="counter">${bookingCart.size()}</div>
+		</div>
+		<div class="cart-list">
+			<h3 class="cart-list-title">預訂清單</h3>
+			<div class="cart-view-range">
+				<c:forEach var="roomCard" items="${bookingCart}">
+					<div class="room-in-cart">
+						<div class="booking-date-div">
+							<img class="cart-list-icons"
+								src="<%=request.getContextPath()%>/img/icon/calendar.png" />
+							<p class="booking-date">${roomCard.getString("startDate")}-
+								${roomCard.getString("leaveDate")}</p>
+						</div>
+						<div class="pic-in-cart">
+							<c:forEach var="rmtypepic"
+								items="${rmpicSvc.getAllByRoomType(roomCard.getString('rmtype'))}"
+								begin="0" end="0">
+								<div>
+									<img
+										src="<%=request.getContextPath()%>/RoomPicServlet?rmpicno=${rmtypepic.rm_pic_no}&action=getOneRmPic" />
+								</div>
+							</c:forEach>
+						</div>
+						<h2>${rmtypeSvc.getOne(roomCard.getString('rmtype')).type_name}</h2>
+						<br /> <img class="cart-list-icons"
+							src="<%=request.getContextPath()%>/img/icon/user.png" />
+						<p>${roomCard.getString("guest")}成人</p>
+						<hr />
+						<img class="cart-list-icons"
+							src="<%=request.getContextPath()%>/img/icon/bed.png" />
+						<p>1 間套房</p>
+						<h3 class="single-price">
+							<button data-rmtype="${roomCard.getString('rmtype')}"
+								data-id="${roomCard.getString('roomCardId')}"
+								class="delete-room-card">移除</button>
+							<span>價格小計：</span>USD\$${roomCard.getString("subtotal")}
+						</h3>
+					</div>
+				</c:forEach>
+			</div>
+			<c:if test="${bookingCart == null}">
+				<h4 id="room-cart-empty">尚未選取商品</h4>
+			</c:if>
+			<h3 class="total-price">
+				總價：<span>$</span>
+			</h3>
+			<a
+				href="<%=request.getContextPath()%>/frontend/roomrsv/checkout.jsp?<%=request.getQueryString()%>"
+				id="check-out">前往結賬</a>
+		</div>
+	</header>
+	<div class="banner-pic">
+		<img src="<%=request.getContextPath()%>/img/booking-bg.jpeg" alt="" />
+	</div>
+	<!-- 主頁面 -->
+	<div class="main-wrapper">
+		<div class="content">
+			<div class="available-rooms">
+				<c:if test="${rsvvoList.size() == 0 }">
+					<div class="no-room-available">
+						<h2>指定日期無符合條件之空房</h2>
+					</div>
+				</c:if>
+				<c:forEach var="rsvvo" items="${rsvvoList}">
+					<div class="room-card">
+						<div class="room-pic">
+							<c:forEach var="rmtypepic"
+								items="${rmpicSvc.getAllByRoomType(rsvvo.rm_type)}">
+								<div>
+									<img
+										src="<%=request.getContextPath()%>/RoomPicServlet?rmpicno=${rmtypepic.rm_pic_no}&action=getOneRmPic" />
+								</div>
+							</c:forEach>
+						</div>
+						<div class="room-infos">
+							<h3 class="room-title">${rmtypeSvc.getOne(rsvvo.rm_type).type_name}</h3>
+							<div class="room-cap room-info">
+								<i class="fas fa-users"></i>
+								1~${rmtypeSvc.getOne(rsvvo.rm_type).rm_capacity} Guest
+							</div>
+							<div class="room-space room-info">
+								<i class="fas fa-expand-arrows-alt"></i> 220㎡
+							</div>
+							<div class="room-bed room-info">
+								<i class="fas fa-bed"></i> King Size
+							</div>
+						</div>
+						<div class="room-price">
+							<p class="per-ppl">
+								一晚每人<span>USD</span><span>${rmtypeSvc.getOne(rsvvo.rm_type).rm_price}</span>
+							</p>
+							<%
                             Integer stay = Integer.parseInt(infoJson.getString("stay"));
                             Integer guest = Integer.parseInt(infoJson.getString("guest"));
                             pageContext.setAttribute("stayxguest", stay*guest);
                             pageContext.setAttribute("stay", stay);
                             pageContext.setAttribute("guest", guest);
                             %>
-                            <h4>
-                                此為<%=stay%>晚1間的總計<span>USD$</span><span class="subtotal">${rmtypeSvc.getOne(rsvvo.rm_type).rm_price * stayxguest}</span
-                                ><span class="etc">＊價格已含稅,服務費</span>
-                            </h4>
-                            <div class="room-left">
-                                <div>
-                                    <i class="fas fa-exclamation-circle"></i>
-                                    <p>尚餘<span class="room-left-number">${rsvvo.rm_left}</span>間客房</p>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="room-intro">
-                            <p>
-                                ${rmtypeSvc.getOne(rsvvo.rm_type).rm_info}
-                            </p>
-                        </div>
-                        <div class="room-checkout">
-                            <button class="add-to-cart" data-rmtype="${rsvvo.rm_type}" data-label="加入預定"></button>
-                        </div>
-                        <div class="check-room-detail">
-                            <p>房間詳情與服務</p>
-                            <img src="<%=request.getContextPath()%>/img/icon/down-arrow.png" alt="" />
-                        </div>
-                        <div class="room-detail">
-                            <div class="details">
-                                <img src="<%=request.getContextPath()%>/img/icon/bed.png" alt="" />
-                                <div>
-                                    <p><b>床型</b></p>
-                                    <p>
-                                        床1　200 x110cm　西式房間1 <br />床1　200 x110cm　西式房間1<br />
-                                        床1　200 x110cm　西式房間1
-                                    </p>
-                                    <p class="etc">
-                                        *如有需要，能夠更換成大床被褥（King-size、1套），請事先申請交換，入住當天申請的交換需額外收費。
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="details">
-                                <img src="<%=request.getContextPath()%>/img/icon/wifi.png" alt="" />
-                                <div>
-                                    <p><b>Wi-Fi上網</b></p>
-                                    <p>於所有客房和於部分公用區域提供：免費WiFi</p>
-                                </div>
-                            </div>
-                            <div class="details">
-                                <img src="<%=request.getContextPath()%>/img/icon/support.png" alt="" />
-                                <div>
-                                    <p><b>服務設施</b></p>
-                                    <p>
-                                        閱讀書燈、熱飲電壺、迷你吧、保險箱、館內服、睡衣、拖鞋、牙刷、沐浴備品、化妝水、毛巾、吹風機
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="details">
-                                <img src="<%=request.getContextPath()%>/img/icon/shower.png" alt="" />
-                                <div>
-                                    <p><b>衛浴設備</b></p>
-                                    <p>半露天浴池、雙浴室水槽、浴缸、淋浴房、浴室/廁所分設、免治馬桶</p>
-                                </div>
-                            </div>
-                            <div class="details">
-                                <img src="<%=request.getContextPath()%>/img/icon/more.png" alt="" />
-                                <div>
-                                    <p><b>其他</b></p>
-                                    <p>
-                                        本飯店全區域禁止吸煙。 圖像・平面圖僅供參考。
-                                        我們無法接受特定房間的預約,請您見諒。 訂房後不可更改人數。
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </c:forEach>
-                </div>
-                
-                <div class="variables">
-                    <div class="selects">
-                        <div class="guest-select">
-                            <img src="<%=request.getContextPath()%>/img/icon/user.png" />
-                            <select name="guest" id="guest" class="wide">
-                                <option value="2" <c:if test="${guest == 2}"> selected</c:if> >2位成人</option>
-                                <option value="3" <c:if test="${guest == 3}"> selected</c:if> >3位成人</option>
-                                <option value="4" <c:if test="${guest == 4}"> selected</c:if> >4位成人</option>
-                                <option value="5" <c:if test="${guest == 5}"> selected</c:if> >5位成人</option>
-                                <option value="6" <c:if test="${guest == 6}"> selected</c:if> >6位成人</option>
-                            </select>
-                        </div>
-                        <div class="stay-select">
-                            <img src="<%=request.getContextPath()%>/img/icon/moon.png" />
-                            <select name="stay" id="stay" class="wide">
-                                <option value="1" <c:if test="${stay == 1}"> selected</c:if> >1晚</option>
-                                <option value="2" <c:if test="${stay == 2}"> selected</c:if> >2晚</option>
-                                <option value="3" <c:if test="${stay == 3}"> selected</c:if> >3晚</option>
-                                <option value="4" <c:if test="${stay == 4}"> selected</c:if> >4晚</option>
-                                <option value="5" <c:if test="${stay == 5}"> selected</c:if> >5晚</option>
-                                <option value="6" <c:if test="${stay == 6}"> selected</c:if> >6晚</option>
-                                <option value="7" <c:if test="${stay == 7}"> selected</c:if> >7晚</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="chosen-date">
-                        <p> <%=infoJson.getString("startDate")%>  - <%=infoJson.getString("leaveDate")%></p>
-                    </div>
-                    <hr />
-                    <div class="side-calendar">
-                        <p>戴蒙度假村  價格·空房檢索</p>
-                        <button class="calendar-backward arrow">
-                            <img src="<%=request.getContextPath()%>/img/icon/up-chevron.png" />
-                        </button>
-                        <div class="view">
-                            <div id="display"></div>
-                        </div>
-                        <button class="calendar-forward arrow">
-                            <img src="<%=request.getContextPath()%>/img/icon/down-chevron.png" />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
-        <script src="<%=request.getContextPath()%>/js/jquery.nice-select.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
-        <script src="<%=request.getContextPath()%>/js/front/main.js"></script>
-        <script>
+							<h4>
+								此為<%=stay%>晚1間的總計<span>USD$</span><span class="subtotal">${rmtypeSvc.getOne(rsvvo.rm_type).rm_price * stayxguest}</span><span
+									class="etc">＊價格已含稅,服務費</span>
+							</h4>
+							<div class="room-left">
+								<div>
+									<i class="fas fa-exclamation-circle"></i>
+									<p>
+										尚餘<span class="room-left-number">${rsvvo.rm_left}</span>間客房
+									</p>
+								</div>
+							</div>
+						</div>
+						<hr />
+						<div class="room-intro">
+							<p>${rmtypeSvc.getOne(rsvvo.rm_type).rm_info}</p>
+						</div>
+						<div class="room-checkout">
+							<button class="add-to-cart" data-rmtype="${rsvvo.rm_type}"
+								data-label="加入預定"></button>
+						</div>
+						<div class="check-room-detail">
+							<p>房間詳情與服務</p>
+							<img src="<%=request.getContextPath()%>/img/icon/down-arrow.png"
+								alt="" />
+						</div>
+						<div class="room-detail">
+							<div class="details">
+								<img src="<%=request.getContextPath()%>/img/icon/bed.png" alt="" />
+								<div>
+									<p>
+										<b>床型</b>
+									</p>
+									<p>
+										床1 200 x110cm 西式房間1 <br />床1 200 x110cm 西式房間1<br /> 床1 200
+										x110cm 西式房間1
+									</p>
+									<p class="etc">
+										*如有需要，能夠更換成大床被褥（King-size、1套），請事先申請交換，入住當天申請的交換需額外收費。</p>
+								</div>
+							</div>
+							<div class="details">
+								<img src="<%=request.getContextPath()%>/img/icon/wifi.png"
+									alt="" />
+								<div>
+									<p>
+										<b>Wi-Fi上網</b>
+									</p>
+									<p>於所有客房和於部分公用區域提供：免費WiFi</p>
+								</div>
+							</div>
+							<div class="details">
+								<img src="<%=request.getContextPath()%>/img/icon/support.png"
+									alt="" />
+								<div>
+									<p>
+										<b>服務設施</b>
+									</p>
+									<p>閱讀書燈、熱飲電壺、迷你吧、保險箱、館內服、睡衣、拖鞋、牙刷、沐浴備品、化妝水、毛巾、吹風機</p>
+								</div>
+							</div>
+							<div class="details">
+								<img src="<%=request.getContextPath()%>/img/icon/shower.png"
+									alt="" />
+								<div>
+									<p>
+										<b>衛浴設備</b>
+									</p>
+									<p>半露天浴池、雙浴室水槽、浴缸、淋浴房、浴室/廁所分設、免治馬桶</p>
+								</div>
+							</div>
+							<div class="details">
+								<img src="<%=request.getContextPath()%>/img/icon/more.png"
+									alt="" />
+								<div>
+									<p>
+										<b>其他</b>
+									</p>
+									<p>本飯店全區域禁止吸煙。 圖像・平面圖僅供參考。 我們無法接受特定房間的預約,請您見諒。 訂房後不可更改人數。</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+
+			<div class="variables">
+				<div class="selects">
+					<div class="guest-select">
+						<img src="<%=request.getContextPath()%>/img/icon/user.png" /> <select
+							name="guest" id="guest" class="wide">
+							<option value="2" <c:if test="${guest == 2}"> selected</c:if>>2位成人</option>
+							<option value="3" <c:if test="${guest == 3}"> selected</c:if>>3位成人</option>
+							<option value="4" <c:if test="${guest == 4}"> selected</c:if>>4位成人</option>
+							<option value="5" <c:if test="${guest == 5}"> selected</c:if>>5位成人</option>
+							<option value="6" <c:if test="${guest == 6}"> selected</c:if>>6位成人</option>
+						</select>
+					</div>
+					<div class="stay-select">
+						<img src="<%=request.getContextPath()%>/img/icon/moon.png" /> <select
+							name="stay" id="stay" class="wide">
+							<option value="1" <c:if test="${stay == 1}"> selected</c:if>>1晚</option>
+							<option value="2" <c:if test="${stay == 2}"> selected</c:if>>2晚</option>
+							<option value="3" <c:if test="${stay == 3}"> selected</c:if>>3晚</option>
+							<option value="4" <c:if test="${stay == 4}"> selected</c:if>>4晚</option>
+							<option value="5" <c:if test="${stay == 5}"> selected</c:if>>5晚</option>
+							<option value="6" <c:if test="${stay == 6}"> selected</c:if>>6晚</option>
+							<option value="7" <c:if test="${stay == 7}"> selected</c:if>>7晚</option>
+						</select>
+					</div>
+				</div>
+				<div class="chosen-date">
+					<p>
+						<%=infoJson.getString("startDate")%>
+						-
+						<%=infoJson.getString("leaveDate")%></p>
+				</div>
+				<hr />
+				<div class="side-calendar">
+					<p>戴蒙度假村 價格·空房檢索</p>
+					<button class="calendar-backward arrow">
+						<img src="<%=request.getContextPath()%>/img/icon/up-chevron.png" />
+					</button>
+					<div class="view">
+						<div id="display"></div>
+					</div>
+					<button class="calendar-forward arrow">
+						<img src="<%=request.getContextPath()%>/img/icon/down-chevron.png" />
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/js/jquery.nice-select.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/front/main.js"></script>
+	<script>
         $(document).ready(function () {
         	<%
         		List<JSONObject> bookingCart = (List<JSONObject>) session.getAttribute("bookingCart");

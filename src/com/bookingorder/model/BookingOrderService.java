@@ -1,7 +1,9 @@
 package com.bookingorder.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+
+import org.json.JSONObject;
 
 public class BookingOrderService {
 	private BookingOrderDAO_interface dao;
@@ -10,17 +12,17 @@ public class BookingOrderService {
 		dao = new BookingOrderDAO();
 	}
 	
-	public BookingOrderVO addBkOd(String mb_id, Date dateIn, Date dateOut, Integer total_price) {
+	public BookingOrderVO addBkOd(String mb_id, LocalDate dateIn, LocalDate dateOut, Integer total_price, List<JSONObject> dateGroup) {
 		BookingOrderVO bkodvo = new BookingOrderVO();
 		bkodvo.setMb_id(mb_id);
 		bkodvo.setDateIn(dateIn);
 		bkodvo.setDateOut(dateOut);
 		bkodvo.setTotal_price(total_price);
-		bkodvo = dao.insert(bkodvo);
+		bkodvo = dao.insert(bkodvo, dateGroup);
 		return bkodvo;
 	}
 	
-	public void updateDateInOut(String bk_no, Date dateIn, Date dateOut) {
+	public void updateDateInOut(String bk_no, LocalDate dateIn, LocalDate dateOut) {
 		BookingOrderVO bkodvo = new BookingOrderVO();
 		bkodvo.setBk_no(bk_no);
 		bkodvo.setDateIn(dateIn);
@@ -40,6 +42,10 @@ public class BookingOrderService {
 		dao.updateOrderPaid(bk_no);
 	}
 	
+	public void cancelBooking(String bk_no) {
+		dao.cancel(bk_no);
+	}
+	
 	public List<BookingOrderVO> getAllBooking(){
 		return dao.getAll();
 	}
@@ -48,7 +54,7 @@ public class BookingOrderService {
 		return dao.getAllByBkStatus(bk_status);
 	}
 	
-	public List<BookingOrderVO> getAllByDateIn(Date dateIn){
+	public List<BookingOrderVO> getAllByDateIn(LocalDate dateIn){
 		return dao.getAllByDateIn(dateIn);
 	}
 	

@@ -1,6 +1,11 @@
 package com.bookingdetail.model;
 
+import java.sql.Connection;
 import java.util.List;
+
+import org.json.JSONObject;
+
+import com.bookingorder.model.BookingOrderVO;
 
 public class BookingDetailService {
 	private BookingDetailDAO_interface dao;
@@ -9,24 +14,11 @@ public class BookingDetailService {
 		dao = new BookingDetailDAO();
 	}
 	
-	public BookingDetailVO addBkDetail(String bk_no, String rm_type, Integer rm_price, Integer qty) {
+	public BookingDetailVO addBkDetail(BookingOrderVO bkodvo, JSONObject bkitem, Connection conn) {
 		BookingDetailVO bkdetailvo = new BookingDetailVO();
-		bkdetailvo.setBk_no(bk_no);
-		bkdetailvo.setRm_type(rm_type);
-		bkdetailvo.setRm_price(rm_price);
-		bkdetailvo.setQty(qty);
-		dao.insert(bkdetailvo);
+		dao.insert(bkodvo, bkitem, conn);
 		return bkdetailvo;
-	}
-	
-	public BookingDetailVO updateBkDetail(String bk_no, String rm_type, Integer qty) {
-		BookingDetailVO bkdetailvo = new BookingDetailVO();
-		bkdetailvo.setBk_no(bk_no);
-		bkdetailvo.setRm_type(rm_type);
-		bkdetailvo.setQty(qty);
-		dao.update(bkdetailvo);
-		return bkdetailvo;
-	}
+	}  
 	
 	public List<BookingDetailVO> getAllByBkNo(String bk_no) {
 		return dao.getAllByBkNo(bk_no);

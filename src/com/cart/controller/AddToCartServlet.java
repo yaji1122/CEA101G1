@@ -16,43 +16,50 @@ import com.cart.model.CartItem;
 public class AddToCartServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
-	}	
+	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
-		Vector<CartItem> buylist = (Vector<CartItem>)session.getAttribute("cart");
+		Vector<CartItem> buylist = (Vector<CartItem>) session.getAttribute("cart");
 		String action = req.getParameter("action");
-		
-		if("addToCart".equals(action)) {
-			boolean match = false;
-			CartItem acartItem = getCartItem(req);
-			
-			if (buylist == null) {
-				buylist = new Vector<CartItem>();
-				buylist.add(acartItem);
-			}else {
-				for(int i = 0; i < buylist.size(); i++) {
-					CartItem cartItem = buylist.get(i);
-					if (cartItem.getItem_name().equals(acartItem.getItem_name())) {
-						cartItem.setQuantity(cartItem.getQuantity() + acartItem.getQuantity());
-						cartItem.setPrice(cartItem.getPrice() + acartItem.getPrice());
-						buylist.setElementAt(cartItem, i);
-						match = true;
-					}
-				}
-				
-				if(!match) {
+
+		if (!"CHECKOUT".equals(action)) {
+			if ("DELETE".equals(action)) {
+				String del = req.getParameter("del");
+				int d = Integer.parseInt(del);
+				buylist.removeElementAt(d);
+			} 
+			else if ("addToCart".equals(action)) {
+				boolean match = false;
+				CartItem acartItem = getCartItem(req);
+
+				if (buylist == null) {
+					buylist = new Vector<CartItem>();
 					buylist.add(acartItem);
+				} else {
+					for (int i = 0; i < buylist.size(); i++) {
+						CartItem cartItem = buylist.get(i);
+						if (cartItem.getItem_name().equals(acartItem.getItem_name())) {
+							cartItem.setQuantity(cartItem.getQuantity() + acartItem.getQuantity());
+							cartItem.setPrice(cartItem.getPrice() + acartItem.getPrice());
+							buylist.setElementAt(cartItem, i);
+							match = true;
+						}
+					}
+
+					if (!match) {
+						buylist.add(acartItem);
+					}
 				}
 			}
 			session.setAttribute("cart", buylist);
-			String url = "/frontend/meal.jsp";
+			String url = "/frontend/meal/meal.jsp";
 			RequestDispatcher dispatcher = req.getRequestDispatcher(url);
 			dispatcher.forward(req, res);
 		}
 	}
-	
+
 	private CartItem getCartItem(HttpServletRequest req) {
 		String item_name = req.getParameter("item_name");
 		Integer quantity = (new Integer(req.getParameter("quantity")).intValue());

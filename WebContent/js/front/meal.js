@@ -15,6 +15,11 @@ $(".close-display-box").click(function() {
 });
 })
 
+$(".display-close").click(function(){
+    $(".shopping-cart-box").removeClass("display-box-show");
+    $(".black").css("display", "none");
+})
+
 $(".display-qty").each(function(index){
 $("#display-icon-plus" + index + "").click(function(e) {
 	e.preventDefault();
@@ -63,7 +68,14 @@ $("#display-icon-minus" + index + "").click(function(e) {
   });
 })
 
-
+$(function(){
+	var totalprice = 0;
+	$(".cart-name").each(function(index){
+		var price = parseInt($("#cart-price" + index + "").html());	
+		totalprice = totalprice + price;
+	})
+	$("#totalprice").html(totalprice);
+})
 
   $(".hover").mouseleave(
     function () {

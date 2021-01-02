@@ -72,7 +72,7 @@ button {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     width: 400px;
     height: 100%;
     -webkit-transition: -webkit-transform 1.2s ease-in-out;
@@ -81,7 +81,6 @@ button {
     transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
     padding: 50px 30px 0;
 }
-
 .sub-cont {
     overflow: hidden;
     position: absolute;
@@ -236,8 +235,10 @@ button {
 
 .cont h2 {
     width: 100%;
-    font-size: 26px;
     text-align: center;
+    font-weight:400;
+	letter-spacing:2px;
+	font-size:18px;
 }
 
 .cont p {
@@ -318,13 +319,17 @@ button {
     border-bottom: 2px solid rgba(0, 0, 0, 1);
 }
 
-.forgot-pass {
+.cont .forgot-pass {
     margin-top: 15px;
     text-align: center;
     font-size: 12px;
-    color: #000000;
+    
+    
 }
-
+.cont .forgot-pass a {
+	color: #000000;
+	text-decoration:none;
+}
 .forgot-pass a:hover {
     color: #8f4040;
 }
@@ -381,5 +386,6 @@ button.login-button {
     border: 1px solid black;
     border-radius: 20px;
     margin: 0 auto;
+    cursor:pointer;
 }
 </style>

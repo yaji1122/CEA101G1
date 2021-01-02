@@ -15,6 +15,12 @@ import com.shop_order_detail.model.Shop_order_detailVO;
 
 
 public class Shop_orderJDBCDAO implements Shop_orderDAO_interface{
+	@Override
+	public void insertWithShop_order_details(Shop_orderVO shop_orderVO, List<Shop_order_detailVO> list) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "shop";

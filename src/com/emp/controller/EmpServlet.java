@@ -172,12 +172,14 @@ public class EmpServlet extends HttpServlet {
 
 				//修改完成, 準備轉交
 				req.setAttribute("empVO",empVO);
-				System.out.println(emp_id);
-				//開始修改權限資料 
-				AuthService authSvc = new AuthService();	
-//				System.out.println("functions.length = " + functions.length);
-        		for (int i = 0; i < functions.length; i++) {
-//        			System.out.println("for i" + i)        			
+
+				//先刪除資料庫權限的所有資料
+				AuthService authSvc = new AuthService();
+                authSvc.deleteAllAuth(emp_id);
+				
+                //再開始新增選取的權限資料 
+
+        		for (int i = 0; i < functions.length; i++) {     			
                 	authSvc.addAuth(emp_id, functions[i]);}
 				
 				String url = "/backend/emp/protected/listOneEmp.jsp";
@@ -478,7 +480,7 @@ public class EmpServlet extends HttpServlet {
 			//使session失效
 		    session.invalidate();
 		    //重導至login網頁
-		    res.sendRedirect(req.getContextPath()+"/backend/emp/loginEmp.jsp");
+		    res.sendRedirect(req.getContextPath()+"/loginEmp.jsp");
 		}
 		
 		if ("UpdateOneByEmp".contentEquals(action)) {//來自listAllEmp.jsp的請求
@@ -501,7 +503,7 @@ public class EmpServlet extends HttpServlet {
 				//其他可能之錯誤處理
 			} catch(Exception e) {
 				errorMsgs.add("無法取得要修改的資料" + e.getMessage());
-				RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/protected/Backend.jsp");
+				RequestDispatcher failureView =req.getRequestDispatcher("/backend/backend_index.jsp");
 				failureView.forward(req,res);
 			}
 		}
@@ -593,7 +595,7 @@ public class EmpServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/emp/protected/Backend.jsp");
+							.getRequestDispatcher("/backend/backend_index.jsp");
 					failureView.forward(req, res);
 					return;
 					}
@@ -606,7 +608,7 @@ public class EmpServlet extends HttpServlet {
 				req.setAttribute("empVO",empVO);
 				System.out.println(emp_id);
 				
-				String url = "/backend/emp/protected/listOneEmp.jsp";
+				String url = "/backend/backend_index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req,res);
 				//其他可能的錯誤處理
@@ -614,7 +616,7 @@ public class EmpServlet extends HttpServlet {
 		        	errorMsgs.add("修改資料失敗:");
 		        	e.printStackTrace();
 		        	req.setAttribute("empVO", empVO);
-		        	RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/protected/Backend.jsp");
+		        	RequestDispatcher failureView =req.getRequestDispatcher("/backend/backend_index.jsp");
 		        	failureView.forward(req, res);
 		        	}
 		        }

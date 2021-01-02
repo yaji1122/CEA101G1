@@ -37,7 +37,7 @@ body {
 	background-color: black;
 	z-index: 999;
 	width: 100%;
-	height: 100%;
+	height: -webkit-fill-available;
 	margin-top: -77px;
 	position: fixed;
 	opacity: 0.7;
@@ -70,7 +70,7 @@ body {
 }
 
 .img-slide {
-	margin-top: 77px;
+	margin-top: -18.7px;
 	width: 100%;
 	height: 400px;
 }
@@ -116,6 +116,16 @@ body {
 	z-index: 1;
 }
 
+.shopping-cart-icon{
+	margin-left: 93%;
+	margin-top: 26px;
+    font-size: 25px;
+}
+
+.shopping-cart-icon:hover{
+	cursor: pointer;
+}
+
 .scrollspy-example {
 	position: relative;
 }
@@ -124,7 +134,7 @@ body {
 	display: block;
 	padding-right: 16px;
 	padding-left: 16px;
-	margin-top: 100px;
+	margin-top: 10px;
 }
 
 .type-box {
@@ -142,7 +152,7 @@ body {
 
 .card-wrapper {
 	display: block;
-	margin-top: 20px;
+	margin-top: -70px;
 }
 
 .card-box {
@@ -271,6 +281,7 @@ body {
 .display-button-word {
 	text-align: center;
 	color: white;
+	margin-top: 10px;
 }
 
 .display-icon-plus {

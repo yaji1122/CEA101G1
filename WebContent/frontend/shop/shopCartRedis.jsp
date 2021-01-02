@@ -8,8 +8,6 @@
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.shoppingCart.model.*"%>
 
-<%@ include file="/frontend/files/login.file" %>
-
 <%
 	ItemService itemSvc = new ItemService();
 	String item_type_no = request.getParameter("item_type_no");
@@ -23,8 +21,8 @@
 	pageContext.setAttribute("item_type_no", item_type_no);
 %>
 <%	
-	String user_session_id=(String)session.getAttribute("user_session_id");
- 	String mb_id=(String)session.getAttribute("mb_id");
+// 	String user_session_id=(String)session.getAttribute("user_session_id");
+//  	String mb_id=(String)session.getAttribute("mb_id");
 // String mb_id="MEM0000003";
 // 	MembersService membersSvc = new MembersService();
 // 	MembersVO membersVO=null;
@@ -44,42 +42,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>Diamond Resort</title>
-<!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap"
-	rel="stylesheet" />
-<link
-	href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap"
-	rel="stylesheet" />
-<!-- Css Styles -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-	integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/elegant-icons.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/flaticon.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/owl.carousel.min.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/nice-select.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/jquery-ui.min.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/slicknav.min.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/template.css"
-	type="text/css" />
+
+<%@ include file="/frontend/files/commonCSS.file" %>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/slick.css">
 <link rel="stylesheet"
@@ -88,11 +52,24 @@
 	href="${pageContext.request.contextPath}/css/front/shoppage.css"
 	type="text/css" />
 
-
 </head>
-
+<%@ include file="/frontend/files/loginCSS.file" %>
 <body>
+	<%@ include file="/frontend/files/login.file" %>
 	<%@ include file="/frontend/files/loginbox.file" %>
+	
+	<%
+	
+	String mb_id = (String)session.getAttribute("mb_id");
+	if(member!=null){
+	mb_id = member.getMb_id();
+	System.out.println("mb_id = "+mb_id);
+	session.setAttribute("mb_id", mb_id);
+	} else {
+		
+	}
+	%>
+	
 	<div class="back"></div>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -168,34 +145,28 @@
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="menu-item">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-3">
-						<div class="logo">
-							<a href="./index.html"> <img
-								src="${pageContext.request.contextPath}/img/logo.png" alt="" />
+			<div class="nav-menu">
+				<nav class="mainmenu">
+					<ul class="mainmenu-row">
+						<div class="logobox">
+							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
+								src="${pageContext.request.contextPath}/img/logo.png"/>
 							</a>
 						</div>
-					</div>
-					<div class="col-lg-9">
-						<div class="nav-menu">
-
-							<jsp:useBean id="item_typeSvc" scope="page"
-								class="com.item_type.model.Item_typeService" />
-
-							<nav class="mainmenu">
-								<ul>
-									<li class="active"><a
-										href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp">HOME</a></li>
-									<li><a class="nav-event">DIAMOND CLASSIC</a>
+						<li  class="nav-list"><a class="nav-event" href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp">HOME</a></li>
+						
+						<li class="nav-list">
+						<a class="nav-event">DIAMOND CLASSIC</a>
 										<ul class="dropdown">
 											<c:forEach var="item_typeVO"
 												items="${item_typeSvc.allItem_type}" begin="0" end="2">
 												<li value="${item_typeVO.item_type_no}" class="chtype"><a
 													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
 											</c:forEach>
-										</ul></li>
-									<li><a class="nav-event">GIFTS & SOUVENIR</a>
+										</ul>
+						</li>
+						
+						<li class="nav-list"><a class="nav-event">GIFTS & SOUVENIR</a>
 										<ul class="dropdown">
 											<c:forEach var="item_typeVO"
 												items="${item_typeSvc.allItem_type}" begin="3" end="5">
@@ -203,7 +174,8 @@
 													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
 											</c:forEach>
 										</ul></li>
-									<li><a class="nav-evnet">SEASONAL GOODS</a>
+						
+						<li class="nav-list"><a class="nav-evnet">SEASONAL GOODS</a>
 										<ul class="dropdown">
 											<c:forEach var="item_typeVO"
 												items="${item_typeSvc.allItem_type}" begin="6">
@@ -211,8 +183,10 @@
 													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
 											</c:forEach>
 										</ul></li>
-									<li><a href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp"><i class="fas fa-shopping-cart icon" ></i></a></li>
-									<li class="nav-list"><a class="nav-event"> <c:choose>
+						
+						<li class="nav-list"><a class="nav-event" href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp"><i class="fas fa-shopping-cart icon" ></i></a></li>
+						
+						<li class="nav-list"><a class="nav-event"> <c:choose>
 									<c:when test="${member != null}"><i class="far fa-gem"></i></i>會員中心</a>
 							<ul class="dropdown">
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
@@ -220,19 +194,18 @@
 								<li><a href="#">歷史訂單</a></li>
 								<li><a
 									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
-							</ul>
+							</ul></li>
 						</c:when>
 						<c:otherwise>
 							<i class="fas fa-user-circle log-in"></i>
 							</a>
 						</c:otherwise>
 						</c:choose>
-						</li>	
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</div>
+						</li>
+						
+
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</header>
@@ -261,7 +234,7 @@
 						ItemVO order = RedisBuylist.get(index);
 						total += (cartSvc.getValueByItem_no(mb_id, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price());
 					%>
-						<tr>
+						<tr class="itBorTop">
 							<td>
 								<label class="checklabel">
 									<input id="boxchecked<%= index %>" type="checkbox" name="checkact" value="<%= index %>">
@@ -271,27 +244,26 @@
 								</label>
 							</td>
 							<td class="imgframe"><img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"></td>
-							<td>
+						<td>
 								<div class="cartborderFi">
 									<div class="cartItemName"><%=itemSvc.getOneItem(order.getItem_no()).getItem_name()%></div>
-									<div class="cartItemPrice"><span>$ </span><%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%></div>
 									<div class="number-input">
-									
-										<img id="btn<%= index %>" class="addqua" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" src="<%=request.getContextPath()%>/frontend/shop/images/plus.png">
-										<input id="qty<%= index %>" class="quantity" min="0" name="qty" value="<%=cartSvc.getValueByItem_no(mb_id, order.getItem_no())%>" type="number">
-										<img id="btn<%= index + "_1" %>" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" src="<%=request.getContextPath()%>/frontend/shop/images/minus.png" class="plus">
-										
+                                           <!--數量選單 -->
+                                         <div class="qIn">																							
+                                         	<span id="btn<%= index + "_1" %>" class="minusIn" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ><i class="fas fa-minus"></i></span>
+											<input id="qty<%= index %>" class="quantity" min="0" name="quantity" value="<%=cartSvc.getValueByItem_no(mb_id, order.getItem_no())%>" type="number">						
+											<span id="btn<%= index %>" class="plusIn" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i class="fas fa-plus"></i></span>
+										</div>  
 									    <input type="hidden" name="action"  value="deleteSelected"> 
 										<input type="hidden" name="item_no"  value="<%=order.getItem_no()%>"> 
 										<input type="hidden" name="item_price"  value="<%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%>"> 
 										<input type="hidden" name="quantity" value="1" id="qty<%= index + "_1"%>">
-										<input type="button" value="刪 除" class="button" 
-											onclick="location.href='<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=DELETE&del=<%=index%>&item_no=<%=order.getItem_no()%>&quantity=<%=cartSvc.getValueByItem_no(mb_id, order.getItem_no())%>'" >
-									
-									</div>	
-									
+										<input type="hidden" name="points" value="<%=itemSvc.getOneItem(order.getItem_no()).getPoints()%>" >
+										<input type="button" value="刪 除" class="deOnIt" 
+											onclick="location.href='<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=DELETE&del=<%=index%>&item_no=<%=order.getItem_no()%>&quantity=<%=cartSvc.getValueByItem_no(mb_id, order.getItem_no())%>'" >									
+									</div>										
 								</div>
-							</td>					
+							</td>							
 							<td id="td<%= index %>">
 								<div class="priceItemCart">
 									<span>$ </span><span id="span<%= index %>" class="cartPrSi"><%= (cartSvc.getValueByItem_no(mb_id, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price())%></span>
@@ -310,58 +282,160 @@
 					<br>
 					<input type="button" value="清除勾選" class="paybtn cleanbtn" 
 									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=deleteSelected')">
-					<input type="button" value="前往結帳" class="paybtn"
-									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=CHECKOUT')" > 
+					<input type="button" value="前往結帳" class="goPay">
 				</form>
 			</div>
 			<% }%>
 
-			<footer class="footer-section main-footer">
-				<div class="copyright-option">
-					<div class="container">
-						<div class="row">
-							<div>
-								<div class="co-text">
-									<p>
-										Copyright &copy;
-										<script>
-											document.write(new Date()
-													.getFullYear());
-										</script>
-										All rights reserved | This template is made with <i
-											class="fa fa-heart" aria-hidden="true"></i> by <a
-											href="https://colorlib.com" target="_blank">Colorlib</a>
-										<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</footer>
 		</div>
 	</div>
 	<!-- Footer Section Start -->
 
 	<!-- Footer Section End -->
 	<!-- Js Plugins -->
-	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/slick.js"></script>
-	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
-	<script src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/template.js"></script>
-	<script src="${pageContext.request.contextPath}/js/sweetalert.js"></script>
+<%@ include file="/frontend/files/commonJS.file" %>
+	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
-	<script src="${pageContext.request.contextPath}/js/front/main.js"></script>
 	<script type="text/javascript">
 	function go(data){
 		document.selectedForm.action=data;
 		document.selectedForm.submit();
 	}
-	</script>
 	
+$(function(){
+		
+		<%  for (int index = 0; index < RedisBuylist.size(); index++){%>
+			<%ItemVO order = RedisBuylist.get(index);%>
+			
+			var paramsAdd_<%= index %> = {
+				"action":"AddQUANTITY",
+				"index":<%= index %>,
+				"item_no":<%="\"" + order.getItem_no() + "\""%>,
+				"item_name":<%="\"" + itemSvc.getOneItem(order.getItem_no()).getItem_name() + "\""%>,
+				"item_price":<%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%>,
+			};
+			$("#btn<%= index %>").click(function(event){
+				event.stopPropagation();
+				console.log(<%="\"" + order.getItem_no() + "\""%>);
+				$.ajax({
+					data:paramsAdd_<%= index %>,
+					type:"POST",
+					dataType: "json",
+					url:"<%=request.getContextPath()%>/shop/Changingcart.do",
+					success: function (data){
+						console.log("增加"+data.amount);
+						$("#td<%= index %>").html("<span>$ </span>"+data.amount);	
+						
+						if($("#checknum<%= index %>").val()!=0){
+							$("#checknum<%= index %>").val(data.amount);
+						}	
+						$("#forPlusnum<%= index %>").val(data.amount);
+						
+						var shoppingTatal = 0;
+						<%  for (int a = 0; a < RedisBuylist.size(); a++){%>
+							shoppingTatal += parseInt($("#checknum<%= a %>").val(),10);
+						<%}%>
+						$("#checkTotal").text(shoppingTatal);
+					}
+				});	
+			});
+			var paramsMin_<%= index %> = {
+				"action":"MinusQUANTITY",
+				"index":<%= index %>,
+				"item_no":<%="\"" + order.getItem_no() + "\""%>,
+				"item_name":<%="\"" + itemSvc.getOneItem(order.getItem_no()).getItem_name() + "\""%>,
+				"item_price":<%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%>,
+			};
+			
+			$("#btn<%= index + "_1" %>").click(function(event){
+				
+				event.stopPropagation();
+				console.log(<%="\"" + order.getItem_no() + "\""%>);
+				$.ajax({
+					data:paramsMin_<%= index %>,
+					type:"POST",
+					dataType: "json",
+					url:"<%=request.getContextPath()%>/shop/changingServlet.do",
+					success: function (data){
+						console.log("減少"+data.amount);
+						console.log("index"+data.index);
+						if(data.amount!='')
+							$("#td<%= index %>").html("<span>$ </span>"+data.amount);
+							if($("#checknum<%= index %>").val()!=0){
+								$("#checknum<%= index %>").val(data.amount);
+							}	
+							$("#forPlusnum<%= index %>").val(data.amount);
+							
+							var shoppingTatal = 0;
+							<%  for (int a = 0; a < RedisBuylist.size(); a++){%>
+								shoppingTatal += parseInt($("#checknum<%= a %>").val(),10);
+							<%}%>
+							$("#checkTotal").text(shoppingTatal);
+							
+						if(data.amount=== undefined){
+							Swal.fire({
+							  title: '刪除商品',
+							  text: '數量為0，從購物車移除',
+							  icon: 'warning',
+							  showConfirmButton: false,
+							  customClass: 'swal-wide',
+							  timer: 1500
+							}).then(function () {
+						        window.location.href = "<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp"
+						    })
+						}
+					}
+				});	
+			});
+			
+			$("#boxchecked<%= index %>").change(function(event){
+				
+				console.log("check="+$("#boxchecked<%= index %>").prop("checked"));
+				console.log("forPlusnum="+$("#forPlusnum<%= index %>").val());
+				event.stopPropagation();
+				$.ajax({
+					data:creatCheckedJson($("#boxchecked<%= index %>").prop("checked"),$("#forPlusnum<%= index %>").val()),
+					type:"POST",
+					dataType: "json",
+					url:"<%=request.getContextPath()%>/shop/changingServlet.do",
+					success: function (data){		
+						console.log("Checkamount="+data.amount);
+						$("#checknum<%= index %>").val(data.amount);
+						
+						var shoppingTatal = 0;
+						<%  for (int a = 0; a < RedisBuylist.size(); a++){%>
+							shoppingTatal += parseInt($("#checknum<%= a %>").val(),10);
+						<%}%>
+						$("#checkTotal").text(shoppingTatal);
+					}
+				});
+			});
+		<%}%>
+		});
+		function creatCheckedJson(boxchecked, amount){
+			console.log("boxchecked:"+boxchecked+"; amount:"+amount);
+			var checkedJson= {"action":"BOXCHECKED", "boxchecked":boxchecked, "amount":amount};
+			return checkedJson;
+		}
+	
+	var mem = <%="\"" + mb_id + "\""%>;
+	var checkact = document.getElementsByName('checkact');
+	console.log("checkact= "+checkact);
+		console.log("mb_id= "+mem);
+		$(".goPay").click(function(event){
+			if(mem==null){
+				alert("Please Login ");
+				$(".offcanvas-menu-overlay").removeClass("active");
+				$(".login-window-overlay").addClass("active");
+				$(".login-window").addClass("show-login-window");
+				$(".offcanvas-menu-wrapper").removeClass("show-offcanvas-menu-wrapper");
+			} else if(checkact==null){
+				alert("Please Check A Product To Checkout");
+			} else{
+				go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=CHECKOUT');
+			}
+		});
+	
+	</script>
 </body>
 </html>

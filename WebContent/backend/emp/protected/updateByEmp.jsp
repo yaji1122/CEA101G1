@@ -19,9 +19,10 @@
 		</c:forEach>
 	</ul>
 </c:if>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/updateByEmp.css" />
 </head>
 <style>
-div.card {
+/*div.card {
 	position: absolute;
 	left:50%;
 	top:50%;
@@ -53,10 +54,7 @@ div.card .right {
 
 div.card .right .upload-pic {
 	margin-top: 250px;
-}
-#emp-form {
-	min-height:100vh
-}
+}*/
 </style>
 <body>
 	<%@ include file="/backend/files/backend_sidebar.file"%>
@@ -96,7 +94,7 @@ div.card .right .upload-pic {
 						信箱:<input type="email" name="emp_email" placeholder="Email"
 							value="${empVO.emp_email}">
 					</h5>
-					<input type="hidden" name="emp_status" id="emp" size="45" value="1" />
+					<input type="hidden" name="emp_status" id="emp" value="1" />
 					<h5 class="mt-2">
 						地址: <span class="mt-4"><input type="text" name="emp_city"
 							size="5" placeholder="City" value="${empVO.emp_city}"></span> <span
@@ -106,16 +104,18 @@ div.card .right .upload-pic {
 					<span class="mt-4"><input type="text" name="emp_address"
 						size="24" placeholder="Address" value="${empVO.emp_address}"></span>
 					<div>
-						<input type="hidden" name="emp_id" value="${empVO.emp_id}">
-						<input type="hidden" name="emp_date" value="${empVO.emp_date}">
-						<input type="hidden" name="action" value="update_FromEmp">
-						<input type="submit" class="btn" style="width: 250px" value="送出修改">
+						<input type="hidden" name="title_no" value="${empVO.title_no}">
+                          <input type="hidden" name="dept_no" value="${empVO.dept_no}">
+                          <input type="hidden" name="emp_id" value="${empVO.emp_id}">
+                          <input type="hidden" name="emp_date" value="${empVO.emp_date}">
+                          <input type="hidden" name="action" value="update_FromEmp">
+                          <input type="submit" class="btn btn-primary" style="width:250px" value="送出修改" >
 					</div>
 				</div>
 				<div class="right">
 					<input type="hidden" name=> <img
 						src="${pageContext.request.contextPath}/emp/emp.do?emp_id=${empVO.emp_id}&action=getEmpPic">
-					<input type="file" name="emp_pic" size="45" class="upload-pic"
+					<input type="file" name="emp_pic" class="upload-pic"
 						value="${empVO.emp_pic}" />
 				</div>
 			</div>

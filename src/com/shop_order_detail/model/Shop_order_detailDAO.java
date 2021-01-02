@@ -344,5 +344,49 @@ public class Shop_order_detailDAO implements Shop_order_detailDAO_interface {
 		}
 		return list;
 	}
+	
+	public void insertWhenShop_orderInsert (Shop_order_detailVO shop_order_detailVO , java.sql.Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+
+     		pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setString(1, shop_order_detailVO.getSp_odno());
+			pstmt.setString(2, shop_order_detailVO.getItem_no());
+			pstmt.setInt(3, shop_order_detailVO.getQty());
+			pstmt.setDouble(4, shop_order_detailVO.getSale_discount());
+			pstmt.setDouble(5, shop_order_detailVO.getItem_price());
+			pstmt.setInt(6, shop_order_detailVO.getPoints());
+
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("訂單明細錯誤，rolled back");
+					con.rollback(); 
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 
 }

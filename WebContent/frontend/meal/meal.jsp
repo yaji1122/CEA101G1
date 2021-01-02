@@ -95,7 +95,7 @@
 								varStatus="i">
 								<a class="list-group-item list-group-item-action "
 									href="#list-item-${i.index}">
-									<div class="type-box ">
+									<div class="type-box">
 										<h4 class="type-title ">${mealTypeVO.type_name}</h4>
 									</div>
 								</a>
@@ -111,8 +111,15 @@
 
 								<h2 class="title" id="list-item-${j.index}"
 									style="visibility: hidden;">${mealTypeVO.type_name}</h2>
-								<hr style="width: 831px;">
+								<hr style="width: 800px;">
+								<div class="row">
+								<div class="col-lg-4">
 								<h2 class="title">${mealTypeVO.type_name}</h2>
+								</div>
+								<div class="col-lg-8">
+								<i class="fas fa-shopping-cart shopping-cart shopping-cart-icon"></i>
+								</div>
+								</div>
 								<div class="row ">
 									<jsp:useBean id="mealSvc" scope="page"
 										class="com.meal.model.MealService" />
@@ -201,6 +208,35 @@
 
 <%
 	Vector<CartItem> buylist = (Vector<CartItem>)session.getAttribute("cart");
+%>
+		<div class="shopping-cart-box">
+		<a class="close-display-box"> <i class="fas fa-window-close"></i>
+		</a>
+
+		<div class="display-wrapper">
+			<h2 style="text-align: center;">
+				<b>購物車</b>
+			</h2>
+			<div class="shopping-cart-detail">
+				<div class="container">
+					<div class="row" style="height: 300px;">
+						<div class="col-12">
+							<h4 style="text-align: center;">您目前還沒添加商品至購物車唷！</h4>
+						</div>
+					</div>
+					<div class="row" style="height: 70px;">
+						<div class="col-12">
+							<button class="display-button display-close" style="margin: 10px auto;"
+								type="submit">
+								<h5 class="display-button-word" style="margin: auto;">關閉</h5>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>				
+		</div>
+		</div>
+<%
 	if (buylist != null && buylist.size() > 0){
 %>
 
@@ -219,29 +255,32 @@
 						for(int index = 0; index < buylist.size(); index++){
 							CartItem order = buylist.get(index);
 						%>
-						<div class="col-3">
-							<h4 style="text-align: center;"><%= order.getItem_name()%></h4>
+						<div class="col-lg-3">
+							<h4 class="cart-name" style="text-align: center;"><%= order.getItem_name()%></h4>
 						</div>
-						<div class="col-3">
+						<div class="col-lg-3">
 							<h4 style="text-align: center;"><%= order.getQuantity()%></h4>
 						</div>
-						<div class="col-3">
-							<h4 style="text-align: center;"><%= order.getPrice()%></h4>
+						<div class="col-lg-3">
+							<h4 id="cart-price<%= index %>" style="text-align: center;"><%= order.getPrice()%></h4>
 						</div>
-						<div class="col-3">
+						<div class="col-lg-3">
+							<form method="post" action="${pageContext.request.contextPath}/AddToCartServlet">
+							<input type="hidden" name="action" value="DELETE">
+							<input type="hidden" name="del" value="<%= index %>">
 							<button type="submit">
 							<i class="fas fa-trash-alt" style="margin-left: 35px; font-size: 21px"></i>
 							</button>
+						</form>
 						</div>
 						<% } %>
 					</div>
 					<div class="row" style="height: 70px;">
-						<div class="col-12">
+						<div class="col-lg-12">
 							<button class="display-button" style="margin: 10px auto;"
 								type="submit">
-								<i class="fas fa-cart-plus"
-									style="margin-right: 10px; vertical-align: center;"></i>
-								<h5 id="totalprice" class="display-button-word">確定送出 NT$</h5>
+								<h5 class="display-button-word">確定送出 $</h5>
+								<h5 id="totalprice" style="margin-top: 10px;"></h5>
 							</button>
 						</div>
 					</div>
