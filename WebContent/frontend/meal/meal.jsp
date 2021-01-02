@@ -391,11 +391,13 @@
 					</div>
 					<div class="row" style="height: 70px;">
 						<div class="col-lg-12">
+						<form>
 							<button class="display-button" style="margin: 10px auto;"
 								type="submit">
 								<h5 class="display-button-word">確定送出 $</h5>
 								<h5 id="totalprice" style="margin-top: 10px;"></h5>
 							</button>
+							</form>
 						</div>
 					</div>
 				</div>
