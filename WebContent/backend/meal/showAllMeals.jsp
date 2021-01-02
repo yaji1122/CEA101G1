@@ -90,7 +90,7 @@
 											<input type="hidden" name="off" value="${mealVO.meal_no}">
 											<input type="hidden" name="action" value="off">
 											<button id="offbutton" type="submit"
-												class="btn btn-secondary">下架</button>
+												class="btn btn-secondary" style="margin-left: 21%;">下架</button>
 										</form>
 
 									</c:when>
@@ -99,7 +99,7 @@
 											action="${pageContext.request.contextPath}/MealServlet">
 											<input type="hidden" name="on" value="${mealVO.meal_no}">
 											<input type="hidden" name="action" value="on">
-											<button type="submit" class="btn btn-secondary">上架</button>
+											<button type="submit" class="btn btn-secondary" style="margin-left: 21%;">上架</button>
 										</form>
 									</c:when>
 								</c:choose></td>
