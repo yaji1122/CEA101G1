@@ -12,6 +12,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.json.JSONObject;
+
+import com.mealorder.model.MealOrderVO;
+import com.shop_order_detail.model.Shop_order_detailVO;
+
 public class MealOrderDetailDAO implements MealOrderDetailDAO_interface{
 	private static DataSource ds = null;
 	static {
@@ -33,37 +38,38 @@ public class MealOrderDetailDAO implements MealOrderDetailDAO_interface{
 			"DELETE FROM MEAL_ORDER_DETAIL WHERE MEAL_ODNO = ?";
 	private static final String UPDATE = 
 			"UPDATE MEAL_ORDER_DETAIL SET QTY=? WHERE MEAL_ODNO =? AND MEAL_NO=?";
+	private static final String GET_DETAIL_BYODNO=
+			"SELECT * FROM MEAL_ORDER_DETAIL WHERE MEAL_ODNO=?";
 	
 	@Override
-	public void insert(MealOrderDetailVO mealOrderDetailVO) {
-		Connection con = null;
+	public void insert(MealOrderDetailVO mealOrderDetailVO, Connection con) {
 		PreparedStatement pstmt = null;
 		try {
-			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-
 			pstmt.setString(1,  mealOrderDetailVO.getMeal_odno());
 			pstmt.setString(2, mealOrderDetailVO.getMeal_no());
 			pstmt.setInt(3, mealOrderDetailVO.getPrice());
 			pstmt.setInt(4, mealOrderDetailVO.getQty());
-
+			
 			pstmt.executeUpdate();
-
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			
+		}catch (SQLException se) {
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -240,5 +246,57 @@ public class MealOrderDetailDAO implements MealOrderDetailDAO_interface{
 			}
 		}
 		return list;
+	}	
+	
+	public List<MealOrderDetailVO>getAllByOdno(String meal_odno){
+		List<MealOrderDetailVO> list = new ArrayList<MealOrderDetailVO>();
+		MealOrderDetailVO mealOrderDetailVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_DETAIL_BYODNO);
+			pstmt.setString(1, meal_odno);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				mealOrderDetailVO = new MealOrderDetailVO();
+				mealOrderDetailVO.setMeal_odno(rs.getString("meal_odno"));
+				mealOrderDetailVO.setMeal_no(rs.getString("meal_no"));
+				mealOrderDetailVO.setQty(rs.getInt("qty"));
+				mealOrderDetailVO.setPrice(rs.getInt("price"));
+				list.add(mealOrderDetailVO); // Store the row in the list
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
+	
 }

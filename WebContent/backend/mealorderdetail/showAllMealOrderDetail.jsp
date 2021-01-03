@@ -4,7 +4,10 @@
 <%@ page import="com.mealorderdetail.model.*"%>
 
 <%
-	MealOrderDetailVO mealOrderDetailVO = (MealOrderDetailVO) request.getAttribute("mealOrderDetailVO");
+	String meal_odno = request.getParameter("meal_odno");
+	MealOrderDetailService mealOrderDetailSvc = new MealOrderDetailService();
+	List<MealOrderDetailVO> meallist = mealOrderDetailSvc.getAllByOdno(meal_odno);
+	pageContext.setAttribute("meallist", meallist);
 %>
 
 <!DOCTYPE html>
@@ -55,7 +58,7 @@
 				</thead>
 				<tbody>
 					<%-- 		<%@ include file="page1.file" %> --%>
-					
+					<c:forEach var="mealOrderDetailVO" items="${meallist}">
 						<tr>
 							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.meal_odno}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.meal_no}</td>
@@ -65,7 +68,7 @@
 								value="${mealOrderDetailVO.meal_odno}">
 								<button type="submit" class="update btn btn-info">修改</button></td>
 						</tr>
-				
+					</c:forEach>
 				</tbody>
 			</table>
 

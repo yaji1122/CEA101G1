@@ -21,30 +21,6 @@ public class MealOrderDetailServlet extends HttpServlet {
 		res.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		if("insert_meal_orderdetail".equals(action)) {
-			try {
-				String meal_odno =req.getParameter("meal_odno");
-				String meal_no = req.getParameter("meal_no");
-				Integer price = new Integer(req.getParameter("price"));
-				Integer qty = new Integer(req.getParameter("qty"));
-				
-				MealOrderDetailVO mealOrderDetailVO = new MealOrderDetailVO();
-				mealOrderDetailVO.setMeal_odno(meal_odno);
-				mealOrderDetailVO.setMeal_no(meal_no);
-				mealOrderDetailVO.setPrice(price);
-				mealOrderDetailVO.setQty(qty);
-				
-				MealOrderDetailService mealOrderDetailSvc = new MealOrderDetailService();
-				mealOrderDetailVO = mealOrderDetailSvc.addMealOrderDetail(meal_odno, meal_no, price, qty);
-				
-				String url = "/backend/mealorderdetail/mealOrderDetailInfo.jsp";
-				RequestDispatcher dispatcher = req.getRequestDispatcher(url);
-				dispatcher.forward(req, res);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
 		if("update_meal_orderdetail".equals(action)) {
 			String meal_odno =req.getParameter("update-meal-odno");
 			String meal_no = req.getParameter("update-meal-no");

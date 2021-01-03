@@ -4,11 +4,15 @@
 <%@ page import="com.mealtype.model.*"%>
 <%@ page import="com.meal.model.*"%>
 <%@ page import="com.cart.model.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
 
 <%
 	MealTypeVO mealTypeVO = (MealTypeVO) request.getAttribute("mealTypeVO");
 	MealVO mealVO = (MealVO) request.getAttribute("mealVO");
+// 	MembersVO member = (MembersVO)session.getAttribute("member");
+// 	mb_id = member.getMb_id();
+// 	session.setAttribute("mb_id", mb_id);
 %>
 
 <!DOCTYPE html>
@@ -256,7 +260,7 @@
 																		id="display-icon-minus${k.index}"></i> <input
 																		type="text" value=1 class="display-qty"
 																		id="display-qty${k.index}" name="quantity${k.index}"
-																		style="border-radius: 5px;"> <i
+																		style="border-radius: 5px;" disabled="disabled"> <i
 																		class="fas fa-plus-square display-icon-plus"
 																		field="quantity${k.index}"
 																		id="display-icon-plus${k.index}"></i>
@@ -271,6 +275,7 @@
 															</div>
 														</figcaption>
 
+														<input type="hidden" id="item_no${k.index}" name="item_no" value="${mealVO.meal_no}">
 														<input type="hidden" id="item_name${k.index}"
 															name="item_name" value="${mealVO.meal_name}">
 														<input type="hidden" id="item_quantity${k.index}"
@@ -360,6 +365,7 @@
 			</h2>
 			<div class="shopping-cart-detail">
 				<div class="container">
+				
 					<div class="row" style="height: 300px;">
 						<%
 							for (int index = 0; index < buylist.size(); index++) {
@@ -367,12 +373,15 @@
 						%>
 						<div class="col-lg-3">
 							<h4 class="cart-name" style="text-align: center;"><%=order.getItem_name()%></h4>
+							<input type="hidden" name="itemno" value="<%= order.getItem_no() %>" >
 						</div>
 						<div class="col-lg-3">
 							<h4 style="text-align: center;"><%=order.getQuantity()%></h4>
+							<input type="hidden" name="qty" value="<%=order.getQuantity()%>">
 						</div>
 						<div class="col-lg-3">
 							<h4 id="cart-price<%=index%>" style="text-align: center;"><%=order.getPrice()%></h4>
+							<input type="hidden" name="price" value="<%=order.getPrice()%>">
 						</div>
 						<div class="col-lg-3">
 							<form method="post"
@@ -391,16 +400,20 @@
 					</div>
 					<div class="row" style="height: 70px;">
 						<div class="col-lg-12">
-						<form>
+						<form method="post" action="${pageContext.request.contextPath}/MealOrderServlet">
 							<button class="display-button" style="margin: 10px auto;"
 								type="submit">
 								<h5 class="display-button-word">確定送出 $</h5>
-								<h5 id="totalprice" style="margin-top: 10px;"></h5>
+								<h5 id="totalprice" style="margin-top: 10px;"></h5>								
 							</button>
-							</form>
+							<input type="hidden" name="action" value="insert_meal_order">
+							<input type="hidden" name="amount" id="cart-to-servlet" value=1>
+						</form>
 						</div>
 					</div>
+					
 				</div>
+				
 			</div>
 		</div>
 	</div>
