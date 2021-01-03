@@ -28,6 +28,8 @@ public class MealOrderDetailJDBCDAO implements MealOrderDetailDAO_interface{
 			"DELETE FROM MEAL_ORDER_DETAIL WHERE MEAL_ODNO = ?";
 	private static final String UPDATE = 
 			"UPDATE MEAL_ORDER_DETAIL SET PRICE=?, QTY=? WHERE MEAL_ODNO =?";
+	private static final String GET_DETAIL_BYODNO=
+			"SELECT * FROM MEAL_ORDER_DETAIL WHERE MEAL_ODNO=?";
 	
 	@Override
 	public void insert(MealOrderDetailVO mealOrderDetailVO, Connection con) {
@@ -223,6 +225,60 @@ public class MealOrderDetailJDBCDAO implements MealOrderDetailDAO_interface{
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	public List<MealOrderDetailVO>getAllByOdno(String meal_odno){
+		List<MealOrderDetailVO> list = new ArrayList<MealOrderDetailVO>();
+		MealOrderDetailVO mealOrderDetailVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			pstmt = con.prepareStatement(GET_DETAIL_BYODNO);
+			pstmt.setString(1, meal_odno);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				mealOrderDetailVO = new MealOrderDetailVO();
+				mealOrderDetailVO.setMeal_odno(rs.getString("meal_odno"));
+				mealOrderDetailVO.setMeal_no(rs.getString("meal_no"));
+				mealOrderDetailVO.setQty(rs.getInt("qty"));
+				mealOrderDetailVO.setPrice(rs.getInt("price"));
+				list.add(mealOrderDetailVO); // Store the row in the list
+			}
+
+		}catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
