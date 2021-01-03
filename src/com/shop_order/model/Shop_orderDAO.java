@@ -332,13 +332,19 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 			}
 			rs.close();
 			// 再同時新增訂單明細
+//			String sale_discount = null;
+//			if() {
+//				
+//			} else {
+//				
+//			}
 			Shop_order_detailDAO dao = new Shop_order_detailDAO();
 			System.out.println("list.size()(執行前)="+list.size());
 			for (Shop_order_detailVO newShop_order_detail : list) {
 				newShop_order_detail.setSp_odno(next_sp_odno);
 				dao.insertWhenShop_orderInsert(newShop_order_detail,con);
 			}
-			
+			System.out.println("======");
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
