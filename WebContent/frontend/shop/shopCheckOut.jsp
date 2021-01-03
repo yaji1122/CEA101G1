@@ -29,8 +29,7 @@
 
 	<%@ include file="/frontend/files/login.file"%>
 	<%@ include file="/frontend/files/loginbox.file" %>
-	
-	console.log(<%= member.getMb_id()%>);
+
 	<%
 		String mb_id = (String)session.getAttribute("mb_id");
 		if(member!=null){
@@ -202,7 +201,7 @@
 				List<ItemVO> buylist = (List<ItemVO>)session.getAttribute("buylist");
 				Double amount = (Double)request.getAttribute("amount");
 				request.setAttribute("amount",amount);
-				Integer poamount = (int)request.getAttribute("poamount");
+				Integer poamount = (Integer)request.getAttribute("poamount");
 				request.setAttribute("poamount",poamount);
 				
 				CartService cartSVC = new CartService();
@@ -246,7 +245,7 @@
 							<tr>
 								<td colspan="4">
 								<td>總積分</td>
-								<td><span>$ </span><%=poamount %></td>
+								<td><%=poamount %></td>
 							</tr>
 							<tr>
 								<td colspan="4">
@@ -258,9 +257,10 @@
 						<form method="POST"
 							action="<%=request.getContextPath()%>/shop_order/shop_order.do">
 							<input type="hidden" name="action" value="insertWithOrder_details"> 
-							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+<%-- 							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
 							<input type="hidden" name="mb_id" value="${member.mb_id}">
-							<input type="hidden" name="om_tpr" value="<%=amount%>"> 
+							<input type="hidden" name="total_price" value="<%=amount%>">
+							<input type="hidden" name="points_total" value="<%=poamount%>">  
 							<input type="submit" value="確定購買" class="paybtn">
 						</form>
 					</div>

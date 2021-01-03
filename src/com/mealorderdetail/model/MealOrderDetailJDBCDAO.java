@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
+import com.mealorder.model.MealOrderVO;
+
 public class MealOrderDetailJDBCDAO implements MealOrderDetailDAO_interface{
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -24,10 +28,11 @@ public class MealOrderDetailJDBCDAO implements MealOrderDetailDAO_interface{
 			"DELETE FROM MEAL_ORDER_DETAIL WHERE MEAL_ODNO = ?";
 	private static final String UPDATE = 
 			"UPDATE MEAL_ORDER_DETAIL SET PRICE=?, QTY=? WHERE MEAL_ODNO =?";
+	private static final String GET_DETAIL_BYODNO=
+			"SELECT * FROM MEAL_ORDER_DETAIL WHERE MEAL_ODNO=?";
 	
 	@Override
-	public void insert(MealOrderDetailVO mealOrderDetailVO) {
-		Connection con = null;
+	public void insert(MealOrderDetailVO mealOrderDetailVO, Connection con) {
 		PreparedStatement pstmt = null;
 		try {
 			Class.forName(driver);
@@ -38,7 +43,6 @@ public class MealOrderDetailJDBCDAO implements MealOrderDetailDAO_interface{
 			pstmt.setString(2, mealOrderDetailVO.getMeal_no());
 			pstmt.setInt(3, mealOrderDetailVO.getPrice());
 			pstmt.setInt(4, mealOrderDetailVO.getQty());
-
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -248,19 +252,73 @@ public class MealOrderDetailJDBCDAO implements MealOrderDetailDAO_interface{
 		return list;
 	}
 	
+	public List<MealOrderDetailVO>getAllByOdno(String meal_odno){
+		List<MealOrderDetailVO> list = new ArrayList<MealOrderDetailVO>();
+		MealOrderDetailVO mealOrderDetailVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			pstmt = con.prepareStatement(GET_DETAIL_BYODNO);
+			pstmt.setString(1, meal_odno);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				mealOrderDetailVO = new MealOrderDetailVO();
+				mealOrderDetailVO.setMeal_odno(rs.getString("meal_odno"));
+				mealOrderDetailVO.setMeal_no(rs.getString("meal_no"));
+				mealOrderDetailVO.setQty(rs.getInt("qty"));
+				mealOrderDetailVO.setPrice(rs.getInt("price"));
+				list.add(mealOrderDetailVO); // Store the row in the list
+			}
+
+		}catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	public static void main(String[] args) {
 		MealOrderDetailJDBCDAO dao = new MealOrderDetailJDBCDAO();
 		// 新增
 		MealOrderDetailVO mealOrderDetailVO1 = new MealOrderDetailVO();
 
-		mealOrderDetailVO1.setMeal_odno("MEALOD0001");
-		mealOrderDetailVO1.setMeal_no("M0001");
-		mealOrderDetailVO1.setPrice(10000);
-		mealOrderDetailVO1.setQty(5);
-
-		dao.insert(mealOrderDetailVO1);
-
-		System.out.println("新增成功");
+//		mealOrderDetailVO1.setMeal_odno("MEALOD0001");
+//		mealOrderDetailVO1.setMeal_no("M0001");
+//		mealOrderDetailVO1.setPrice(10000);
+//		mealOrderDetailVO1.setQty(5);
+//
+//		dao.insert(mealOrderDetailVO1);
+//
+//		System.out.println("新增成功");
 		
 		//修改
 //		MealOrderDetailVO mealOrderDetailVO2 = new MealOrderDetailVO();

@@ -2,6 +2,9 @@ package com.mealorder.model;
 
 import java.util.*;
 
+import com.mealorderdetail.model.MealOrderDetailDAO;
+import com.mealorderdetail.model.MealOrderDetailVO;
+
 import java.sql.*;
 
 public class MealOrderJDBCDAO implements MealOrderDAO_interface {
@@ -57,6 +60,70 @@ public class MealOrderJDBCDAO implements MealOrderDAO_interface {
 			}
 		}
 
+	}
+
+	@Override
+	public void insertWithDetails(MealOrderVO mealOrderVO, List<MealOrderDetailVO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			con.setAutoCommit(false);
+			
+			String cols[] = {"MEAL_ODNO"};
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+			pstmt.setString(1,  mealOrderVO.getMb_id());
+			pstmt.setString(2, mealOrderVO.getRm_no());
+			pstmt.setInt(3, mealOrderVO.getTotal_price());
+			
+			pstmt.executeUpdate();
+			
+			String next_mealodno = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {
+				next_mealodno = rs.getString(1);
+			}
+			rs.close();
+			MealOrderDetailDAO dao = new MealOrderDetailDAO();
+			for(MealOrderDetailVO aDetail : list) {
+				aDetail.setMeal_odno(next_mealodno);
+				dao.insert(aDetail, con);
+			}
+			
+			con.commit();
+			con.setAutoCommit(true);
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		}catch (SQLException se) {
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 
 	@Override

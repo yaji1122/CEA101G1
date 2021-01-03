@@ -2,6 +2,10 @@ package com.mealorder.model;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
+import com.mealorderdetail.model.MealOrderDetailVO;
+
 public class MealOrderService {
 
 	private MealOrderDAO_interface dao;
@@ -45,5 +49,9 @@ public class MealOrderService {
 
 	public List<MealOrderVO> getAll() {
 		return dao.getAll();
+	}	
+	
+	synchronized public void insertWithDetails(MealOrderVO mealOrderVO, List<MealOrderDetailVO> meallist) {
+		dao.insertWithDetails(mealOrderVO, meallist);
 	}
 }

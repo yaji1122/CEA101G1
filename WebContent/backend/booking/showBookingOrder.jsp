@@ -93,7 +93,7 @@ table.bookingOrderTable a.cancel i {
 				<option value="3"
 					<c:if test="${current_query_status == '3'}"> selected</c:if>>已完成</option>
 				<option value="4"
-					<c:if test="${current_query_status == '3'}"> selected</c:if>>已取消</option>
+					<c:if test="${current_query_status == '4'}"> selected</c:if>>已取消</option>
 			</select>
 		</div>
 

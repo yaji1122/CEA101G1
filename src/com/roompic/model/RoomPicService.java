@@ -35,4 +35,19 @@ public class RoomPicService {
 	public byte[] getOneByPicNo(String rm_pic_no) {
 		return dao.getOneRmPic(rm_pic_no);
 	}
+	
+	public byte[] geOneByRmType(String rm_pic_no) {
+		return dao.getOneRmPic(rm_pic_no);
+	}
+	
+	public String getOneRandomPic(String rm_type) {
+		String base64Img = "";
+		List<RoomPicVO> picList = dao.getAllByRoomType(rm_type);
+		if (picList.size() == 0) {
+			return "";
+		}
+		byte[] picBytes = getOneByPicNo(picList.get(0).getRm_pic_no());
+		base64Img = Base64.getEncoder().encodeToString(picBytes);
+		return base64Img;
+	}
 }

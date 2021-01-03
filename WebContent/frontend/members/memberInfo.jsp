@@ -366,229 +366,258 @@ MembersVO member = (MembersVO)session.getAttribute("member");
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/front/creditCard.js"></script>
-	<script src="<%=request.getContextPath()%>/js/front/memberInfo.js"></script>
 	<script>
-        $(".addnewcard").click(function(){ //新增信用卡畫面
-        	$("#creditCard-input-view").css("opacity", "1");
-        	$("#creditCard-input-view").css("z-index", "99");
-        	$("#cancelinsert").click(()=>{
-        		$("#creditCard-input-view").css("opacity", "0");
-        		$("#creditCard-input-view").css("z-index", "-1");
-        	})
-        })
-        //新增信用卡
-        $("#insertnewcard").click(function(){
-        	let cardname = $("#name").val();
-        	let cardno = $("#cardnumber").val();
-        	let expmon = $("#expirationdate").val().split("/")[0];
-        	let expyear = $("#expirationdate").val().split("/")[1];
-        	let csc = $("#securitycode").val();
-        	let mbid = "${member.mb_id}"
-        	$.ajax({
-        		url:"<%=request.getContextPath()%>/PaymentServlet?action=insert_credit_card",
-        		data:{
-        			"card_name":cardname,
-        			"card_no":cardno,
-        			"exp_mon":expmon,
-        			"exp_year":expyear,
-        			"csc": csc,
-        			"mb_id": mbid
-        		},
-        		type:"POST",
-        		success: function(msg){
-        			let obj = JSON.parse(msg)
-        			if (obj.status == "success") {
-        				Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "已新增付款方式",
-                            showConfirmButton: false,
-                            timer: 1000,
-                        });
-        				let fragment = document.createElement("div");
-        				fragment.classList.add("creditcard");
-        				fragment.innerHTML = `
-                                <h4 class="cardnumber">` + cardno + `</h4>
-                                <h6>CARDHOLDER NAME</h6>
-                                <p class="cardholder">` + cardname + `</p>
-                                <p class="exp">` + expmon + `/` + expyear + `</p>
-                                <i class="fas fa-minus-circle delete-creditcard"></i>
-                                <input name="pay_no" class="pay_no" style="display:none" value=`+ obj.payno +`>
-                                <div class="creditcard-logo">
-                                    <img src="<%=request.getContextPath()%>/img/creditcard/master.png">
-                                </div>
-        						`
-        				$(".creditcards").eq(0).prepend(fragment);
-        				setTimeout(function(){
-        					$("#creditCard-input-view").css("opacity", "0");
-        	        		$("#creditCard-input-view").css("z-index", "-1");
-        				}, 1000);
-        			} else {
-        				Swal.fire({
-                            position: "center",
-                            icon: "error",
-                            title: "伺服器忙線中，請稍後再試",
-                            showConfirmButton: false,
-                            timer: 1000,
-                        });
-        			}
-        		}
-        	})
-        })
-        //刪除信用卡
-        $(document.body).on("click", ".delete-creditcard",function () { 
-        	let thisCard = $(this).parent();
-            Swal.fire({
-                title: "確認刪除嗎?",
-                text: "刪除後將無法返回資料",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "確認",
-                cancelButtonText: "取消",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                	let pay_no = thisCard.find("input").val();
-                	console.log(pay_no);
-                    $.ajax({
-                        url: "<%=request.getContextPath()%>/PaymentServlet?action=delete_credit_card",
-                        data: { "pay_no": pay_no },
-                        type: "POST",
-                        success: function (msg) {
-                        	if(msg == "success") {
-                        		Swal.fire({
-                                    position: "center",
-                                    icon: "success",
-                                    title: "已移除付款訊息",
-                                    showConfirmButton: false,
-                                    timer: 1000,
-                                });
-                        		thisCard.remove();
-                        	}
-                        },
-                    });
-                }
-            });
-        });
-      //變更基本資料
-        $("#user-info-form").submit(function (e) {
-            e.preventDefault();
-            let form = document.getElementById("user-info-form");
-            let divs = $("#user-info-form").children("div");
-            let inputs = divs.children("input");
-            let formData = new FormData(form);
-            $.ajax({
-                url: "<%=request.getContextPath()%>/MembersServlet?action=update_member",
-                data: formData,
-                type: "POST",
-                contentType: false,
-                processData: false,
-                success: function (msg) {
-                    if (msg == "success") {
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "已成功變更您的訊息",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                        $("#user-info-form").find(".cancel-update").css("display", "none");
-                        $("#user-info-form").find(".update-basic-info").css("display", "none");
-                        $(".show-basic-update").css("display", "block");
-                        inputs.prop("disabled", true);
-                        $(".password_reset").css("display", "none");
-                    }
-                },
-            });
-        });
-      //變更個人照片
-      $("#update-mbpic").change(function(){
-    	  let pic = $(this).parent().siblings("img");
-    	  let file = this.files[0];
-    	  let formData = new FormData();
-    	  formData.append("mb_pic", file);
-    	  formData.append("mb_id", "${member.mb_id}");
-    	  $.ajax({
-    		  url: "<%=request.getContextPath()%>/MembersServlet?action=update_picture",
-    	  	  data: formData,
-    	  	  type:"POST",
-    		  contentType: false,
-              processData: false,
-   			  success: function(msg){
-   				  let reader = new FileReader();
-   				  reader.addEventListener("load", (ex)=>{
-   					  pic.attr("src", ex.target.result);
-   				  });
-   				  reader.readAsDataURL(file);
-   			  } 
-    	  })
-    	  
-      })
-       //變更密碼
-        $("#account-info-form").submit(function (e) {
-            
-            e.preventDefault();
-            let form = document.getElementById("account-info-form");
-            let divs = $("#account-info-form").children("div");
-            let inputs = divs.children("input");
-            let formData = new FormData(form);
-            let oldpwd = $("#old_mb_pwd").val();
-            let newpwd = $("#new_mb_pwd").val();
-            let confirmpwd = $("#confirm_new_mb_pwd").val();
-            if (newpwd != confirmpwd) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "密碼確認錯誤",
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
-                return;
-            }
-            $.ajax({
-                url: "<%=request.getContextPath()%>/MembersServlet?action=update_password",
-                data: formData,
-                type: "POST",
-                contentType: false,
-                processData: false,
-                success: function (msg) {
-                    if (msg == "success") {
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "已成功變更密碼",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                        $("#old_mb_pwd").val("");
-                        $("#new_mb_pwd").val("");
-                        $("#confirm_new_mb_pwd").val("");
-                    } else if (msg == "pwd_incorrect") {
-                        Swal.fire({
-                            position: "center",
-                            icon: "error",
-                            title: "舊密碼輸入錯誤",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    } else {
-                        Swal.fire({
-                            position: "center",
-                            icon: "error",
-                            title: "系統忙碌中，請洽客服人員",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    }
-                    $("#account-info-form").find(".cancel-update").css("display", "none");
-                    $("#account-info-form").find(".update-account-info").css("display", "none");
-                    $(".show-account-update").css("display", "block");
-                    inputs.prop("disabled", true);
-                    $(".password_reset").css("display", "none");
-                },
-            });
-        });
+		$(document).ready(function () {
+		    $(".show-basic-update").click(function () {
+		        buttonShow($(this));
+		    });
+		    $(".show-account-update").click(function () {
+		        buttonShow($(this));
+		        $(".password_reset").css("display", "flex");
+		    });
+		    //按鈕出現與消失
+		    function buttonShow(item) {
+				item.css("display", "none")
+		        let form = item.parent().siblings("form");
+		        let divs = form.children("div");
+		        let inputs = divs.children("input");
+		        inputs.prop("disabled", false);
+		        form.find(".cancel-update").css("display", "block");
+				form.find(".cancel-update").next().css("display", "block");
+		        form.find(".cancel-update").click(function () {
+		            $(this).css("display", "none");
+		 			$(this).next().css("display", "none");
+				    item.css("display", "block")
+		            inputs.prop("disabled", true);
+		            $(".password_reset").css("display", "none");
+		        });
+		    }
+		    
+		    $(".addnewcard").click(function(){ //新增信用卡畫面
+	        	$("#creditCard-input-view").css("opacity", "1");
+	        	$("#creditCard-input-view").css("z-index", "99");
+	        	$("#cancelinsert").click(()=>{
+	        		$("#creditCard-input-view").css("opacity", "0");
+	        		$("#creditCard-input-view").css("z-index", "-1");
+	        	})
+	        })
+	        //新增信用卡
+	        $("#insertnewcard").click(function(){
+	        	let cardname = $("#name").val();
+	        	let cardno = $("#cardnumber").val();
+	        	let expmon = $("#expirationdate").val().split("/")[0];
+	        	let expyear = $("#expirationdate").val().split("/")[1];
+	        	let csc = $("#securitycode").val();
+	        	let mbid = "${member.mb_id}"
+	        	$.ajax({
+	        		url:"<%=request.getContextPath()%>/PaymentServlet?action=insert_credit_card",
+	        		data:{
+	        			"card_name":cardname,
+	        			"card_no":cardno,
+	        			"exp_mon":expmon,
+	        			"exp_year":expyear,
+	        			"csc": csc,
+	        			"mb_id": mbid
+	        		},
+	        		type:"POST",
+	        		success: function(msg){
+	        			let obj = JSON.parse(msg)
+	        			if (obj.status == "success") {
+	        				Swal.fire({
+	                            position: "center",
+	                            icon: "success",
+	                            title: "已新增付款方式",
+	                            showConfirmButton: false,
+	                            timer: 1000,
+	                        });
+	        				let fragment = document.createElement("div");
+	        				fragment.classList.add("creditcard");
+	        				fragment.innerHTML = `
+	                                <h4 class="cardnumber">` + cardno + `</h4>
+	                                <h6>CARDHOLDER NAME</h6>
+	                                <p class="cardholder">` + cardname + `</p>
+	                                <p class="exp">` + expmon + `/` + expyear + `</p>
+	                                <i class="fas fa-minus-circle delete-creditcard"></i>
+	                                <input name="pay_no" class="pay_no" style="display:none" value=`+ obj.payno +`>
+	                                <div class="creditcard-logo">
+	                                    <img src="<%=request.getContextPath()%>/img/creditcard/master.png">
+	                                </div>
+	        						`
+	        				$(".creditcards").eq(0).prepend(fragment);
+	        				setTimeout(function(){
+	        					$("#creditCard-input-view").css("opacity", "0");
+	        	        		$("#creditCard-input-view").css("z-index", "-1");
+	        				}, 1000);
+	        			} else {
+	        				Swal.fire({
+	                            position: "center",
+	                            icon: "error",
+	                            title: "伺服器忙線中，請稍後再試",
+	                            showConfirmButton: false,
+	                            timer: 1000,
+	                        });
+	        			}
+	        		}
+	        	})
+	        })
+	        //刪除信用卡
+	        $(document.body).on("click", ".delete-creditcard",function () { 
+	        	let thisCard = $(this).parent();
+	            Swal.fire({
+	                title: "確認刪除嗎?",
+	                text: "刪除後將無法返回資料",
+	                icon: "warning",
+	                showCancelButton: true,
+	                confirmButtonColor: "#3085d6",
+	                cancelButtonColor: "#d33",
+	                confirmButtonText: "確認",
+	                cancelButtonText: "取消",
+	            }).then((result) => {
+	                if (result.isConfirmed) {
+	                	let pay_no = thisCard.find("input").val();
+	                	console.log(pay_no);
+	                    $.ajax({
+	                        url: "<%=request.getContextPath()%>/PaymentServlet?action=delete_credit_card",
+	                        data: { "pay_no": pay_no },
+	                        type: "POST",
+	                        success: function (msg) {
+	                        	if(msg == "success") {
+	                        		Swal.fire({
+	                                    position: "center",
+	                                    icon: "success",
+	                                    title: "已移除付款訊息",
+	                                    showConfirmButton: false,
+	                                    timer: 1000,
+	                                });
+	                        		thisCard.remove();
+	                        	}
+	                        },
+	                    });
+	                }
+	            });
+	        });
+	      //變更基本資料
+	        $("#user-info-form").submit(function (e) {
+	            e.preventDefault();
+	            let form = document.getElementById("user-info-form");
+	            let divs = $("#user-info-form").children("div");
+	            let inputs = divs.children("input");
+	            let formData = new FormData(form);
+	            $.ajax({
+	                url: "<%=request.getContextPath()%>/MembersServlet?action=update_member",
+	                data: formData,
+	                type: "POST",
+	                contentType: false,
+	                processData: false,
+	                success: function (msg) {
+	                    if (msg == "success") {
+	                        Swal.fire({
+	                            position: "center",
+	                            icon: "success",
+	                            title: "已成功變更您的訊息",
+	                            showConfirmButton: false,
+	                            timer: 1500,
+	                        });
+	                        $("#user-info-form").find(".cancel-update").css("display", "none");
+	                        $("#user-info-form").find(".update-basic-info").css("display", "none");
+	                        $(".show-basic-update").css("display", "block");
+	                        inputs.prop("disabled", true);
+	                        $(".password_reset").css("display", "none");
+	                    }
+	                },
+	            });
+	        });
+	      //變更個人照片
+	      $("#update-mbpic").change(function(){
+	    	  let pic = $(this).parent().siblings("img");
+	    	  let file = this.files[0];
+	    	  let formData = new FormData();
+	    	  formData.append("mb_pic", file);
+	    	  formData.append("mb_id", "${member.mb_id}");
+	    	  $.ajax({
+	    		  url: "<%=request.getContextPath()%>/MembersServlet?action=update_picture",
+	    	  	  data: formData,
+	    	  	  type:"POST",
+	    		  contentType: false,
+	              processData: false,
+	   			  success: function(msg){
+	   				  let reader = new FileReader();
+	   				  reader.addEventListener("load", (ex)=>{
+	   					  pic.attr("src", ex.target.result);
+	   				  });
+	   				  reader.readAsDataURL(file);
+	   			  } 
+	    	  })
+	    	  
+	      })
+	       //變更密碼
+	        $("#account-info-form").submit(function (e) {
+	            
+	            e.preventDefault();
+	            let form = document.getElementById("account-info-form");
+	            let divs = $("#account-info-form").children("div");
+	            let inputs = divs.children("input");
+	            let formData = new FormData(form);
+	            let oldpwd = $("#old_mb_pwd").val();
+	            let newpwd = $("#new_mb_pwd").val();
+	            let confirmpwd = $("#confirm_new_mb_pwd").val();
+	            if (newpwd != confirmpwd) {
+	                Swal.fire({
+	                    position: "center",
+	                    icon: "error",
+	                    title: "密碼確認錯誤",
+	                    showConfirmButton: false,
+	                    timer: 1500,
+	                });
+	                return;
+	            }
+	            $.ajax({
+	                url: "<%=request.getContextPath()%>/MembersServlet?action=update_password",
+	                data: formData,
+	                type: "POST",
+	                contentType: false,
+	                processData: false,
+	                success: function (msg) {
+	                    if (msg == "success") {
+	                        Swal.fire({
+	                            position: "center",
+	                            icon: "success",
+	                            title: "已成功變更密碼",
+	                            showConfirmButton: false,
+	                            timer: 1500,
+	                        });
+	                        $("#old_mb_pwd").val("");
+	                        $("#new_mb_pwd").val("");
+	                        $("#confirm_new_mb_pwd").val("");
+	                    } else if (msg == "pwd_incorrect") {
+	                        Swal.fire({
+	                            position: "center",
+	                            icon: "error",
+	                            title: "舊密碼輸入錯誤",
+	                            showConfirmButton: false,
+	                            timer: 1500,
+	                        });
+	                    } else {
+	                        Swal.fire({
+	                            position: "center",
+	                            icon: "error",
+	                            title: "系統忙碌中，請洽客服人員",
+	                            showConfirmButton: false,
+	                            timer: 1500,
+	                        });
+	                    }
+	                    $("#account-info-form").find(".cancel-update").css("display", "none");
+	                    $("#account-info-form").find(".update-account-info").css("display", "none");
+	                    $(".show-account-update").css("display", "block");
+	                    inputs.prop("disabled", true);
+	                    $(".password_reset").css("display", "none");
+	                },
+	            });
+	        });
+		});
+
+		
+      
 
         </script>
 </body>
