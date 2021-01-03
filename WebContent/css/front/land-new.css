@@ -163,12 +163,12 @@ p {
   margin-top: 600px;
   position: absolute;
   margin-left: 20px;
-  
+  margin-top: 608px;
 }
 #pic1{
   width:350px;
-  height:150px;
-  margin: 0px auto;
+  height:280px;
+  margin: 10px auto;
   position: relative;
   background-image: url("../img/surf2.png");
   background-size: cover;
@@ -176,12 +176,11 @@ p {
 }
 #pic1 #p1{
   width:350px;
-  height:150px;
+  height:280px;
   margin: 0px auto;
   text-align: center;
   position: absolute;
   opacity: 0;
-  top:-15px;
   text-align: center;
   padding-top: 120px;
   
@@ -197,7 +196,7 @@ p {
   height:280px;
   margin:10px auto;
   margin-top: 738px;
-  margin-right: 480px;
+  margin-right: 520px;
 }
 #pic2{
   width:350px;
@@ -211,8 +210,8 @@ p {
 }
 #pic2 #p2{
   border:solid 5px;
-  width:290px;
-  height:150px;
+  width:350px;
+  height:280px;
   margin: 10px auto;
   text-align: center;
   position: absolute;
@@ -230,13 +229,13 @@ p {
 /* 嚙踝嚙踝蕭�嚙踝蕭(嚙踐) */
 #contentWall3{
   width:350px;
-  height:250px;
+  height:280px;
   margin:10px auto;
   right: 15px;
 }
 #pic3 {
   width:350px;
-  height:250px;
+  height:280px;
   margin: 10px auto;
   position: relative;
   padding: 3px;
@@ -248,7 +247,7 @@ p {
 
 #contentWall-3 #p3{
   width:350px;
-  height:150px;
+  height:280px;
   margin: 10px auto;
   text-align: center;
   padding-top: 120px;

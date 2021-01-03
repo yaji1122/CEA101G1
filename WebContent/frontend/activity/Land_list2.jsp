@@ -31,7 +31,7 @@
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet" />
     <!-- Css Styles -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/fontawesome.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/elegant-icons.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/flaticon.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/owl.carousel.min.css" type="text/css" />
@@ -218,7 +218,7 @@
                  <div class="text">
                      <div class="content-text">
                          <div class="top-row">
-                            <h6>百步穿楊</h6>
+                            <h6>百步穿楊</a></h6>
                             <span>Lorem ipsum dolor sit amet 
                             consectetur adipisicing elit.
                              Necessitatibus corrupti cum 
@@ -250,6 +250,15 @@
                     </select>
                  </div>
                  <input type="hidden" name="actNo" value="${actVO.getActNo()}">
+                 <input type="hidden" name="actNo" value="${actVO.getActEventNo()}">
+                 <input type="hidden" name="actNo" value="${actVO.getactName()}">
+                 <input type="hidden" name="actNo" value="${actVO.getActStatus()}">
+                 <input type="hidden" name="actNo" value="${actVO.getActRegTime()}">
+                 <input type="hidden" name="actNo" value="${actVO.getActDate()}">
+                 <input type="hidden" name="actNo" value="${actVO.getDeadLine()}">
+                 <input type="hidden" name="actNo" value="${actVO.getActTime()}">
+                 <input type="hidden" name="actNo" value="${actVO.getParticipant()}">
+                 <input type="hidden" name="actNo" value="${actVO.getActPrice()}">
                  <button type="submit" class="btn btn-outline-primary" style="margin-top:-80px;">
                                                  我要預約
                 </button>

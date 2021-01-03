@@ -46,7 +46,7 @@ public class ActReserveServlet extends HttpServlet {
 			}
 
 			session.setAttribute("shoppingcart", actlist);
-			String url = "<%=request.getContextPath()%>/frontend/activity/Land_list2";
+			String url = "<%=request.getContextPath()%>/frontend/activity/Act_Checkout.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 		}

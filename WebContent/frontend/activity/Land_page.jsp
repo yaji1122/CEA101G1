@@ -207,9 +207,9 @@
             </div>
             </c:forEach>
             <div class="back face">
-              <h1>Roses</h1>
-              <p class="artist">The Chainsmokers</p>
-              <p class="date">2017</p>
+              <h1><a href="<%=request.getContextPath()%>/frontend/activity/Land_list2.jsp">百步穿楊</a></h1>
+              <p class="artist">陸上活動</p>
+              <p class="date">(射擊)</p>
               <span class="icon-share">
                 <a href="#" style="color:rgb(0, 0, 0)"><i class="fas fa-share-square"></i></a>
               </span>

@@ -58,7 +58,7 @@
                     <ul class="dropdown">
                         <li><a href="./room-details.html">個人檔案</a></li>
                         <li><a href="./blog-details.html">我的假期</a></li>
-                        <li><a href="#">我的足跡</a></li>
+                        <li><a href="#">我的足跡</a></li>
                     </ul>
                 </li>
                 <li>
@@ -173,13 +173,13 @@
         <div class="sea">
             <img src="<%=request.getContextPath()%>/img/land1.png">
             <figure>
-                <figcaption><a href="Ocean.html">Ocean</a></figcaption>
+                <figcaption><a href="<%=request.getContextPath()%>/frontend/activity/Ocean_page.jsp">Ocean</a></figcaption>
             </figure>
         </div>
         <div class="spc">
             <img src="<%=request.getContextPath()%>/img/diving4.png">
             <figure>
-                <figcaption><a href="Ocean.html">Especial</a></figcaption>
+                <figcaption><a href="<%=request.getContextPath()%>/frontend/activity/Special_page.jsp">Special</a></figcaption>
             </figure>
         </div>
     </div>

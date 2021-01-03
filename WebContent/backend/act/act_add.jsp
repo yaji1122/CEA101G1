@@ -41,8 +41,8 @@
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet" name="form1">
 <div id="form">
              <li>
-                <label for="inputEmail4" class="alert alert-primary" role="alert">活動編號: (ACT_ODNo):</label>
-                <input type="text" class="form-control" id="input-Act-no" placeholder="ACT_ODNo" name="actNo" size="45"
+                <label for="inputEmail4" class="alert alert-primary" role="alert">活動編號: (ACT_No):</label>
+                <input type="text" class="form-control" id="input-Act-no" placeholder="ACT_No" name="actNo" size="45"
                 size="45" required placeholder="請輸入活動編號" value="<%= (actVO==null)? "" : actVO.getActNo()%>" />
             </li>
             <li>
@@ -66,14 +66,14 @@
                  value="<%= (actVO==null)? "" :actVO.getActRegTime()%>" />
             </li>
             <li>
-                <label class="alert alert-primary" role="alert">活動截止日期:</label>
-                <input type="date" class="form-control" id="input-Act-Namel4" name="deadLine" size="45"
-                 value="<%= (actVO==null)? "" :actVO.getDeadLine()%>" />
-            </li>
-             <li>
                 <label class="alert alert-primary" role="alert">活動舉辦日期:</label>
                 <input type="date" class="form-control" id="input-Act-Namel4" name="actDate" size="45"
                  value="<%= (actVO==null)? "" :actVO.getActDate()%>" />
+            </li>
+             <li>
+                <label class="alert alert-primary" role="alert">活動截止日期:</label>
+                <input type="date" class="form-control" id="input-Act-Namel4" name="deadLine" size="45"
+                 value="<%= (actVO==null)? "" :actVO.getDeadLine()%>" />
             </li>
             <li>
                 <label class="alert alert-danger">活動時段: (ACT_Time):</label>
