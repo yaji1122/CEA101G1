@@ -62,7 +62,7 @@ public class BookingOrderService {
 		return dao.getOneByBkNo(bk_no);
 	}
 	
-	public BookingOrderVO getOneByMbId(String mb_id) {
-		return dao.getOneByMbId(mb_id);
+	public List<BookingOrderVO> getAllByMbId(String mb_id) {
+		return dao.getAllByMbId(mb_id);
 	}
 }

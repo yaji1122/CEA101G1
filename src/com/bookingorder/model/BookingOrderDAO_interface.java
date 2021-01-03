@@ -12,8 +12,9 @@ public interface BookingOrderDAO_interface {
 	public void updateCheckIn(String bk_no);
 	public void updateCheckOut(String bk_no);
 	public List<BookingOrderVO> getAll();
+	public List<BookingOrderVO> getAllByMbId(String mb_id);
 	public List<BookingOrderVO> getAllByBkStatus(String bk_status);
 	public List<BookingOrderVO> getAllByDateIn(LocalDate date_in);
 	public BookingOrderVO getOneByBkNo(String bk_no);
-	public BookingOrderVO getOneByMbId(String mb_id);
+	
 }

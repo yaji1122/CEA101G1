@@ -31,7 +31,7 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 		}
 
 	private static final String INSERT_STMT = 
-		"INSERT INTO SHOP_ORDER (SP_ODNO,MB_ID,SP_STATUS,TOTAL_PRICE,POINTS_TOTAL,RM_NO) VALUES ('SPOD' || LPAD(to_char(SHOPODNO_SEQ.NEXTVAL), 11, '0'), ?, ?, ?, ?, ?)";
+		"INSERT INTO SHOP_ORDER (SP_ODNO,MB_ID,TOTAL_PRICE,POINTS_TOTAL,RM_NO) VALUES ('SPOD' || LPAD(to_char(SHOPODNO_SEQ.NEXTVAL), 11, '0'), ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 		"SELECT SP_ODNO,MB_ID,to_char(SP_TIME,'yyyy-mm-dd HH24:MI:SS') SP_TIME,SP_STATUS,to_char(SP_DLVR,'yyyy-mm-dd HH24:MI:SS') SP_DLVR,TOTAL_PRICE, POINTS_TOTAL, RM_NO FROM SHOP_ORDER ORDER BY SP_ODNO";
 	private static final String GET_ONE_STMT = 
@@ -316,10 +316,9 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT , cols);
 			
 			pstmt.setString(1, shop_orderVO.getMb_id());
-			pstmt.setString(2, shop_orderVO.getSp_status());
-			pstmt.setDouble(3, shop_orderVO.getTotal_price());
-			pstmt.setInt(4, shop_orderVO.getPoints_total());
-			pstmt.setString(5, shop_orderVO.getRm_no());
+			pstmt.setDouble(2, shop_orderVO.getTotal_price());
+			pstmt.setInt(3, shop_orderVO.getPoints_total());
+			pstmt.setString(4, shop_orderVO.getRm_no());
 						
 			pstmt.executeUpdate();
 			//掘取對應的自增主鍵值
@@ -353,6 +352,7 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 					// 3●設定於當有exception發生時之catch區塊內
 					System.err.print("Transaction is being ");
 					System.err.println("訂單主檔錯誤，rolled back");
+					se.printStackTrace();
 					con.rollback();
 				} catch (SQLException excep) {
 					throw new RuntimeException("rollback error occured. "

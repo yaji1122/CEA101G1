@@ -1,0 +1,118 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&family=Staatliches&display=swap');
+body {
+	font-family: arial;
+	background-image: url("../../img/bgimg.png");
+	 background-size: contain;
+	background-position: right;
+}
+#onGoingBooking {
+	text-align: center;
+	padding: 5px 10px 10px 10px;
+}
+#onGoingBooking .booking-order {
+	position: relative;
+	margin-bottom: 50px;
+	padding: 10px 20px;
+	display:flex;
+	flex-direction: row;
+	align-items: center;
+	background-color: #ffffff90;
+	box-shadow: 0px 0px 3px grey;
+}
+#onGoingBooking .booking-order .booking-date {
+	display:flex;
+	flex-direction: column;
+	min-width:200px;
+	justify-content: center;
+	letter-spacing: 1px;
+	margin: 10px 20px 10px 0px;
+	font-family: 'Staatliches';
+}
+#onGoingBooking .booking-order .booking-date span:nth-child(1){
+	line-height: 45px;
+	font-weight: 800;
+	font-size: 56px;
+	letter-spacing: 1px;
+}
+#onGoingBooking .booking-order .booking-date span:nth-child(2){
+	color: goldenrod;
+    text-transform: uppercase;
+    font-size: 26px;
+    line-height: 1;
+}
+#onGoingBooking .booking-order .booking-date span:nth-child(3){
+	line-height: 1;
+	font-weight: 600;
+	font-size: 20px;
+}
+#onGoingBooking .booking-order .date-information img.booking-date-arrow-down {
+	width: 25px;
+    margin: 15px 0px;
+    transform: translateX(-10px);
+	filter:contrast(0.1);
+}
+#onGoingBooking .booking-order .room-pics {
+	height:200px;
+	max-width: 350px;
+}
+#onGoingBooking .booking-order .room-pics div {
+	max-height: 200px;
+	
+}
+#onGoingBooking .booking-order .room-pics img{
+	max-height: 200px;
+	padding:20px;
+}
+#onGoingBooking .booking-order .rooms {
+	border-left: 2px solid grey;
+	padding-left: 100px;
+}
+#onGoingBooking .booking-order .room {
+	display:flex;
+	flex-direction: row;
+	align-items: center;
+}
+#onGoingBooking .booking-details {
+	font-family: 'Staatliches';
+	min-height: 200px;
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#onGoingBooking .booking-details i {
+    font-weight: 400;
+	margin-right: 5px;
+}
+#onGoingBooking .booking-details {
+	font-family: 'Noto Sans TC', sans-serif;
+}
+#onGoingBooking .booking-order .buttons {
+	position: absolute;
+	right:10px;
+	bottom:10px;
+}
+#onGoingBooking .booking-order .buttons button {
+	width:100px;
+	padding:5px 10px;
+	cursor:pointer;
+	border:none;
+	box-shadow: 0px 1px 1px grey;
+	letter-spacing: 1px;
+	font-size: 14px;
+}
+#onGoingBooking .booking-order .buttons button.cancel-order {
+	background-color: #ff4646;
+}
+#onGoingBooking .booking-order .buttons button.check-order-detail {
+	background-color: #0e918c;
+	margin-right: 10px;
+}
+#onGoingBooking .booking-order .buttons button.check-order-detail i {
+	margin-right: 5px;
+}
+#onGoingBooking .booking-order .buttons button:hover {
+	filter:saturate(0.8) brightness(1.2);
+}

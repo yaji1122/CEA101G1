@@ -79,15 +79,15 @@ public class RoomRsvDAO implements RoomRsvDAO_interface {
 			String rmtype = bkitem.getString("rmtype");
 			pstmt = conn.prepareStatement(UPDATE);
 			for (int i = 0; i < stay; i++) { //訂幾天，就更新幾天的資料
-				date = date.plusDays(i);
-				rsvvo = getOneByDateNRmType(date, rmtype, conn); //取得該天該房型的資料
+				LocalDate currentDate = date.plusDays(i);
+				rsvvo = getOneByDateNRmType(currentDate, rmtype, conn); //取得該天該房型的資料
 				if (rsvvo == null) {
-					insert(date, conn); //如果該日期尚未創建空房表，
-					rsvvo = getOneByDateNRmType(date, rmtype, conn);
+					insert(currentDate, conn); //如果該日期尚未創建空房表，
+					rsvvo = getOneByDateNRmType(currentDate, rmtype, conn);
 				}
 				Integer rmLeft = rsvvo.getRm_left() - 1;
 				pstmt.setInt(1, rmLeft);
-				pstmt.setDate(2, java.sql.Date.valueOf(date));
+				pstmt.setDate(2, java.sql.Date.valueOf(currentDate));
 				pstmt.setString(3, rmtype);
 				pstmt.executeUpdate();
 			}
@@ -120,12 +120,13 @@ public class RoomRsvDAO implements RoomRsvDAO_interface {
 		RoomRsvVO rsvvo = null;
 		try {
 			pstmt = conn.prepareStatement(UPDATE);
+			
 			for (int i = 0; i < stay; i++) { //訂幾天，就更新幾天的資料
-				startDate = startDate.plusDays(i);
-				rsvvo = getOneByDateNRmType(startDate, rmType, conn); //取得該天該房型的資料
+				LocalDate currentDate = startDate.plusDays(i);
+				rsvvo = getOneByDateNRmType(currentDate, rmType, conn); //取得該天該房型的資料
 				Integer rmLeft = rsvvo.getRm_left() + 1;
 				pstmt.setInt(1, rmLeft);
-				pstmt.setDate(2, java.sql.Date.valueOf(startDate));
+				pstmt.setDate(2, java.sql.Date.valueOf(currentDate));
 				pstmt.setString(3, rmType);
 				pstmt.executeUpdate();
 			}
