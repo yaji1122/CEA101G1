@@ -39,6 +39,17 @@ public class RoomPicServlet extends HttpServlet {
 			return;
 		}
 		
+		if ("getOneRandomPic".equals(action)) {
+			res.setContentType("img/jpg");
+			String rmtype = req.getParameter("rmtype");
+			RoomPicService rmpicSvc = new RoomPicService();
+			List<RoomPicVO> picList = rmpicSvc.getAllByRoomType(rmtype);
+			byte[] rmpic = rmpicSvc.getOneByPicNo(picList.get(0).getRm_pic_no());
+			res.getOutputStream().write(rmpic);
+			res.getOutputStream().flush();
+			return;
+		}
+		
 		if ("addRmPic".equals(action)) {
 			res.setCharacterEncoding("UTF-8");
 			res.setContentType("text; charset=utf-8");

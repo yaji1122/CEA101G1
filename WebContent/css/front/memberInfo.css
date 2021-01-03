@@ -1,4 +1,8 @@
 @charset "UTF-8";
+*::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
 /* 覆蓋MAIN CSS */
 body {
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;

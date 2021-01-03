@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.sql.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -66,7 +65,6 @@ public class BookingOrderServlet extends HttpServlet {
 						return startDate1.compareTo(startDate2);
 					}
 				});
-				
 				
 				Map<String, List<JSONObject>> groupMap = new HashMap<>(); //依照日期建立訂單，相同日期的房型在同個訂單
 				groupMap = bookingCart.stream().collect(Collectors.groupingBy( e -> e.getString("group")));
@@ -236,19 +234,18 @@ public class BookingOrderServlet extends HttpServlet {
 			} 
 		}
 		
-		if ("getone_bymbid".equals(action)) {
+		if ("getall_bymbid".equals(action)) {
 			dispatcher = req.getRequestDispatcher("/backend/booking/bookingInfo.jsp");
 			List<BookingOrderVO> bkodList = new LinkedList<>();
 			try {
 				String mb_id = req.getParameter("bkod_mbid_query");
 				BookingOrderService bkodSvc = new BookingOrderService();
-				BookingOrderVO bkodvo = bkodSvc.getOneByMbId(mb_id);
-				if (bkodvo == null) {
+				bkodList = bkodSvc.getAllByMbId(mb_id);
+				if (bkodList.size() == 0) {
 					req.setAttribute("msgs", "查無訂單");
 				} else {
-					bkodList.add(bkodvo);
+					req.setAttribute("bkodList", bkodList);
 				}
-				req.setAttribute("bkodList", bkodList);
 				dispatcher.forward(req, res);
 				return;
 			} catch (Exception e){

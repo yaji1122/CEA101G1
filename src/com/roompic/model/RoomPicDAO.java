@@ -116,11 +116,7 @@ public class RoomPicDAO implements RoomPicDAO_interface {
 			while (rs.next()) {
 				RoomPicVO rmpicvo = new RoomPicVO();
 				String rm_pic_no = rs.getString("rm_pic_no");
-				String rm_type = rs.getString("rm_type");
-				byte[] rm_pic = rs.getBytes("rm_pic");
 				rmpicvo.setRm_pic_no(rm_pic_no);
-				rmpicvo.setRm_type(rm_type);
-				rmpicvo.setRm_pic(rm_pic);
 				pics.add(rmpicvo);
 			}
 			

@@ -34,10 +34,11 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 	private static final String CHECKIN = "UPDATE BOOKING_ORDER SET CHECKIN = CURRENT_TIMESTAMP, BK_STATUS = 2 WHERE BK_NO = ?";
 	private static final String CHECKOUT = "UPDATE BOOKING_ORDER SET CHECKOUT = CURRENT_TIMESTAMP, BK_STATUS = 3 WHERE BK_NO = ?";
 	private static final String GETALL = "SELECT * FROM BOOKING_ORDER ORDER BY BK_NO";
+	private static final String GETALLBYMBID = "SELECT * FROM BOOKING_ORDER WHERE MB_ID = ?";
 	private static final String GETALLBYBKSTATUS = "SELECT * FROM BOOKING_ORDER WHERE BK_STATUS = ? ORDER BY BK_NO";
 	private static final String GETALLBYDATEIN = "SELECT * FROM BOOKING_ORDER WHERE DATEIN = ? ORDER BY BK_NO";
 	private static final String GETONEBYBKNO = "SELECT * FROM BOOKING_ORDER WHERE BK_NO = ?";
-	private static final String GETONEBYMBID = "SELECT * FROM BOOKING_ORDER WHERE MB_ID = ?";
+	
 
 	@Override
 	public BookingOrderVO insert(BookingOrderVO bkodvo, List<JSONObject> dateGroup) {
@@ -464,26 +465,26 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 	}
 
 	@Override
-	public BookingOrderVO getOneByMbId(String mb_id) {
+	public List<BookingOrderVO> getAllByMbId(String mb_id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		BookingOrderVO bkodvo = null;
+		List<BookingOrderVO> bkodList = new LinkedList<>();
 		try {
 			conn = ds.getConnection();
-			pstmt = conn.prepareStatement(GETONEBYMBID);
+			pstmt = conn.prepareStatement(GETALLBYMBID);
 			pstmt.setString(1, mb_id);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				bkodvo = new BookingOrderVO();
+				BookingOrderVO bkodvo = new BookingOrderVO();
 				bkodvo.setBk_no(rs.getString("BK_NO"));
 				bkodvo.setMb_id(mb_id);
 				bkodvo.setBk_date(rs.getDate("BK_DATE"));
 				bkodvo.setDateIn(rs.getDate("DATEIN").toLocalDate());
 				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
-				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
-				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
+				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
+				bkodList.add(bkodvo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
@@ -510,7 +511,7 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				}
 			}
 		}
-		return bkodvo;
+		return bkodList;
 	}
 
 }
