@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import com.item.model.ItemService;
 import com.item.model.ItemVO;
 import com.members.model.MembersService;
+import com.members.model.MembersVO;
 import com.shop_order.model.Shop_orderService;
 import com.shop_order.model.Shop_orderVO;
 import com.shop_order_detail.model.Shop_order_detailVO;
@@ -321,7 +322,7 @@ public class Shop_orderServlet extends HttpServlet {
 		
 		if ("insertWithOrder_details".equals(action)) {
 			 List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			 req.setAttribute("errorMsgs", errorMsgs);
 	
 			try {
 				/***************************1.接收請求參數***************************************/
@@ -332,6 +333,7 @@ public class Shop_orderServlet extends HttpServlet {
 				String mb_id = req.getParameter("mb_id");
 				Double total_price = new Double(req.getParameter("total_price"));
 				Integer points_total = new Integer(req.getParameter("points_total"));
+				MembersVO mem = new MembersVO();
 				
 				System.out.println("總金額" + total_price);
 								
@@ -356,6 +358,7 @@ public class Shop_orderServlet extends HttpServlet {
 				shop_orderVO.setMb_id(mb_id);
 				shop_orderVO.setTotal_price(total_price);
 				shop_orderVO.setPoints_total(points_total);
+//				shop_orderVO.setRm_no("");
 				
 				/***************************2.開始新增訂單***************************************/
 				Shop_orderService shop_orderSvc = new Shop_orderService();
@@ -366,7 +369,7 @@ public class Shop_orderServlet extends HttpServlet {
 				membersSvc.updateMemPoint(mb_id, points_total);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/								
-				String url = "/frontend/shop/shopAllOrder.jsp";
+				String url = "/frontend/shop/shopPage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				CartService cartSVC = new CartService();
