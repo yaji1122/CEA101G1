@@ -62,9 +62,9 @@
 	
 	String mb_id = (String)session.getAttribute("mb_id");
 	if(member!=null){
-	mb_id = member.getMb_id();
-	System.out.println("mb_id = "+mb_id);
-	session.setAttribute("mb_id", mb_id);
+		mb_id = member.getMb_id();
+		System.out.println("mb_id = "+mb_id);
+		session.setAttribute("mb_id", mb_id);
 	} else {
 		
 	}
@@ -432,6 +432,7 @@ $(function(){
 			} else if(checkact==null){
 				alert("Please Check A Product To Checkout");
 			} else{
+				alert("Go To Checkout");
 				go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=CHECKOUT');
 			}
 		});
