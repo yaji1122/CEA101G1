@@ -15,22 +15,10 @@ public class BookingOrderVO implements Serializable {
 	private Date checkOut;
 	private String bk_status;
 	private Integer total_price;
-	
-	
+	private String card_no;
 	
 	public BookingOrderVO() {};
 	
-	public BookingOrderVO(String bk_no, String mb_id, Date bk_date, LocalDate dateIn, LocalDate dateOut, String bk_status, Integer total_price) {
-		super();
-		this.bk_no = bk_no;
-		this.mb_id = mb_id;
-		this.bk_date = bk_date;
-		this.dateIn = dateIn;
-		this.dateOut = dateOut;
-		this.bk_status = bk_status;
-		this.total_price = total_price;
-	}
-
 	public String getBk_no() {
 		return bk_no;
 	}
@@ -101,6 +89,14 @@ public class BookingOrderVO implements Serializable {
 
 	public void setTotal_price(Integer total_price) {
 		this.total_price = total_price;
+	}
+
+	public String getCard_no() {
+		return card_no;
+	}
+
+	public void setCard_no(String card_no) {
+		this.card_no = card_no;
 	}
 
 	

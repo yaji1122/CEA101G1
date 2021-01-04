@@ -19,20 +19,6 @@ MembersVO member = (MembersVO)session.getAttribute("member");
 <body>
 	<%@ include file="/frontend/files/header.file"%>
 	<div class="main-wrapper">
-		<div class="select-div">
-			<div class="side-nav">
-				<ul>
-					<li><a
-						href="<%=request.getContextPath()%>/frontend/members/memberInfo.jsp"><i
-							class="far fa-user"></i> 個人資訊</a></li>
-					<li><a
-						href="<%=request.getContextPath()%>/frontend/members/memberBooking.jsp"><i
-							class="far fa-calendar-check"></i> 假期管理</a></li>
-					<li><a href="#"><i class="fas fa-clipboard-list"></i> 訂單管理</a>
-					</li>
-				</ul>
-			</div>
-		</div>
 		<div class="info-div">
 			<div class="info-content">
 				<div class="tabset">

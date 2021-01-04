@@ -10,6 +10,8 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.bookingorder.model.BookingOrderService;
+
 public class RoomsDAO implements RoomsDAO_interface {
 
 	private static DataSource ds = null;
@@ -25,7 +27,7 @@ public class RoomsDAO implements RoomsDAO_interface {
 
 	private static final String INSERT = "INSERT INTO ROOMS (RM_NO, RM_TYPE) VALUES (?, ?)";
 	private static final String UPDATE = "UPDATE ROOMS SET RM_STATUS = ? WHERE RM_NO = ?";
-	private static final String UPDATE_CHECKIN = "UPDATE ROOMS SET MB_ID WHERE RM_NO = ?";
+	private static final String UPDATE_CHECKIN = "UPDATE ROOMS SET RM_STATUS = ?, MB_ID = ? WHERE RM_NO = ?";
 	private static final String DELETE = "DELETE FROM ROOMS WHERE RM_NO = ?";
 	private static final String GETALLBYSTATUS = "SELECT * FROM ROOMS WHERE RM_STATUS = ? ORDER BY RM_NO";
 	private static final String GETALLBYRMTYPE = "SELECT * FROM ROOMS WHERE RM_TYPE = ? ORDER BY RM_NO";
@@ -124,10 +126,10 @@ public class RoomsDAO implements RoomsDAO_interface {
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(UPDATE_CHECKIN);
-			pstmt.setString(1, rmvo.getMb_id());
-			pstmt.setString(2, rmvo.getRm_no());
+			pstmt.setString(1, "1");
+			pstmt.setString(2, rmvo.getMb_id());
+			pstmt.setString(3, rmvo.getRm_no());
 			pstmt.executeUpdate();
-
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {

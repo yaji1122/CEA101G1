@@ -12,12 +12,13 @@ public class BookingOrderService {
 		dao = new BookingOrderDAO();
 	}
 	
-	public BookingOrderVO addBkOd(String mb_id, LocalDate dateIn, LocalDate dateOut, Integer total_price, List<JSONObject> dateGroup) {
+	public BookingOrderVO addBkOd(String mb_id, LocalDate dateIn, LocalDate dateOut, Integer total_price, List<JSONObject> dateGroup, String card_no) {
 		BookingOrderVO bkodvo = new BookingOrderVO();
 		bkodvo.setMb_id(mb_id);
 		bkodvo.setDateIn(dateIn);
 		bkodvo.setDateOut(dateOut);
 		bkodvo.setTotal_price(total_price);
+		bkodvo.setCard_no(card_no);
 		bkodvo = dao.insert(bkodvo, dateGroup);
 		return bkodvo;
 	}
@@ -56,6 +57,10 @@ public class BookingOrderService {
 	
 	public List<BookingOrderVO> getAllByDateIn(LocalDate dateIn){
 		return dao.getAllByDateIn(dateIn);
+	}
+	
+	public List<BookingOrderVO> getAllByDateOut(LocalDate dateOut){
+		return dao.getAllByDateOut(dateOut);
 	}
 	
 	public BookingOrderVO getOneByBkNo(String bk_no) {

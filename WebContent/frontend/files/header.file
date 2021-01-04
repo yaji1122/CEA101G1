@@ -24,7 +24,7 @@
 		</div>
 		<nav class="mainmenu mobile-menu">
 			<ul>
-				<li><a class="nav-event">住客專區</a>
+				<li><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event">住客專區</a>
 					<ul class="dropdown">
 						<li><a href="./activity.html">活動報名</a></li>
 						<li><a href="">預約服務</a></li>
@@ -58,24 +58,29 @@
 			<div class="nav-menu">
 				<nav class="mainmenu">
 					<ul class="mainmenu-row">
+					<div class="logobox">
+							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
+								src="${pageContext.request.contextPath}/img/logo.png"/>
+							</a>
+					</div>
+					<li  class="nav-list"><a href="<%=request.getContextPath()%>/frontend/roomrsv/available.jsp" class="nav-evnet">查看空房</a></li>
 					<li  class="nav-list"><a href="#" class="nav-evnet">最新消息</a></li>
-						<li class="nav-list"><a class="nav-event">住客專區</a>
+						
+						<li  class="nav-list"><a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" class="nav-evnet">戴蒙商城</a></li>
+						
+						<li  class="nav-list"><a class="nav-event"
+							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房介紹</a>
+						</li>
+						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event" class="nav-event">住客專區</a>
 							<ul class="dropdown">
 								<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
 								<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
 								<li><a href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
-							</ul></li>
-						<li  class="nav-list"><a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" class="nav-evnet">戴蒙商城</a></li>
-						<div class="logobox">
-							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
-								src="${pageContext.request.contextPath}/img/logo.png"/>
-							</a>
-						</div>
-						<li  class="nav-list"><a class="nav-event"
-							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房</a>
+							</ul>
 						</li>
-						<li class="nav-list"><a class="nav-event"> <c:choose>
-									<c:when test="${member != null}"><i class="far fa-gem"></i></i>會員中心</a>
+						<li class="nav-list"><a class="nav-event"> 
+						<c:choose>
+									<c:when test="${member != null}"><i class="far fa-gem"></i></i>${member.mb_name}</a>
 							<ul class="dropdown">
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberBooking.jsp">我的假期</a></li>
