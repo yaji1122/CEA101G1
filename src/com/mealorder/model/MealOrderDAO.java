@@ -7,6 +7,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.json.JSONObject;
+
+import com.mealorderdetail.model.MealOrderDetailDAO;
+import com.mealorderdetail.model.MealOrderDetailService;
+import com.mealorderdetail.model.MealOrderDetailVO;
+
 import java.sql.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -245,4 +251,65 @@ public class MealOrderDAO implements MealOrderDAO_interface {
 		}
 		return list;
 	}	
+	
+	public void insertWithDetails(MealOrderVO mealOrderVO, List<MealOrderDetailVO> meallist) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			
+			String cols[] = {"MEAL_ODNO"};
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+			pstmt.setString(1,  mealOrderVO.getMb_id());
+			pstmt.setString(2, mealOrderVO.getRm_no());
+			pstmt.setInt(3, mealOrderVO.getTotal_price());
+			
+			pstmt.executeUpdate();
+			String next_odno = null;
+			rs = pstmt.getGeneratedKeys();			
+			if(rs.next()) {
+				next_odno = rs.getString(1); 
+			}
+			rs.close();
+			MealOrderDetailDAO dao = new MealOrderDetailDAO();
+			for(MealOrderDetailVO aDetail : meallist) {
+				aDetail.setMeal_odno(next_odno);
+				dao.insert(aDetail, con);
+			}
+			
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println(meallist.size());
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 }

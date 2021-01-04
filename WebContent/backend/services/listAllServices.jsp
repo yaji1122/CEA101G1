@@ -40,7 +40,7 @@ pageContext.setAttribute("list", list);
 		<c:forEach var="servicesVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 			<tr>
-				<th>${servicesVO.serv_no}</th>
+				<td>${servicesVO.serv_no}</td>
 				<td>${servicesVO.serv_name}</td>
 				<td>
 					${serviceTypeSvc.getOneServiceType(servicesVO.serv_type_no).serv_type_name}</td>

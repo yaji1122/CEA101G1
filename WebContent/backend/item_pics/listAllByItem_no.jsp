@@ -151,7 +151,7 @@ position: fixed;
 		<FORM style="margin-bottom: 0px;">
 			<input type="button" value="新增圖片" class="addPic">
 		</FORM>
-		<a href="<%=request.getContextPath()%>/backend/item/select_item.jsp"
+		<a href="<%=request.getContextPath()%>/backend/item/itemInfo.jsp"
 			class="homePic">回商品管理</a>
 	</div>
 

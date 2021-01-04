@@ -255,17 +255,18 @@
 								<c:forEach var="item_picsVO"
 									items="${item_picsSvc.getAllPics(itemVO.item_no)}">
 									<div class="itempic">
-										<a
-											href="<%=request.getContextPath()%>/frontend/shop/shopItemDetail.jsp?item_no=${itemVO.item_no}"><img
-											src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"
-											alt="" /> </a>
+										<a href="<%=request.getContextPath()%>/frontend/shop/shopItemDetail.jsp?item_no=${itemVO.item_no}">
+											<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"/> 
+										</a>
 									</div>
 								</c:forEach>
 							</div>
+						
 							<div class="itemdetail">
-								<span class="itemdescribe">${itemVO.item_name}</span> <span
-									class="itemprice">$ ${itemVO.item_price}</span>
+								<span class="itemdescribe">${itemVO.item_name}</span> 
+								<span class="itemprice">$ ${itemVO.item_price}</span>
 							</div>
+						
 						</div>
 
 					</c:forEach>

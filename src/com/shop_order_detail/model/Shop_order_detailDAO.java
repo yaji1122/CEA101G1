@@ -26,7 +26,7 @@ public class Shop_order_detailDAO implements Shop_order_detailDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO SHOP_ORDER_DETAIL (SP_ODNO,ITEM_NO,QTY,SALE_DISCOUNT,ITEM_PRICE,POINTS) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO SHOP_ORDER_DETAIL (SP_ODNO,ITEM_NO,QTY,ITEM_PRICE,POINTS) VALUES (?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT SP_ODNO,ITEM_NO,QTY,SALE_DISCOUNT,ITEM_PRICE,POINTS FROM SHOP_ORDER_DETAIL ORDER BY ITEM_NO";
 	private static final String GET_ONE_STMT = "SELECT SP_ODNO,ITEM_NO,QTY,SALE_DISCOUNT,ITEM_PRICE,POINTS FROM SHOP_ORDER_DETAIL WHERE SP_ODNO = ? AND ITEM_NO = ?";
 	private static final String UPDATE = "UPDATE SHOP_ORDER_DETAIL SET QTY = ? WHERE SP_ODNO = ? AND ITEM_NO = ?";
@@ -349,16 +349,22 @@ public class Shop_order_detailDAO implements Shop_order_detailDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
+			System.out.println(shop_order_detailVO.getSp_odno());
+			System.out.println(shop_order_detailVO.getItem_no());
+			System.out.println(shop_order_detailVO.getQty());
+			System.out.println(shop_order_detailVO.getSale_discount());
+			System.out.println(shop_order_detailVO.getItem_price());
+			System.out.println(shop_order_detailVO.getPoints());
+					
      		pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, shop_order_detailVO.getSp_odno());
 			pstmt.setString(2, shop_order_detailVO.getItem_no());
 			pstmt.setInt(3, shop_order_detailVO.getQty());
-			pstmt.setDouble(4, shop_order_detailVO.getSale_discount());
-			pstmt.setDouble(5, shop_order_detailVO.getItem_price());
-			pstmt.setInt(6, shop_order_detailVO.getPoints());
-
+//			pstmt.setDouble(4, shop_order_detailVO.getSale_discount());
+			pstmt.setDouble(4, shop_order_detailVO.getItem_price());
+			pstmt.setInt(5, shop_order_detailVO.getPoints());
+			System.out.println("=========");
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors

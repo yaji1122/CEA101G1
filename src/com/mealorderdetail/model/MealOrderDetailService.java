@@ -1,6 +1,11 @@
 package com.mealorderdetail.model;
 
+import java.sql.Connection;
 import java.util.List;
+
+import org.json.JSONObject;
+
+import com.mealorder.model.MealOrderVO;
 
 public class MealOrderDetailService {
 
@@ -10,14 +15,13 @@ public class MealOrderDetailService {
 		dao = new MealOrderDetailDAO();
 	}
 
-	public MealOrderDetailVO addMealOrderDetail(String meal_odno, String meal_no, Integer price, Integer qty) {
-		MealOrderDetailVO mealOrderDetailVO = new MealOrderDetailVO();
-
+		public MealOrderDetailVO addMealOrderDetail(String meal_odno, String meal_no, Integer price, Integer qty, Connection con) {
+		MealOrderDetailVO mealOrderDetailVO = new MealOrderDetailVO();	
 		mealOrderDetailVO.setMeal_odno(meal_odno);
 		mealOrderDetailVO.setMeal_no(meal_no);
 		mealOrderDetailVO.setPrice(price);
 		mealOrderDetailVO.setQty(qty);
-		dao.insert(mealOrderDetailVO);
+		dao.insert(mealOrderDetailVO, con);
 
 		return mealOrderDetailVO;
 	}
@@ -44,5 +48,9 @@ public class MealOrderDetailService {
 
 	public List<MealOrderDetailVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<MealOrderDetailVO> getAllByOdno(String meal_odno){
+		return dao.getAllByOdno(meal_odno);
 	}
 }
