@@ -86,7 +86,6 @@
 			<li><i class="fa fa-envelope"></i> info.colorlib@gmail.com</li>
 		</ul>
 	</div>
-
 	<!-- offcanvas menu end -->
 
 	<!-- header menu -->
