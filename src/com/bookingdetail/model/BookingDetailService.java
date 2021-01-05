@@ -23,4 +23,8 @@ public class BookingDetailService {
 	public List<BookingDetailVO> getAllByBkNo(String bk_no) {
 		return dao.getAllByBkNo(bk_no);
 	}
+	
+	public List<BookingDetailVO> getAll(){
+		return dao.getAll();
+	}
 }
