@@ -3,8 +3,7 @@ package com.meal.model;
 import java.io.Serializable;
 
 public class MealVO implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	private String meal_no;
 	private String meal_type_no;
 	private String meal_name;

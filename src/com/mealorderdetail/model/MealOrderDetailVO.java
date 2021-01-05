@@ -3,8 +3,7 @@ package com.mealorderdetail.model;
 import java.io.Serializable;
 
 public class MealOrderDetailVO implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	private String meal_odno;
 	private String meal_no;
 	private Integer price;

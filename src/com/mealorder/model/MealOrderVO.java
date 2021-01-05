@@ -6,8 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class MealOrderVO implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	private String meal_odno;
 	private String mb_id;
 	private String rm_no;
