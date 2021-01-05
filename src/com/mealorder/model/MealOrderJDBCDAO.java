@@ -14,11 +14,11 @@ public class MealOrderJDBCDAO implements MealOrderDAO_interface {
 	String password = "123456";
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO MEAL_ORDER (MEAL_ODNO, MB_ID, RM_NO, TOTAL_PRICE) VALUES ('MEALOD' || LPAD(to_char(MEALODNO_SEQ.NEXTVAL), 4, '0'), ?, ?, ?)";
+			"INSERT INTO MEAL_ORDER (MEAL_ODNO, BK_NO, RM_NO, TOTAL_PRICE) VALUES ('MEALOD' || LPAD(to_char(MEALODNO_SEQ.NEXTVAL), 4, '0'), ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT MEAL_ODNO, MB_ID, RM_NO, OD_TIME, TOTAL_PRICE, OD_STATUS FROM MEAL_ORDER ORDER BY MEAL_ODNO";
+			"SELECT MEAL_ODNO, BK_NO, RM_NO, OD_TIME, TOTAL_PRICE, OD_STATUS FROM MEAL_ORDER ORDER BY MEAL_ODNO DESC";
 	private static final String GET_ONE_STMT = 
-			"SELECT MEAL_ODNO, MB_ID, RM_NO, OD_TIME, TOTAL_PRICE, OD_STATUS FROM MEAL_ORDER WHERE MEAL_ODNO= ?";
+			"SELECT MEAL_ODNO, BK_NO, RM_NO, OD_TIME, TOTAL_PRICE, OD_STATUS FROM MEAL_ORDER WHERE MEAL_ODNO= ?";
 	private static final String DELETE = 
 			"DELETE FROM MEAL_ORDER WHERE MEAL_ODNO = ?";
 	private static final String UPDATE = 
@@ -33,7 +33,7 @@ public class MealOrderJDBCDAO implements MealOrderDAO_interface {
 			con = DriverManager.getConnection(url, userid, password);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1,  mealOrderVO.getMb_id());
+			pstmt.setString(1,  mealOrderVO.getBk_no());
 			pstmt.setString(2, mealOrderVO.getRm_no());
 			pstmt.setInt(3, mealOrderVO.getTotal_price());
 
@@ -74,7 +74,7 @@ public class MealOrderJDBCDAO implements MealOrderDAO_interface {
 			
 			String cols[] = {"MEAL_ODNO"};
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
-			pstmt.setString(1,  mealOrderVO.getMb_id());
+			pstmt.setString(1,  mealOrderVO.getBk_no());
 			pstmt.setString(2, mealOrderVO.getRm_no());
 			pstmt.setInt(3, mealOrderVO.getTotal_price());
 			
@@ -222,7 +222,7 @@ public class MealOrderJDBCDAO implements MealOrderDAO_interface {
 			while (rs.next()) {
 				mealOrderVO = new MealOrderVO();
 				mealOrderVO.setMeal_odno(rs.getString("meal_odno"));
-				mealOrderVO.setMb_id(rs.getString("mb_id"));
+				mealOrderVO.setBk_no(rs.getString("bk_no"));
 				mealOrderVO.setRm_no(rs.getString("rm_no"));
 				mealOrderVO.setOd_time(rs.getTimestamp("od_time"));
 				mealOrderVO.setTotal_price(rs.getInt("total_price"));
@@ -278,7 +278,7 @@ public class MealOrderJDBCDAO implements MealOrderDAO_interface {
 			while (rs.next()) {
 				mealOrderVO = new MealOrderVO();
 				mealOrderVO.setMeal_odno(rs.getString("meal_odno"));
-				mealOrderVO.setMb_id(rs.getString("mb_id"));
+				mealOrderVO.setBk_no(rs.getString("bk_no"));
 				mealOrderVO.setRm_no(rs.getString("rm_no"));
 				mealOrderVO.setOd_time(rs.getTimestamp("od_time"));
 				mealOrderVO.setTotal_price(rs.getInt("total_price"));
@@ -346,26 +346,26 @@ public class MealOrderJDBCDAO implements MealOrderDAO_interface {
 //		System.out.println("刪除成功");
 
 		// 查詢
-		MealOrderVO mealOrderVO3 = dao.findByPrimaryKey("MEALOD0001");
-		System.out.print(mealOrderVO3.getMeal_odno() + ",");
-		System.out.print(mealOrderVO3.getMb_id() + ",");
-		System.out.print(mealOrderVO3.getRm_no() + ",");
-		System.out.print(mealOrderVO3.getOd_time() + ",");
-		System.out.print(mealOrderVO3.getTotal_price() + ",");
-		System.out.print(mealOrderVO3.getOd_status() + ",");
-		System.out.println();
-		System.out.println("===========================================");
+//		MealOrderVO mealOrderVO3 = dao.findByPrimaryKey("MEALOD0001");
+//		System.out.print(mealOrderVO3.getMeal_odno() + ",");
+//		System.out.print(mealOrderVO3.getMb_id() + ",");
+//		System.out.print(mealOrderVO3.getRm_no() + ",");
+//		System.out.print(mealOrderVO3.getOd_time() + ",");
+//		System.out.print(mealOrderVO3.getTotal_price() + ",");
+//		System.out.print(mealOrderVO3.getOd_status() + ",");
+//		System.out.println();
+//		System.out.println("===========================================");
 		
 		// 查詢
-		List<MealOrderVO> list = dao.getAll();
-		for (MealOrderVO aMealOrder: list) {
-			System.out.print(aMealOrder.getMeal_odno() + ",");
-			System.out.print(aMealOrder.getMb_id() + ",");
-			System.out.print(aMealOrder.getRm_no() + ",");
-			System.out.print(aMealOrder.getOd_time() + ",");
-			System.out.print(aMealOrder.getTotal_price() + ",");
-			System.out.print(aMealOrder.getOd_status() + ",");
-			System.out.println();
-		}	
+//		List<MealOrderVO> list = dao.getAll();
+//		for (MealOrderVO aMealOrder: list) {
+//			System.out.print(aMealOrder.getMeal_odno() + ",");
+//			System.out.print(aMealOrder.getMb_id() + ",");
+//			System.out.print(aMealOrder.getRm_no() + ",");
+//			System.out.print(aMealOrder.getOd_time() + ",");
+//			System.out.print(aMealOrder.getTotal_price() + ",");
+//			System.out.print(aMealOrder.getOd_status() + ",");
+//			System.out.println();
+//		}	
 	}
 }

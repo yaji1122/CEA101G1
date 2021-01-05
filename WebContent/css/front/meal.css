@@ -224,8 +224,8 @@ body {
 
 .shopping-cart-detail {
 	width: 100%;
-	height: 330px;
-	margin-top: 45px;
+	height: 350px;
+	margin-top: 25px;
 }
 
 .display-img-word {
@@ -311,6 +311,30 @@ body {
 	box-sizing: border-box;
 }
 
+.cart-icon-plus{
+	font-size: 31px;
+	color: #7B7B7B;
+	cursor: pointer;
+	float: right;
+}
+
+.cart-icon-minus{
+	font-size: 31px;
+	color: #7B7B7B;
+	float: left;
+	cursor: pointer;
+}
+
+.cart-icon-plus:hover, .cart-icon-minus:hover {
+	background: #ffffff;
+	color: #000000;
+}
+
+.cart-qty{
+	text-align: center;
+	width: 50%;
+	box-sizing: border-box;
+}
 /* Icon set - http://ionicons.com */
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,700)
 	;
@@ -349,7 +373,7 @@ body {
 }
 
 .snip1268 img {
-	width: max-content;
+	width: 100%;
 	height: -webkit-fill-available; vertical-align : top;
 	-webkit-transition: opacity 0.35s;
 	transition: opacity 0.35s;
