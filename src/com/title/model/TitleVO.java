@@ -3,7 +3,7 @@ package com.title.model;
 import java.io.Serializable;
 
 public class TitleVO implements Serializable{
-	
+	private static final long serialVersionUID = 1L;	
 	private String Title_no;
 	private String Title;
 	

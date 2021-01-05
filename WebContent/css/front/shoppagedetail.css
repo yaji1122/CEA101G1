@@ -124,14 +124,13 @@
 .added-cart-title {
 } */
 .itemtypeheader {
-    width: 100%;
+    width: 100vw;
     height: 70px;
     border: 1px solid rgb(235, 232, 232);
     margin-top: 0px;
     position: fixed;
     top: 60px;
     background-color: white;
-    z-index: 98;
 }
 .hideUp .itemtypeheader {
     top: 0;
@@ -222,11 +221,13 @@
 #itemsmpic img{
     width: 30px;
     height: 50px;
-    margin-top: 14px;
+    margin-top: 4px;
     float: left;
     margin-left: -5px;
 }
-
+.itempoints{
+	margin-left:35px;
+}
 .itemtypeno {
     width: 350px;
     height: 15px;

@@ -2,9 +2,11 @@ a:focus {
     color: black;
     
 }
+
 body {
 	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
+
 div.calendar-available {
 	padding-top:20px;
 	position:fixed;
@@ -16,6 +18,7 @@ div.calendar-available {
 	background-color: white;
 	display:none;
 }
+
 div.show-calendar {
 	display:block;
 	z-index:99;
@@ -70,7 +73,7 @@ body {
 }
 
 .img-slide {
-	margin-top: -18.7px;
+	margin-top: 60px;
 	width: 100%;
 	height: 400px;
 }
