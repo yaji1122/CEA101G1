@@ -6,7 +6,7 @@ public class ActOrderVO implements java.io.Serializable{
 	
 	private String actOdno;
 	private String actNo;
-	private String mbId;
+	private String bkNo;
 	private Date odTime;
 	private String odStatus;
 	private Integer ppl;
@@ -24,11 +24,11 @@ public class ActOrderVO implements java.io.Serializable{
 	public void setActNo(String actNo) {
 		this.actNo = actNo;
 	}
-	public String getMbId() {
-		return mbId;
+	public String getBkNo() {
+		return bkNo;
 	}
-	public void setMbId(String mbId) {
-		this.mbId = mbId;
+	public void setBkNo(String bkNo) {
+		this.bkNo = bkNo;
 	}
 	public Date getOdTime() {
 		return odTime;

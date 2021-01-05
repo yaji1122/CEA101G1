@@ -43,9 +43,9 @@
                  placeholder="ACT_No" value="<%= (actOrderVO==null)? "" :actOrderVO.getActNo()%>" /> 
             </li>
             <li>
-                <label class="alert alert-primary" role="alert">會員編號: (MB_ID):</label>
-                <input type="text" class="form-control" id="input-Act-Namel4" name="mbId" size="45" 
-                 placeholder="MB_ID" value="<%= (actOrderVO==null)? "" :actOrderVO.getMbId()%>" />
+                <label class="alert alert-primary" role="alert">訂房編號: (BK_NO):</label>
+                <input type="text" class="form-control" id="input-Act-Namel4" name="bkNo" size="45" 
+                 placeholder="BK_NO" value="<%= (actOrderVO==null)? "" :actOrderVO.getBkNo()%>" />
             </li>
             <li>
                 <label class="alert alert-danger">訂單日期: (OD_Time):</label>
