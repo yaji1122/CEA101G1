@@ -3,6 +3,7 @@ package com.auth.model;
 import java.io.Serializable;
 
 public class AuthVO implements Serializable {
+	private static final long serialVersionUID = 1L;	
 	
 	private String emp_id;
 	private String func_no;

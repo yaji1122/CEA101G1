@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class EmpVO implements java.io.Serializable{
-	
+	private static final long serialVersionUID = 1L;	
 	private String emp_id;
 	private String emp_name;
 	private String emp_pwd;
