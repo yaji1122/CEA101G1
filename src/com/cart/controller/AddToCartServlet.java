@@ -41,6 +41,7 @@ public class AddToCartServlet extends HttpServlet {
 					for (int i = 0; i < buylist.size(); i++) {
 						CartItem cartItem = buylist.get(i);
 						if (cartItem.getItem_name().equals(acartItem.getItem_name())) {
+							cartItem.setItem_no(cartItem.getItem_no());
 							cartItem.setQuantity(cartItem.getQuantity() + acartItem.getQuantity());
 							cartItem.setPrice(cartItem.getPrice() + acartItem.getPrice());
 							buylist.setElementAt(cartItem, i);
@@ -61,10 +62,12 @@ public class AddToCartServlet extends HttpServlet {
 	}
 
 	private CartItem getCartItem(HttpServletRequest req) {
+		String item_no = req.getParameter("item_no");
 		String item_name = req.getParameter("item_name");
 		Integer quantity = (new Integer(req.getParameter("quantity")).intValue());
 		Integer price = (new Integer(req.getParameter("price")).intValue());
 		CartItem ci = new CartItem();
+		ci.setItem_no(item_no);
 		ci.setItem_name(item_name);
 		ci.setQuantity(quantity);
 		ci.setPrice(price);

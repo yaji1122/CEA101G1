@@ -336,6 +336,7 @@ public class Shop_orderServlet extends HttpServlet {
 				MembersVO mem = new MembersVO();
 				
 				System.out.println("總金額" + total_price);
+				System.out.println("總積分" + points_total);
 								
 				List<Shop_order_detailVO> list = new ArrayList<Shop_order_detailVO>(); // 準備置入訂單明細
 				
@@ -384,7 +385,7 @@ public class Shop_orderServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("增加訂單資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/frontend/shop/shopCheckout.jsp");
+						.getRequestDispatcher("/frontend/shop/shopCheckOut.jsp");
 				failureView.forward(req, res);
 			}
 		 }

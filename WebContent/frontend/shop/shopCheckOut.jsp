@@ -201,7 +201,7 @@
 				List<ItemVO> buylist = (List<ItemVO>)session.getAttribute("buylist");
 				Double amount = (Double)request.getAttribute("amount");
 				request.setAttribute("amount",amount);
-				Integer poamount = (int)request.getAttribute("poamount");
+				Integer poamount = (Integer)request.getAttribute("poamount");
 				request.setAttribute("poamount",poamount);
 				
 				CartService cartSVC = new CartService();
@@ -245,7 +245,7 @@
 							<tr>
 								<td colspan="4">
 								<td>總積分</td>
-								<td><span>$ </span><%=poamount %></td>
+								<td><%=poamount %></td>
 							</tr>
 							<tr>
 								<td colspan="4">

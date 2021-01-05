@@ -853,7 +853,7 @@ a.calendar-today .calendar-date {
 .checkout-title i.medal {
 	color:gold;
 }
-.main-wrapper .available-rooms .room-card, .main-wrapper .show-all-booking .room-card {
+.main-wrapper .show-all-booking .room-card {
 	padding-top:60px;
 }
 .show-all-booking .room-card .booking-item-title {

@@ -5,7 +5,9 @@
 <%
 	ServiceOrderVO serviceOrderVO = (ServiceOrderVO) request.getAttribute("serviceOrderVO"); //ServiceOrderServlet.java (Concroller) 存入req的serviceOrderVO物件 (包括幫忙取出的serviceOrderVO, 也包括輸入資料錯誤時的serviceOrderVO物件)
 %>
-
+<jsp:useBean id="servicesSvc" scope="page"
+	class="com.services.model.ServicesService" />
+	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,40 +39,55 @@ max-width:300px;
 		ACTION="${pageContext.request.contextPath}/ServiceOrderServlet"
 		name="form1">
 		<div class="form-group">
-			服務編號:<%=serviceOrderVO.getServ_odno()%>
+			服務訂單編號:<%=serviceOrderVO.getServ_odno()%>
 		</div>
 		<div class="form-group">
-			<label for="serv_type_no">會員編號:</label> <input type="text"
+			<label for="mb_id">會員編號:</label> <input type="text"
 				class="form-control" id="mb_id" name="mb_id"
 				value="<%=serviceOrderVO.getMb_id()%>" required>
 		</div>
 		<div class="form-group">
-			<label for="serv_status">訂單狀態編號:</label> <input type="text"
+			<label for="od_status">訂單狀態:</label>
+			<select name="od_status" id="od_status">
+				<option value="0" ${serviceOrderVO.od_status == 0 ? 'selected':''}>未完成</option>
+				<option value="1" ${serviceOrderVO.od_status == 1 ? 'selected':''}>已完成</option>
+				<option value="2" ${serviceOrderVO.od_status == 2 ? 'selected':''}>已取消</option>
+			</select> 
+			<%--  <input type="text"
 				class="form-control" id="od_status" name="od_status"
-				value="<%=serviceOrderVO.getOd_status()%>" required>
+				value="<%=serviceOrderVO.getOd_status()%>" required> --%>
 		</div>
 		<div class="form-group">
-			<label for="serv_price">客房編號:</label> <input type="text"
+			<label for="rm_no">客房編號:</label> <input type="text"
 				class="form-control" id="rm_no" name="rm_no"
 				value="<%=serviceOrderVO.getRm_no()%>">
 		</div>
 		<div class="form-group">
-			<label for="serv_info">服務編號:</label> <input type="text"
+			<label for="serv_no">服務名稱:</label> 
+			<select name="serv_no"
+				id="serv_no">
+				<c:forEach var="servicesVO" items="${servicesSvc.all}">
+					<option value="${servicesVO.serv_no}"
+						${(serviceOrderVO.serv_no==servicesVO.serv_no)?'selected':'' }>${servicesVO.serv_name}</option>
+				</c:forEach>
+			</select>
+			
+			<%-- <input type="text"
 				class="form-control" id="serv_no" name="serv_no"
-				value="<%=serviceOrderVO.getServ_no()%>">
+				value="<%=serviceOrderVO.getServ_no()%>"> --%>
 		</div>
 		<div class="form-group">
-			<label for="serv_name">預約時間:</label> <input type="text"
+			<label for="serv_time">預約時間:</label> <input type="text"
 				class="form-control" id="serv_time" name="serv_time"
 				value="<%=serviceOrderVO.getServ_time()%>" required>
 		</div>
 		<div class="form-group">
-			<label for="serv_dura">服務人數:</label> <input type="text"
+			<label for="serv_count">服務人數:</label> <input type="text"
 				class="form-control" id="serv_count" name="serv_count"
 				value="<%=serviceOrderVO.getServ_count()%>" required>
 		</div>
 		<div class="form-group">
-			<label for="serv_ppl">訂單總額:</label> <input type="text"
+			<label for="total_price">訂單總額:</label> <input type="text"
 				class="form-control" id="total_price" name="total_price"
 				value="<%=serviceOrderVO.getTotal_price()%>" required>
 		</div>
