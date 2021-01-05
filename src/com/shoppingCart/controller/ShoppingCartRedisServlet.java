@@ -55,7 +55,7 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 				}
 				// 刪除單個商品
 				if (action.equals("DELETE")) {
-					System.out.println("進單品刪除");
+					System.out.println("刪除單一商品");
 					String del = req.getParameter("del");
 					int d = Integer.parseInt(del);
 					buylist.remove(d);

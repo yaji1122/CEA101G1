@@ -296,14 +296,13 @@ body {
     color: darkgrey;
 }
 .itemtypeheader {
-    width: 100%;
+    width: 100vw;
     height: 70px;
     border: 1px solid rgb(235, 232, 232);
     margin-top: 0px;
     position: fixed;
     top: 60px;
     background-color: white;
-    z-index: 98;
 }
 .hideUp .itemtypeheader {
     top: 0;

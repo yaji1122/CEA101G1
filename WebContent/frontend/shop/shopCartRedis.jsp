@@ -142,6 +142,9 @@
 		</ul>
 	</div>
 	<!-- Offcanvas Menu Section End -->
+	
+	<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
+	
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="menu-item">

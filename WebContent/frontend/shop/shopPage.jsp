@@ -155,6 +155,9 @@
 		</ul>
 	</div>
 	<!-- Offcanvas Menu Section End -->
+	
+	<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
+	
 	<header class="header-section">
 		<div class="menu-item">
 			<div class="nav-menu">
@@ -170,10 +173,10 @@
 						<li class="nav-list">
 						<a class="nav-event">DIAMOND CLASSIC</a>
 										<ul class="dropdown">
-											<c:forEach var="item_typeVO"
-												items="${item_typeSvc.allItem_type}" begin="0" end="2">
-												<li value="${item_typeVO.item_type_no}" class="chtype"><a
-													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
+											<c:forEach var="item_typeVO" items="${item_typeSvc.allItem_type}" begin="0" end="2">
+												<li value="${item_typeVO.item_type_no}" class="chtype">
+												<a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a>
+												</li>
 											</c:forEach>
 										</ul>
 						</li>
@@ -183,18 +186,21 @@
 											<c:forEach var="item_typeVO"
 												items="${item_typeSvc.allItem_type}" begin="3" end="5">
 												<li value="${item_typeVO.item_type_no}" class="chtype"><a
-													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
+													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a>
+												</li>
 											</c:forEach>
-										</ul></li>
+										</ul>
+						</li>
 						
 						<li class="nav-list"><a class="nav-evnet">SEASONAL GOODS</a>
 										<ul class="dropdown">
-											<c:forEach var="item_typeVO"
-												items="${item_typeSvc.allItem_type}" begin="6">
+											<c:forEach var="item_typeVO" items="${item_typeSvc.allItem_type}" begin="6">
 												<li value="${item_typeVO.item_type_no}" class="chtype"><a
-													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a></li>
+													href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=${item_typeVO.item_type_no}">${item_typeVO.type_name}</a>
+												</li>
 											</c:forEach>
-										</ul></li>
+										</ul>
+						</li>
 						
 						<li class="nav-list"><a class="nav-event" href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp"><i class="fas fa-shopping-cart icon" ></i></a></li>
 						
