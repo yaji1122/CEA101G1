@@ -1,6 +1,10 @@
 package com.mealtype.model;
 
-public class MealTypeVO {
+import java.io.Serializable;
+
+public class MealTypeVO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String meal_type_no;
 	private String type_name;
 	
