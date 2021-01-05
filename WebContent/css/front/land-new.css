@@ -163,12 +163,11 @@ p {
   margin-top: 600px;
   position: absolute;
   margin-left: 20px;
-  margin-top: 608px;
 }
 #pic1{
   width:350px;
   height:280px;
-  margin: 10px auto;
+  margin: 0px auto;
   position: relative;
   background-image: url("../img/surf2.png");
   background-size: cover;
@@ -183,6 +182,7 @@ p {
   opacity: 0;
   text-align: center;
   padding-top: 120px;
+  
   
 }
 #pic1 #p1:hover{

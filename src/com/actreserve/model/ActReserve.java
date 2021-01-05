@@ -17,6 +17,12 @@ public class ActReserve implements java.io.Serializable{
 	private String participant;
 	private Integer actPrice;
 	
+	public String getParticipant() {
+		return participant;
+	}
+	public void setParticipant(String participant) {
+		this.participant = participant;
+	}
 	public String getActNo() {
 		return actNo;
 	}
@@ -65,12 +71,7 @@ public class ActReserve implements java.io.Serializable{
 	public void setActTime(String actTime) {
 		this.actTime = actTime;
 	}
-	public String getParticipant() {
-		return participant;
-	}
-	public void setParticipant(String participant) {
-		this.participant = participant;
-	}
+	
 	public Integer getActPrice() {
 		return actPrice;
 	}
@@ -82,7 +83,7 @@ public class ActReserve implements java.io.Serializable{
 	public String toString() {
 		return "ACT [ACT_NO="+actNo+",ACT_EVENT_NO="+actEventNo+",ACT_NAME="+actName+",ACT_STATIS="+actStatus+
 				",ACT_REG_TIME="+actRegTime+",ACT_DATE="+actDate+",DEADLINE="+deadLine+",ACT_TIME="+actTime+
-				",PPL="+participant+"人,ACT_PRICE="+actPrice+"]";
+				"Participant"+participant+"人,ACT_PRICE="+actPrice+"]";
 				
 	}
 	

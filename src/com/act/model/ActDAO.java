@@ -42,6 +42,11 @@ public class ActDAO implements ActDAO_interface{
 			"UPDATE ACT set ACT_EVENT_NO=?,ACT_NAME=?,ACT_STATUS=?,ACT_REG_TIME=?,ACT_DATE=?,"
 			+ "DEADLINE=?,ACT_TIME=?,PARTICIPANT=?,ACT_PRICE=? where ACT_NO=?";
 
+	private static final String GET_ALL_BY_STATUS =
+			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_REG_TIME,'yyyy-mm-dd')ACT_REG_TIME,"
+			+ "TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,TO_CHAR(DEADLINE,'yyyy-mm-dd')DEADLINE,ACT_TIME," + 
+			"PARTICIPANT,ACT_PRICE FROM ACT order By ACT_STATUS";
+	
 	@Override
 	public void insert(ActVO actVO) {
 		Connection con = null;
@@ -189,7 +194,7 @@ public class ActDAO implements ActDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo ¤]ºÙ¬° Domain objects
+				// empVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				actVO = new ActVO();
 				actVO.setActNo(rs.getString("ACT_NO"));
 				actVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
@@ -250,7 +255,7 @@ public class ActDAO implements ActDAO_interface{
 		rs = pstmt.executeQuery();
 
 		while (rs.next()) {
-			// empVO ¤]ºÙ¬° Domain objects
+			// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 			actVO = new ActVO();
 			actVO.setActNo(rs.getString("ACT_NO"));
 			actVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
