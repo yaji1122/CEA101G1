@@ -54,6 +54,7 @@ public class BookingOrderServlet extends HttpServlet {
 			
 			try {
 				MembersVO member = (MembersVO) req.getSession().getAttribute("member");
+				String card_no = req.getParameter("card_no");
 				String mb_id = member.getMb_id();
 				List<JSONObject> bookingCart = (List<JSONObject>) req.getSession().getAttribute("bookingCart");
 				
@@ -78,7 +79,7 @@ public class BookingOrderServlet extends HttpServlet {
 					totalPrice = dateGroup.stream()
 								.mapToInt(e -> Integer.parseInt(e.getString("subtotal")))
 								.sum();
-					bkodSvc.addBkOd(mb_id, dateIn, dateOut, totalPrice, dateGroup);
+					bkodSvc.addBkOd(mb_id, dateIn, dateOut, totalPrice, dateGroup, card_no);
 				}
 				req.getSession().removeAttribute("bookingCart");
 				res.sendRedirect(req.getContextPath() + "/frontend/roomrsv/bookingResult.jsp");

@@ -12,23 +12,24 @@
 <head>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-search.css" type="text/css" /> 
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-search.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-add.css" type="text/css" /> 
 
 <title>活動訂單資料 - actOrder_listOne.jsp</title>
 
 </head>
 <div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left:450px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>訂單查詢</h2>
+			<h2 style="margin-left:80px;">訂單查詢</h2>
 		</div>
 		
-		<nav class="navbar-top navbar-light">
+		<nav class="navbar-top navbar-light" >
 			<form class="form-inline">
 				<button class="btn btn-outline-success" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/back-end/actorder/backend-order_select_page.jsp'">
+				onclick="location.href='<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp'">
 				  回訂單查詢
 				</button>
 			</form>

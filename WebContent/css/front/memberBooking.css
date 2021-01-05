@@ -4,7 +4,7 @@
 body {
 	font-family: arial;
 	background-image: url("../../img/bgimg.png");
-	 background-size: contain;
+	 background-size: cover;
 	background-position: right;
 }
 #onGoingBooking {
@@ -116,3 +116,92 @@ body {
 #onGoingBooking .booking-order .buttons button:hover {
 	filter:saturate(0.8) brightness(1.2);
 }
+#onGoingBooking .no-booking {
+	min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+#onGoingBooking .no-booking h2 {
+	padding:20px;
+	border-top: 2px solid #e8e8e8;
+ 	border-bottom: 2px solid #e8e8e8;
+	backdrop-filter: blur(5px);
+	color: #bbbbbb;
+	font-weight: 400;
+	letter-spacing: 2px;
+}
+#onGoingBooking .no-booking a {
+	color:#03506f
+}
+#onGoingBooking .no-booking a:hover {
+	color: #008891;
+}
+/* 歷史紀錄 */
+#bookingHistory {
+	padding: 10px;
+}
+#history-table {
+	width:100%;	
+	font-family: 'Staatliches';
+}
+#history-table tr td:first-child span {
+	font-size: 20px;
+	font-weight: 200;
+	margin-left: 5px;
+}
+#history-table span.status-checked-in {
+	color:#03506f;
+	border: 1px solid #03506f;
+}
+#history-table span.status-finished {
+	color:#393e46;
+	border: 1px solid #393e46;
+}
+#history-table span.status-canceled {
+	color:#f05454;
+	border: 1px solid #f05454;
+}
+#history-table tr th {
+	font-size: 14px;
+	font-weight: 300;
+	letter-spacing: 1px;
+}
+#history-table tr th:nth-child(1){
+	font-size: 18px;
+	font-weight: 700;
+	min-width: 200px;
+	padding-left: 10px;
+}
+#history-table tr:nth-child(even) {
+	background-color: #ffffff90;
+}
+#history-table tr:nth-child(odd) {
+	background-color: #aaaaaa95;
+}
+#history-table tr td:nth-child(1) {
+	font-size: 20px;
+	font-weight: 400;
+	padding-left: 10px;
+}
+#history-table tr td {
+	padding:5px 0px;
+}
+#history-table tr td:last-child a{
+	font-size: 12px;
+	border: 1px solid black;
+	padding: 1px 2px;
+}
+#history-table tr:nth-child(1){
+	border-bottom: 1px solid grey;
+	background-color: #ffffff;
+	vertical-align: end;
+}
+
+
+
+
+
+
+

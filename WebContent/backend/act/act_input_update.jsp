@@ -29,12 +29,12 @@
 	</ul>
 </c:if>
 
-        <div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+       <div class="logo">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left: 450px;">
 		</div>
-		<div class="form-title">
+		<div class="form-title" style="margin-left:100px;">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>活動查詢</h2>
+			<h2>新增活動</h2>
 		</div>
 
 
@@ -98,7 +98,7 @@
                   <button type="submit" class="btn btn-primary">送出修改</button>
                   <button type="reset" class="btn btn-primary">重設</button>
                   <button type="button" class="btn btn-outline-danger"
-                  onclick="location.href='<%=request.getContextPath()%>/back-end/act/backend-act_select_page.jsp'">
+                  onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_select_page.jsp'">
                                                  回首頁</button>
          </div>
     

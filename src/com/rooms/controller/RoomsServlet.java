@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
+
+import com.bookingorder.model.BookingOrderService;
 import com.rooms.model.*;
 import com.roomtype.model.RoomTypeService;
 import javax.servlet.*;
@@ -102,11 +104,15 @@ public class RoomsServlet extends HttpServlet {
 			try {
 				String rm_no = req.getParameter("rm_no");
 				String mb_id = req.getParameter("mb_id");
+				String bk_no = req.getParameter("bk_no");
 				RoomsService rmSvc = new RoomsService();
+				BookingOrderService bkSvc = new BookingOrderService();
+				bkSvc.checkIn(bk_no);
 				rmSvc.updateCheckIn(rm_no, mb_id);
+				out.print("success");
 			} catch (Exception e) {
 				e.printStackTrace();
-				out.print("更新失敗");
+				out.print("fail");
 			}
 		}
 

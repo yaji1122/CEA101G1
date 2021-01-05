@@ -157,7 +157,16 @@
 		<url-pattern>/act/ActServlet</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
+		<servlet-name>ActReserveServlet</servlet-name>
+		<servlet-class>com.actreserve.controller.ActReserveServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActReserveServlet</servlet-name>
+		<url-pattern>/ActReserveServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>ActOrderServlet</servlet-name>
 		<servlet-class>com.actorder.controller.ActOrderServlet</servlet-class>
 	</servlet>

@@ -15,24 +15,25 @@
       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend.css" type="text/css" />
       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery-ui.css">
       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-search.css" type="text/css" />
+      <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-add.css" type="text/css" />
 
 <title>活動資料 - actOrder_listOne.jsp</title>
 
 </head>
 
        <div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left:450px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>活動查詢</h2>
+			<h2 style="margin-left:80px;">活動查詢</h2>
 		</div>
 		<br>
 
 		<nav class="navbar-top navbar-light" style="margin-left:120px;">
 			<form class="form-inline">
 				<button class="btn btn-outline-success" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/back-end/act/backend-act_select_page.jsp'">
+				onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_select_page.jsp'">
 				  回活動查詢
 				</button>
 			</form>

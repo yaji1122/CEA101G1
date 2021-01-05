@@ -9,11 +9,11 @@
 	<!-- 頁面內容開始-->
 
 		<div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left: 430px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>訂單查詢</h2>
+			<h2 style="margin-left: 80px;">訂單查詢</h2>
 		</div>
     <!-- Example single danger button -->
     <%@ include file="/backend/actorder/act_order_select_page.jsp"%>

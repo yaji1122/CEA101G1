@@ -31,18 +31,18 @@
 </c:if>
 
         <div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left:450px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>活動查詢</h2>
+			<h2 style="margin-left:80px;">活動查詢</h2>
 		</div>
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet" name="form1">
 <div id="form">
              <li>
-                <label for="inputEmail4" class="alert alert-primary" role="alert">活動編號: (ACT_ODNo):</label>
-                <input type="text" class="form-control" id="input-Act-no" placeholder="ACT_ODNo" name="actNo" size="45"
+                <label for="inputEmail4" class="alert alert-primary" role="alert">活動編號: (ACT_No):</label>
+                <input type="text" class="form-control" id="input-Act-no" placeholder="ACT_No" name="actNo" size="45"
                 size="45" required placeholder="請輸入活動編號" value="<%= (actVO==null)? "" : actVO.getActNo()%>" />
             </li>
             <li>
@@ -66,14 +66,14 @@
                  value="<%= (actVO==null)? "" :actVO.getActRegTime()%>" />
             </li>
             <li>
-                <label class="alert alert-primary" role="alert">活動截止日期:</label>
-                <input type="date" class="form-control" id="input-Act-Namel4" name="deadLine" size="45"
-                 value="<%= (actVO==null)? "" :actVO.getDeadLine()%>" />
-            </li>
-             <li>
                 <label class="alert alert-primary" role="alert">活動舉辦日期:</label>
                 <input type="date" class="form-control" id="input-Act-Namel4" name="actDate" size="45"
                  value="<%= (actVO==null)? "" :actVO.getActDate()%>" />
+            </li>
+             <li>
+                <label class="alert alert-primary" role="alert">活動截止日期:</label>
+                <input type="date" class="form-control" id="input-Act-Namel4" name="deadLine" size="45"
+                 value="<%= (actVO==null)? "" :actVO.getDeadLine()%>" />
             </li>
             <li>
                 <label class="alert alert-danger">活動時段: (ACT_Time):</label>
@@ -97,7 +97,7 @@
                   <button type="submit" class="btn btn-primary">新增</button>
                   <button type="reset" class="btn btn-primary">重設</button>
                   <button type="button" class="btn btn-outline-danger"
-                  onclick="location.href='<%=request.getContextPath()%>/back-end/act/backend-act_select_page.jsp'">
+                  onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_select_page.jsp'">
                                                  回首頁</button>
          </div>
     

@@ -46,20 +46,6 @@ pageContext.setAttribute("history", history);
 <body>
 	<%@ include file="/frontend/files/header.file"%>
 	<div class="main-wrapper">
-		<div class="select-div">
-			<div class="side-nav">
-				<ul>
-					<li><a
-						href="<%=request.getContextPath()%>/frontend/members/memberInfo.jsp"><i
-							class="far fa-user"></i> 個人資訊</a></li>
-					<li><a
-						href="<%=request.getContextPath()%>/frontend/members/memberBooking.jsp"><i
-							class="far fa-calendar-check"></i> 假期管理</a></li>
-					<li><a href="#"><i class="fas fa-clipboard-list"></i> 訂單管理</a>
-					</li>
-				</ul>
-			</div>
-		</div>
 		<div class="info-div">
 			<div class="info-content">
 				<div class="tabset">
@@ -77,15 +63,21 @@ pageContext.setAttribute("history", history);
 						class="com.roompic.model.RoomPicService" />
 					<div class="tab-panels">
 						<section id="onGoingBooking" class="tab-panel">
+							<c:if test="${onGoing.size() == 0}">
+							<div class="no-booking">
+								<h2>目前尚未預約假期</h2>
+								<a href="<%=request.getContextPath()%>/frontend/roomrsv/available.jsp">前往預定?</a>
+							</div>
+							</c:if>
 							<c:forEach var="booking" items="${onGoing}">
-
 								<div class="booking-order">
 									<div class="date-information">
 										<div class="booking-date">
 											<span>${booking.dateIn.getDayOfMonth()}</span> <span>${booking.dateIn.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}</span>
 											<span>${booking.dateIn.getYear()}</span>
 										</div>
-										<img class="booking-date-arrow-down" src="<%=request.getContextPath()%>/img/icon/fast-forward.png">
+										<img class="booking-date-arrow-down"
+											src="<%=request.getContextPath()%>/img/icon/fast-forward.png">
 										<div class="booking-date">
 											<span>${booking.dateOut.getDayOfMonth()}</span> <span>${booking.dateOut.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}</span>
 											<span>${booking.dateOut.getYear()}</span>
@@ -106,7 +98,8 @@ pageContext.setAttribute("history", history);
 														(${booking.dateOut.compareTo(booking.dateIn)} Night)
 													</p>
 													<p>
-														<i class="fas fa-home"></i>${rmtypeSvc.getOne(detail.rm_type).type_name}</p>
+														<i class="fas fa-home"></i>${rmtypeSvc.getOne(detail.rm_type).type_name}
+													</p>
 													<p>
 														<i class="far fa-user"></i>${detail.rm_guest} Guest
 													</p>
@@ -118,35 +111,98 @@ pageContext.setAttribute("history", history);
 										<button class="check-order-detail">
 											<i class="fas fa-clipboard-list"></i></i>訂單詳情
 										</button>
-										<button class="cancel-order">
+										<button class="cancel-order" data-bkno="${booking.bk_no}">
 											<i class="far fa-bell-slash"></i>取消訂單
 										</button>
 									</div>
 								</div>
-
 							</c:forEach>
 						</section>
 
 						<section id="bookingHistory" class="tab-panel">
-							<c:forEach var="booking" items="${history}">
-								<div class="booking-order">
-									<h3>入住日期：${booking.dateIn} 退房日期：${booking.dateOut}</h3>
-									<div class="booking-details">
-										<c:forEach var="detail"
-											items="${bkdetailSvc.getAllByBkNo(booking.bk_no)}">
-											<div>
-												<p>${rmtypeSvc.getOne(detail.rm_type).type_name}</p>
-												<p>${detail.rm_guest}位成人</p>
-											</div>
-										</c:forEach>
-									</div>
-									<h4>訂單總額 ${booking.total_price}</h4>
-								</div>
-							</c:forEach>
+							<table id="history-table">
+								<tr>
+									<th>訂單編號</th>
+									<th>訂單日期</th>
+									<th>入住日期</th>
+									<th>訂單總額</th>
+									<th>付款卡號</th>
+									<th>收據明細</th>
+								</tr>
+								<c:forEach var="histo" items="${history}">
+								<tr>
+									<td><i class="fas fa-receipt"></i>${histo.bk_no} 
+									<c:choose>
+									<c:when test="${histo.bk_status == 2}"><span class="status-checked-in">CHECKED IN</span></c:when>
+									<c:when test="${histo.bk_status == 3}"><span class="status-finished">FINISHED</span></c:when>
+									<c:when test="${histo.bk_status == 4}"><span class="status-canceled">CANCELED</span></c:when>
+									</c:choose>
+									</td>
+									<td>${histo.bk_date}</td>
+									<td>${histo.dateIn}</td>
+									<td>${histo.total_price}</td>
+									<td>${histo.card_no}</td>
+									<td><a>收據 <i class="fas fa-file-invoice-dollar"></i></a></td>
+								</tr>
+								</c:forEach>
+							</table>
+							
 						</section>
 					</div>
-					<%@ include file="/frontend/files/commonJS.file"%>
-					<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-					<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%@ include file="/frontend/files/commonJS.file"%>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$(".cancel-order").click(function (e) {
+		        e.preventDefault();
+		        let bkno = $(this).attr("data-bkno");
+		        Swal.fire({
+		            title: "Are you sure?",
+		            text: "訂單取消後無法復原",
+		            icon: "warning",
+		            showCancelButton: true,
+		            confirmButtonText: "確認取消",
+		            cancelButtonText: "離開對話",
+		            confirmButtonColor: '#d33',
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                $.ajax({
+		                    url: "<%=request.getContextPath()%>/bookingServlet?action=cancel_booking",
+		                    data: {
+		                        bk_no: bkno,
+		                    },
+		                    type: "POST",
+		                    success: function (msg) {
+		                    	console.log(msg);
+		                        if (msg == "success") {
+		                            Swal.fire({
+		                            	title: '訂單取消成功',
+		                            	icon: 'success',
+		                            	showConfirmButton: false,
+		                            	timer: 1500,
+		                            });
+		                            setTimeout(function(){
+		                            	window.location.reload();
+		                            }, 1500);
+		                        } else if (msg == "fail"){
+		                        	Swal.fire({
+		                            	title: '訂單取消失敗',
+		                            	icon: 'warning',
+		                            	showConfirmButton: false,
+		                            	timer: 1500,
+		                            });
+		                        }
+		                    },
+		                });
+		            }
+		        });
+		    });
+		})
+	</script>
 </body>
 </html>

@@ -7,7 +7,7 @@ body {
   width: 100%;
     height: 100%;
     background-position: center;
-    background-image: url("<%=request.getContextPath()%>/img/sun1.png");
+    background-image: url("<%=request.getContextPath()%>/img/activity/bg1.png");
     background-size: cover;
     background-attachment: fixed;
 }
@@ -155,7 +155,7 @@ p {
   color:rgb(237, 240, 72);
 }
 
-/* �����(撌虫�) */
+/* 嚙踝嚙踝蕭�嚙踝蕭(��嚙�) */
 #contentWalll{
   width:350px;
   height:280px;
@@ -163,11 +163,10 @@ p {
   margin-top: 600px;
   position: absolute;
   margin-left: 20px;
-  
 }
 #pic1{
   width:350px;
-  height:150px;
+  height:280px;
   margin: 0px auto;
   position: relative;
   background-image: url("../img/surf2.png");
@@ -176,14 +175,14 @@ p {
 }
 #pic1 #p1{
   width:350px;
-  height:150px;
+  height:280px;
   margin: 0px auto;
   text-align: center;
   position: absolute;
   opacity: 0;
-  top:-15px;
   text-align: center;
   padding-top: 120px;
+  
   
 }
 #pic1 #p1:hover{
@@ -191,13 +190,13 @@ p {
   border:5px solid;
   background-color: white;
 }
-/* �����(銝�) */
+/* 嚙踝嚙踝蕭�嚙踝蕭(��蕭) */
 #contentWall2{
   width:350px;
   height:280px;
   margin:10px auto;
   margin-top: 738px;
-  margin-right: 480px;
+  margin-right: 520px;
 }
 #pic2{
   width:350px;
@@ -211,8 +210,8 @@ p {
 }
 #pic2 #p2{
   border:solid 5px;
-  width:290px;
-  height:150px;
+  width:350px;
+  height:280px;
   margin: 10px auto;
   text-align: center;
   position: absolute;
@@ -227,16 +226,16 @@ p {
   background-color: white;
 }
 
-/* �����(�) */
+/* 嚙踝嚙踝蕭�嚙踝蕭(嚙踐) */
 #contentWall3{
   width:350px;
-  height:250px;
+  height:280px;
   margin:10px auto;
   right: 15px;
 }
 #pic3 {
   width:350px;
-  height:250px;
+  height:280px;
   margin: 10px auto;
   position: relative;
   padding: 3px;
@@ -248,7 +247,7 @@ p {
 
 #contentWall-3 #p3{
   width:350px;
-  height:150px;
+  height:280px;
   margin: 10px auto;
   text-align: center;
   padding-top: 120px;
@@ -267,7 +266,7 @@ p {
   background-color: white;
 }
 
-/* 銝����con */
+/* ����蕭�嚙踝蕭�嚙踝�on */
 #pic1 #p1 .icon-start{
   position: absolute;
   bottom:10px;

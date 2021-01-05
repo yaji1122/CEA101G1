@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-search.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-select_page.css" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-add.css" type="text/css" />
 
 </head>
 <body bgcolor='white'>
@@ -33,11 +35,11 @@
 	</c:if>
 	
 	<div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left: 450px;">
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2>全部照片</h2>
+			<h2 style="margin-left: 80px;">全部照片</h2>
 		</div>
     <!-- Example single danger button -->
 
@@ -46,16 +48,20 @@
 	      <nav class="navbar-top navbar-light">
 			<form class="form-inline">
 				<button class="btn btn-outline-danger" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/back-end/actorder/backend-order_select_page.jsp'">
+				onclick="location.href='<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp'">
 				  回訂單查詢
 				</button>
 				<button class="btn btn-outline-danger" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/back-end/act/backend-act_select_page.jsp'">
+				onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_select_page.jsp'">
 				  回活動查詢
+				</button>
+				<button class="btn btn-outline-danger" type="button" 
+				onclick="location.href='<%=request.getContextPath()%>/backend/actpic/backend-act_pic_add.jsp'">
+				  新增照片
 				</button>
 		    </form>
 		   </nav>
-		   <br>
+		   
 		<table class="table table-hover" id="table">
 			<thead class="title">
 				<tr class="table-primary">

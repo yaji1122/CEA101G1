@@ -107,21 +107,23 @@
                     <h3 class="text-dark">Searching</h3>
                     <p class="border-bottom pb-4">with multiple method</p>
                     <ul class="list-unstyled">
-         <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
-                        <li>                  
+                        <li>                      
                             <div class="pl-3">
                                 <h6 class="text-dark">選擇員工編號/姓名</h6>
                                 <ul class="list-unstyled">
                                     <li>
+                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" > 
                                     <select size="1" name="emp_id">
                                      <c:forEach var="empVO" items="${list}" > 
                                         <option value="${empVO.emp_id}">${empVO.emp_id}
                                       </c:forEach>   
                                      </select>
                                     <input type="hidden" name="action" value="getOne_For_Display">
-                                    <input type="submit" value="send" class="btn btn-outline-light btn-sm">                                   
+                                    <input type="submit" value="send" class="btn btn-outline-light btn-sm"> 
+                                    </FORM>                             
                                     </li>
                                      <li>
+                                     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
                                      <select size="1" name="emp_id">
                                       <c:forEach var="empVO" items="${list}" > 
                                          <option value="${empVO.emp_id}">${empVO.emp_name}
@@ -129,12 +131,12 @@
                                      </select>
                                      <input type="hidden" name="action" value="getOne_For_Display">
                                      <input type="submit" value="send" class="btn btn-outline-light btn-sm"> 
+                                     </FORM>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                     </FORM>
-                        <li>
+                       <li>
                           <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
                             <div class="pl-3">
                                 <h6 class="text-dark">選擇部門</h6>

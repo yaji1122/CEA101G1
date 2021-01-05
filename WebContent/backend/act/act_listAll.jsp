@@ -19,6 +19,7 @@
       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend.css" type="text/css" />
       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery-ui.css">
       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-search.css" type="text/css" />
+      <link rel="stylesheet" href="<%=request.getContextPath()%>/css/back/backend-add.css" type="text/css" />
 
 </head>
 <body bgcolor='white'>
@@ -36,7 +37,7 @@
 	
 	
 	<div class="logo">
-			<img src="<%=request.getContextPath()%>/img/logo.png" style="width:30%;">
+			<img src="<%=request.getContextPath()%>/img/logo.png" style="margin-left: 450px;">
 		</div>
 		<div class="form-title" style="margin-left:100px;">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
@@ -45,7 +46,7 @@
 		
 		  <div class="btn1" style="margin-right:80px;">
 				     <button type="button" class="btn btn-outline-danger" 
-                      onclick="location.href='<%=request.getContextPath()%>/back-end/act/backend-act_select_page.jsp?action=getAll'">
+                      onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_select_page.jsp?action=getAll'">
                                                           ¦^­º­¶</button>
 					<a class="btn btn-secondary dropdown-toggle" href="#" role="button"
 						id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"

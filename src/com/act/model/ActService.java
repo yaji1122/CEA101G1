@@ -68,5 +68,7 @@ public class ActService {
     	
 		return dao.getAll();
 	}
+    
+
 
 }

@@ -36,7 +36,7 @@ pageContext.setAttribute("list", list);
 				end="<%=pageIndex+rowsPerPage-1%>">
 
 				<tr>
-					<th scope="row">${serviceTypeVO.serv_type_no}</th>
+					<td scope="row">${serviceTypeVO.serv_type_no}</td>
 					<td>${serviceTypeVO.serv_type_name}</td>
 					
 

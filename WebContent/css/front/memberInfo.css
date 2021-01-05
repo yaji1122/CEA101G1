@@ -30,45 +30,6 @@ button:focus {
     min-width: 850px;
     margin: 0 auto;
 }
-/* Side bar */
-.select-div {
-    position: relative;
-}
-.side-nav ul {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-.side-nav ul li {
-    list-style: none;
-    text-align: center;
-    height: 100%;
-    letter-spacing: 5px;
-    font-size: 16px;
-    padding-bottom: 5px;
-    border-bottom: 2px solid transparent;
-}
-.side-nav ul li a::after {
-    position: absolute;
-    transition: 0.3s;
-    content: "";
-    width: 0;
-    left: 50%;
-    bottom: -10px;
-    height: 3px;
-    background: rgba(228, 169, 19, 0.753);
-}
-.side-nav ul li a {
-    position: relative;
-    color: black;
-    height: 100%;
-    width: 100%;
-}
-.side-nav ul li a:hover::after {
-    width: 100%;
-    left: 0;
-}
 /* member info  */
 .info-div {
     height: 100%;
@@ -303,28 +264,32 @@ i.log-in {
 .tabset > label {
     position: relative;
     display: inline-block;
-    padding: 15px 15px 25px;
+    padding: 10px 25px 20px;
     border: transparent;
     border-bottom: 0;
     cursor: pointer;
     font-weight: 600;
+	letter-spacing: 1px;
 }
 
 .tabset > label::after {
     content: "";
     position: absolute;
-    left: 15px;
+    left: 25px;
     bottom: 10px;
     width: 22px;
     height: 4px;
     background: #8d8d8d;
+	transition: 0.5s ease;
 }
 
 .tabset > label:hover,
 .tabset > input:focus + label {
     color: #0f4c75;
 }
-
+.tabset > label:hover::after {
+	width:60px;
+} 
 .tabset > label:hover::after,
 .tabset > input:focus + label::after,
 .tabset > input:checked + label::after {

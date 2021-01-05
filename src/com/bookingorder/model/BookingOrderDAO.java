@@ -27,7 +27,7 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 		}
 	}
 
-	private static final String INSERT = "INSERT INTO BOOKING_ORDER (BK_NO, MB_ID, DATEIN, DATEOUT, TOTAL_PRICE) VALUES ('BKOD' || LPAD(to_char(BK_SEQ.NEXTVAL), 6, '0'), ?, ?, ?, ?)";
+	private static final String INSERT = "INSERT INTO BOOKING_ORDER (BK_NO, MB_ID, DATEIN, DATEOUT, TOTAL_PRICE, CARD_NO) VALUES ('BKOD' || LPAD(to_char(BK_SEQ.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?)";
 	private static final String UPDATEDATEINOUT = "UPDATE BOOKING_ORDER SET DATEIN = ?, DATEOUT = ? WHERE BK_NO = ?";
 	private static final String UPDATESTATUS = "UPDATE BOOKING_ORDER SET BK_STATUS = ? WHERE BK_NO = ?";
 	private static final String ORDERPAID = "UPDATE BOOKING_ORDER SET BK_STATUS = 1 WHERE BK_NO = ?";
@@ -37,6 +37,7 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 	private static final String GETALLBYMBID = "SELECT * FROM BOOKING_ORDER WHERE MB_ID = ?";
 	private static final String GETALLBYBKSTATUS = "SELECT * FROM BOOKING_ORDER WHERE BK_STATUS = ? ORDER BY BK_NO";
 	private static final String GETALLBYDATEIN = "SELECT * FROM BOOKING_ORDER WHERE DATEIN = ? ORDER BY BK_NO";
+	private static final String GETALLBYDATEOUT = "SELECT * FROM BOOKING_ORDER WHERE DATEOUT = ? ORDER BY BK_NO";
 	private static final String GETONEBYBKNO = "SELECT * FROM BOOKING_ORDER WHERE BK_NO = ?";
 	
 
@@ -55,6 +56,7 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 			pstmt.setDate(2, java.sql.Date.valueOf(dateIn));
 			pstmt.setDate(3, java.sql.Date.valueOf(bkodvo.getDateOut()));
 			pstmt.setInt(4,  bkodvo.getTotal_price());
+			pstmt.setString(5,  bkodvo.getCard_no());
 			pstmt.executeUpdate();
 			rs = pstmt.getGeneratedKeys();
 			while (rs.next()) {
@@ -282,6 +284,8 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
 				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
+				bkodvo.setCard_no(rs.getString("CARD_NO"));
+				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
 				bkodvoList.add(bkodvo);
 			}
 		} catch (SQLException e) {
@@ -332,6 +336,8 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
 				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
 				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
+				bkodvo.setCard_no(rs.getString("CARD_NO"));
+				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
 				bkodvo.setBk_status(bk_status);
 				bkodvoList.add(bkodvo);
 			}
@@ -384,6 +390,61 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
 				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
+				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
+				bkodvo.setCard_no(rs.getString("CARD_NO"));
+				bkodvoList.add(bkodvo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return bkodvoList;
+	}
+	
+	@Override
+	public List<BookingOrderVO> getAllByDateOut(LocalDate date_out) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BookingOrderVO> bkodvoList = new LinkedList<>();
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(GETALLBYDATEOUT);
+			pstmt.setDate(1, java.sql.Date.valueOf(date_out));
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				BookingOrderVO bkodvo = new BookingOrderVO();
+				bkodvo.setBk_no(rs.getString("BK_NO"));
+				bkodvo.setMb_id(rs.getString("MB_ID"));
+				bkodvo.setBk_date(rs.getDate("BK_DATE"));
+				bkodvo.setDateIn(rs.getDate("DATEIN").toLocalDate());
+				bkodvo.setDateOut(date_out);
+				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
+				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
+				bkodvo.setBk_status(rs.getString("BK_STATUS"));
+				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
+				bkodvo.setCard_no(rs.getString("CARD_NO"));
 				bkodvoList.add(bkodvo);
 			}
 		} catch (SQLException e) {
@@ -435,6 +496,8 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
 				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
+				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
+				bkodvo.setCard_no(rs.getString("CARD_NO"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
@@ -484,6 +547,7 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
 				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
+				bkodvo.setCard_no(rs.getString("CARD_NO"));
 				bkodList.add(bkodvo);
 			}
 		} catch (SQLException e) {

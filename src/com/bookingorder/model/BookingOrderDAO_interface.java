@@ -15,6 +15,7 @@ public interface BookingOrderDAO_interface {
 	public List<BookingOrderVO> getAllByMbId(String mb_id);
 	public List<BookingOrderVO> getAllByBkStatus(String bk_status);
 	public List<BookingOrderVO> getAllByDateIn(LocalDate date_in);
+	public List<BookingOrderVO> getAllByDateOut(LocalDate date_out);
 	public BookingOrderVO getOneByBkNo(String bk_no);
 	
 }

@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/owl.carousel.min.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/nice-select.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery-ui.min.css" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/template.css" type="text/css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/Activity.css" type="text/css" />
 <title>Insert title here</title>
@@ -59,7 +58,7 @@
                     <ul class="dropdown">
                         <li><a href="./room-details.html">個人檔案</a></li>
                         <li><a href="./blog-details.html">我的假期</a></li>
-                        <li><a href="#">我的足跡</a></li>
+                        <li><a href="#">我的足跡</a></li>
                     </ul>
                 </li>
                 <li>
@@ -168,19 +167,19 @@
         <div class="land">
             <img src="<%=request.getContextPath()%>/img/sheet4.png">
             <figure>
-                <figcaption><a href="<%=request.getContextPath()%>/front-end/Land_page.jsp" >Land</a></figcaption>
+                <figcaption><a href="<%=request.getContextPath()%>/frontend/activity/Land_page.jsp" >Land</a></figcaption>
             </figure>
         </div>
         <div class="sea">
             <img src="<%=request.getContextPath()%>/img/land1.png">
             <figure>
-                <figcaption><a href="Ocean.html">Ocean</a></figcaption>
+                <figcaption><a href="<%=request.getContextPath()%>/frontend/activity/Ocean_page.jsp">Ocean</a></figcaption>
             </figure>
         </div>
         <div class="spc">
             <img src="<%=request.getContextPath()%>/img/diving4.png">
             <figure>
-                <figcaption><a href="Ocean.html">Especial</a></figcaption>
+                <figcaption><a href="<%=request.getContextPath()%>/frontend/activity/Special_page.jsp">Special</a></figcaption>
             </figure>
         </div>
     </div>
@@ -194,8 +193,8 @@
     <script src="<%=request.getContextPath()%>/js/jquery-ui.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/jquery.slicknav.js"></script>
     <script src="<%=request.getContextPath()%>/js/owl.carousel.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/template.js"></script>
-    <script src="<%=request.getContextPath()%>/js/sweetalert.js"></script>
+    <script src="<%=request.getContextPath()%>/js/front/template.js"></script>
+    
 </body>
 
 </html>

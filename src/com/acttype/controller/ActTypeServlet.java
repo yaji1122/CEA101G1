@@ -76,7 +76,7 @@ public class ActTypeServlet extends HttpServlet{
 				
 				/***************************3.�d�ߧ���,�ǳ����(Send the Success view)*************/
 				req.setAttribute("actTypeVO", actTypeVO); // ��Ʈw���X��actTypeVO����,�s�Jreq
-				String url = "/backend/acttype/listOneAct.jsp";
+				String url = "<%=request.getContextPath()%>/backend/acttype/listOneAct.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOneAct.jsp
 				successView.forward(req, res);
 

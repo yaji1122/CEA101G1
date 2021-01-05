@@ -1,13 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.service_order.model.*"%>
 
 <%
-ServiceOrderService servicesSvc = new ServiceOrderService();
-List<ServiceOrderVO> list = servicesSvc.getAll();
+	ServiceOrderService serviceOrderSvc = new ServiceOrderService();
+List<ServiceOrderVO> list = serviceOrderSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
+
+<jsp:useBean id="servicesSvc" scope="page"
+	class="com.services.model.ServicesService" />
 
 
 <!DOCTYPE html>
@@ -31,42 +35,46 @@ pageContext.setAttribute("list", list);
 </head>
 <body>
 
-
-	<header>
-		<h2>服務訂單</h2>
-	</header>
 	<table>
-
 		<thead>
 			<tr>
 				<th scope="col">訂單編號</th>
 				<th scope="col">會員編號</th>
 				<th scope="col">訂單成立時間</th>
-				<th scope="col">訂單狀態編號</th>
+				<th scope="col">訂單狀態</th>
 				<th scope="col">客房編號</th>
-				<th scope="col">服務編號</th>
+				<th scope="col">服務名稱</th>
 				<th scope="col">預約時間</th>
 				<th scope="col">服務人數</th>
 				<th scope="col">訂單總額</th>
 				<th scope="col">修改</th>
 				<th scope="col">刪除</th>
 			</tr>
-
 		</thead>
 		<tbody>
 
 			<%@ include file="/backend/files/page1.file"%>
-			<c:forEach var="serviceOrderVO" items="${list}" begin="<%=pageIndex%>"
-				end="<%=pageIndex+rowsPerPage-1%>">
+			<c:forEach var="serviceOrderVO" items="${list}"
+				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 				<tr>
-					<th scope="row">${serviceOrderVO.serv_odno}</th>
+					<td scope="row">${serviceOrderVO.serv_odno}</td>
 					<td>${serviceOrderVO.mb_id}</td>
-					<td>${serviceOrderVO.od_time}</td>
-					<td>${serviceOrderVO.od_status}</td>
+					<td><fmt:formatDate value="${serviceOrderVO.od_time}"
+							pattern="yyyy-MM-dd HH:mm:ss" /></td>
+					<td><c:choose>
+							<c:when test="${serviceOrderVO.od_status.equals('0')}">未完成</c:when>
+							<c:when test="${serviceOrderVO.od_status.equals('1')}">已完成</c:when>
+							<c:when test="${serviceOrderVO.od_status.equals('2')}">已取消</c:when>
+						</c:choose></td>
+
+					<%-- <td>${serviceOrderVO.od_status}</td> --%>
 					<td>${serviceOrderVO.rm_no}</td>
-					<td>${serviceOrderVO.serv_no}</td>
-					<td>${serviceOrderVO.serv_time}</td>
+					<%-- <td>${serviceOrderVO.serv_no}</td> --%>
+					<td>
+						${servicesSvc.getOneServices(serviceOrderVO.serv_no).serv_name}</td>
+					<td><fmt:formatDate value="${serviceOrderVO.serv_time}"
+							pattern="yyyy-MM-dd HH:mm:ss" /></td>
 					<td>${serviceOrderVO.serv_count}</td>
 					<td>${serviceOrderVO.total_price}</td>
 					<td>
@@ -107,7 +115,7 @@ pageContext.setAttribute("list", list);
 		integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
 		crossorigin="anonymous"></script>
 	<%-- <script src="${pageContext.request.contextPath}/js/services.js"></script> --%>
-	
-	
+
+
 </body>
 </html>

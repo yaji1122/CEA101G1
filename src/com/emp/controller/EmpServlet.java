@@ -289,6 +289,11 @@ public class EmpServlet extends HttpServlet {
         			System.out.println("for i" + i);
                 	authSvc.addAuth(emp_id, functions[i]);
             		}
+        		//新增完成, 同時發送驗證郵件
+        		EmpMailService mail = new EmpMailService();
+        		String Msg = "Hello! Welcome to join us! "+ emp_name + "\n"+ "你的員工代號為" + emp_id + "\n"+
+        		"請輸入此密碼後進行變更"+ emp_pwd +"\n"+"(已經啟用)";
+        		mail.sendMail(emp_email, "密碼變更", Msg);
 
         		//新增完成, 準備轉交至listAllEmp
         		String url ="/backend/emp/protected/listAllEmp.jsp";
