@@ -308,15 +308,15 @@
 	
 $(function(){
 		
-		<%  for (int index = 0; index < RedisBuylist.size(); index++){%>
-			<%ItemVO order = RedisBuylist.get(index);%>
-			
+		<%  for (int index = 0; index < RedisBuylist.size(); index++){%>			
+			 <%ItemVO order = RedisBuylist.get(index);%>
+			<% ItemVO oneItem = itemSvc.getOneItem(order.getItem_no()); %>
 			var itemAdd_<%= index %> = {
 				"action":"AddQty",
 				"index":<%= index %>,
 				"item_no":<%="\"" + order.getItem_no() + "\""%>,
-				"item_name":<%="\"" + itemSvc.getOneItem(order.getItem_no()).getItem_name() + "\""%>,
-				"item_price":<%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%>,
+				"item_name":<%="\"" + oneItem.getItem_name() + "\""%>,
+				"item_price":<%=oneItem.getItem_price()%>,
 			};
 			$("#btn<%= index %>").click(function(event){
 				event.stopPropagation();
@@ -347,8 +347,8 @@ $(function(){
 				"action":"SubQty",
 				"index":<%= index %>,
 				"item_no":<%="\"" + order.getItem_no() + "\""%>,
-				"item_name":<%="\"" + itemSvc.getOneItem(order.getItem_no()).getItem_name() + "\""%>,
-				"item_price":<%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%>,
+				"item_name":<%="\"" + oneItem.getItem_name() + "\""%>,
+				"item_price":<%=oneItem.getItem_price()%>,
 			};
 			
 			$("#btn<%= index + "_1" %>").click(function(event){
