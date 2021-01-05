@@ -240,10 +240,9 @@
 						<tr class="itBorTop">
 							<td>
 								<label class="checklabel">
-									<input id="boxchecked<%= index %>" type="checkbox" name="checkact" value="<%= index %>">
-									<input id="checknum<%= index %>" type="hidden" value="0">
+									<input id="boxselect<%= index %>" type="checkbox" name="checkact" value="<%= index %>" required="required">
+									<input id="checknum<%= index %>" type="hidden" name="checkedItem" value="0">
 									<input id="forPlusnum<%= index %>" type="hidden" value="<%= (cartSvc.getValueByItem_no(mb_id, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price())%>">
-									<span class="checkmark"></span>
 								</label>
 							</td>
 							<td class="imgframe"><img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"></td>
@@ -288,8 +287,10 @@
 					<input type="button" value="前往結帳" class="goPay">
 				</form>
 			</div>
-			<% }%>
-
+			<% } else{%> 
+			<div>購物車是空的</div>
+			
+			<%} %>
 		</div>
 	</div>
 	<!-- Footer Section Start -->
@@ -310,8 +311,8 @@ $(function(){
 		<%  for (int index = 0; index < RedisBuylist.size(); index++){%>
 			<%ItemVO order = RedisBuylist.get(index);%>
 			
-			var paramsAdd_<%= index %> = {
-				"action":"AddQUANTITY",
+			var itemAdd_<%= index %> = {
+				"action":"AddQty",
 				"index":<%= index %>,
 				"item_no":<%="\"" + order.getItem_no() + "\""%>,
 				"item_name":<%="\"" + itemSvc.getOneItem(order.getItem_no()).getItem_name() + "\""%>,
@@ -321,13 +322,13 @@ $(function(){
 				event.stopPropagation();
 				console.log(<%="\"" + order.getItem_no() + "\""%>);
 				$.ajax({
-					data:paramsAdd_<%= index %>,
+					data:itemAdd_<%= index %>,
 					type:"POST",
 					dataType: "json",
-					url:"<%=request.getContextPath()%>/shop/Changingcart.do",
+					url:"<%=request.getContextPath()%>/shop/changingServlet.do",
 					success: function (data){
 						console.log("增加"+data.amount);
-						$("#td<%= index %>").html("<span>$ </span>"+data.amount);	
+						$("#span<%= index %>").html(data.amount);	
 						
 						if($("#checknum<%= index %>").val()!=0){
 							$("#checknum<%= index %>").val(data.amount);
@@ -335,15 +336,15 @@ $(function(){
 						$("#forPlusnum<%= index %>").val(data.amount);
 						
 						var shoppingTatal = 0;
-						<%  for (int a = 0; a < RedisBuylist.size(); a++){%>
-							shoppingTatal += parseInt($("#checknum<%= a %>").val(),10);
+						<%  for (int i = 0; i < RedisBuylist.size(); i++){%>
+							shoppingTatal += parseInt($("#checknum<%= i %>").val(),10);
 						<%}%>
 						$("#checkTotal").text(shoppingTatal);
 					}
 				});	
 			});
-			var paramsMin_<%= index %> = {
-				"action":"MinusQUANTITY",
+			var itemSub_<%= index %> = {
+				"action":"SubQty",
 				"index":<%= index %>,
 				"item_no":<%="\"" + order.getItem_no() + "\""%>,
 				"item_name":<%="\"" + itemSvc.getOneItem(order.getItem_no()).getItem_name() + "\""%>,
@@ -355,7 +356,7 @@ $(function(){
 				event.stopPropagation();
 				console.log(<%="\"" + order.getItem_no() + "\""%>);
 				$.ajax({
-					data:paramsMin_<%= index %>,
+					data:itemSub_<%= index %>,
 					type:"POST",
 					dataType: "json",
 					url:"<%=request.getContextPath()%>/shop/changingServlet.do",
@@ -363,15 +364,15 @@ $(function(){
 						console.log("減少"+data.amount);
 						console.log("index"+data.index);
 						if(data.amount!='')
-							$("#td<%= index %>").html("<span>$ </span>"+data.amount);
+							$("#span<%= index %>").html(data.amount);
 							if($("#checknum<%= index %>").val()!=0){
 								$("#checknum<%= index %>").val(data.amount);
 							}	
 							$("#forPlusnum<%= index %>").val(data.amount);
 							
 							var shoppingTatal = 0;
-							<%  for (int a = 0; a < RedisBuylist.size(); a++){%>
-								shoppingTatal += parseInt($("#checknum<%= a %>").val(),10);
+							<%  for (int i = 0; i < RedisBuylist.size(); i++){%>
+								shoppingTatal += parseInt($("#checknum<%= i %>").val(),10);
 							<%}%>
 							$("#checkTotal").text(shoppingTatal);
 							
@@ -391,13 +392,13 @@ $(function(){
 				});	
 			});
 			
-			$("#boxchecked<%= index %>").change(function(event){
+			$("#boxselect<%= index %>").change(function(event){
 				
-				console.log("check="+$("#boxchecked<%= index %>").prop("checked"));
+				console.log("check="+$("#boxselect<%= index %>").prop("checked"));
 				console.log("forPlusnum="+$("#forPlusnum<%= index %>").val());
 				event.stopPropagation();
 				$.ajax({
-					data:creatCheckedJson($("#boxchecked<%= index %>").prop("checked"),$("#forPlusnum<%= index %>").val()),
+					data:creatCheckedJson($("#boxselect<%= index %>").prop("checked"),$("#forPlusnum<%= index %>").val()),
 					type:"POST",
 					dataType: "json",
 					url:"<%=request.getContextPath()%>/shop/changingServlet.do",
@@ -415,24 +416,25 @@ $(function(){
 			});
 		<%}%>
 		});
-		function creatCheckedJson(boxchecked, amount){
-			console.log("boxchecked:"+boxchecked+"; amount:"+amount);
-			var checkedJson= {"action":"BOXCHECKED", "boxchecked":boxchecked, "amount":amount};
+		function creatCheckedJson(boxselect, amount){
+			console.log("boxselect:"+boxselect+"; amount:"+amount);
+			var checkedJson= {"action":"BoxSelect", "boxselect":boxselect, "amount":amount};
 			return checkedJson;
 		}
 	
 	var mem = <%="\"" + mb_id + "\""%>;
-	var checkact = document.getElementsByName('checkact');
-	console.log("checkact= "+checkact);
+	var checkedItem = document.getElementsByName('checkedItem');
+	
 		console.log("mb_id= "+mem);
 		$(".goPay").click(function(event){
+			console.log("checkedItem= "+checkedItem);
 			if(mem==null){
 				alert("Please Login ");
 				$(".offcanvas-menu-overlay").removeClass("active");
 				$(".login-window-overlay").addClass("active");
 				$(".login-window").addClass("show-login-window");
 				$(".offcanvas-menu-wrapper").removeClass("show-offcanvas-menu-wrapper");
-			} else if(checkact==null){
+			} else if(checkedItem==0){
 				alert("Please Check A Product To Checkout");
 			} else{
 				alert("Go To Checkout");
