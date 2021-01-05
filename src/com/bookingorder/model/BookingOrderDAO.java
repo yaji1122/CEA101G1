@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.sql.*;
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import javax.naming.*;
 import javax.sql.*;
 
@@ -281,8 +281,14 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setBk_date(rs.getDate("BK_DATE"));
 				bkodvo.setDateIn(rs.getDate("DATEIN").toLocalDate());
 				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
-				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
-				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
+				java.sql.Timestamp checkin = rs.getTimestamp("CHECKIN");
+				if (checkin != null) {
+					bkodvo.setCheckIn(rs.getTimestamp("CHECKIN").toLocalDateTime());
+				}
+				java.sql.Timestamp checkout = rs.getTimestamp("CHECKOUT");
+				if (checkout != null) {
+					bkodvo.setCheckOut(rs.getTimestamp("CHECKOUT").toLocalDateTime());
+				}
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
 				bkodvo.setCard_no(rs.getString("CARD_NO"));
 				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
@@ -334,8 +340,14 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setBk_date(rs.getDate("BK_DATE"));
 				bkodvo.setDateIn(rs.getDate("DATEIN").toLocalDate());
 				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
-				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
-				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
+				java.sql.Timestamp checkin = rs.getTimestamp("CHECKIN");
+				if (checkin != null) {
+					bkodvo.setCheckIn(rs.getTimestamp("CHECKIN").toLocalDateTime());
+				}
+				java.sql.Timestamp checkout = rs.getTimestamp("CHECKOUT");
+				if (checkout != null) {
+					bkodvo.setCheckOut(rs.getTimestamp("CHECKOUT").toLocalDateTime());
+				}
 				bkodvo.setCard_no(rs.getString("CARD_NO"));
 				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
 				bkodvo.setBk_status(bk_status);
@@ -387,8 +399,14 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setBk_date(rs.getDate("BK_DATE"));
 				bkodvo.setDateIn(date_in);
 				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
-				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
-				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
+				java.sql.Timestamp checkin = rs.getTimestamp("CHECKIN");
+				if (checkin != null) {
+					bkodvo.setCheckIn(rs.getTimestamp("CHECKIN").toLocalDateTime());
+				}
+				java.sql.Timestamp checkout = rs.getTimestamp("CHECKOUT");
+				if (checkout != null) {
+					bkodvo.setCheckOut(rs.getTimestamp("CHECKOUT").toLocalDateTime());
+				}
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
 				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
 				bkodvo.setCard_no(rs.getString("CARD_NO"));
@@ -440,8 +458,14 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setBk_date(rs.getDate("BK_DATE"));
 				bkodvo.setDateIn(rs.getDate("DATEIN").toLocalDate());
 				bkodvo.setDateOut(date_out);
-				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
-				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
+				java.sql.Timestamp checkin = rs.getTimestamp("CHECKIN");
+				if (checkin != null) {
+					bkodvo.setCheckIn(rs.getTimestamp("CHECKIN").toLocalDateTime());
+				}
+				java.sql.Timestamp checkout = rs.getTimestamp("CHECKOUT");
+				if (checkout != null) {
+					bkodvo.setCheckOut(rs.getTimestamp("CHECKOUT").toLocalDateTime());
+				}
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
 				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
 				bkodvo.setCard_no(rs.getString("CARD_NO"));
@@ -493,8 +517,14 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setBk_date(rs.getDate("BK_DATE"));
 				bkodvo.setDateIn(rs.getDate("DATEIN").toLocalDate());
 				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
-				bkodvo.setCheckIn(rs.getDate("CHECKIN"));
-				bkodvo.setCheckOut(rs.getDate("CHECKOUT"));
+				java.sql.Timestamp checkin = rs.getTimestamp("CHECKIN");
+				if (checkin != null) {
+					bkodvo.setCheckIn(rs.getTimestamp("CHECKIN").toLocalDateTime());
+				}
+				java.sql.Timestamp checkout = rs.getTimestamp("CHECKOUT");
+				if (checkout != null) {
+					bkodvo.setCheckOut(rs.getTimestamp("CHECKOUT").toLocalDateTime());
+				}
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
 				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
 				bkodvo.setCard_no(rs.getString("CARD_NO"));
@@ -545,6 +575,14 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				bkodvo.setBk_date(rs.getDate("BK_DATE"));
 				bkodvo.setDateIn(rs.getDate("DATEIN").toLocalDate());
 				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
+				java.sql.Timestamp checkin = rs.getTimestamp("CHECKIN");
+				if (checkin != null) {
+					bkodvo.setCheckIn(rs.getTimestamp("CHECKIN").toLocalDateTime());
+				}
+				java.sql.Timestamp checkout = rs.getTimestamp("CHECKOUT");
+				if (checkout != null) {
+					bkodvo.setCheckOut(rs.getTimestamp("CHECKOUT").toLocalDateTime());
+				}
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
 				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
 				bkodvo.setCard_no(rs.getString("CARD_NO"));

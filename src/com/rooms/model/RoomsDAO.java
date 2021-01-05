@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.Context;
@@ -27,10 +28,13 @@ public class RoomsDAO implements RoomsDAO_interface {
 
 	private static final String INSERT = "INSERT INTO ROOMS (RM_NO, RM_TYPE) VALUES (?, ?)";
 	private static final String UPDATE = "UPDATE ROOMS SET RM_STATUS = ? WHERE RM_NO = ?";
-	private static final String UPDATE_CHECKIN = "UPDATE ROOMS SET RM_STATUS = ?, MB_ID = ? WHERE RM_NO = ?";
+	private static final String UPDATE_CHECKIN = "UPDATE ROOMS SET RM_STATUS = ?, MB_ID = ?, BK_NO = ? WHERE RM_NO = ?";
+	private static final String UPDATE_CHECKOUT = "UPDATE ROOMS SET RM_STATUS = ?, MB_ID = ?, BK_NO = ? WHERE RM_NO = ?";
 	private static final String DELETE = "DELETE FROM ROOMS WHERE RM_NO = ?";
+	private static final String GETALLBYBKNO = "SELECT * FROM ROOMS WHERE BK_NO = ? ORDER BY RM_NO";
 	private static final String GETALLBYSTATUS = "SELECT * FROM ROOMS WHERE RM_STATUS = ? ORDER BY RM_NO";
 	private static final String GETALLBYRMTYPE = "SELECT * FROM ROOMS WHERE RM_TYPE = ? ORDER BY RM_NO";
+	private static final String GETALLBYMBID = "SELECT * FROM ROOMS WHERE MB_ID = ? ORDER BY RM_NO";
 	private static final String GETALL = "SELECT * FROM ROOMS ORDER BY RM_NO";
 
 	@Override
@@ -96,6 +100,7 @@ public class RoomsDAO implements RoomsDAO_interface {
 			pstmt = conn.prepareStatement(UPDATE);
 			pstmt.setString(1, rmvo.getRm_status());
 			pstmt.setString(2, rmvo.getRm_no());
+			pstmt.setString(3, rmvo.getBk_no());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -128,7 +133,42 @@ public class RoomsDAO implements RoomsDAO_interface {
 			pstmt = conn.prepareStatement(UPDATE_CHECKIN);
 			pstmt.setString(1, "1");
 			pstmt.setString(2, rmvo.getMb_id());
-			pstmt.setString(3, rmvo.getRm_no());
+			pstmt.setString(3, rmvo.getBk_no());
+			pstmt.setString(4, rmvo.getRm_no());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	@Override
+	public void update_checkout(RoomsVO rmvo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(UPDATE_CHECKOUT);
+			pstmt.setString(1, "0");
+			pstmt.setNull(2, java.sql.Types.CHAR);
+			pstmt.setNull(3, java.sql.Types.CHAR);
+			pstmt.setString(4, rmvo.getRm_no());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
@@ -201,6 +241,7 @@ public class RoomsDAO implements RoomsDAO_interface {
 				rmvo.setRm_type(rm_type);
 				rmvo.setRm_status(rm_status);
 				rmvo.setMb_id(mb_id);
+				rmvo.setBk_no(rs.getString("BK_NO"));
 				rooms.add(rmvo);
 			}
 		} catch (SQLException e) {
@@ -240,6 +281,7 @@ public class RoomsDAO implements RoomsDAO_interface {
 				String rm_type = rs.getString("RM_TYPE");
 				String rm_status = rs.getString("RM_STATUS");
 				String mb_id = rs.getString("MB_ID");
+				rmvo.setBk_no(rs.getString("BK_NO"));
 				rmvo.setRm_no(rm_no);
 				rmvo.setRm_type(rm_type);
 				rmvo.setRm_status(rm_status);
@@ -282,6 +324,7 @@ public class RoomsDAO implements RoomsDAO_interface {
 				String rm_type = rs.getString("RM_TYPE");
 				String rm_status = rs.getString("RM_STATUS");
 				String mb_id = rs.getString("MB_ID");
+				rmvo.setBk_no(rs.getString("BK_NO"));
 				rmvo.setRm_no(rm_no);
 				rmvo.setRm_type(rm_type);
 				rmvo.setRm_status(rm_status);
@@ -309,4 +352,97 @@ public class RoomsDAO implements RoomsDAO_interface {
 		return rooms;
 	}
 
+	@Override
+	public List<RoomsVO> getAllByMbId(String mb_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<RoomsVO> rooms = new ArrayList<>();
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(GETALLBYMBID);
+			pstmt.setString(1, mb_id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				RoomsVO rmvo = new RoomsVO();
+				rmvo.setRm_no(rs.getString("RM_NO"));
+				rmvo.setRm_type( rs.getString("RM_TYPE"));
+				rmvo.setBk_no(rs.getString("BK_NO"));
+				rmvo.setMb_id(mb_id);
+				rooms.add(rmvo);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch(SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return rooms;
+	}
+	
+	@Override
+	public List<RoomsVO> getAllByBkNo(String bk_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<RoomsVO> rooms = new ArrayList<>();
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(GETALLBYBKNO);
+			pstmt.setString(1, bk_no);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				RoomsVO rmvo = new RoomsVO();
+				rmvo.setRm_no(rs.getString("RM_NO"));
+				rmvo.setRm_type( rs.getString("RM_TYPE"));
+				rmvo.setMb_id(rs.getString("MB_ID"));
+				rmvo.setBk_no(bk_no);
+				rooms.add(rmvo);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch(SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return rooms;
+	}
 }

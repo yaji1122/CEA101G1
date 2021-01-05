@@ -1,10 +1,12 @@
 package com.mealorder.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class MealOrderVO {
+public class MealOrderVO implements Serializable {
+	private static final long serialVersionUID = 1L;	
 	private String meal_odno;
 	private String mb_id;
 	private String rm_no;

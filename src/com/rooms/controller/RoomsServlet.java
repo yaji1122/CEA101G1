@@ -106,9 +106,20 @@ public class RoomsServlet extends HttpServlet {
 				String mb_id = req.getParameter("mb_id");
 				String bk_no = req.getParameter("bk_no");
 				RoomsService rmSvc = new RoomsService();
-				BookingOrderService bkSvc = new BookingOrderService();
-				bkSvc.checkIn(bk_no);
-				rmSvc.updateCheckIn(rm_no, mb_id);
+				rmSvc.updateCheckIn(rm_no, mb_id, bk_no);
+				out.print("success");
+			} catch (Exception e) {
+				e.printStackTrace();
+				out.print("fail");
+			}
+		}
+		
+		if ("update_check_out".equals(action)) {
+			try {
+				String bk_no = req.getParameter("bk_no");
+				RoomsService rmSvc = new RoomsService();
+				List<RoomsVO> list = rmSvc.getAllByBkNo(bk_no);
+				list.forEach(e -> rmSvc.updateCheckOut(e.getRm_no()));
 				out.print("success");
 			} catch (Exception e) {
 				e.printStackTrace();

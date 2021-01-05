@@ -3,6 +3,7 @@ package com.bookingorder.model;
 import java.io.Serializable;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BookingOrderVO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -11,8 +12,8 @@ public class BookingOrderVO implements Serializable {
 	private Date bk_date;
 	private LocalDate dateIn;
 	private LocalDate dateOut;
-	private Date checkIn;
-	private Date checkOut;
+	private LocalDateTime checkIn;
+	private LocalDateTime checkOut;
 	private String bk_status;
 	private Integer total_price;
 	private String card_no;
@@ -59,19 +60,19 @@ public class BookingOrderVO implements Serializable {
 		this.dateOut = dateOut;
 	}
 
-	public Date getCheckIn() {
+	public LocalDateTime getCheckIn() {
 		return checkIn;
 	}
 
-	public void setCheckIn(Date checkIn) {
+	public void setCheckIn(LocalDateTime checkIn) {
 		this.checkIn = checkIn;
 	}
 
-	public Date getCheckOut() {
+	public LocalDateTime getCheckOut() {
 		return checkOut;
 	}
 
-	public void setCheckOut(Date checkOut) {
+	public void setCheckOut(LocalDateTime checkOut) {
 		this.checkOut = checkOut;
 	}
 	

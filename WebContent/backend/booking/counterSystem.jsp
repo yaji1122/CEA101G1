@@ -1,19 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.bookingorder.model.*"%>
 <%@ page import="com.rooms.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.time.LocalDate"%>
+<%@ page import="java.util.stream.Collectors" %>
 <%
 BookingOrderService bkodSvc = new BookingOrderService();
 LocalDate today = LocalDate.now();
-List<BookingOrderVO> checkIns = bkodSvc.getAllByDateIn(today);
-List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today);
+List<BookingOrderVO> checkIns = bkodSvc.getAllByDateIn(today).stream() //取得當天尚未CheckIn的訂單
+								.filter(e -> e.getBk_status().equals(BKSTATUS.PAID))
+								.collect(Collectors.toList());
+
+List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today); //取得當天尚未CheckOut的訂單
+List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 pageContext.setAttribute("checkIns", checkIns);
 pageContext.setAttribute("checkOuts", checkOuts);
+pageContext.setAttribute("checkeds", checkeds);
+
 %>
+<jsp:useBean id="mbSvc" scope="page"
+	class="com.members.model.MembersService" />
+<jsp:useBean id="bkdetailSvc" scope="page"
+	class="com.bookingdetail.model.BookingDetailService" />
+<jsp:useBean id="rmtypeSvc" scope="page"
+	class="com.roomtype.model.RoomTypeService" />
+<jsp:useBean id="rmSvc" scope="page"
+	class="com.rooms.model.RoomsService" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,20 +57,31 @@ pageContext.setAttribute("checkOuts", checkOuts);
 	<div class="wrapper">
 		<div class="header">
 			<div>
-				<span>CALENDAR DATE</span> <span><%=LocalDate.now()%></span>
+				<h4>CALENDAR DATE</h4> <h3><%=LocalDate.now()%></h3>
 			</div>
-			<div>TODAY CHECK IN</div>
-			<div>TODAY CHECK OUT</div>
-			<div>CURRENT GUESTS</div>
+			<div>
+				<h4>TODAY CHECK IN</h4>
+				<h3>${checkIns.size()}</h3>
+			</div>
+			<div>
+				<h4>TODAY CHECK OUT</h4>
+				<h3>${checkOuts.size()}</h3>
+			</div>
+			<% 
+				List<BookingOrderVO> list = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
+				int totalGuest = 0;
+				for (BookingOrderVO bkodvo: list){
+					int i = bkdetailSvc.getAllByBkNo(bkodvo.getBk_no()).stream()
+							.mapToInt(e -> e.getRm_guest())
+							.sum();
+					totalGuest += i;
+				}
+			%>
+			<div>
+				<h4>CURRENT GUESTS</h4>
+				<h3><%=totalGuest%></h3>
+			</div>
 		</div>
-		<jsp:useBean id="mbSvc" scope="page"
-			class="com.members.model.MembersService" />
-		<jsp:useBean id="bkdetailSvc" scope="page"
-			class="com.bookingdetail.model.BookingDetailService" />
-		<jsp:useBean id="rmtypeSvc" scope="page"
-			class="com.roomtype.model.RoomTypeService" />
-		<jsp:useBean id="rmSvc" scope="page"
-			class="com.rooms.model.RoomsService" />
 		<div class="main">
 			<div class="list">
 				<table>
@@ -64,11 +91,10 @@ pageContext.setAttribute("checkOuts", checkOuts);
 					<tr class="table-head">
 						<th>訂單編號</th>
 						<th>入住會員</th>
-						<th>預定入住日期</th>
-						<th>預計退房日期</th>
-						<th>辦理入住</th>
-						<th>辦理退房</th>
+						<th>入住日期</th>
+						<th>退房日期</th>
 						<th>辦理狀態</th>
+						<th>辦理入住</th>
 					</tr>
 					<c:if test="${checkIns.size()==0}">
 						<tr>
@@ -78,14 +104,15 @@ pageContext.setAttribute("checkOuts", checkOuts);
 					
 					<c:forEach var="checkIn" items="${checkIns}">
 						<tr class="list-data">
-							<td>${checkIn.bk_no}</td>
-							<td><a class="booking-detail member"
+							<td><i class="fas fa-receipt"></i>${checkIn.bk_no}</td>
+							<td>
+								<i class="far fa-user member-icon"></i>
+								<a class="booking-detail member"
 								href="<%=request.getContextPath()%>/MembersServlet?mb_id=${checkIn.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${checkIn.mb_id}</a><br>
-								${mbSvc.getOneByMbId(checkIn.mb_id).mb_name}</td>
+								${mbSvc.getOneByMbId(checkIn.mb_id).mb_name}
+							</td>
 							<td>${checkIn.dateIn}</td>
 							<td>${checkIn.dateOut}</td>
-							<td><button class="check-in"  <c:if test="${checkIn.bk_status != 1}">disabled</c:if> >CHECK IN</button></td>
-							<td><button>CHECK OUT</button></td>
 							<td>
 							<c:choose>
 								<c:when test="${checkIn.bk_status == 1}">
@@ -96,6 +123,7 @@ pageContext.setAttribute("checkOuts", checkOuts);
 								</c:otherwise>
 							</c:choose>
 							</td>
+							<td><button class="check-in"  <c:if test="${checkIn.bk_status != 1}">disabled</c:if> >CHECK IN</button></td>
 						</tr>
 						<c:if test="${checkIn.bk_status == 1}">
 						<tr>
@@ -107,6 +135,7 @@ pageContext.setAttribute("checkOuts", checkOuts);
 									<span>房客數：${room.rm_guest} 人</span>
 								</div>
 								<div class="checkin-option">
+									<h4>選擇房號</h4>
 									<c:forEach var="rm" items="${rmSvc.getAllByRmType(room.rm_type)}">
 										<span class="all-rooms <c:if test='${rm.rm_status == 0}'>empty</c:if>">${rm.rm_no}</span>
 										<%-- <a 
@@ -115,7 +144,7 @@ pageContext.setAttribute("checkOuts", checkOuts);
 									</c:forEach>
 								</div>
 							</c:forEach>
-							<h2>未結餘款：USD\$${checkIn.total_price * 0.7}</h2>
+							<h2 class="price-to-pay">未結餘款：USD\$${checkIn.total_price * 0.7}</h2>
 							<button class="checkin-confirm" data-mbid="${checkIn.mb_id}" data-bkno="${checkIn.bk_no}">CONFIRM</button>
 							</td>
 						<tr>
@@ -130,11 +159,10 @@ pageContext.setAttribute("checkOuts", checkOuts);
 					<tr class="table-head">
 						<th>訂單編號</th>
 						<th>會員編號</th>
-						<th>預定入住日期</th>
-						<th>預計退房日期</th>
-						<th>辦理入住</th>
+						<th>入住時間</th>
+						<th>退房日期</th>
+						<th>消費明細</th>
 						<th>辦理退房</th>
-						<th>辦理狀態</th>
 					</tr>
 					<c:if test="${checkOuts.size()==0}">
 						<tr>
@@ -144,24 +172,61 @@ pageContext.setAttribute("checkOuts", checkOuts);
 					<c:forEach var="checkOut" items="${checkOuts}">
 						<tr class="list-data">
 							<td>${checkOut.bk_no}</td>
-							<td>${checkOut.mb_id}</td>
-							<td>${checkOut.dateIn}</td>
-							<td>${checkOut.dateOut}</td>
-							<td><button>CHECK IN</button></td>
-							<td><button>CHECK OUT</button></td>
 							<td>
-								<c:choose>
-								<c:when test="${checkIn.bk_status == 2}">
-									入住中
-								</c:when>
-								<c:otherwise>
-									已退房
-								</c:otherwise>
-							</c:choose>
+								<i class="far fa-user member-icon"></i>
+								<a class="booking-detail member"
+								href="<%=request.getContextPath()%>/MembersServlet?mb_id=${checkOut.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${checkOut.mb_id}</a><br>
+								${mbSvc.getOneByMbId(checkOut.mb_id).mb_name}
 							</td>
+							<fmt:parseDate pattern="yyyy-MM-dd'T'HH:mm" type="both" value="${checkOut.checkIn}" var="parsedDateTime"/> 
+							<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${parsedDateTime}"/></td>
+							<td>${checkOut.dateOut}</td>
+							<td>receipt</td>
+							<td><button class="checkout-confirm" data-mbid="${checkOut.mb_id}" data-bkno="${checkOut.bk_no}">CHECK OUT</button></td>
 						</tr>
-
 					</c:forEach>
+					<tr>
+						<td colspan="7"></td>
+					</tr>
+					<tr>
+						<td colspan="7" class="list-title">入住中清單</td>
+					</tr>
+					<tr class="table-head">
+						<th>訂單編號</th>
+						<th>會員編號</th>
+						<th>入住時間</th>
+						<th>退房日期</th>
+						<th>入住房號</th>
+						<th>提前退房</th>
+					</tr>
+					<c:if test="${checkeds.size()==0}">
+						<tr>
+							<td colspan="7" class="td-msg">無入住中房客</td>
+						</tr>
+					</c:if>
+					<c:forEach var="checked" items="${checkeds}">
+						<tr class="list-data">
+							<td>${checked.bk_no}</td>
+							<td>
+								<i class="far fa-user member-icon"></i>
+								<a class="booking-detail member"
+								href="<%=request.getContextPath()%>/MembersServlet?mb_id=${checked.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${checked.mb_id}</a><br>
+								${mbSvc.getOneByMbId(checked.mb_id).mb_name}
+							</td>
+							<fmt:parseDate pattern="yyyy-MM-dd'T'HH:mm" type="both" value="${checked.checkIn}" var="parsedDateTime"/> 
+							<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${parsedDateTime}"/></td>
+							<td>${checked.dateOut}</td>
+							<td>
+								<c:forEach var="room" items="${rmSvc.getAllByBkNo(checked.bk_no)}">
+									<span class="all-rooms">${room.rm_no}</span>
+								</c:forEach>
+							</td>
+							<td><button class="checkout-confirm" data-mbid="${checked.mb_id}" data-bkno="${checked.bk_no}">CHECK OUT</button></td>
+						</tr>
+					</c:forEach>
+					<tr>
+						<td colspan="7"></td>
+					</tr>
 				</table>
 			</div>
 		</div>
@@ -177,82 +242,135 @@ pageContext.setAttribute("checkOuts", checkOuts);
 	<!-- 加入常用 js -->
 	<script src="${pageContext.request.contextPath}/js/back/backend.js"></script>
 	<script>
-		$(window).on("load", function() {
-			$(".loader").delay(400).fadeOut();
-			$("#preloder").delay(600).fadeOut("slow");
-		});
-		let bookingDetail = $("#booking-detail-info");
-		$(".booking-detail").click(function(e) {
-			e.preventDefault();
-			let src = $(this).attr("href");
-			bookingDetail.addClass("display-show");
-			bookingDetail.children("iframe").attr("src", src);
-		});
-		$(".icon").click(function() {
-			$(this).parents(".display-show").removeClass("display-show");
-		});
-		$(".check-in").click(function() {
-			let rooms = $(this).closest("tr").next().find(".room-check-in")
-			if (!rooms.hasClass("show")) {
-				rooms.addClass("show")
-			} else {
-				rooms.removeClass("show");
-			}
-		})
-		$(".empty").click(function(){
-			$(this).siblings(".empty").removeClass("selected");
-			$(this).addClass("selected");
-		})
-		$(".checkin-confirm").click(function(){
-			let selects = $(this).siblings(".checkin-option");
-			let mbid = $(this).attr("data-mbid");
-			let bkno = $(this).attr("data-bkno");
-			let roomArr = [];
-			for (let i = 0; i < selects.length; i++){
-				let rm_no = selects.eq(i).children(".selected").text();
-				if (roomArr.indexOf(rm_no) < 0) {
-					roomArr.push(rm_no);
-				} else {
-					Swal.fire({
-						position:"center",
-						title:"房號重複",
-						icon:"error",
-						text:"請重新選擇房號",
-					})
-					return;
-				}
-			}
-			for (i in roomArr){
-				$.ajax({
-					url:"<%=request.getContextPath()%>/RoomsServlet?action=update_check_in",
-					data:{
-						rm_no: roomArr[i],
-						mb_id: mbid,
-						bk_no: bkno,
-					},
-					type:"POST",
-					success: function(msg){
-						if (msg == "success"){
-							Swal.fire({
-								position:"center",
-								title:"辦理入住成功",
-								icon:"success",
-								text:"1秒後畫面將重新整理",
-							})
-							setTimeout(function(){
-								window.location.reload();
-							}, 1000)
-						} else {
-							Swal.fire({
-								position:"center",
-								title:"系統爆炸了",
-								icon:"error",
-							})
-						}
-					}
-				})
-			}
-		})
+	$(window).on("load", function () {
+	    $(".loader").delay(400).fadeOut();
+	    $("#preloder").delay(600).fadeOut("slow");
+	});
+
+	$(document).ready(function () {
+	    let bookingDetail = $("#booking-detail-info");
+	    $(".booking-detail").click(function (e) {
+	        e.preventDefault();
+	        let src = $(this).attr("href");
+	        bookingDetail.addClass("display-show");
+	        bookingDetail.children("iframe").attr("src", src);
+	    });
+	    $(".icon").click(function () {
+	        $(this).parents(".display-show").removeClass("display-show");
+	    });
+	    $(".check-in").click(function () {
+	        let rooms = $(this).closest("tr").next().find(".room-check-in");
+	        if (!rooms.hasClass("show")) {
+	            rooms.addClass("show");
+	        } else {
+	            rooms.removeClass("show");
+	        }
+	    });
+	    $(".empty").click(function () {
+	        $(this).siblings(".empty").removeClass("selected");
+	        $(this).addClass("selected");
+	    });
+	    $(".checkin-confirm").click(function () {
+	        let selects = $(this).siblings(".checkin-option");
+	        let mbid = $(this).attr("data-mbid");
+	        let bkno = $(this).attr("data-bkno");
+	        let roomArr = [];
+	        for (let i = 0; i < selects.length; i++) {
+	            let rm_no = selects.eq(i).children(".selected").text();
+	            if (roomArr.indexOf(rm_no) < 0) {
+	                roomArr.push(rm_no);
+	            } else {
+	                Swal.fire({
+	                    position: "center",
+	                    title: "房號重複",
+	                    icon: "error",
+	                    text: "請重新選擇房號",
+	                });
+	                return;
+	            }
+	        }
+	        $.ajax({
+	            //更新訂單狀態
+	            url: "<%=request.getContextPath()%>/bookingServlet?action=checkin",
+	            data: {
+	                bk_no: bkno,
+	            },
+	            type: "POST",
+	        });
+	        for (i in roomArr) {
+	            //將選好的房號放入房間
+	            $.ajax({
+	                url: "<%=request.getContextPath()%>/RoomsServlet?action=update_check_in",
+	                data: {
+	                    rm_no: roomArr[i],
+	                    mb_id: mbid,
+	                    bk_no: bkno,
+	                },
+	                type: "POST",
+	                success: function (msg) {
+	                    if (msg == "success") {
+	                        Swal.fire({
+	                            position: "center",
+	                            title: "辦理入住成功",
+	                            icon: "success",
+	                            confirmButton: false,
+	                        });
+	                        setTimeout(function () {
+	                            window.location.reload();
+	                        }, 1000);
+	                    } else {
+	                        Swal.fire({
+	                            position: "center",
+	                            title: "系統爆炸了",
+	                            icon: "error",
+	                        });
+	                    }
+	                },
+	            });
+	        }
+	    });
+	    $(".checkout-confirm").click(function () {
+	        let mbid = $(this).attr("data-mbid");
+	        let bkno = $(this).attr("data-bkno");
+	        $.ajax({
+	            //更新訂單狀態
+	            url: "<%=request.getContextPath()%>/bookingServlet?action=checkout",
+	            data: {
+	                bk_no: bkno,
+	            },
+	            type: "POST",
+	        });
+	        $.ajax({
+	            //將房號資訊清空
+	            url: "<%=request.getContextPath()%>/RoomsServlet?action=update_check_out",
+	            data: {
+	                mb_id: mbid,
+	                bk_no: bkno,
+	            },
+	            type: "POST",
+	            success: function (msg) {
+	                if (msg == "success") {
+	                    Swal.fire({
+	                        position: "center",
+	                        title: "退房完成",
+	                        icon: "success",
+	                        confirmButton: false,
+	                    });
+	                    setTimeout(function () {
+	                        window.location.reload();
+	                    }, 1000);
+	                } else {
+	                    Swal.fire({
+	                        position: "center",
+	                        title: "系統爆炸了",
+	                        icon: "error",
+	                    });
+	                }
+	            },
+	        });
+	    });
+	});
+
 	</script>
 </body>
 </html>

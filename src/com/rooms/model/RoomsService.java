@@ -34,11 +34,19 @@ public class RoomsService {
 		return rmvo;
 	}
 	
-	public RoomsVO updateCheckIn(String rm_no, String mb_id) {
+	public RoomsVO updateCheckIn(String rm_no, String mb_id, String bk_no) {
 		RoomsVO rmvo = new RoomsVO();
 		rmvo.setRm_no(rm_no);
 		rmvo.setMb_id(mb_id);
+		rmvo.setBk_no(bk_no);
 		dao.update_checkin(rmvo);
+		return rmvo;
+	}
+	
+	public RoomsVO updateCheckOut(String rm_no) {
+		RoomsVO rmvo = new RoomsVO();
+		rmvo.setRm_no(rm_no);
+		dao.update_checkout(rmvo);
 		return rmvo;
 	}
 	
@@ -53,6 +61,15 @@ public class RoomsService {
 	public List<RoomsVO> getAllByRmType(String rmtype) {
 		return dao.getAllByRmType(rmtype);
 	}
+	
+	public List<RoomsVO> getAllByMbId(String mb_id) {
+		return dao.getAllByMbId(mb_id);
+	}
+	
+	public List<RoomsVO> getAllByBkNo(String bk_no) {
+		return dao.getAllByBkNo(bk_no);
+	}
+	
 	public List<RoomsVO> getAll() {
 		return dao.getAll();
 	}

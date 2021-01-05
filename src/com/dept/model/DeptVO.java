@@ -3,7 +3,7 @@ package com.dept.model;
 import java.io.Serializable;
 
 public class DeptVO implements Serializable {
-
+	private static final long serialVersionUID = 1L;	
 	private String dept_no;
 	private String dept;
 	

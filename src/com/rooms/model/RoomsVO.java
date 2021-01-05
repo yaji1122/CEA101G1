@@ -8,16 +8,9 @@ public class RoomsVO implements Serializable {
 	private String rm_type;
 	private String rm_status;
 	private String mb_id;
+	private String bk_no;
 	
 	public RoomsVO() {};
-	
-	public RoomsVO(String rm_no, String rm_type, String rm_status, String mb_id) {
-		super();
-		this.rm_no = rm_no;
-		this.rm_type = rm_type;
-		this.rm_status = rm_status;
-		this.mb_id = mb_id;
-	}
 	
 	public String getRm_no() {
 		return rm_no;
@@ -42,6 +35,14 @@ public class RoomsVO implements Serializable {
 	}
 	public void setMb_id(String mb_id) {
 		this.mb_id = mb_id;
+	}
+
+	public String getBk_no() {
+		return bk_no;
+	}
+
+	public void setBk_no(String bk_no) {
+		this.bk_no = bk_no;
 	}
 	
 }
