@@ -90,60 +90,90 @@
 	<!-- offcanvas menu end -->
 
 	<!-- header menu -->
-	<header class="header-section">
-		<div class="menu-item">
-			<div class="nav-menu">
-				<nav class="mainmenu">
-					<ul class="mainmenu-row">
-						<li class="nav-list"><a href="#" class="nav-evnet">最新消息</a></li>
-						<li class="nav-list"><a class="nav-event">住客專區</a>
-							<ul class="dropdown">
-								<li><a
-									href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
-								<li><a
-									href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
-								<li><a
-									href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
-							</ul></li>
-						<li class="nav-list"><a
-							href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp"
-							class="nav-evnet">戴蒙商城</a></li>
-						<div class="logobox">
+<!-- 	<header class="header-section"> -->
+<!-- 		<div class="menu-item"> -->
+<!-- 			<div class="nav-menu"> -->
+<!-- 				<nav class="mainmenu"> -->
+<!-- 					<ul class="mainmenu-row"> -->
+<!-- 						<li class="nav-list"><a href="#" class="nav-evnet">最新消息</a></li> -->
+<!-- 						<li class="nav-list"><a class="nav-event">住客專區</a> -->
+<!-- 							<ul class="dropdown"> -->
+<!-- 								<li><a -->
+<%-- 									href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li> --%>
+<!-- 								<li><a -->
+<%-- 									href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li> --%>
+<!-- 								<li><a -->
+<%-- 									href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li> --%>
+<!-- 							</ul></li> -->
+<!-- 						<li class="nav-list"><a -->
+<%-- 							href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" --%>
+<!-- 							class="nav-evnet">戴蒙商城</a></li> -->
+<!-- 						<div class="logobox"> -->
+<%-- 							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img --%>
+<%-- 								src="${pageContext.request.contextPath}/img/logo.png" /> </a> --%>
+<!-- 						</div> -->
+<!-- 						<li class="nav-list"><a class="nav-event" -->
+<%-- 							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房</a> --%>
+<!-- 						</li> -->
+<!-- 						<li class="nav-list"> -->
+<!-- 						<a class="nav-event"> -->
+<!-- 							<i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="color: white;"></i> -->
+<!-- 							</a> -->
+<!-- 						</li> -->
+<%-- 						<li class="nav-list"><a class="nav-event"> <c:choose> --%>
+<%-- 									<c:when test="${member != null}"> --%>
+<!-- 										<i class="far fa-gem"></i> -->
+<!-- 										</i>會員中心</a> -->
+<!-- 							<ul class="dropdown"> -->
+<!-- 								<li><a -->
+<%-- 									href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li> --%>
+<!-- 								<li><a href="#">我的假期</a></li> -->
+<!-- 								<li><a href="#">歷史訂單</a></li> -->
+<!-- 								<li><a -->
+<%-- 									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li> --%>
+<!-- 							</ul></li> -->
+<%-- 						</c:when> --%>
+<%-- 						<c:otherwise> --%>
+<!-- 							<i class="fas fa-user-circle log-in"></i> -->
+<!-- 							</a> -->
+<%-- 						</c:otherwise> --%>
+<%-- 						</c:choose> --%>
+<!-- 						</li> -->
+<!-- 					</ul> -->
+<!-- 				</nav> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</header> -->
+	<header class="header-section nav-fixed">
+        <div class="menu-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="logobox">
 							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
 								src="${pageContext.request.contextPath}/img/logo.png" /> </a>
 						</div>
-						<li class="nav-list"><a class="nav-event"
-							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房</a>
-						</li>
-						<li class="nav-list">
-						<a class="nav-event">
-							<i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="color: white;"></i>
-							</a>
-						</li>
-						<li class="nav-list"><a class="nav-event"> <c:choose>
-									<c:when test="${member != null}">
-										<i class="far fa-gem"></i>
-										</i>會員中心</a>
-							<ul class="dropdown">
-								<li><a
-									href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
-								<li><a href="#">我的假期</a></li>
-								<li><a href="#">歷史訂單</a></li>
-								<li><a
-									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
-							</ul></li>
-						</c:when>
-						<c:otherwise>
-							<i class="fas fa-user-circle log-in"></i>
-							</a>
-						</c:otherwise>
-						</c:choose>
-						</li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</header>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="nav-menu">
+                            <nav class="mainmenu">
+                                <ul>
+                                    <li>
+                                        <a href="" class="nav-evnet">您的訂單</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-event">
+                                            <i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="font-size: 20px"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 	<!-- header menu -->
 
 
@@ -260,7 +290,7 @@
 																		id="display-icon-minus${k.index}"></i> <input
 																		type="text" value=1 class="display-qty"
 																		id="display-qty${k.index}" name="quantity${k.index}"
-																		style="border-radius: 5px;" disabled="disabled"> <i
+																		style="border-radius: 5px;" disabled="disabled"><i
 																		class="fas fa-plus-square display-icon-plus"
 																		field="quantity${k.index}"
 																		id="display-icon-plus${k.index}"></i>
