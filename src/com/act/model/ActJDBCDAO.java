@@ -277,10 +277,10 @@ public class ActJDBCDAO implements ActDAO_interface{
 	public static void main(String[] args) {
 		ActJDBCDAO dao = new  ActJDBCDAO();
 		
-		//·s¼W
+		//ï¿½sï¿½W
 //		ActVO actVO1 = new ActVO();
 //		actVO1.setActEventNo("1000011110");
-//		actVO1.setActName("¸õ¤ô");
+//		actVO1.setActName("ï¿½ï¿½ï¿½ï¿½");
 //		actVO1.setActStatus("0");
 //		actVO1.setActRegTime(java.sql.Date.valueOf("2020-12-09"));
 //		actVO1.setActDate(java.sql.Date.valueOf("2020-12-15"));
@@ -290,7 +290,7 @@ public class ActJDBCDAO implements ActDAO_interface{
 //		actVO1.setActPrice(1000);
 //		dao.insert(actVO1);
 				
-		// ­×§ï
+		// ï¿½×§ï¿½
 //		ActVO actVO2 = new ActVO();
 //		actVO2.setActNo("1000000012");
 //		actVO2.setActEventNo("1000011110");
@@ -304,10 +304,10 @@ public class ActJDBCDAO implements ActDAO_interface{
 //		actVO2.setActPrice(2000);
 //		dao.update(actVO2);		
 				
-		// §R°£
+		// ï¿½Rï¿½ï¿½
 //		dao.delete("1000000012");
 				
-		//³æ¶µ¬d¸ß		
+		//ï¿½æ¶µï¿½dï¿½ï¿½		
 //		ActVO actVO3 = dao.findByPrimaryKey("1000000004");
 //		System.out.print(actVO3.getActNo() + ",");
 //		System.out.print(actVO3.getActName() + ",");
@@ -320,7 +320,7 @@ public class ActJDBCDAO implements ActDAO_interface{
 //		System.out.print(actVO3.getActPrice());
 //		System.out.println("---------------------");
 //		
-		// ¬d¸ß
+		// ï¿½dï¿½ï¿½
 		List<ActVO> list = dao.getAll();
 			for (ActVO actVO : list) {
 				System.out.print(actVO.getActNo() + ",");
@@ -335,6 +335,11 @@ public class ActJDBCDAO implements ActDAO_interface{
 				System.out.println();
 				}
 
+	}
+	@Override
+	public List<ActVO> getAllByActStatus() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
