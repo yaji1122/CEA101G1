@@ -180,6 +180,9 @@
 		</ul>
 	</div>
 	<!-- Offcanvas Menu Section End -->
+	
+	<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
+	
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="menu-item">
@@ -328,10 +331,9 @@
 								<c:forEach var="item_picsVO" begin="0" end="0"
 									items="${item_picsSvc.getAllPics(itemVO.item_no)}">
 									<div class="itempic">
-										<a
-											href="<%=request.getContextPath()%>/frontend/shop/shopItemDetail.jsp?item_no=${itemVO.item_no}"><img
-											src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"
-											alt="" /> </a>
+										<a href="<%=request.getContextPath()%>/frontend/shop/shopItemDetail.jsp?item_no=${itemVO.item_no}">
+											<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"/>
+										</a>
 									</div>
 								</c:forEach>
 							</div>

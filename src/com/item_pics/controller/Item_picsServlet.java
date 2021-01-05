@@ -200,13 +200,20 @@ public class Item_picsServlet extends HttpServlet {
         	
         	req.setCharacterEncoding("UTF-8");
     		res.setContentType("image/gif, image/jpg, image/jpeg, image/png");
-
+    			InputStream ispu = null;
     			String item_pic_no = req.getParameter("item_pic_no").trim();
-
+    			
     			Item_picsService is = new Item_picsService();
     			Item_picsVO isvo = is.getOnePic(item_pic_no);
+    			if(isvo.getItem_pic()!=null) {
     			res.getOutputStream().write(isvo.getItem_pic());
-        	
+    			} else {
+    				ispu = req.getServletContext().getResourceAsStream("/img/nodata.png");
+    				byte[] pic = new byte[ispu.available()];
+    				ispu.read(pic);
+    				res.getOutputStream().write(pic);
+    				ispu.close();
+    			}
         }
 		
 		if ("delete".equals(action)) { // 來自listAllEmp.jsp
