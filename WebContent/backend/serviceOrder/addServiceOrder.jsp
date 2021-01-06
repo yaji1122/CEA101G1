@@ -25,15 +25,15 @@ form {
 		ACTION="${pageContext.request.contextPath}/ServiceOrderServlet"
 		name="form1">
 		<div class="form-group">
-			<label for="mb_id">會員編號:</label> <input type="text"
-				class="form-control" id="mb_id" name="mb_id"
-				value="<%=(serviceOrderVO == null) ? "MEM0000001" : serviceOrderVO.getMb_id()%>">
+			<label for="bk_no">訂房單號:</label> <input type="text"
+				class="form-control" id="bk_no" name="bk_no"
+				value="<%=(serviceOrderVO == null) ? "MEM0000001" : serviceOrderVO.getBk_no()%>">
 		</div>
-		<div class="form-group">
+		<%-- <div class="form-group">
 			<label for="od_status">訂單狀態編號:</label> <input type="text"
 				class="form-control" id="od_status" name="od_status"
 				value="<%=(serviceOrderVO == null) ? "1" : serviceOrderVO.getOd_status()%>">
-		</div>
+		</div> --%>
 		<div class="form-group">
 			<label for="rm_no">客房編號:</label> <input type="text"
 				class="form-control" id="rm_no" name="rm_no"

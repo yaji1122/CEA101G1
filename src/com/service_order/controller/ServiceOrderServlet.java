@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.members.model.MembersVO;
 import com.service_order.model.*;
 
 @WebServlet("/ServiceOrderServlet")
 public class ServiceOrderServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	public ServiceOrderServlet() {
 		super();
@@ -60,7 +63,7 @@ public class ServiceOrderServlet extends HttpServlet {
 		if ("update".equals(action)) {
 
 			String serv_odno = req.getParameter("serv_odno").trim();
-			String mb_id = req.getParameter("mb_id");
+			String bk_no = req.getParameter("bk_no");
 			String od_status = req.getParameter("od_status");
 			String rm_no = req.getParameter("rm_no");
 			String serv_no = req.getParameter("serv_no");
@@ -78,7 +81,7 @@ public class ServiceOrderServlet extends HttpServlet {
 //			Timestamp serv_time = serviceOrderVO.getServ_time();
 
 			serviceOrderVO.setServ_odno(serv_odno);
-			serviceOrderVO.setMb_id(mb_id);
+			serviceOrderVO.setBk_no(bk_no);
 //			serviceOrderVO.setOd_time(od_time);
 			serviceOrderVO.setOd_status(od_status);
 			serviceOrderVO.setRm_no(rm_no);
@@ -88,7 +91,7 @@ public class ServiceOrderServlet extends HttpServlet {
 			serviceOrderVO.setTotal_price(total_price);
 
 			ServiceOrderService serviceOrderSvc = new ServiceOrderService();
-			serviceOrderVO = serviceOrderSvc.updateServiceOrder(serv_odno, mb_id, /* od_time, */ od_status, rm_no,
+			serviceOrderVO = serviceOrderSvc.updateServiceOrder(serv_odno, bk_no, /* od_time, */ od_status, rm_no,
 					serv_no, serv_time, serv_count, total_price);
 
 			req.setAttribute("serviceOrderVO", serviceOrderVO);
@@ -107,8 +110,9 @@ public class ServiceOrderServlet extends HttpServlet {
 			
 			try {
 //				String serv_odno = req.getParameter("serv_odno").trim();
-				String mb_id = req.getParameter("mb_id");
-				String od_status = req.getParameter("od_status");
+//				MembersVO member = (MembersVO)req.getSession().getAttribute("member");
+//				String bk_no = member.getBk_no();
+				String bk_no = req.getParameter("rm_id");
 				String rm_no = req.getParameter("rm_no");
 				String serv_no = req.getParameter("serv_no");
 
@@ -126,9 +130,9 @@ public class ServiceOrderServlet extends HttpServlet {
 //			Timestamp serv_time = serviceOrderVO.getServ_time();
 
 //				serviceOrderVO.setServ_odno(serv_odno);
-				serviceOrderVO.setMb_id(mb_id);
+				serviceOrderVO.setBk_no(bk_no);
 //			serviceOrderVO.setOd_time(od_time);
-				serviceOrderVO.setOd_status(od_status);
+//				serviceOrderVO.setOd_status(od_status);
 				serviceOrderVO.setRm_no(rm_no);
 				serviceOrderVO.setServ_no(serv_no);
 				serviceOrderVO.setServ_time(serv_time);
@@ -136,7 +140,7 @@ public class ServiceOrderServlet extends HttpServlet {
 				serviceOrderVO.setTotal_price(total_price);
 
 				ServiceOrderService serviceOrderSvc = new ServiceOrderService();
-				serviceOrderVO = serviceOrderSvc.addServiceOrder(/*serv_odno,*/ mb_id, /* od_time, */ od_status, rm_no,
+				serviceOrderVO = serviceOrderSvc.addServiceOrder(/*serv_odno,*/ bk_no, /* od_time, */ /*od_status,*/ rm_no,
 						serv_no, serv_time, serv_count, total_price);
 
 				String url = "/backend/serviceOrder/serviceOrderInfo.jsp";
