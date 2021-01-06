@@ -55,7 +55,7 @@
 				<thead>
 					<tr>
 						<th scope="col">訂單編號</th>
-						<th scope="col">會員編號</th>
+						<th scope="col">訂房單號</th>
 						<th scope="col">客房編號</th>
 						<th scope="col">訂單時間</th>
 						<th scope="col">訂單總額</th>
@@ -132,13 +132,13 @@
 
 		<label for="update-mbid">
 			<p>會員編號</p> <input type="text" id="update-mbid" name="update-mbid"
-			maxlength="10" placeholder="請依照格式輸入(MEMXXXXXXX)" disabled="disabled" required />
+			maxlength="10" placeholder="請依照格式輸入(MEMXXXXXXX)" required disabled="disabled"/>
 		</label> <label for="update-rmno">
 			<p>客房編號</p> <input type="text" id="update-rmno" name="update-rmno"
 			maxlength="3" placeholder="請依照格式輸入(XXX)" required />
 		</label> <label for="update-totalprice">
 			<p>訂單總額</p> <input type="text" id="update-totalprice"
-			name="update-totalprice" disabled="disabled"/>
+			name="update-totalprice" readonly="readonly"/>
 		</label> <label for="update-odstatus">
 			<p>訂單狀態</p> <select class="custom-select custom-select-sm"
 			name="update-odstatus" id="update-odstatus">

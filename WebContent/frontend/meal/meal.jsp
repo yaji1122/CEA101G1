@@ -5,14 +5,15 @@
 <%@ page import="com.meal.model.*"%>
 <%@ page import="com.cart.model.*"%>
 <%@ page import="com.members.model.*"%>
+<%@ page import="com.rooms.model.*"%>
+<%@ page import="com.bookingorder.model.*" %>
 <%@ page import="java.util.*"%>
+<%@ page import="java.util.stream.Collectors" %>
 
 <%
 	MealTypeVO mealTypeVO = (MealTypeVO) request.getAttribute("mealTypeVO");
 	MealVO mealVO = (MealVO) request.getAttribute("mealVO");
-// 	MembersVO member = (MembersVO)session.getAttribute("member");
-// 	bk_no = member.getbk_no();
-// 	session.setAttribute("bk_no", bk_no);
+	RoomsVO roomsVO = (RoomsVO) request.getAttribute("rooms");
 %>
 
 <!DOCTYPE html>
@@ -35,6 +36,30 @@
 	<%@ include file="/frontend/files/loginCSS.file"%>
 	<%@ include file="/frontend/files/login.file"%>
 	<%@ include file="/frontend/files/loginbox.file"%>
+
+	<%
+		String mb_id = member.getMb_id();
+		BookingOrderService bkodSvc = new BookingOrderService();
+		List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
+		List<BookingOrderVO> newList = bkodList.stream()
+									.filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
+									.collect(Collectors.toList());
+		String bk_no = "";
+		for(BookingOrderVO list : newList){
+			bk_no = list.getBk_no();
+		}
+		System.out.println(bk_no);
+		
+		RoomsService roomsSvc = new RoomsService();
+		List<RoomsVO> roomList = roomsSvc.getAllByMbId(mb_id);
+		List<String> roomnoList = new ArrayList<>();
+		for(RoomsVO list : roomList){
+			roomnoList.add(list.getRm_no());
+		}
+		roomnoList.forEach(System.out::println);
+			
+		session.setAttribute("roomnoList", roomnoList);
+	%>
 
 	<!-- preloader -->
 	<div id="preloder">
@@ -88,6 +113,11 @@
 	</div>
 	<!-- offcanvas menu end -->
 
+	<%
+		Vector<CartItem> buylist = (Vector<CartItem>) session.getAttribute("cart");
+		session.setAttribute("buylist", buylist);
+	%>
+
 	<!-- header menu -->
 	<header class="header-section nav-fixed">
         <div class="menu-item">
@@ -107,9 +137,32 @@
                                         <a href="" class="nav-evnet">您的訂單</a>
                                     </li>
                                     <li>
+                                    <c:choose>
+                                    	<c:when test="${buylist.isEmpty()}">
+                                    	<a class="nav-event">
+                                            <i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="font-size: 20px">
+                                            </i>                                                                                      
+                                        </a>  
+                                        </c:when>
+                                         
+                                    	<c:when test="${buylist.size() > 0}">
                                         <a class="nav-event">
-                                            <i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="font-size: 20px"></i>
-                                        </a>
+                                            <i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="font-size: 20px">
+                                            <div class="nav-counter nav-counter-blue">
+                                            <h6 style="letter-spacing: normal;">
+                                            <%= buylist.size() %>
+                                            </h6>
+                                            </div>                                             
+                                            </i>                                                                                      
+                                        </a>           
+                                        </c:when>
+                                        <c:otherwise>
+                                        <a class="nav-event">
+                                            <i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="font-size: 20px">
+                                            </i>                                                                                      
+                                        </a>  
+                                        </c:otherwise>
+                                       </c:choose>                
                                     </li>
                                 </ul>
                             </nav>
@@ -296,9 +349,6 @@
 		</footer>
 	</div>
 
-	<%
-		Vector<CartItem> buylist = (Vector<CartItem>) session.getAttribute("cart");
-	%>
 	<div class="shopping-cart-box">
 		<a class="close-display-box"> <i class="fas fa-window-close"></i>
 		</a>
@@ -309,13 +359,13 @@
 			</h2>
 			<div class="shopping-cart-detail">
 				<div class="container">
-					<div class="row" style="height: 300px;">
-						<div class="col-12">
+					<div class="row" style="height: 330px;">
+						<div class="col-lg-12">
 							<h4 style="text-align: center;">您目前還沒添加商品至購物車唷！</h4>
 						</div>
 					</div>
 					<div class="row" style="height: 70px;">
-						<div class="col-12">
+						<div class="col-lg-12">
 							<button class="display-button display-close"
 								style="margin: 10px auto;" type="submit">
 								<h5 class="display-button-word" style="margin: auto;">關閉</h5>
@@ -382,13 +432,25 @@
 						<% } %>
 					</div>
 					
+					<form method="post" action="${pageContext.request.contextPath}/MealOrderServlet">
 					<div class="row" style="height: 70px;">
-						<div class="col-lg-12">
-						<form method="post" action="${pageContext.request.contextPath}/MealOrderServlet">
+						<div class="col-lg-3">
+							<h5 style="margin-top: 25px; margin-left: 5%; display:inline-block;"><b>房號</b></h5>
+							
+							<label>
+								<select id="rm_no" name="rm_no" class="custom-select custom-select-sm" style="font-size: 20px; margin-top: -8px; margin-left: 30%;">
+								<c:forEach var="roomsVO" items="${roomnoList}" varStatus="rmno">
+									<option value="${roomsVO}">${roomsVO}</option>
+								</c:forEach>
+								</select>
+							</label>
+							
+						</div>
+						<div class="col-lg-9">
 							<button class="display-button" style="margin: 10px auto;"
 								type="submit">
 								<h5 class="display-button-word">確定送出 $</h5>
-								<h5 id="totalprice" style="margin-top: 10px;"></h5>	
+								<h5 id="totalprice" style="margin-top: 10px; color:white;"></h5>	
 							</button>
 							<input type="hidden" name="action" value="insert_meal_order">
 							<input type="hidden" name="amount" id="cart-to-servlet" value=1>
@@ -397,10 +459,10 @@
 								CartItem order = buylist.get(index);
 							%>
 							<input type="hidden" id="hidden-cartqty<%=index %>" field="hidden-cartqty<%=index %>" name="qty" value="<%=order.getQuantity()%>">
-							<% } %>
-						</form>
+							<% } %>						
 						</div>
 					</div>
+					</form>
 					
 				</div>
 				
