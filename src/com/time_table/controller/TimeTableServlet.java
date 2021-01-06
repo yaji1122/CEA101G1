@@ -17,6 +17,8 @@ import com.time_table.model.*;
 @WebServlet("/TimeTableServlet")
 public class TimeTableServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public TimeTableServlet() {
 		super();
 	}

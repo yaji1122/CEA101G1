@@ -2,12 +2,15 @@ package com.cart.model;
 
 public class CartItem implements java.io.Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	public CartItem() {
 		item_no="";
 		item_name = "";
 		quantity = 0;
 		price = 0;
 	}
+
 
 	private String item_no;
 	private String item_name;
@@ -39,4 +42,5 @@ public class CartItem implements java.io.Serializable{
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
+
 }

@@ -16,6 +16,8 @@ import com.service_type.model.*;
 @WebServlet("/ServiceTypeServlet")
 public class ServiceTypeServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public ServiceTypeServlet() {
 		super();
 	}

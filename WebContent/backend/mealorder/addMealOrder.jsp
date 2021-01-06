@@ -24,8 +24,8 @@
 	<form method="post"
 		action="${pageContext.request.contextPath}/MealOrderServlet">
 		<div class="insert-meal-type">
-			<label for="mb_id">
-				<p>會員編號</p> <input type="text" name="mb_id" maxlength="10"
+			<label for="bk_no">
+				<p>會員編號</p> <input type="text" name="bk_no" maxlength="10"
 				placeholder="請依照格式輸入(MEMXXXXXXX)" required/>
 			</label> 
 			<label for="rm_no">

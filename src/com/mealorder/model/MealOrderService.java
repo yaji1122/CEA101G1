@@ -14,10 +14,10 @@ public class MealOrderService {
 		dao = new MealOrderDAO();
 	}
 	
-	public MealOrderVO addMealOrder(String mb_id, String rm_no, Integer total_price) {
+	public MealOrderVO addMealOrder(String bk_no, String rm_no, Integer total_price) {
 		MealOrderVO mealOrderVO = new MealOrderVO();
 
-	mealOrderVO.setMb_id(mb_id);
+	mealOrderVO.setBk_no(bk_no);
 	mealOrderVO.setRm_no(rm_no);
 	mealOrderVO.setTotal_price(total_price);
 	dao.insert(mealOrderVO);

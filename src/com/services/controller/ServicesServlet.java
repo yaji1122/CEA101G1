@@ -20,6 +20,8 @@ import com.services.model.*;
 @WebServlet("/ServicesServlet")
 public class ServicesServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}

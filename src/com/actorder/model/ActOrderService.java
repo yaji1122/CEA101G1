@@ -12,13 +12,13 @@ public class ActOrderService {
 		dao = new ActOrderDAO(); 
 	}
 	
-	public ActOrderVO addActOrder(String actOdno,String actNo,String mbId
+	public ActOrderVO addActOrder(String actOdno,String actNo,String bkNo
     		,Date odTime,String odStatus,Integer ppl,Integer totalPrice){
 		
     	ActOrderVO actOrderVO = new ActOrderVO();
     	actOrderVO.setActOdno(actOdno);
     	actOrderVO.setActNo(actNo);
-    	actOrderVO.setMbId(mbId);
+    	actOrderVO.setBkNo(bkNo);
     	actOrderVO.setOdTime(odTime);
     	actOrderVO.setOdStatus(odStatus);
     	actOrderVO.setPpl(ppl);
@@ -28,13 +28,13 @@ public class ActOrderService {
 		return actOrderVO;
 	}
 	
-	public ActOrderVO updateActOrder(String actOdno,String actNo,String mbId
+	public ActOrderVO updateActOrder(String actOdno,String actNo,String bkNo
     		,Date odTime,String odStatus,Integer ppl,Integer totalPrice){
 		
     	ActOrderVO actOrderVO = new ActOrderVO();
     	actOrderVO.setActOdno(actOdno);
     	actOrderVO.setActNo(actNo);
-    	actOrderVO.setMbId(mbId);
+    	actOrderVO.setBkNo(bkNo);
     	actOrderVO.setOdTime(odTime);
     	actOrderVO.setOdStatus(odStatus);
     	actOrderVO.setPpl(ppl);

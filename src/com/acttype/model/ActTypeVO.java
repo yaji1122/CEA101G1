@@ -2,6 +2,9 @@ package com.acttype.model;
 import java.sql.Date;
 
 public class ActTypeVO implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String actTypeNo;
 	private String actTypeName;
 	

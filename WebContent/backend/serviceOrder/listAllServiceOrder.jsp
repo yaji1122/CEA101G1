@@ -39,7 +39,7 @@ pageContext.setAttribute("list", list);
 		<thead>
 			<tr>
 				<th scope="col">訂單編號</th>
-				<th scope="col">會員編號</th>
+				<th scope="col">訂房單號</th>
 				<th scope="col">訂單成立時間</th>
 				<th scope="col">訂單狀態</th>
 				<th scope="col">客房編號</th>
@@ -59,7 +59,7 @@ pageContext.setAttribute("list", list);
 
 				<tr>
 					<td scope="row">${serviceOrderVO.serv_odno}</td>
-					<td>${serviceOrderVO.mb_id}</td>
+					<td>${serviceOrderVO.bk_no}</td>
 					<td><fmt:formatDate value="${serviceOrderVO.od_time}"
 							pattern="yyyy-MM-dd HH:mm:ss" /></td>
 					<td><c:choose>

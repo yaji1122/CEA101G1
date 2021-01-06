@@ -40,13 +40,13 @@ public class MealOrderServlet extends HttpServlet {
 		if("insert_meal_order".equals(action)) {
 			try {
 //			MembersVO member = (MembersVO) session().getAttribute("member");
-			String mb_id = "MEM0000001";
+			String bk_no = "BKOD000001";
 //			RoomsVO room = (RoomsVO)session().getAttribute("room");
 			String rm_no = "101";
 			Integer total_price = new Integer(req.getParameter("amount"));
 			
 			MealOrderVO mealOrderVO = new MealOrderVO();
-			mealOrderVO.setMb_id(mb_id);
+			mealOrderVO.setBk_no(bk_no);
 			mealOrderVO.setRm_no(rm_no);
 			mealOrderVO.setTotal_price(total_price);
 			
@@ -62,7 +62,7 @@ public class MealOrderServlet extends HttpServlet {
 				Integer price = order.getPrice() / order.getQuantity();
 				System.out.println("編號: " + meal_no + "數量: " + qty + "單價: " + price);
 				mealOrderDetailVO.setMeal_no(meal_no);
-				mealOrderDetailVO.setQty(qty);
+				mealOrderDetailVO.setQty(new Integer(req.getParameter("qty")));
 				mealOrderDetailVO.setPrice(price);
 				meallist.add(mealOrderDetailVO);
 				System.out.println("更新: " + meallist.size());
@@ -106,19 +106,19 @@ public class MealOrderServlet extends HttpServlet {
 			}
 		}
 		
-		if("delete_meal_order".equals(action)) {
-			try {
-				String meal_odno = req.getParameter("delete-mealorder-no").trim();
-				
-				MealOrderService mealOrderSvc = new MealOrderService();
-				mealOrderSvc.deleteMealOrder(meal_odno);
-				
-				String url = "/backend/mealorder/mealOrderInfo.jsp";
-				RequestDispatcher dispatcher = req.getRequestDispatcher(url);
-				dispatcher.forward(req, res);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}	
+//		if("delete_meal_order".equals(action)) {
+//			try {
+//				String meal_odno = req.getParameter("delete-mealorder-no").trim();
+//				
+//				MealOrderService mealOrderSvc = new MealOrderService();
+//				mealOrderSvc.deleteMealOrder(meal_odno);
+//				
+//				String url = "/backend/mealorder/mealOrderInfo.jsp";
+//				RequestDispatcher dispatcher = req.getRequestDispatcher(url);
+//				dispatcher.forward(req, res);
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//			}
+//		}	
 	}
 }
