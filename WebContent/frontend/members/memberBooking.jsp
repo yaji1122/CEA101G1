@@ -43,6 +43,28 @@ pageContext.setAttribute("history", history);
 
 <title>Diamond Resort 會員個人資料</title>
 </head>
+<style>
+	#pkupbooking {
+		z-index:-99;
+		opacity:0;
+		position: absolute;
+		left:50%;
+		top:-100%;
+		transform:translate(-50%, -50%);
+		box-shadow: 0px 0px 3px black;
+		transition: 1s ease;
+	}
+	#pkupbooking iframe {
+		width:100vw;
+		height:100vh;
+		border:none;
+	}
+	#pkupbooking.show {
+		z-index: 999;
+		top:50%;
+		opacity:1;
+	}
+</style>
 <body>
 	<%@ include file="/frontend/files/header.file"%>
 	<div class="main-wrapper">
@@ -108,6 +130,9 @@ pageContext.setAttribute("history", history);
 										</c:forEach>
 									</div>
 									<div class="buttons">
+										<button id="pkup">
+											<i class="fas fa-helicopter"></i>接送預約
+										</button>
 										<button class="check-order-detail">
 											<i class="fas fa-clipboard-list"></i></i>訂單詳情
 										</button>
@@ -153,11 +178,18 @@ pageContext.setAttribute("history", history);
 			</div>
 		</div>
 	</div>
+	<div id="pkupbooking">
+		<iframe src="<%=request.getContextPath()%>/frontend/roomrsv/pickup.jsp"></iframe>
+	</div>
 	<%@ include file="/frontend/files/commonJS.file"%>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
 	<script>
 		$(document).ready(function(){
+			$("#pkup").click(function(){
+				$("#pkupbooking").addClass("show");
+			})
+			
 			$(".cancel-order").click(function (e) {
 		        e.preventDefault();
 		        let bkno = $(this).attr("data-bkno");

@@ -345,7 +345,8 @@ pageContext.setAttribute("infoJson", infoJson);
         	//加入商品到購物車
         	$(".add-to-cart").click(function(){
         		let button = $(this);
-        		let rmtype = $(this).attr("data-rmtype")
+        		let rmtype = $(this).attr("data-rmtype");
+        		$("#room-cart-empty").remove();
         		if (roomLimit[rmtype] == 0){ //判斷是否已達上限
         			Swal.fire({
         				position: "center",

@@ -154,14 +154,17 @@ body {
 #history-table span.status-checked-in {
 	color:#03506f;
 	border: 1px solid #03506f;
+	padding:1px 2px;
 }
 #history-table span.status-finished {
 	color:#393e46;
 	border: 1px solid #393e46;
+	padding:1px 2px;
 }
 #history-table span.status-canceled {
 	color:#f05454;
 	border: 1px solid #f05454;
+	padding:1px 2px;
 }
 #history-table tr th {
 	font-size: 14px;

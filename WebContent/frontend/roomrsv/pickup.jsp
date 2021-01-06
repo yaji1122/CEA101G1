@@ -247,6 +247,7 @@
                 				})
                 				setTimeout(function(){
                 					window.parent.document.getElementById('pkupbooking').classList.remove("show");
+                					window.location.reload();
                 				}, 1000)
             				}
             			}
