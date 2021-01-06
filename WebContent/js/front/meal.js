@@ -149,3 +149,5 @@ $(".cart-icon-minus").click(function() {
 $(".hover").mouseleave(function() {
 	$(this).removeClass("hover");
 });
+
+
