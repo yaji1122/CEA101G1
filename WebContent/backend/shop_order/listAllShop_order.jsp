@@ -51,11 +51,11 @@ sp_status.put("4", "已取消");
 }
 
 table {
-	width: 800px;
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	margin-left: auto;
+	margin-left: 60px;
 	margin-right: auto;
 	border: 1px gray;
 }
