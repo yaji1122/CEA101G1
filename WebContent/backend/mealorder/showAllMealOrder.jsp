@@ -61,7 +61,7 @@
 						<th scope="col">訂單總額</th>
 						<th scope="col">訂單狀態</th>
 						<th scope="col">修改</th>
-						<th scope="col">刪除</th>
+<!-- 						<th scope="col">刪除</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -82,7 +82,7 @@
 								</form>
 							</td>
 
-							<td style="font-size: 16px; text-align: center; padding-top: 2%;">${mealOrderVO.mb_id}</td>
+							<td style="font-size: 16px; text-align: center; padding-top: 2%;">${mealOrderVO.bk_no}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 2%;">${mealOrderVO.rm_no}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 2%;">
 								<fmt:formatDate value="${mealOrderVO.od_time}"
@@ -100,15 +100,15 @@
 							<td><input type="hidden" name="meal_odno"
 								value="${mealOrderVO.meal_odno}">
 								<button type="submit" class="update btn btn-info">修改</button></td>
-							<td>
-								<form method="post"
-									action="${pageContext.request.contextPath}/MealOrderServlet">
-									<input type="hidden" name="delete-mealorder-no"
-										value="${mealOrderVO.meal_odno}"> <input type="hidden"
-										name="action" value="delete_meal_order">
-									<button type="submit" class="btn btn-danger">刪除</button>
-								</form>
-							</td>
+<!-- 							<td> -->
+<!-- 								<form method="post" -->
+<%-- 									action="${pageContext.request.contextPath}/MealOrderServlet"> --%>
+<!-- 									<input type="hidden" name="delete-mealorder-no" -->
+<%-- 										value="${mealOrderVO.meal_odno}"> <input type="hidden" --%>
+<!-- 										name="action" value="delete_meal_order"> -->
+<!-- 									<button type="submit" class="btn btn-danger">刪除</button> -->
+<!-- 								</form> -->
+<!-- 							</td> -->
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -132,13 +132,13 @@
 
 		<label for="update-mbid">
 			<p>會員編號</p> <input type="text" id="update-mbid" name="update-mbid"
-			maxlength="10" placeholder="請依照格式輸入(MEMXXXXXXX)" required />
+			maxlength="10" placeholder="請依照格式輸入(MEMXXXXXXX)" disabled="disabled" required />
 		</label> <label for="update-rmno">
 			<p>客房編號</p> <input type="text" id="update-rmno" name="update-rmno"
 			maxlength="3" placeholder="請依照格式輸入(XXX)" required />
 		</label> <label for="update-totalprice">
 			<p>訂單總額</p> <input type="text" id="update-totalprice"
-			name="update-totalprice" required />
+			name="update-totalprice" disabled="disabled"/>
 		</label> <label for="update-odstatus">
 			<p>訂單狀態</p> <select class="custom-select custom-select-sm"
 			name="update-odstatus" id="update-odstatus">

@@ -19,20 +19,20 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 	String password = "123456";
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO ACT_ORDER(ACT_ODNO,ACT_NO,MB_ID,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE)"
+			"INSERT INTO ACT_ORDER(ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE)"
 			+ "VALUES(('ACTOD' || LPAD(to_char(ACTODNO_SEQ.NEXTVAL) ,? ,? ,? ,? ,? ,?)";
 	
 	private static final String GET_ALL_STMT =
-			"SELECT ACT_ODNO,ACT_NO,MB_ID,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER order By ACT_ODNO";
+			"SELECT ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER order By ACT_ODNO";
 	
 	private static final String GET_ONE_STMT = 
-			"SELECT ACT_ODNO,ACT_NO,MB_ID,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER where ACT_ODNO = ?";
+			"SELECT ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER where ACT_ODNO = ?";
 	
 	private static final String DELETE =
 			"DELETE FROM ACT_ORDER where ACT_ODNO = ?";
 	
 	private static final String UPDATE =
-			"UPDATE ACT_ORDER SET ACT_NO=?,MB_ID=?,OD_TIME=?,OD_STATUS=?,PPL=?,TOTAL_PRICE=? where ACT_ODNO = ?";
+			"UPDATE ACT_ORDER SET ACT_NO=?,BK_NO=?,OD_TIME=?,OD_STATUS=?,PPL=?,TOTAL_PRICE=? where ACT_ODNO = ?";
 	
 
 	@Override
@@ -46,7 +46,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1,actOrderVO.getActNo());
-			pstmt.setString(2,actOrderVO.getMbId());
+			pstmt.setString(2,actOrderVO.getBkNo());
 			pstmt.setDate(3,actOrderVO.getOdTime());
 			pstmt.setString(4,actOrderVO.getOdStatus());
 			pstmt.setInt(5,actOrderVO.getPpl());
@@ -91,7 +91,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 			
 			
 			pstmt.setString(1,actOrderVO.getActNo());
-			pstmt.setString(2,actOrderVO.getMbId());
+			pstmt.setString(2,actOrderVO.getBkNo());
 			pstmt.setDate(3,actOrderVO.getOdTime());
 			pstmt.setString(4,actOrderVO.getOdStatus());
 			pstmt.setInt(5,actOrderVO.getPpl());
@@ -182,7 +182,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 				
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
-				actOrderVO.setMbId(rs.getString("MB_ID"));
+				actOrderVO.setBkNo(rs.getString("BK_NO"));
 				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));
@@ -235,7 +235,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 				
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
-				actOrderVO.setMbId(rs.getString("MB_ID"));
+				actOrderVO.setBkNo(rs.getString("BK_NO"));
 				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));
@@ -272,7 +272,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 	public static void main(String[] args) {
 		ActOrderJDBCDAO dao = new ActOrderJDBCDAO();
 		
-		//·s¼W
+		//ï¿½sï¿½W
 //		ActOrderVO actOrderVO1 = new ActOrderVO();
 //		actOrderVO1.setActNo("1000000012");
 //		actOrderVO1.setMbId("10");
@@ -283,7 +283,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 //		dao.insert(actOrderVO1);
 		
 		
-		//­×§ï
+		//ï¿½×§ï¿½
 //		ActOrderVO actOrderVO2 = new ActOrderVO();
 //		actOrderVO2.setActOdno("1000000015");
 //		actOrderVO2.setActNo("1000000012");
@@ -294,10 +294,10 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 //		actOrderVO2.setTotalPrice(3000);
 //		dao.update(actOrderVO2);
 //		
-//		// §R°£
+//		// ï¿½Rï¿½ï¿½
 //		dao.delete("1000000015");
 //		
-//		//³æ¶µ¬d¸ß		
+//		//ï¿½æ¶µï¿½dï¿½ï¿½		
 //		ActOrderVO actOrderVO3 = dao.findByPrimaryKey("ACTOD0000000001");
 //		System.out.print(actOrderVO3.getActOdno() + ",");
 //		System.out.print(actOrderVO3.getActNo() + ",");
@@ -308,7 +308,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 //		System.out.print(actOrderVO3.getTotalPrice());
 //		System.out.println("---------------------");
 		
-//		// ¬d¸ß
+//		// ï¿½dï¿½ï¿½
 //		List<ActOrderVO> list = dao.getAll();
 //			for (ActOrderVO actOrderVO : list) {
 //				System.out.print(actOrderVO.getActOdno() + ",");

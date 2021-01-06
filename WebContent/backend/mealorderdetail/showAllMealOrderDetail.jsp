@@ -53,7 +53,7 @@
 						<th scope="col">餐點編號</th>
 						<th scope="col">單價</th>
 						<th scope="col">數量</th>
-						<th scope="col">修改</th>
+<!-- 						<th scope="col">修改</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -64,9 +64,9 @@
 							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.meal_no}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.price}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.qty}</td>
-							<td><input type="hidden" name="meal_odno"
-								value="${mealOrderDetailVO.meal_odno}">
-								<button type="submit" class="update btn btn-info">修改</button></td>
+<!-- 							<td><input type="hidden" name="meal_odno" -->
+<%-- 								value="${mealOrderDetailVO.meal_odno}"> --%>
+<!-- 								<button type="submit" class="update btn btn-info">修改</button></td> -->
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -74,31 +74,31 @@
 
 	<%-- 	<%@ include file="page2.file" %> --%>
 
-	<form class="update-display update-display-div" method="post"
-		action="${pageContext.request.contextPath}/MealOrderDetailServlet">
+<!-- 	<form class="update-display update-display-div" method="post" -->
+<%-- 		action="${pageContext.request.contextPath}/MealOrderDetailServlet"> --%>
 	
-			<div class="close-icon">
-				<i class="fas fa-times icon"></i>
-			</div>
-			<h3>
-				訂單編號：<b id="update-mealodno"></b>
-			</h3>
+<!-- 			<div class="close-icon"> -->
+<!-- 				<i class="fas fa-times icon"></i> -->
+<!-- 			</div> -->
+<!-- 			<h3> -->
+<!-- 				訂單編號：<b id="update-mealodno"></b> -->
+<!-- 			</h3> -->
 
-			<h3>
-				餐點編號：<b id="update-mealno"></b>
-			</h3>
+<!-- 			<h3> -->
+<!-- 				餐點編號：<b id="update-mealno"></b> -->
+<!-- 			</h3> -->
 
-			<label for="update-qty"><p>
-					<b>數量</b>
-				</p> <input type="text" id="update-qty" name="update-qty"
-				placeholder="請輸入數量" required /> </label> <input type="hidden" name="action"
-				value="update_meal_orderdetail"> <input type="hidden"
-				name="update-meal-odno" id="update-mealodno-to-servlet"> <input
-				type="hidden" name="update-meal-no" id="update-mealno-to-servlet">
-			<button type="submit" class="btn btn-success"
-				style="width: 100px; margin: 50px auto; background-color: pink;">更新資料</button>
+<!-- 			<label for="update-qty"><p> -->
+<!-- 					<b>數量</b> -->
+<!-- 				</p> <input type="text" id="update-qty" name="update-qty" -->
+<!-- 				placeholder="請輸入數量" required /> </label> <input type="hidden" name="action" -->
+<!-- 				value="update_meal_orderdetail"> <input type="hidden" -->
+<!-- 				name="update-meal-odno" id="update-mealodno-to-servlet"> <input -->
+<!-- 				type="hidden" name="update-meal-no" id="update-mealno-to-servlet"> -->
+<!-- 			<button type="submit" class="btn btn-success" -->
+<!-- 				style="width: 100px; margin: 50px auto; background-color: pink;">更新資料</button> -->
 	
-	</form>
+<!-- 	</form> -->
 
 	<script>
 		$(".update").click(function() {

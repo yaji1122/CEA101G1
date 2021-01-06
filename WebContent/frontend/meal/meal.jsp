@@ -11,8 +11,8 @@
 	MealTypeVO mealTypeVO = (MealTypeVO) request.getAttribute("mealTypeVO");
 	MealVO mealVO = (MealVO) request.getAttribute("mealVO");
 // 	MembersVO member = (MembersVO)session.getAttribute("member");
-// 	mb_id = member.getMb_id();
-// 	session.setAttribute("mb_id", mb_id);
+// 	bk_no = member.getbk_no();
+// 	session.setAttribute("bk_no", bk_no);
 %>
 
 <!DOCTYPE html>
@@ -341,48 +341,63 @@
 			<div class="shopping-cart-detail">
 				<div class="container">
 				
-					<div class="row" style="height: 300px;">
+					<div class="row" style="height: 330px; overflow-y:scroll;">
 						<%
 							for (int index = 0; index < buylist.size(); index++) {
 									CartItem order = buylist.get(index);
 						%>
-						<div class="col-lg-3">
-							<h4 class="cart-name" style="text-align: center;"><%=order.getItem_name()%></h4>
+						<div class="container" style="height: 80px;">
+						<div class="row" style="height: 80px;">
+						<div class="col-lg-2" style="width: 72px;height: 72px; padding: 0px 25px;">
+						<img style="width: 100%; height: 100%; border-radius: 5px;" src="${pageContext.request.contextPath}/MealServlet?action=view_mealpic&meal_no=<%= order.getItem_no() %>">
+						</div>
+						<div class="col-lg-3" style="margin-top: 20px;">
+							<h5 class="cart-name" style="text-align: center;"><%=order.getItem_name()%></h5>
 							<input type="hidden" name="itemno" value="<%= order.getItem_no() %>" >
 						</div>
-						<div class="col-lg-3">
-							<h4 style="text-align: center;"><%=order.getQuantity()%></h4>
-							<input type="hidden" name="qty" value="<%=order.getQuantity()%>">
+						<div class="col-lg-3" style="margin-top: 20px;">
+							<i class="fas fa-minus-square cart-icon-minus"field="cart-quantity<%= index%>"id="cart-icon-minus<%= index%>"></i> 
+							<input type="text" value=<%=order.getQuantity()%> class="cart-qty"id="cart-qty<%= index%>" name="cart-quantity<%= index%>"style="margin-left:7.5%; border-radius: 5px;" disabled="disabled">
+							<i class="fas fa-plus-square cart-icon-plus"field="cart-quantity<%= index%>"id="cart-icon-plus<%= index%>"></i>
+							
 						</div>
-						<div class="col-lg-3">
-							<h4 id="cart-price<%=index%>" style="text-align: center;"><%=order.getPrice()%></h4>
+						<div class="col-lg-2" style="margin-top: 20px;">
+							<h5 id="show-cartprice<%=index%>" style="text-align: center;"><%=order.getPrice()%></h5>
 							<input type="hidden" name="price" value="<%=order.getPrice()%>">
+							<input type="hidden" id="cart-price<%=index %>" value="<%=order.getPrice()%>">
 						</div>
-						<div class="col-lg-3">
+						<div class="col-lg-2" style="margin-top: 20px;">
 							<form method="post"
 								action="${pageContext.request.contextPath}/AddToCartServlet">
 								<input type="hidden" name="action" value="DELETE"> <input
 									type="hidden" name="del" value="<%=index%>">
 								<button type="submit">
 									<i class="fas fa-trash-alt"
-										style="margin-left: 35px; font-size: 21px"></i>
+										style="margin-left: 10px; font-size: 21px"></i>
 								</button>
 							</form>
 						</div>
-						<%
-							}
-						%>
+						</div>
+						</div>
+						<% } %>
 					</div>
+					
 					<div class="row" style="height: 70px;">
 						<div class="col-lg-12">
 						<form method="post" action="${pageContext.request.contextPath}/MealOrderServlet">
 							<button class="display-button" style="margin: 10px auto;"
 								type="submit">
 								<h5 class="display-button-word">確定送出 $</h5>
-								<h5 id="totalprice" style="margin-top: 10px;"></h5>								
+								<h5 id="totalprice" style="margin-top: 10px;"></h5>	
 							</button>
 							<input type="hidden" name="action" value="insert_meal_order">
 							<input type="hidden" name="amount" id="cart-to-servlet" value=1>
+							<%
+							for (int index = 0; index < buylist.size(); index++) {
+								CartItem order = buylist.get(index);
+							%>
+							<input type="hidden" id="hidden-cartqty<%=index %>" field="hidden-cartqty<%=index %>" name="qty" value="<%=order.getQuantity()%>">
+							<% } %>
 						</form>
 						</div>
 					</div>

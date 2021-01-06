@@ -70,7 +70,7 @@
               <tr class="table-primary">
                 <th>活動訂單編號:</th>
                 <th>活動編號:</th>
-                <th>會員編號:</th>
+                <th>訂房編號:</th>
                 <th>訂單狀態:</th>
                 <th>訂單日期:</th>
                 <th>參加人數:</th>
@@ -84,7 +84,7 @@
               
                    <td>${actOrderVO.actOdno}</td>
 	               <td>${actOrderVO.actNo}</td>
-	               <td>${actOrderVO.mbId}</td>
+	               <td>${actOrderVO.bkNo}</td>
 	               <td>
 	               <c:choose>
 						<c:when test="${actOrderVO.odStatus == 0}">進行中</c:when>

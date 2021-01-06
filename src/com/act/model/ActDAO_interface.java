@@ -10,5 +10,6 @@ public interface ActDAO_interface {
 	public void delete(String actNo);
 	public ActVO findByPrimaryKey(String actNo);
 	public List<ActVO> getAll();
+	public List<ActVO> getAllByActStatus();
 
 }

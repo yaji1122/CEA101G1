@@ -164,8 +164,8 @@ public class ActOrderServlet extends HttpServlet{
 							return;//�{�����_
 						}
 						
-						String mbId = req.getParameter("mbId").trim();
-						if (mbId == null || mbId.trim().length() == 0) {
+						String bkNo = req.getParameter("bkNo").trim();
+						if (bkNo == null || bkNo.trim().length() == 0) {
 							errorMsgs.add("�нT�{���ʽs���榡�O�_���T");
 						} 
 						
@@ -199,7 +199,7 @@ public class ActOrderServlet extends HttpServlet{
 						ActOrderVO actOrderVO = new ActOrderVO();
 						actOrderVO.setActOdno(actOdno);
 						actOrderVO.setActNo(actNo);
-						actOrderVO.setMbId(mbId);
+						actOrderVO.setBkNo(bkNo);
 						actOrderVO.setOdTime(odTime);
 						actOrderVO.setOdStatus(odStatus);
 						actOrderVO.setPpl(Numppl);
@@ -217,7 +217,7 @@ public class ActOrderServlet extends HttpServlet{
 						
 						/***************************2.�}�l�ק���*****************************************/
 						ActOrderService ActOrderSvc = new ActOrderService();
-						actOrderVO = ActOrderSvc.updateActOrder(actOdno, actNo, mbId, odTime, odStatus, Numppl, total_price);
+						actOrderVO = ActOrderSvc.updateActOrder(actOdno, actNo, bkNo, odTime, odStatus, Numppl, total_price);
 						
 						/***************************3.�ק粒��,�ǳ����(Send the Success view)*************/
 						req.setAttribute("actOrderVO", actOrderVO); // ��Ʈwupdate���\��,���T����actOrderVO����,�s�Jreq
@@ -279,8 +279,8 @@ public class ActOrderServlet extends HttpServlet{
 								return;//�{�����_
 							}
 							
-							String mbId = req.getParameter("mbId").trim();
-							if (mbId == null || mbId.trim().length() == 0) {
+							String bkNo = req.getParameter("bkNo").trim();
+							if (bkNo == null || bkNo.trim().length() == 0) {
 								errorMsgs.add("�нT�{���ʽs���榡�O�_���T");
 							} 
 							
@@ -314,7 +314,7 @@ public class ActOrderServlet extends HttpServlet{
 							ActOrderVO actOrderVO = new ActOrderVO();
 							actOrderVO.setActOdno(actOdno);
 							actOrderVO.setActNo(actNo);
-							actOrderVO.setMbId(mbId);
+							actOrderVO.setBkNo(bkNo);
 							actOrderVO.setOdTime(odtime);
 							actOrderVO.setOdStatus(odStatus);
 							actOrderVO.setPpl(Numppl);
@@ -331,7 +331,7 @@ public class ActOrderServlet extends HttpServlet{
 		        			
 		        			/***************************2.�}�l�s�W���***************************************/
 		        			ActOrderService ActOrderSvc = new ActOrderService();
-		        			actOrderVO = ActOrderSvc.addActOrder(actOdno, actNo, mbId, odtime, odStatus, Numppl, total_price);
+		        			actOrderVO = ActOrderSvc.addActOrder(actOdno, actNo, bkNo, odtime, odStatus, Numppl, total_price);
 		        			
 		        			/***************************3.�s�W����,�ǳ����(Send the Success view)***********/
 		        			String url = "/backend/actorder/backend-order_listAll.jsp";
