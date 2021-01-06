@@ -53,7 +53,6 @@ public class MealOrderServlet extends HttpServlet {
 				for(BookingOrderVO list : newList){
 					bk_no = list.getBk_no();
 				}
-				System.out.println(bk_no);
 				
 //			RoomsVO room = (RoomsVO)session().getAttribute("room");
 			String rm_no = req.getParameter("rm_no");
