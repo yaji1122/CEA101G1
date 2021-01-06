@@ -22,20 +22,20 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 	}
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO ACT_ORDER(ACT_ODNO,ACT_NO,MB_ID,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE)"
+			"INSERT INTO ACT_ORDER(ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE)"
 			+ "VALUES('ACTOD' || LPAD(to_char(ACTODNO_SEQ.NEXTVAL), 10, '0') ,? ,? ,? ,? ,? ,?)";
 	
 	private static final String GET_ALL_STMT =
-			"SELECT ACT_ODNO,ACT_NO,MB_ID,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER order By ACT_ODNO";
+			"SELECT ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER order By ACT_ODNO";
 	
 	private static final String GET_ONE_STMT = 
-			"SELECT ACT_ODNO,ACT_NO,MB_ID,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER where ACT_ODNO = ?";
+			"SELECT ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER where ACT_ODNO = ?";
 	
 	private static final String DELETE =
 			"DELETE FROM ACT_ORDER where ACT_ODNO = ?";
 	
 	private static final String UPDATE =
-			"UPDATE ACT_ORDER SET ACT_NO=?,MB_ID=?,OD_TIME=?,OD_STATUS=?,PPL=?,TOTAL_PRICE=? where ACT_ODNO = ?";
+			"UPDATE ACT_ORDER SET ACT_NO=?,BK_NO=?,OD_TIME=?,OD_STATUS=?,PPL=?,TOTAL_PRICE=? where ACT_ODNO = ?";
 	
 	@Override
 	public void insert(ActOrderVO actOrderVO) {
@@ -47,7 +47,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1,actOrderVO.getActNo());
-			pstmt.setString(2,actOrderVO.getMbId());
+			pstmt.setString(2,actOrderVO.getBkNo());
 			pstmt.setDate(3,actOrderVO.getOdTime());
 			pstmt.setString(4,actOrderVO.getOdStatus());
 			pstmt.setInt(5,actOrderVO.getPpl());
@@ -86,7 +86,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1,actOrderVO.getActNo());
-			pstmt.setString(2,actOrderVO.getMbId());
+			pstmt.setString(2,actOrderVO.getBkNo());
 			pstmt.setDate(3,actOrderVO.getOdTime());
 			pstmt.setString(4,actOrderVO.getOdStatus());
 			pstmt.setInt(5,actOrderVO.getPpl());
@@ -169,7 +169,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 				actOrderVO = new ActOrderVO();
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
-				actOrderVO.setMbId(rs.getString("MB_ID"));
+				actOrderVO.setBkNo(rs.getString("BK_NO"));
 				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));
@@ -216,7 +216,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
                 actOrderVO = new ActOrderVO();
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
-				actOrderVO.setMbId(rs.getString("MB_ID"));
+				actOrderVO.setBkNo(rs.getString("BK_NO"));
 				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));

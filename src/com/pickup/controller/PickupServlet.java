@@ -34,12 +34,11 @@ public class PickupServlet extends HttpServlet{
 				String bk_no = req.getParameter("bk_no");
 				String chop_no = req.getParameter("chop_no");
 				String arriveDatetimeStr = req.getParameter("arrive_datetime");
-				DateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 				Timestamp arrive_datetime = new Timestamp(df.parse(arriveDatetimeStr).getTime());
 				PickupService pkupSvc = new PickupService();
-				PickupVO pkupvo = pkupSvc.addPkup(bk_no, chop_no, arrive_datetime);
-				String pkup_no = pkupvo.getPkup_no();
-				out.print(pkup_no);
+				pkupSvc.addPkup(bk_no, chop_no, arrive_datetime);
+				out.print("success");
 			} catch (Exception e) {
 				e.printStackTrace();
 				out.print("fail");
@@ -112,13 +111,13 @@ public class PickupServlet extends HttpServlet{
 			}
 		}
 		
-		if("getAllByBkNo".equals(action)) {
+		if("getOneByBkNo".equals(action)) {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/backend/pickup/pkupInfo.jsp");
 			res.setContentType("text/html; charset=utf-8");
 			try {
 				String bk_no = req.getParameter("bk_no");
 				PickupService pkupSvc = new PickupService();
-				List<PickupVO> pkupList = pkupSvc.getAllByBkNo(bk_no);
+				PickupVO pkupvo = pkupSvc.getOneByBkNo(bk_no);
 				dispatcher.forward(req, res);
 			} catch (Exception e) {
 				e.printStackTrace();

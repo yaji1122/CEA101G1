@@ -79,6 +79,26 @@
 	.main-wrapper{
 		min-width:100%;
 	}
+	#pkupbooking {
+		z-index:-99;
+		opacity:0;
+		position: absolute;
+		left:50%;
+		top:-100%;
+		transform:translate(-50%, -50%);
+		box-shadow: 0px 0px 3px black;
+		transition: 1s ease;
+	}
+	#pkupbooking iframe {
+		width:100vw;
+		height:100vh;
+		border:none;
+	}
+	#pkupbooking.show {
+		z-index: 999;
+		top:50%;
+		opacity:1;
+	}
 </style>
 <body>
 	<!-- preloader -->
@@ -105,18 +125,23 @@
 			<i class="far fa-check-circle"></i>
 			<h2>付款預訂完成</h2>
 			<h3>開始規劃您的假期</h3>
-			<a href="<%=request.getContextPath()%>/frontend/roomrsv/pickup.jsp">預約接送</a>
+			<a id="pkup">預約接送</a>
 			<a href="<%=request.getContextPath()%>/frontend/members/memberBooking.jsp">假期管理</a>
 			<a href="<%=request.getContextPath()%>/frontend/index.jsp">返回首頁</a>
 		</div>
 		
 	</div>
-
+	<div id="pkupbooking">
+		<iframe src="<%=request.getContextPath()%>/frontend/roomrsv/pickup.jsp"></iframe>
+	</div>
 	<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="<%=request.getContextPath()%>/js/front/main.js"></script>
 	<script>
 		$(document).ready(function(){
+			$("#pkup").click(function(){
+				$("#pkupbooking").addClass("show");
+			})
 			$(".banner-pic").animate({height: "100vh"}, 2000, function(){
 				$(".bk-msg").animate({opacity: "1", marginTop: "40px"},1000, function(){
 					$(".bk-msg").animate({marginTop:"30px"}, 200)

@@ -336,7 +336,7 @@ pageContext.setAttribute("infoJson", infoJson);
             		}
         		}
         	%>
-        	var roomLimit = { //得到房型數量，依此限制加入購物車的數量
+        	var roomLimit = { //建立js物件，得到房型數量，依此限制加入購物車的數量
         			<c:forEach var="rsvvo" items="${rsvvoList}">
             		${rsvvo.rm_type}: ${rsvvo.rm_left},
             		</c:forEach>	

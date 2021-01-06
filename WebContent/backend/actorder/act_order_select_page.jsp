@@ -63,11 +63,11 @@
 		<li id="font">
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/actorder/ActOrderServlet">
 				<div class="input-group mb-3">
-					<h5>會員編號:</h5>
+					<h5>訂房編號:</h5>
 					<select class="custom-select" id="inputGroupSelect02"
 						name="actOdno">
 						<c:forEach var="actOrderVO" items="${ActOrderSvc.all}">
-							<option value="${actOrderVO.actOdno}">${actOrderVO.mbId}
+							<option value="${actOrderVO.actOdno}">${actOrderVO.bkNo}
 						</c:forEach>
 					</select> <input type="hidden" name="action" value="getOne_For_Display">
 					<button class="btn btn-outline-secondary" type="submit"

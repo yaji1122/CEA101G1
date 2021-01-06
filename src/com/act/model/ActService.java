@@ -69,6 +69,11 @@ public class ActService {
 		return dao.getAll();
 	}
     
+    public List<ActVO> getAllActByStatus(String ActNo){
+    	
+    	return dao.getAllActStatus(ActNo);
+    	
+    }
 
 
 }

@@ -3,6 +3,8 @@ package com.act.model;
 import java.sql.Date;
 
 public class ActVO implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	private String actNo;
 	private String actEventNo;

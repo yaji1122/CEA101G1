@@ -2,6 +2,8 @@ package com.time_table.model;
 
 public class TimeTableVO implements java.io.Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private Integer serv_period;
 	private String serv_no;
 	private Integer max_serv_ppl;

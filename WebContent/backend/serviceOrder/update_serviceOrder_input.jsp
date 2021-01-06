@@ -44,7 +44,7 @@ max-width:300px;
 		<div class="form-group">
 			<label for="mb_id">會員編號:</label> <input type="text"
 				class="form-control" id="mb_id" name="mb_id"
-				value="<%=serviceOrderVO.getMb_id()%>" required>
+				value="<%=serviceOrderVO.getBk_no()%>" required>
 		</div>
 		<div class="form-group">
 			<label for="od_status">訂單狀態:</label>

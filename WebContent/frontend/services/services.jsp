@@ -61,9 +61,7 @@ pageContext.setAttribute("list", list);
 									<li><a class="nav-event">已預約服務</a>
 										<ul class="dropdown">
 										</ul></li>
-										<li><a href="#" class="nav-event">購物車按鈕</a>
-										
-
+									<li><a href="<%=request.getContextPath()%>/frontend/services/servicesCart.jsp" class="nav-event">購物車</a>
 								</ul>
 							</nav>
 						</div>
@@ -139,8 +137,10 @@ pageContext.setAttribute("list", list);
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
+						<form name="shoppingForm"
+								action="${pageContext.request.contextPath}/ServicesCartServlet"
+								method="POST">
 						<div class="modal-body">
-							<form>
 								<p>請選擇日期:</p>
 								<input name="hiredate" class="f_date1" type="text">
 
@@ -155,7 +155,7 @@ pageContext.setAttribute("list", list);
 								</div>
 
 								<div class="form-group">
-									<label for="exampleFormControlSelect1">服務人數</label> <select
+									<label for="exampleFormControlSelect1">服務人數</label> <select name="quantity"
 										class="form-control" id="exampleFormControlSelect1">
 										<option>1</option>
 										<option>2</option>
@@ -164,7 +164,7 @@ pageContext.setAttribute("list", list);
 									</select>
 								</div>
 								<div class="form-group">
-									<label for="exampleFormControlSelect2">服務場所</label> <select
+									<label for="exampleFormControlSelect2">服務場所</label> <select name="location"
 										class="form-control" id="exampleFormControlSelect2">
 										<option>102客房</option>
 										<option>露天按摩A區</option>
@@ -172,20 +172,27 @@ pageContext.setAttribute("list", list);
 									</select>
 								</div>
 								<p>服務價格:${servicesVO.serv_price}</p>
-							</form>
+								<input type="hidden" name="servicesNo" value="${servicesVO.serv_no}"> 
+								<input type="hidden" name="price" value="${servicesVO.serv_price}"> 
+								<!-- <input type="hidden" name="hiredate" value="2017-03-08T12:30:54">  -->
+								<input type="hidden" name="action" value="ADD">
+									
+							
 
 
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save
-								changes</button>
+								data-dismiss="modal">取消</button>
+							<input type="submit" class="btn btn-primary" value="預約送出">
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</c:forEach>
+		
+		<jsp:include page="servicesCart.jsp" flush="true" />
 	</div>
 
 

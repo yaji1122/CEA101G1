@@ -3,8 +3,9 @@ package com.service_order.model;
 import java.sql.Timestamp;
 
 public class ServiceOrderVO implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private String serv_odno;
-	private String mb_id;
+	private String bk_no;
 	private Timestamp od_time;
 	private String od_status;
 	private String rm_no;
@@ -21,12 +22,12 @@ public class ServiceOrderVO implements java.io.Serializable {
 		this.serv_odno = serv_odno;
 	}
 
-	public String getMb_id() {
-		return mb_id;
+	public String getBk_no() {
+		return bk_no;
 	}
 
-	public void setMb_id(String mb_id) {
-		this.mb_id = mb_id;
+	public void setBk_no(String bk_no) {
+		this.bk_no = bk_no;
 	}
 
 	public Timestamp getOd_time() {

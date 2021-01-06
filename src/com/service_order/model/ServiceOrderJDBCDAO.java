@@ -37,7 +37,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, serviceOrderVO.getMb_id());
+			pstmt.setString(1, serviceOrderVO.getBk_no());
 			pstmt.setString(2, serviceOrderVO.getOd_status());
 			pstmt.setString(3, serviceOrderVO.getRm_no());
 			pstmt.setString(4, serviceOrderVO.getServ_no());
@@ -88,7 +88,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(8, serviceOrderVO.getServ_odno());
-			pstmt.setString(1, serviceOrderVO.getMb_id());
+			pstmt.setString(1, serviceOrderVO.getBk_no());
 //			pstmt.setTimestamp(2, serviceOrderVO.getOd_time());
 			pstmt.setString(2, serviceOrderVO.getOd_status());
 			pstmt.setString(3, serviceOrderVO.getRm_no());
@@ -191,7 +191,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 				// serviceOrderVO 也稱為 Domain objects
 				serviceOrderVO = new ServiceOrderVO();
 				serviceOrderVO.setServ_odno(rs.getString("serv_odno"));
-				serviceOrderVO.setMb_id(rs.getString("mb_id"));
+				serviceOrderVO.setBk_no(rs.getString("bk_no"));
 				serviceOrderVO.setOd_time(rs.getTimestamp("od_time"));
 				serviceOrderVO.setOd_status(rs.getString("od_status"));
 				serviceOrderVO.setRm_no(rs.getString("rm_no"));
@@ -256,7 +256,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 				// serviceOrderVO 也稱為 Domain objects
 				serviceOrderVO = new ServiceOrderVO();
 				serviceOrderVO.setServ_odno(rs.getString("serv_odno"));
-				serviceOrderVO.setMb_id(rs.getString("mb_id"));
+				serviceOrderVO.setBk_no(rs.getString("bk_no"));
 				serviceOrderVO.setOd_time(rs.getTimestamp("od_time"));
 				serviceOrderVO.setOd_status(rs.getString("od_status"));
 				serviceOrderVO.setRm_no(rs.getString("rm_no"));
@@ -307,7 +307,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 
 		// 新增
 //		ServiceOrderVO serv1 = new ServiceOrderVO();
-//		serv1.setMb_id("MEM0000010");
+//		serv1.setBk_no("MEM0000010");
 //		serv1.setOd_status("0");
 //		serv1.setRm_no("101");
 //		serv1.setServ_no("001");
@@ -319,7 +319,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 		// 修改
 //		ServiceOrderVO serv2 = new ServiceOrderVO();
 //		serv2.setServ_odno("SERV000005");
-//		serv2.setMb_id("MEM0000003");
+//		serv2.setBk_no("MEM0000003");
 //		serv2.setOd_status("1");
 //		serv2.setRm_no("102");
 //		serv2.setServ_no("002");
@@ -334,7 +334,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 		// 查詢
 //		ServiceOrderVO serv3 = dao.findByPrimaryKey("SERV000005");
 //		System.out.print(serv3.getServ_odno() + ",");
-//		System.out.print(serv3.getMb_id() + ",");
+//		System.out.print(serv3.getBk_no() + ",");
 //		System.out.print(serv3.getOd_time() + ",");
 //		System.out.print(serv3.getOd_status() + ",");
 //		System.out.print(serv3.getRm_no() + ",");
@@ -348,7 +348,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 //		List<ServiceOrderVO> list = dao.getAll();
 //		for (ServiceOrderVO serv : list) {
 //			System.out.print(serv.getServ_odno() + ",");
-//			System.out.print(serv.getMb_id() + ",");
+//			System.out.print(serv.getBk_no() + ",");
 //			System.out.print(serv.getOd_time() + ",");
 //			System.out.print(serv.getOd_status() + ",");
 //			System.out.print(serv.getRm_no() + ",");

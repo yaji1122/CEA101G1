@@ -1,6 +1,7 @@
 package com.services.model;
 
 public class ServicesVO implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private String serv_no;
 	private String serv_type_no;
 	private String serv_status;

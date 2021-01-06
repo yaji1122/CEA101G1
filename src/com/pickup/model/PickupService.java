@@ -1,6 +1,5 @@
 package com.pickup.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class PickupService {
 		return dao.getOneByPkupNo(pkup_no);
 	}
 	
-	public List<PickupVO> getAllByBkNo(String bk_no) {
-		return dao.getAllByBkNo(bk_no);
+	public PickupVO getOneByBkNo(String bk_no) {
+		return dao.getOneByBkNo(bk_no);
 	}
 }

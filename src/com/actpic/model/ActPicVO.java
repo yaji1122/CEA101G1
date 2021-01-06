@@ -3,6 +3,8 @@ import java.sql.Date;
 
 public class ActPicVO implements java.io.Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private String actPicNo;
 	private String actEventNo;
 	private byte[] actPic;

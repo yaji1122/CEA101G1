@@ -134,14 +134,11 @@ table.bookingOrderTable a.cancel i {
 							href="<%=request.getContextPath()%>/MembersServlet?mb_id=${bkodvo.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${bkodvo.mb_id}</a><br>
 							${mbSvc.getOneByMbId(bkodvo.mb_id).mb_name}</td>
 						<td><c:choose>
-								<c:when test="${pkupSvc.getAllByBkNo(bkodvo.bk_no).size() == 0}">
+							<c:when test="${pkupSvc.getOneByBkNo(bkodvo.bk_no) == null}">
 							無預約
 							</c:when>
 								<c:otherwise>
-									<a class="booking-detail pkup"
-										href="<%=request.getContextPath()%>/PickupServlet?bk_no=${bkodvo.bk_no}&action=getAllByBkNo">
-										<i class="fas fa-search-plus"></i>
-									</a>
+								<fmt:formatDate value="${pkupSvc.getOneByBkNo(bkodvo.bk_no).arrive_datetime}" type = "both" dateStyle = "medium" timeStyle = "short"/>
 								</c:otherwise>
 							</c:choose></td>
 						<td>入住：${bkodvo.dateIn}<br>退房：${bkodvo.dateOut}

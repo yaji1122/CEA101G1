@@ -4,6 +4,9 @@ import java.sql.Date;
 
 
 public class ActEventVO implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String actEventNo;
 	private String actTypeNo;
 	private String actEventName;

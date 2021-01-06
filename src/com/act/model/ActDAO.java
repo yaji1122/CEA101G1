@@ -42,10 +42,10 @@ public class ActDAO implements ActDAO_interface{
 			"UPDATE ACT set ACT_EVENT_NO=?,ACT_NAME=?,ACT_STATUS=?,ACT_REG_TIME=?,ACT_DATE=?,"
 			+ "DEADLINE=?,ACT_TIME=?,PARTICIPANT=?,ACT_PRICE=? where ACT_NO=?";
 
-	private static final String GET_ALL_BY_STATUS =
+	private static final String GET_ALL_BY_ACT_STATUS =
 			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_REG_TIME,'yyyy-mm-dd')ACT_REG_TIME,"
 			+ "TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,TO_CHAR(DEADLINE,'yyyy-mm-dd')DEADLINE,ACT_TIME," + 
-			"PARTICIPANT,ACT_PRICE FROM ACT order By ACT_STATUS";
+			"ACT_PRICE FROM ACT order WHERE ACT_STATUS <> '0' ";
 	
 	@Override
 	public void insert(ActVO actVO) {
@@ -300,5 +300,71 @@ public class ActDAO implements ActDAO_interface{
 	}
 	return list;
   }
+	public List<ActVO> getAllActStatus(String actNo) {
+		List<ActVO> list = new ArrayList<ActVO>();
+		ActVO actVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_BY_ACT_STATUS);
+			pstmt.setString(1, actNo);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				actVO = new ActVO();
+				actVO.setActNo(rs.getString("ACT_NO"));
+				actVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
+				actVO.setActName(rs.getString("ACT_NAME"));
+				actVO.setActStatus(rs.getString("ACT_STATUS"));
+				actVO.setActRegTime(rs.getDate("ACT_REG_TIME"));
+				actVO.setActDate(rs.getDate("ACT_DATE"));
+				actVO.setDeadLine(rs.getDate("DEADLINE"));
+				actVO.setActTime(rs.getString("ACT_TIME"));
+				actVO.setActPrice(rs.getInt("ACT_PRICE"));
+				list.add(actVO);
+			}
+		
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	  }
+
+	@Override
+	public List<ActVO> getAllByActStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 

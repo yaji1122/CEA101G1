@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 public class MealOrderVO implements Serializable {
 	private static final long serialVersionUID = 1L;	
 	private String meal_odno;
-	private String mb_id;
+	private String bk_no;
 	private String rm_no;
 	private Timestamp od_time;
 	private Integer total_price;
@@ -20,11 +20,12 @@ public class MealOrderVO implements Serializable {
 	public void setMeal_odno(String meal_odno) {
 		this.meal_odno = meal_odno;
 	}
-	public String getMb_id() {
-		return mb_id;
+
+	public String getBk_no() {
+		return bk_no;
 	}
-	public void setMb_id(String mb_id) {
-		this.mb_id = mb_id;
+	public void setBk_no(String bk_no) {
+		this.bk_no = bk_no;
 	}
 	public String getRm_no() {
 		return rm_no;

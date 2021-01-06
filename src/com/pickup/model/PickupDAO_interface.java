@@ -9,7 +9,7 @@ public interface PickupDAO_interface {
 	public void delete(String pkup_no);
 	public List<PickupVO> getAll();
 	public List<PickupVO> getAllByPkupStatus(String pkup_status);
-	public List<PickupVO> getAllByBkNo(String bk_no);
+	public PickupVO getOneByBkNo(String bk_no);
 	public PickupVO getOneByPkupNo(String pkup_no);
 	
 	
