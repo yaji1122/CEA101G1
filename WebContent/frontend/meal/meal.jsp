@@ -14,6 +14,7 @@
 	MealTypeVO mealTypeVO = (MealTypeVO) request.getAttribute("mealTypeVO");
 	MealVO mealVO = (MealVO) request.getAttribute("mealVO");
 	RoomsVO roomsVO = (RoomsVO) request.getAttribute("rooms");
+
 %>
 
 <!DOCTYPE html>

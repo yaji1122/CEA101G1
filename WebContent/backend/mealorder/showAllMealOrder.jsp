@@ -49,6 +49,7 @@
 	<!-- 		</ul> -->
 	<%-- 	</c:if> --%>
 
+
 	<c:choose>
 		<c:when test="${mealOrderList.size() > 0}">
 			<table id="myTable" class="table tablesorter">

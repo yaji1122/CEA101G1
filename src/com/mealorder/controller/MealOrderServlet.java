@@ -53,6 +53,7 @@ public class MealOrderServlet extends HttpServlet {
 				for(BookingOrderVO list : newList){
 					bk_no = list.getBk_no();
 				}
+
 				
 			String rm_no = req.getParameter("rm_no");
 			Integer total_price = new Integer(req.getParameter("amount"));
