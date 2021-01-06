@@ -54,7 +54,6 @@ public class MealOrderServlet extends HttpServlet {
 					bk_no = list.getBk_no();
 				}
 				
-//			RoomsVO room = (RoomsVO)session().getAttribute("room");
 			String rm_no = req.getParameter("rm_no");
 			Integer total_price = new Integer(req.getParameter("amount"));
 			
