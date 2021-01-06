@@ -262,7 +262,7 @@
 									items="${item_picsSvc.getAllPics(itemVO.item_no)}">
 									<div class="itempic">
 										<a href="<%=request.getContextPath()%>/frontend/shop/shopItemDetail.jsp?item_no=${itemVO.item_no}">
-											<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"/> 
+											<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?action=getOne_Pic_Display&item_pic_no=${item_picsVO.item_pic_no}"/> 
 										</a>
 									</div>
 								</c:forEach>

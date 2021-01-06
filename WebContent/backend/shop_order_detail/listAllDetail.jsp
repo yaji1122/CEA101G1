@@ -42,7 +42,7 @@
 }
 
 table {
-	width: 1100px;
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -64,15 +64,15 @@ th, td {
 	text-align: center;
 }
 </style>
-
+<%@ include file="/backend/files/backend_header.file" %>
 </head>
 <body bgcolor='white'>
-
+<%@ include file="/backend/files/backend_sidebar.file" %>
 	<div id="title">
 
 		<div class="titleAll">商品資料</div>
 		<div>
-			<a href="<%=request.getContextPath()%>/backend/item/select_item.jsp"
+			<a href="<%=request.getContextPath()%>/backend/shop_order/select_shop_order.jsp"
 				class="home">回商品管理</a>
 		</div>
 
@@ -92,8 +92,10 @@ th, td {
 		<jsp:useBean id="itemSvc" scope="page"
 			class="com.item.model.ItemService" />
 
-
-		<c:forEach var="shop_order_detailVO" items="${list}">
+		<%@ include file="/backend/files/page1.file"%>
+			
+		<c:forEach var="shop_order_detailVO" items="${list}" begin="<%=pageIndex%>"
+			end="<%=pageIndex+rowsPerPage-1%>">
 
 			<tr>
 				<td>${shop_order_detailVO.sp_odno}</td>
@@ -117,6 +119,9 @@ th, td {
 			</tr>
 		</c:forEach>
 	</table>
-
+	<h5 class="footer">	
+			<%@ include file="/backend/files/page2.file"%>
+	</h5>
+	<%@ include file="/backend/files/backend_footer.file" %>
 </body>
 </html>

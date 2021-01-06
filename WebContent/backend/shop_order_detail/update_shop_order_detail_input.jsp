@@ -76,10 +76,10 @@ th, td {
 	float: left;
 }
 </style>
-
+<%@ include file="/backend/files/backend_header.file" %>
 </head>
 <body bgcolor='white'>
-
+<%@ include file="/backend/files/backend_sidebar.file" %>
 	<div id="title">
 
 		<div class="titleAll">修改商品資料</div>
@@ -133,5 +133,6 @@ th, td {
 		<input type="submit" value="送出修改" class="inputItem">
 	</FORM>
 	<script src="${pageContext.request.contextPath}/js/backShopItem.js"></script>
+	<%@ include file="/backend/files/backend_footer.file" %>
 </body>
 </html>
