@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%  
-pageContext.setAttribute("templname", request.getParameter("temp-lname"));
+<%
+	pageContext.setAttribute("templname", request.getParameter("temp-lname"));
 pageContext.setAttribute("tempfname", request.getParameter("temp-fname"));
 pageContext.setAttribute("tempemail", request.getParameter("temp-email"));
-pageContext.setAttribute("temppassword",request.getParameter("temp-password"));
-pageContext.setAttribute("tempconfirmpassword",request.getParameter("temp-confirm-password"));
+pageContext.setAttribute("temppassword", request.getParameter("temp-password"));
+pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confirm-password"));
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
 <title>Diamond Resort Registration</title>
-<%@ include file="/frontend/files/commonCSS.file" %>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+<%@ include file="/frontend/files/commonCSS.file"%>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+	integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+	crossorigin="anonymous" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/intlTelInput.min.css"
 	type="text/css" />
@@ -82,22 +85,23 @@ pageContext.setAttribute("tempconfirmpassword",request.getParameter("temp-confir
 										maxlength="50" required /> <label class="fieldlabels">密碼(Password):
 										英文大小寫至少一個，最少8碼<b>*</b>
 									</label> <input type="password" id="mb_pwd" name="mb_pwd"
-										placeholder="Password" minlength="8" pattern="[a-zA-Z0-9]{8,}" value="${temppassword}"
-										required /> <label class="fieldlabels confirm_laebl">確認密碼(Confirm
+										placeholder="Password" minlength="8" pattern="[a-zA-Z0-9]{8,}"
+										value="${temppassword}" required /> <label
+										class="fieldlabels confirm_laebl">確認密碼(Confirm
 										Password): <b>*</b>
 									</label> <input type="password" id="mb_cpwd" name="mb_cpwd"
-										placeholder="Confirm Password" value="${tempconfirmpassword}" required /> <label
-										class="fieldlabels">帳戶名稱(Acccount name): <b>*</b></label> <input
-										type="text" id="mb_acc" name="mb_acc"
-										placeholder="Account name" maxlength="20" required /> <label
-										class="fieldlabels">姓(Last Name): <b>*</b></label> <input
-										type="text" id="mb_lname" name="mb_lname" value="${templname}"
-										placeholder="First Name" maxlength="20" required /> <label
-										class="fieldlabels">名(First Name): <b>*</b></label> <input
-										type="text" id="mb_fname" name="mb_fname" value="${tempfname}"
-										placeholder="Last Name" maxlength="50" required /> <label
-										class="fieldlabels">出生日期(Birthday): <b>*</b></label> <input
-										type="text" id="mb_bd" name="mb_bd"
+										placeholder="Confirm Password" value="${tempconfirmpassword}"
+										required /> <label class="fieldlabels">姓(Last Name):
+										<b>*</b>
+									</label> <input type="text" id="mb_lname" name="mb_lname"
+										value="${templname}" placeholder="First Name" maxlength="20"
+										required /> <label class="fieldlabels">名(First Name):
+										<b>*</b>
+									</label> <input type="text" id="mb_fname" name="mb_fname"
+										value="${tempfname}" placeholder="Last Name" maxlength="50"
+										required /> <label class="fieldlabels">出生日期(Birthday):
+										<b>*</b>
+									</label> <input type="text" id="mb_bd" name="mb_bd"
 										placeholder="Date of Birth" required /> <label
 										class="fieldlabels">聯絡電話(Contact No.): <b>*</b></label> <input
 										type="tel" id="mb_phone" name="mb_phone"
@@ -312,14 +316,12 @@ pageContext.setAttribute("tempconfirmpassword",request.getParameter("temp-confir
 										<div class="form-container">
 											<div class="field-container">
 												<label for="name">姓名(Name)</label> <input id="name"
-													maxlength="20" type="text" name="credit-card-name"
-													 required />
+													maxlength="20" type="text" name="credit-card-name" required />
 											</div>
 											<div class="field-container">
 												<label for="cardnumber">信用卡號(Card Number)</label><span
 													id="generatecard"></span> <input id="cardnumber"
-													type="text" name="cardnumber" 
-													inputmode="numeric" required />
+													type="text" name="cardnumber" inputmode="numeric" required />
 												<svg id="ccicon" class="ccicon" width="750" height="471"
 													viewBox="0 0 750 471" version="1.1"
 													xmlns="http://www.w3.org/2000/svg"
@@ -332,8 +334,8 @@ pageContext.setAttribute("tempconfirmpassword",request.getParameter("temp-confir
 											</div>
 											<div class="field-container">
 												<label for="securitycode">安全碼(Security Code)</label> <input
-													id="securitycode" type="text" name="csc"
-													maxlength="3" inputmode="numeric" required />
+													id="securitycode" type="text" name="csc" maxlength="3"
+													inputmode="numeric" required />
 											</div>
 										</div>
 									</div>
@@ -356,7 +358,7 @@ pageContext.setAttribute("tempconfirmpassword",request.getParameter("temp-confir
 									<br />
 									<div class="row justify-content-center">
 										<div class="col-12">
-											<img src="${pageContext.request.contextPath}/images/good.jpg"/>
+											<img src="${pageContext.request.contextPath}/images/good.jpg" />
 										</div>
 									</div>
 									<div class="row justify-content-center">
@@ -373,12 +375,13 @@ pageContext.setAttribute("tempconfirmpassword",request.getParameter("temp-confir
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
-	<%@ include file="/frontend/files/commonJS.file" %>
+	<%@ include file="/frontend/files/commonJS.file"%>
 	<script
 		src="${pageContext.request.contextPath}/js/intlTelInput-jquery.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/front/registration.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/js/front/registration.js"></script>
 	<script>
 	//Ajax
 	let regisForm = document.querySelector("#msform");

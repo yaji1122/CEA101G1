@@ -141,6 +141,7 @@
     </style>
     <body>
     <jsp:useBean id="chopSvc" scope="page" class="com.choppers.model.ChoppersService"></jsp:useBean>
+     <jsp:useBean id="pkupSvc" scope="page" class="com.pickup.model.PickupService"></jsp:useBean>
         <div class="main">
             <h4 class="title"><i class="fas fa-helicopter"></i>機場快綫</h4>
             <div class="intro">
@@ -154,7 +155,15 @@
             <select id="bkno">
             	<option disabled selected>選擇訂單</option>
             	<c:forEach var="bkod" items="${uncheckedList}">
-            	<option value="${bkod.bk_no}:${bkod.dateIn}">訂單編號${bkod.bk_no}:入住日期${bkod.dateIn}</option>
+            	<c:choose>
+            		<c:when test="${pkupSvc.getOneByBkNo(bkod.bk_no) != null}">
+            		<option disabled>訂單編號${bkod.bk_no}:入住日期${bkod.dateIn}(已預約)</option>
+            		</c:when>
+            		<c:otherwise>
+            		<option value="${bkod.bk_no}:${bkod.dateIn}">訂單編號${bkod.bk_no}:入住日期${bkod.dateIn}</option>
+            		</c:otherwise>
+            	</c:choose>
+            	
             	</c:forEach>
             </select>
             <h4>接送預約時間</h4>
@@ -233,8 +242,12 @@
                 					position:"center",
                 					icon:"success",
                 					showConfirmButton:false,
+                					timer:1000,
                 					title:"預約成功"
                 				})
+                				setTimeout(function(){
+                					window.parent.document.getElementById('pkupbooking').classList.remove("show");
+                				}, 1000)
             				}
             			}
             		})
