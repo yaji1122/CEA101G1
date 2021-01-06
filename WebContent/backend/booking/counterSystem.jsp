@@ -312,7 +312,7 @@ pageContext.setAttribute("checkeds", checkeds);
 	                            position: "center",
 	                            title: "辦理入住成功",
 	                            icon: "success",
-	                            confirmButton: false,
+	                            showConfirmButton: false,
 	                        });
 	                        setTimeout(function () {
 	                            window.location.reload();
@@ -353,7 +353,7 @@ pageContext.setAttribute("checkeds", checkeds);
 	                        position: "center",
 	                        title: "退房完成",
 	                        icon: "success",
-	                        confirmButton: false,
+	                        showConfirmButton: false,
 	                    });
 	                    setTimeout(function () {
 	                        window.location.reload();

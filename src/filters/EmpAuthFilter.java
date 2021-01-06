@@ -59,7 +59,6 @@ public class EmpAuthFilter implements Filter {
 		maps.put("10", new String[] {"serviceOrder"});
 		maps.put("11", new String[] {"meal","mealtype"});
 		maps.put("12", new String[] {"mealorder","mealordertail"});
-		
 		EmpVO emp = (EmpVO)req.getSession().getAttribute("empVO");
 		AuthService authSvc = new AuthService();
 		List<AuthVO> authList = authSvc.getAllByEmp(emp.getEmp_id());
@@ -75,9 +74,11 @@ public class EmpAuthFilter implements Filter {
 				}
 			}
 		}
+		
 		if (pass) {
 			chain.doFilter(request, response);
 		} else {
+			req.getSession().setAttribute("authErrorMsg", "權限不足");
 			res.sendRedirect(req.getContextPath()+"/backend/backend_index.jsp");
 		}
 	}
