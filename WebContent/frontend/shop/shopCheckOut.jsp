@@ -7,7 +7,7 @@
 <%@ page import="com.shoppingCart.model.*"%>
 <jsp:useBean id="item_picsSvc" scope="page" class="com.item_pics.model.Item_picsService" />
 <jsp:useBean id="itemSvc" scope="page" class="com.item.model.ItemService" />
-
+<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +36,7 @@
 			mb_id = member.getMb_id();
 			System.out.println("mb_id = " + mb_id);
 			session.setAttribute("mb_id", mb_id);
+			
 		} else {
 			
 		}
@@ -212,19 +213,6 @@
 						<div>
 							<h1>結帳前確認 Check</h1>
 						</div>
-<!-- 						<table class="tabletitle"> -->
-<!-- 							<tr> -->
-<!-- 								<th></th> -->
-<!-- 								<th class="imgframe"></th> -->
-<!-- 								<th>編號</th> -->
-<!-- 								<th>名稱</th> -->
-<!-- 								<th>價格</th> -->
-<!-- 								<th>數量</th> -->
-<!-- 								<th>積分</th> -->
-<!-- 								<th>總積分</th> -->
-<!-- 								<th>總額</th> -->
-<!-- 							</tr> -->
-<!-- 						</table> -->
 						<% for (int i = 0; i < buylist.size(); i++) {
 							ItemVO order = buylist.get(i);
 						%>
@@ -249,8 +237,13 @@
 							</tr>
 							<tr>
 								<td colspan="4">
+								<td>使用積分</td>
+								<td><input type="number" id="pointUsed" max="<%=member.getMb_point()%>" min="0"></td>	
+							</tr>
+							<tr>
+								<td colspan="4">
 								<td>總金額</td>
-								<td><span>$ </span><%=amount %></td>
+								<td><span>$</span><span id="priceAfPo"> <%=amount %></span></td>
 							</tr>
 						</table>
 						<br>
@@ -259,7 +252,7 @@
 							<input type="hidden" name="action" value="insertWithOrder_details"> 
 <%-- 							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
 							<input type="hidden" name="mb_id" value="${member.mb_id}">
-							<input type="hidden" name="total_price" value="<%=amount%>">
+							<input type="hidden" name="total_price" id="sendPri"value="<%=amount%>">
 							<input type="hidden" name="points_total" value="<%=poamount%>">  
 							<input type="submit" value="確定購買" class="paybtn">
 						</form>
@@ -271,5 +264,19 @@
 	<%@ include file="/frontend/files/commonJS.file" %>
 		<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
+	<script>
+	$("#pointUsed").change(function(){
+		var oraPri = <%=amount %>;
+		var poiUs = $("#pointUsed").val();
+		console.log(oraPri - poiUs);
+		console.log(poiUs);
+		$("#priceAfPo").html(oraPri - poiUs);
+		$("#sendPri").val(oraPri - poiUs);
+	});
+	
+	
+	</script>
+	
+	
 </body>
 </html>

@@ -262,20 +262,20 @@ public class CartDAO implements CartDAO_interface {
 		CartDAO dao = new CartDAO();
 
 		// 新增
-		ItemVO itemVO = new ItemVO();
-		itemVO.setItem_no("I0007");
-		itemVO.setQuantity(61);	
-		MembersVO membersVO = new MembersVO();
-		membersVO.setMb_id("MEM0000001");
-		dao.insert(membersVO, itemVO);
+//		ItemVO itemVO = new ItemVO();
+//		itemVO.setItem_no("I0007");
+//		itemVO.setQuantity(61);	
+//		MembersVO membersVO = new MembersVO();
+//		membersVO.setMb_id("MEM0000001");
+//		dao.insert(membersVO, itemVO);
 
 		// 增加
-		ItemVO itemVO2 = new ItemVO();
-		itemVO2.setItem_no("I0012");
-		itemVO2.setQuantity(20);	
-		MembersVO membersVO2 = new MembersVO();
-		membersVO2.setMb_id("MEM0000002");
-		dao.update(membersVO2, itemVO2);
+//		ItemVO itemVO2 = new ItemVO();
+//		itemVO2.setItem_no("I0012");
+//		itemVO2.setQuantity(20);	
+//		MembersVO membersVO2 = new MembersVO();
+//		membersVO2.setMb_id("MEM0000002");
+//		dao.update(membersVO2, itemVO2);
 
 		//刪除
 //		ItemVO itemVO3 = new ItemVO();
@@ -287,7 +287,7 @@ public class CartDAO implements CartDAO_interface {
 		
 		//查詢
 		
-		System.out.println(dao.getAllItem_noByMb_id("MEM0000001"));
-		System.out.println(dao.getValueByItem_no("MEM0000001","I0001"));		
+//		System.out.println(dao.getAllItem_noByMb_id("MEM0000001"));
+//		System.out.println(dao.getValueByItem_no("MEM0000001","I0001"));		
 	}
 }

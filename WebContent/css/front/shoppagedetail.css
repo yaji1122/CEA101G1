@@ -131,6 +131,8 @@
     position: fixed;
     top: 60px;
     background-color: white;
+    z-index: 11;
+    
 }
 .hideUp .itemtypeheader {
     top: 0;
