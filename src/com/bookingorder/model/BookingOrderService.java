@@ -59,6 +59,10 @@ public class BookingOrderService {
 		return dao.getAllByDateIn(dateIn);
 	}
 	
+	public List<BookingOrderVO> getAllBeforeToday(LocalDate today){
+		return dao.getAllBeforeToday(today);
+	}
+	
 	public List<BookingOrderVO> getAllByDateOut(LocalDate dateOut){
 		return dao.getAllByDateOut(dateOut);
 	}

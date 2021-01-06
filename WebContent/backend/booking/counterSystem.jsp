@@ -11,10 +11,7 @@
 <%
 BookingOrderService bkodSvc = new BookingOrderService();
 LocalDate today = LocalDate.now();
-List<BookingOrderVO> checkIns = bkodSvc.getAllByDateIn(today).stream() //取得當天尚未CheckIn的訂單
-								.filter(e -> e.getBk_status().equals(BKSTATUS.PAID))
-								.collect(Collectors.toList());
-
+List<BookingOrderVO> checkIns = bkodSvc.getAllBeforeToday(today);
 List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today); //取得當天尚未CheckOut的訂單
 List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 pageContext.setAttribute("checkIns", checkIns);
@@ -30,6 +27,8 @@ pageContext.setAttribute("checkeds", checkeds);
 	class="com.roomtype.model.RoomTypeService" />
 <jsp:useBean id="rmSvc" scope="page"
 	class="com.rooms.model.RoomsService" />
+<jsp:useBean id="pkupSvc" scope="page"
+ 	class="com.pickup.model.PickupService"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,15 +56,15 @@ pageContext.setAttribute("checkeds", checkeds);
 	<div class="wrapper">
 		<div class="header">
 			<div>
-				<h4>CALENDAR DATE</h4> <h3><%=LocalDate.now()%></h3>
+				<h3><%=LocalDate.now()%></h3>
 			</div>
 			<div>
-				<h4>TODAY CHECK IN</h4>
-				<h3>${checkIns.size()}</h3>
+				<h4>今日待入住訂單</h4>
+				<h3>${checkIns.size()} 筆</h3>
 			</div>
 			<div>
-				<h4>TODAY CHECK OUT</h4>
-				<h3>${checkOuts.size()}</h3>
+				<h4>今日待退房訂單</h4>
+				<h3>${checkOuts.size()} 筆</h3>
 			</div>
 			<% 
 				List<BookingOrderVO> list = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
@@ -78,8 +77,8 @@ pageContext.setAttribute("checkeds", checkeds);
 				}
 			%>
 			<div>
-				<h4>CURRENT GUESTS</h4>
-				<h3><%=totalGuest%></h3>
+				<h4>當前度假村人數</h4>
+				<h3><%=totalGuest%> 人</h3>
 			</div>
 		</div>
 		<div class="main">
@@ -91,9 +90,9 @@ pageContext.setAttribute("checkeds", checkeds);
 					<tr class="table-head">
 						<th>訂單編號</th>
 						<th>入住會員</th>
-						<th>入住日期</th>
-						<th>退房日期</th>
-						<th>辦理狀態</th>
+						<th>預約入住日</th>
+						<th>預計退房日</th>
+						<th>接送狀況</th>
 						<th>辦理入住</th>
 					</tr>
 					<c:if test="${checkIns.size()==0}">
@@ -106,20 +105,22 @@ pageContext.setAttribute("checkeds", checkeds);
 						<tr class="list-data">
 							<td><i class="fas fa-receipt"></i>${checkIn.bk_no}</td>
 							<td>
-								<i class="far fa-user member-icon"></i>
 								<a class="booking-detail member"
 								href="<%=request.getContextPath()%>/MembersServlet?mb_id=${checkIn.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${checkIn.mb_id}</a><br>
-								${mbSvc.getOneByMbId(checkIn.mb_id).mb_name}
+								<i class="far fa-user member-icon"></i>${mbSvc.getOneByMbId(checkIn.mb_id).mb_name}
 							</td>
 							<td>${checkIn.dateIn}</td>
 							<td>${checkIn.dateOut}</td>
 							<td>
 							<c:choose>
-								<c:when test="${checkIn.bk_status == 1}">
-									未入住
+								<c:when test="${pkupSvc.getOneByBkNo(checkIn.bk_no) == null}">
+									無預約
+								</c:when>
+								<c:when test="${pkupSvc.getOneByBkNo(checkIn.bk_no).pkup_status == 0}">
+									未抵達
 								</c:when>
 								<c:otherwise>
-									已入住
+									已抵達
 								</c:otherwise>
 							</c:choose>
 							</td>
@@ -128,11 +129,10 @@ pageContext.setAttribute("checkeds", checkeds);
 						<c:if test="${checkIn.bk_status == 1}">
 						<tr>
 							<td class="room-check-in" colspan="7">
+							<% int i = 1; %>
 							<c:forEach var="room" items="${bkdetailSvc.getAllByBkNo(checkIn.bk_no)}">
-								<% int i = 1; %>
 								<div class="room-info">
-									<h5>房間 <%= i++ %><span class="rmtype" data-rmtype="${room.rm_type}">${rmtypeSvc.getOne(room.rm_type).type_name}</span></h5>
-									<span>房客數：${room.rm_guest} 人</span>
+									<h4>房間 <%= i++ %><span class="rmtype" data-rmtype="${room.rm_type}">${rmtypeSvc.getOne(room.rm_type).type_name}</span><span>入住人數：${room.rm_guest} 人</span></h4>
 								</div>
 								<div class="checkin-option">
 									<h4>選擇房號</h4>
@@ -144,7 +144,7 @@ pageContext.setAttribute("checkeds", checkeds);
 									</c:forEach>
 								</div>
 							</c:forEach>
-							<h2 class="price-to-pay">未結餘款：USD\$${checkIn.total_price * 0.7}</h2>
+							<h5 class="price-to-pay">未結餘款：USD\$${checkIn.total_price * 0.7}-</h5>
 							<button class="checkin-confirm" data-mbid="${checkIn.mb_id}" data-bkno="${checkIn.bk_no}">CONFIRM</button>
 							</td>
 						<tr>
@@ -171,7 +171,7 @@ pageContext.setAttribute("checkeds", checkeds);
 					</c:if>
 					<c:forEach var="checkOut" items="${checkOuts}">
 						<tr class="list-data">
-							<td>${checkOut.bk_no}</td>
+							<td><i class="fas fa-receipt"></i>${checkOut.bk_no}</td>
 							<td>
 								<i class="far fa-user member-icon"></i>
 								<a class="booking-detail member"
@@ -206,7 +206,7 @@ pageContext.setAttribute("checkeds", checkeds);
 					</c:if>
 					<c:forEach var="checked" items="${checkeds}">
 						<tr class="list-data">
-							<td>${checked.bk_no}</td>
+							<td><i class="fas fa-receipt"></i>${checked.bk_no}</td>
 							<td>
 								<i class="far fa-user member-icon"></i>
 								<a class="booking-detail member"
@@ -238,8 +238,7 @@ pageContext.setAttribute("checkeds", checkeds);
 		<iframe src=""></iframe>
 	</div>
 	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-	<%@ include file="/backend/files/backend_footer.file"%>
-	<!-- 加入常用 js -->
+	<%@ include file="/backend/files/backend_footer.file"%> <!-- 加入常用 js -->
 	<script src="${pageContext.request.contextPath}/js/back/backend.js"></script>
 	<script>
 	$(window).on("load", function () {

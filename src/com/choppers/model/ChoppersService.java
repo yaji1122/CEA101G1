@@ -1,6 +1,12 @@
 package com.choppers.model;
 
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Base64;
 import java.util.List;
+
+import com.roompic.model.RoomPicVO;
 
 
 public class ChoppersService {
@@ -58,6 +64,17 @@ public class ChoppersService {
 
 	public List<ChoppersVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public String getChopPic(String chop_no) {
+		String base64Img = "";
+		ChoppersVO chop = dao.getOneByChopNo(chop_no);
+		byte[] picBytes = chop.getChop_pic();
+		if (picBytes == null) {
+			return base64Img;
+		}
+		base64Img = Base64.getEncoder().encodeToString(picBytes);
+		return base64Img;
 	}
 	
 	public ChoppersVO getOneByChopNo(String chop_no) {

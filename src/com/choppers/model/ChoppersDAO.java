@@ -263,7 +263,7 @@ public class ChoppersDAO implements ChoppersDAO_interface {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ChoppersVO chopvo = new ChoppersVO();
+		ChoppersVO chopvo = null;
 
 		try {
 			conn = ds.getConnection();
@@ -272,6 +272,7 @@ public class ChoppersDAO implements ChoppersDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
+				chopvo = new ChoppersVO();
 				byte[] chop_pic = rs.getBytes("chop_pic");
 				String chop_name = rs.getString("chop_name");
 				String chop_status = rs.getString("chop_status");

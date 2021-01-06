@@ -39,6 +39,7 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 	private static final String GETALLBYDATEIN = "SELECT * FROM BOOKING_ORDER WHERE DATEIN = ? ORDER BY BK_NO";
 	private static final String GETALLBYDATEOUT = "SELECT * FROM BOOKING_ORDER WHERE DATEOUT = ? ORDER BY BK_NO";
 	private static final String GETONEBYBKNO = "SELECT * FROM BOOKING_ORDER WHERE BK_NO = ?";
+	private static final String GETALLCHECKIN = "SELECT * FROM BOOKING_ORDER WHERE DATEIN <= ? AND BK_STATUS = '1' ORDER BY BK_NO";
 	
 
 	@Override
@@ -583,6 +584,57 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 				if (checkout != null) {
 					bkodvo.setCheckOut(rs.getTimestamp("CHECKOUT").toLocalDateTime());
 				}
+				bkodvo.setBk_status(rs.getString("BK_STATUS"));
+				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
+				bkodvo.setCard_no(rs.getString("CARD_NO"));
+				bkodList.add(bkodvo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return bkodList;
+	}
+
+	@Override
+	public List<BookingOrderVO> getAllBeforeToday(LocalDate today) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BookingOrderVO> bkodList = new LinkedList<>();
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(GETALLCHECKIN);
+			pstmt.setDate(1, java.sql.Date.valueOf(today));
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				BookingOrderVO bkodvo = new BookingOrderVO();
+				bkodvo.setBk_no(rs.getString("BK_NO"));
+				bkodvo.setMb_id(rs.getString("MB_ID"));
+				bkodvo.setBk_date(rs.getDate("BK_DATE"));
+				bkodvo.setDateIn(rs.getDate("DATEIN").toLocalDate());
+				bkodvo.setDateOut(rs.getDate("DATEOUT").toLocalDate());
 				bkodvo.setBk_status(rs.getString("BK_STATUS"));
 				bkodvo.setTotal_price(rs.getInt("TOTAL_PRICE"));
 				bkodvo.setCard_no(rs.getString("CARD_NO"));

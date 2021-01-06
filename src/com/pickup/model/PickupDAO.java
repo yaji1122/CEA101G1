@@ -43,25 +43,36 @@ public class PickupDAO implements PickupDAO_interface {
 	public synchronized PickupVO insert(PickupVO pkupvo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+		ResultSet rs = null;
 		try  {
-			
+			String[] genKey = new String[] {"PKUP_NO"};
 			conn = ds.getConnection();
-			pstmt = conn.prepareStatement(INSERT);
-			String bk_no = pkupvo.getBk_no();
-			String chop_no = pkupvo.getChop_no();
-			Timestamp arrive_datetime = pkupvo.getArrive_datetime();
-			pstmt.setString(1, bk_no);
-			pstmt.setString(2, chop_no);
-			pstmt.setTimestamp(3, arrive_datetime);
+			conn.setAutoCommit(false);
+			pstmt = conn.prepareStatement(INSERT, genKey);
+			pstmt.setString(1, pkupvo.getBk_no());
+			pstmt.setString(2, pkupvo.getChop_no());
+			pstmt.setTimestamp(3, pkupvo.getArrive_datetime());
 			pstmt.executeUpdate();
-			ResultSet rs = pstmt.getGeneratedKeys();
+			rs = pstmt.getGeneratedKeys();
 			while (rs.next()) {
-				pkupvo.setPkup_no(rs.getString("pkup_no"));
+				pkupvo.setPkup_no(rs.getString(1));
 			}
+			conn.commit();
 		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -295,12 +306,11 @@ public class PickupDAO implements PickupDAO_interface {
 	}
 	
 	@Override
-	public List<PickupVO> getAllByBkNo(String bk_no) {
+	public PickupVO getOneByBkNo(String bk_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<PickupVO> pickups = new LinkedList<>();
-		
+		PickupVO pkupvo = null;
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(GETONEBYBKNO);
@@ -308,7 +318,7 @@ public class PickupDAO implements PickupDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				PickupVO pkupvo = new PickupVO();
+				pkupvo = new PickupVO();
 				String pkup_no = rs.getString("PKUP_NO");
 				String chop_no = rs.getString("CHOP_NO");
 				Timestamp pkup_time = rs.getTimestamp("PKUP_TIME");
@@ -320,7 +330,6 @@ public class PickupDAO implements PickupDAO_interface {
 				pkupvo.setPkup_time(pkup_time);
 				pkupvo.setArrive_datetime(arrive_datetime);
 				pkupvo.setPkup_status(pkup_status);
-				pickups.add(pkupvo);
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
@@ -347,7 +356,7 @@ public class PickupDAO implements PickupDAO_interface {
 				}
 			}
 		}
-		return pickups;
+		return pkupvo;
 	}
 	
 	@Override

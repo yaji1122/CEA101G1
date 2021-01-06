@@ -71,7 +71,7 @@ public class BookingOrderServlet extends HttpServlet {
 				groupMap = bookingCart.stream().collect(Collectors.groupingBy( e -> e.getString("group")));
 				Set<String> group =  groupMap.keySet();
 				BookingOrderService bkodSvc = new BookingOrderService();
-				for (String date: group) { //依照日期不同建立訂單細項
+				for (String date: group) { //依照日期不同建立訂單
 					Integer totalPrice = 0;
 					List<JSONObject> dateGroup = groupMap.get(date);
 					LocalDate dateIn = LocalDate.parse(date.split("/")[0]);
