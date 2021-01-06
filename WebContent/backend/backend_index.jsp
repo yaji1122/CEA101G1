@@ -30,7 +30,7 @@
 	
 		toastr.options = {
 		  "closeButton": false,
-		  "debug": true,
+		  "debug": false,
 		  "newestOnTop": false,
 		  "progressBar": false,
 		  "positionClass": "toast-top-center",

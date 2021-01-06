@@ -2,6 +2,7 @@ package filters;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -65,13 +66,9 @@ public class EmpAuthFilter implements Filter {
 		boolean pass = false;
 		for (int i = 0; i < authList.size(); i++) {
 			String[] filenames =  maps.get(authList.get(i).getFunc_no());
-			if (filenames != null) {
-				for (int j = 0; j < filenames.length; j++) {
-					if(compare.contains(filenames[j])) {
-						pass = true;
-						break;
-					}
-				}
+			if (Arrays.stream(filenames).anyMatch(e -> compare.contains(e))) {
+				pass = true;
+				break;
 			}
 		}
 		
