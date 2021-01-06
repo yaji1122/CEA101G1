@@ -54,6 +54,7 @@ public class EmpLogin extends HttpServlet {
         //若是員工
         	HttpSession session = req.getSession();
         	session.setAttribute("empVO", empVO);//存入session中的empVO, 做已經登入過的標識
+        	session.setAttribute("emp_id", emp_id);
         //並同時將員工資料存入快取
         	Cookie EmpCookie = new Cookie("emp", emp_id);
         	EmpCookie.setMaxAge(60*60);

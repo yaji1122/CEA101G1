@@ -44,6 +44,8 @@
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 	
+	
+	
 	<filter>
 		<filter-name>GuestFilter</filter-name>
 		<filter-class>filters.GuestFilter</filter-class>
@@ -61,7 +63,7 @@
 	 <filter>
       <filter-name>EmpLoginFilter</filter-name>
       <filter-class>filters.EmpLoginFilter</filter-class>
-    </filter>
+  	 </filter>
 
     <filter-mapping>
       <filter-name>EmpLoginFilter</filter-name>
@@ -72,6 +74,21 @@
       <dispatcher>ERROR</dispatcher>
       <dispatcher>ASYNC</dispatcher>
     </filter-mapping>
+
+	<filter>
+      <filter-name>EmpAuthFilter</filter-name>
+      <filter-class>filters.EmpAuthFilter</filter-class>
+  	 </filter>
+    <filter-mapping>
+      <filter-name>EmpAuthFilter</filter-name>
+      <url-pattern>/backend/*</url-pattern>
+      <dispatcher>REQUEST</dispatcher>
+      <dispatcher>FORWARD</dispatcher>
+      <dispatcher>INCLUDE</dispatcher>
+      <dispatcher>ERROR</dispatcher>
+      <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
 
      <servlet>
        <servlet-name>DeptServlet</servlet-name>
