@@ -15,17 +15,19 @@
                             <span class="emp-name">${empVO.emp_name}<span class="emp-title">${titleSvc.getOneTitle(empVO.title_no).title}</span></span>
 
                             <span class="user-status"> <i class="fa fa-circle"></i> <span>Online</span> </span>
-                            <a href="<%=request.getContextPath()%>/emp/emp.do?action=logout">登出</a>
                         </div>
+                         <div class="emp-func">
+                            	 <a class="emp-logout" href="<%=request.getContextPath()%>/emp/emp.do?action=logout">登出</a>
+                           		 <a class="emp-personal" href="<%=request.getContextPath()%>/backend/emp/protected/updateByEmp.jsp">個人資訊</a>
+                          </div>
                     </div>
 
                     <div class="sidebar-menu">
                         <ul>
-                            <li class="header-menu"><span></span></li>
+                            <li class="header-menu"><span>戴蒙度假村系統選單</span></li>
                             <li>
-                                <a href="<%=request.getContextPath()%>/backend/emp/protected/updateByEmp.jsp"> <i class="fa fa-user"></i> <span>個人基本資料</span> </a>
+                                <a href="<%=request.getContextPath()%>/backend/backend_index.jsp"><i class="fas fa-home"></i><span>回首頁</span> </a>
                             </li>
-                            <li class="header-menu"><span>戴蒙度假村系統</span></li>
                             <li>
                                 <a href="<%=request.getContextPath()%>/backend/emp/protected/selectPage.jsp">
                                     <i class="fa fa-users"></i> <span>員工管理</span>

@@ -56,7 +56,7 @@
             width: 400px;
             text-align: center;
             padding: 10px;
-            background-color:white;  
+            background-color:white;
         }
         .main h4 {
         	width:100%;
