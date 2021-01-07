@@ -66,7 +66,7 @@ public class EmpLoginFilter implements Filter {
 
 		if (empVO == null) {
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath()+"/backend/loginEmp.jsp");
+			res.sendRedirect(req.getContextPath()+"/loginEmp.jsp");
 			return;
 		}else {
 			chain.doFilter(request, response);
