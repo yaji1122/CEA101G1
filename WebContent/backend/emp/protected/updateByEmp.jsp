@@ -67,7 +67,7 @@
 					</div>
 					
 					<span class="mt-4">&emsp;&emsp;&nbsp;&nbsp;<input type="text" name="emp_address"
-						size="24" placeholder="Address" value="${empVO.emp_address}"></span>
+						size="24" placeholder="Address" value="<%=empVO.getEmp_address()%>"></span>
 					<div>
 						  <input type="hidden" name="title_no" value="${empVO.title_no}">
                           <input type="hidden" name="dept_no" value="${empVO.dept_no}">

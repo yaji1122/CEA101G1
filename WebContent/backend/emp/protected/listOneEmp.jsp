@@ -112,12 +112,14 @@
             <h3>Send Email</h3>
             <form
                 method="POST"
-                action="https://docs.google.com/forms/u/4/d/e/1FAIpQLScd_QpMNxKcaklMsZG-hR_cLH0WGqUFrGVttnwEJ7BNOE5FGg/formResponse"
+                action="<%=request.getContextPath()%>/emp/emp.do"
                 target="_self"
                 id="form">
                 <div id="emailname"><%=empVO.getEmp_email()%></div>
-                <input type="text" id="emailname"  placeholder="Subject" required />
-                <textarea type="text" id="emailname" placeholder="Message" required /></textarea>
+                <input type="hidden" value="${empVO.emp_email}" name="emp_email">
+                <input type="text" id="emailname"  placeholder="Subject" name="subject" required />
+                <textarea type="text" id="emailname" placeholder="Message" name="messages" required /></textarea>
+                <input type="hidden" name="action" value="sendEmail">
                 <button type="submit" id="btn" name="submit">Submit</button>
             </form>
         </div>     

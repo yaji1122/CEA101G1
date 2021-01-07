@@ -51,20 +51,20 @@ public class EmpMailService {
      }
    }
 	
-	 public static void main (String args[]){
-
-      String to = "B114097012@tmu.edu.tw";
-      
-      String subject = "密碼通知";
-      
-      String ch_name = "Chia-Lin";
-      String passRandom = "jspodj";
-      String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" +" (已經啟用)"; 
-       
-      EmpMailService mailService = new EmpMailService();
-      mailService.sendMail(to, subject, messageText);
-
-   }
+//	 public static void main (String args[]){
+//
+//      String to = "B114097012@tmu.edu.tw";
+//      
+//      String subject = "密碼通知";
+//      
+//      String ch_name = "Chia-Lin";
+//      String passRandom = "jspodj";
+//      String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" +" (已經啟用)"; 
+//       
+//      EmpMailService mailService = new EmpMailService();
+//      mailService.sendMail(to, subject, messageText);
+//
+//   }
 
 
 }
