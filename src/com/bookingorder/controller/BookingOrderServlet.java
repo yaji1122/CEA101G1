@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -20,9 +21,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
-
 import com.bookingdetail.model.*;
 import com.bookingorder.model.*;
 import com.members.model.MembersVO;
@@ -31,7 +31,6 @@ import com.members.model.MembersVO;
 @WebServlet("/bookingServlet")
 public class BookingOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	public BookingOrderServlet() {
         super();
     }
@@ -70,7 +69,9 @@ public class BookingOrderServlet extends HttpServlet {
 				Map<String, List<JSONObject>> groupMap = new HashMap<>(); //依照日期建立訂單，相同日期的房型在同個訂單
 				groupMap = bookingCart.stream().collect(Collectors.groupingBy( e -> e.getString("group")));
 				Set<String> group =  groupMap.keySet();
+				HttpSession userSession = req.getSession();
 				BookingOrderService bkodSvc = new BookingOrderService();
+				Set<javax.websocket.Session> wsSessions = (Set<javax.websocket.Session>) userSession.getAttribute("wsSessions");
 				for (String date: group) { //依照日期不同建立訂單
 					Integer totalPrice = 0;
 					List<JSONObject> dateGroup = groupMap.get(date);
@@ -79,9 +80,17 @@ public class BookingOrderServlet extends HttpServlet {
 					totalPrice = dateGroup.stream()
 								.mapToInt(e -> Integer.parseInt(e.getString("subtotal")))
 								.sum();
-					bkodSvc.addBkOd(mb_id, dateIn, dateOut, totalPrice, dateGroup, card_no);
+					BookingOrderVO bkodvo =  bkodSvc.addBkOd(mb_id, dateIn, dateOut, totalPrice, dateGroup, card_no);
+					if (wsSessions != null) {
+						JSONObject data = new JSONObject();
+						data.put("type", "訂房訂單");
+						data.put("odno", bkodvo.getBk_no());
+						wsSessions.forEach(e -> e.getAsyncRemote().sendText(data.toString()));
+					}
 				}
-				req.getSession().removeAttribute("bookingCart");
+				
+				userSession.removeAttribute("bookingCart");
+				userSession.setAttribute("bookingPass", "pass");
 				res.sendRedirect(req.getContextPath() + "/frontend/roomrsv/bookingResult.jsp");
 			} catch (Exception e){
 				e.printStackTrace();

@@ -25,26 +25,43 @@
 	<%@ include file="/backend/files/backend_footer.file"%> <!-- 加入常用 js -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script>
+	//WS
+	var MyPoint = "/NotifyWS";
+	var host = window.location.host;
+	var path = window.location.pathname;
+	var webCtx = path.substring(0, path.indexOf('/', 1));
+	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+	var webSocket = new WebSocket(endPointURL);
+	webSocket.onmessage = function(event) {
+		var jsonObj = JSON.parse(event.data);
+		let type = jsonObj.type;
+		let odno = jsonObj.odno;
+		Command: toastr["info"]( type + "編號為：" + odno, "有一筆新的訂單")
+	};
+		
+	
+		
+	
+	
 	<c:if test="${msg != null}">
 		Command: toastr["warning"]("請向主管申請開通權限", " 權限不足")
-	
-		toastr.options = {
-		  "closeButton": false,
-		  "debug": false,
-		  "newestOnTop": false,
-		  "progressBar": false,
-		  "positionClass": "toast-top-center",
-		  "preventDuplicates": false,
-		  "onclick": null,
-		  "showDuration": "300",
-		  "hideDuration": "1000",
-		  "timeOut": "2000",
-		  "showEasing": "swing",
-		  "hideEasing": "linear",
-		  "showMethod": "fadeIn",
-		  "hideMethod": "fadeOut"
-		}
 	</c:if>
+	toastr.options = {
+			  "closeButton": true,
+			  "debug": false,
+			  "newestOnTop": true,
+			  "progressBar": false,
+			  "positionClass": "toast-top-right",
+			  "preventDuplicates": false,
+			  "onclick": null,
+			  "showDuration": "300",
+			  "hideDuration": "1000",
+			  "timeOut": "10000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			}
 	</script>
 </body>
 </html>
