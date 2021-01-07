@@ -19,8 +19,7 @@ public class BookingOrderService {
 		bkodvo.setDateOut(dateOut);
 		bkodvo.setTotal_price(total_price);
 		bkodvo.setCard_no(card_no);
-		bkodvo = dao.insert(bkodvo, dateGroup);
-		return bkodvo;
+		return dao.insert(bkodvo, dateGroup);
 	}
 	
 	public void updateDateInOut(String bk_no, LocalDate dateIn, LocalDate dateOut) {

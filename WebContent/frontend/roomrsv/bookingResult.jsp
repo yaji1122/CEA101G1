@@ -1,6 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.List" %>
+<%
+String pass = (String) session.getAttribute("bookingPass");
+if (pass == null) response.sendRedirect(request.getContextPath() + "/frontend/index.jsp"); //如果並非透過下定後的頁面將被重新導向
+session.removeAttribute("bookingPass");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,6 +145,7 @@
 	<script src="<%=request.getContextPath()%>/js/front/main.js"></script>
 	<script>
 		$(document).ready(function(){
+			//button
 			$("#pkup").click(function(){
 				$("#pkupbooking").addClass("show");
 			})
