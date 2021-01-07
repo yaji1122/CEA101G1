@@ -186,22 +186,22 @@
 							<div class="carousel-inner" role="listbox">
 								<div class="carousel-item active">
 									<img class="d-block w-100 img-box"
-										src="${pageContext.request.contextPath}/img/meal/food.jpg"
+										src="${pageContext.request.contextPath}/img/meal/hamburger.jpg"
 										alt="First slide">
 								</div>
 								<div class="carousel-item ">
 									<img class="d-block w-100 img-box"
-										src="${pageContext.request.contextPath}/img/meal/food-2.jpg "
+										src="${pageContext.request.contextPath}/img/meal/pizza.jpg "
 										alt="Second slide ">
 								</div>
 								<div class="carousel-item ">
 									<img class="d-block w-100 img-box"
-										src="${pageContext.request.contextPath}/img/meal/food-3.jpg "
+										src="${pageContext.request.contextPath}/img/meal/friedchicken.jpg "
 										alt="third slide ">
 								</div>
 								<div class="carousel-item ">
 									<img class="d-block w-100 img-box"
-										src="${pageContext.request.contextPath}/img/meal/food-4.jpg "
+										src="${pageContext.request.contextPath}/img/meal/pasta.jpg "
 										alt="fourth slide ">
 								</div>
 							</div>
@@ -239,7 +239,7 @@
 								<a class="list-group-item list-group-item-action " style="background-color: rgb(44, 49, 64);"
 									href="#list-item-${i.index}">
 									<div class="type-box">
-										<h4 class="type-title"><b>${mealTypeVO.type_name}</b></h4>
+										<h5 class="type-title"><b>${mealTypeVO.type_name}</b></h5>
 									</div>
 								</a>
 							</c:forEach>
@@ -280,7 +280,7 @@
 																onclick="document.getElementById('form' + ${k.index} + '').submit();">加入購物車</a>
 														</div>
 														<figcaption>
-															<h3 id="meal_name${k.index}" style="color: white; user-select: none;">${mealVO.meal_name}</h3>
+															<h5 id="meal_name${k.index}" style="color: white; user-select: none; float: left;">${mealVO.meal_name}</h5>
 															<p style="color: white; user-select: none;">${mealVO.meal_info}</p>
 															<div class="row" style="display: none;">
 																<div class="col-lg-12">
@@ -296,10 +296,9 @@
 																</div>
 															</div>
 															<div class="row">
-																<i class="col-lg-2 fas fa-dollar-sign"
-																	style="float: left; margin-top: 25px; display: inline-block; color: white; user-select: none;"></i>
-																<div class="col-lg-10 price" id="showprice${k.index}">
-																<h5 style="color: white; user-select: none;">${mealVO.price}</h5>
+																<div class="col-lg-12 price" id="showprice${k.index}">
+																<h5 style="color: white; user-select: none; margin-top: 40px; display: inline-block;">${mealVO.price}</h5>
+																<h5 style="color: white; display: inline-block">元</h5>
 																</div>
 																<input type="hidden" id="price${k.index}"
 																	value="${mealVO.price}">
