@@ -140,11 +140,7 @@ body {
 	padding-left: 16px;
 	margin-top: 10px;
 }
-
-.type-box {
-	padding: 10px 20px;
-}
-
+	
 .type-title {
 	color: white;
 }
@@ -155,7 +151,7 @@ body {
 
 .title {
 	margin: 20px 0px;
-	margin-left: 31px;
+	margin-left: 5px;
 	color: white;
 }
 
@@ -166,10 +162,10 @@ body {
 
 .card-box {
 	padding: 10px 10px;
-	max-height: 450px;
-	max-width: 270px;
+/* 	max-height: 450px; */
+/* 	max-width: 270px; */
 	margin-bottom: 30px;
-	margin-left: 30px;
+/* 	margin-left: 30px; */
 }
 
 .button {
@@ -544,7 +540,6 @@ body {
 }
 
 .snip1268 .price {
-	font-size: 1.3em;
 	font-weight: 700;
 	text-align: right;
 	display: inline-block;

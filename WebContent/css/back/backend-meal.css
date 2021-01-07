@@ -98,7 +98,7 @@ td {
 	justify-content:space-evenly;
 	width:60%;
 	height:100%;
-	background-color:lightyellow;
+	background-color: #ECF5FF;
 	border: 2px solid black;
 	text-align:center;
 	border-radius: 5px;
@@ -183,13 +183,14 @@ input:focus {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: lightpink;
+    background-color: #C4E1FF;
     width: 300px;
     height: 40px;
     border: none;
     margin: 20px 0px;
     border-radius: 10px;
     color: black;
+    cursor: pointer;
 }
 .pic-upload:hover {
     box-shadow: 0px 0px 2px black;

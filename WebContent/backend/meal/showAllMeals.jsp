@@ -140,7 +140,7 @@
 		<div class="close-icon">
 			<i class="fas fa-times icon" style="margin-top: 5%;"></i>
 		</div>
-		<h3>
+		<h3 style="margin-top: 20px;">
 			餐點編號：<b id="update-meal-no"></b>
 		</h3>
 
@@ -162,30 +162,30 @@
 				<b>預計製作時間</b>
 			</p> <select class="custom-select custom-select-sm"
 			name="update-makingtime" id="update-makingtime" required>
-				<option value="0" selected>0</option>
-				<option value="5 ">5</option>
-				<option value="10 ">10</option>
-				<option value="15">15</option>
+				<option value="0">0</option>
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15" selected>15</option>
 		</select> </label> <label for="update-mealstatus"><p>
 				<b>餐點狀態</b>
 			</p> <select class="custom-select custom-select-sm"
 			name="update-mealstatus" id="update-mealstatus" required>
-				<option value="0" selected>下架</option>
-				<option value="1">上架</option>
+				<option value="0">下架</option>
+				<option value="1" selected>上架</option>
 		</select> </label> <label for="update-mealpic"><p>
 				<b>上傳餐點照片</b>
 			</p>
 			<div class="pic-upload" name="pic-upload" for="update-mealpic">
 				<h6>
-					<i class="icon fas fa-cloud-upload-alt"></i>上傳照片
+					<i class="icon fas fa-cloud-upload-alt" style="cursor: pointer;"></i>上傳照片
 				</h6>
-				<input type="file" name="update-mealpic" accept="image/*" />
+				<input type="file" name="update-mealpic" accept="image/*" style="cursor: pointer;"/>
 			</div> </label>
 		<div>
 			<input type="hidden" name="action" value="update_meal"> <input
 				type="hidden" name="update-meal-no" id="update-meal-to-servlet">
 			<button type="submit" class="btn btn-light"
-				style="width: 100px; margin: 50px auto; background-color: pink;">更新資料</button>
+				style="width: 100px; margin: 50px auto; background-color: #C4E1FF">更新資料</button>
 		</div>
 
 	</form>

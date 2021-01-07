@@ -57,9 +57,11 @@ input{
 .grid{
 	width:100px;
 	display: grid;
-	grid-template-columns: 100px 50px;
+	grid-template-columns: 50px 90px 90px;
 	grid-template-rows:30px;
+	column-gap: 5px;
+	margin-bottom:10px;
 }
-..grid input{
-	width:50px;
+.grid input{
+	width:95px;
 }

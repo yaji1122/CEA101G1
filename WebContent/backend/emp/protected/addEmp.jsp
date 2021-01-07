@@ -78,19 +78,19 @@
 								<div class="py-3">
 									<div>
 										<input type="hidden" name="emp_city"
-											value="<%=(empVO == null) ? "台北" : empVO.getEmp_city()%>" />
+											value="<%=(empVO == null) ? "null" : empVO.getEmp_city()%>" />
 									</div>
 									<div class="mt-4">
 										<input type="hidden" name="emp_town"
-											value="<%=(empVO == null) ? "台北" : empVO.getEmp_town()%>" />
+											value="<%=(empVO == null) ? "null" : empVO.getEmp_town()%>" />
 									</div>
 									<div class="mt-4">
 										<input type="hidden" name="emp_address"
-											value="<%=(empVO == null) ? "台北" : empVO.getEmp_address()%>" />
+											value="<%=(empVO == null) ? "null" : empVO.getEmp_address()%>" />
 									</div>
 									<div class="mt-4">
 										<input type="hidden" name="emp_phone"
-											value="<%=(empVO == null) ? "0933799899" : empVO.getEmp_phone()%>" />
+											value="<%=(empVO == null) ? "null" : empVO.getEmp_phone()%>" />
 									</div>
 									<div class="mt-4">
 										<span class="d-block head"></span> <input type="hidden"

@@ -55,7 +55,7 @@ img {
 			</select>
 			</label>
 			<label for="meal_pic"><p>上傳餐點照片</p>
-				<div class="pic-upload" name="pic-upload" for="meal_pic">
+				<div class="pic-upload" name="pic-upload" for="meal_pic" style="background-color: #BEBEBE;">
 					<h6>
 						<i class="icon fas fa-cloud-upload-alt"></i>上傳照片
 					</h6>
@@ -65,7 +65,7 @@ img {
 		</div>
 
 		<input type="hidden" name="action" value="insert_meal">
-		<button type="submit" class="btn btn-light" style="background-color:pink;">確認送出</button>
+		<button type="submit" class="btn btn-light" style="background-color: #BEBEBE;">確認送出</button>
 
 		</form>
 	</div>

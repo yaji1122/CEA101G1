@@ -68,7 +68,8 @@
                         <h4 class="mt-1 clearfix"><%=deptVO.getDept()%></h4>
                         <span class="mt-4"><%=empVO.getEmp_city()%><%=empVO.getEmp_town()%><%=empVO.getEmp_address()%></span>
                         <div class="button">
-                            <button class="neo-button"><i class="fa fa-check-circle fa-2x"></i></button>
+                            <button class="neo-button"><i class=" ${(empVO.emp_status==2)?"fa fa-times-circle fa-2x":"fa fa-check-circle fa-2x"}"></i></button>
+                            <input type="hidden" id="status" value="<%=empVO.getEmp_status()%>" />
                             <button class="neo-button" id="phone"><i class="fa fa-mobile fa-2x"></i></button>
                             <button class="neo-button" id="email()"><i class="fa fa-google fa-2x" ></i></button>
                          </div>
@@ -102,7 +103,7 @@
             <div class="alo-ph-circle"></div>
             <div class="alo-ph-circle-fill"></div>
             <div class="alo-ph-img-circle"><i class="fa fa-phone"></i></div>
-            <span class="alo-ph-text">0<%=empVO.getEmp_phone()%></span>
+            <span class="alo-ph-text"><%=empVO.getEmp_phone()%></span>
         </a>
       </div>
     </section>
@@ -111,13 +112,14 @@
             <h3>Send Email</h3>
             <form
                 method="POST"
-                action="https://docs.google.com/forms/u/4/d/e/1FAIpQLScd_QpMNxKcaklMsZG-hR_cLH0WGqUFrGVttnwEJ7BNOE5FGg/formResponse"
+                action="<%=request.getContextPath()%>/emp/emp.do"
                 target="_self"
                 id="form">
                 <div id="emailname"><%=empVO.getEmp_email()%></div>
-                <input type="text" id="emailname"  placeholder="Subject" required />
-                <textarea type="text" id="emailname" placeholder="Message" required /></textarea>
-
+                <input type="hidden" value="${empVO.emp_email}" name="emp_email">
+                <input type="text" id="emailname"  placeholder="Subject" name="subject" required />
+                <textarea type="text" id="emailname" placeholder="Message" name="messages" required /></textarea>
+                <input type="hidden" name="action" value="sendEmail">
                 <button type="submit" id="btn" name="submit">Submit</button>
             </form>
         </div>     
@@ -143,7 +145,7 @@ let closeForm = function () {
         open = false;
     }
 };
-            
+
  </script>
 </body>
 </html>
