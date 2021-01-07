@@ -19,14 +19,14 @@ pageContext.setAttribute("list", list);
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
+<!-- <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
 	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
 	crossorigin="anonymous" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
 	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-	crossorigin="anonymous">
+	crossorigin="anonymous"> -->
 <link href='${pageContext.request.contextPath}/css/datatables.min.css'
 	rel='stylesheet' />
 
@@ -35,7 +35,7 @@ pageContext.setAttribute("list", list);
 </head>
 <body>
 
-	<table>
+	<table id="myTable">
 		<thead>
 			<tr>
 				<th scope="col">訂單編號</th>
@@ -46,6 +46,7 @@ pageContext.setAttribute("list", list);
 				<th scope="col">服務名稱</th>
 				<th scope="col">預約時間</th>
 				<th scope="col">服務人數</th>
+				<th scope="col">服務場所</th>
 				<th scope="col">訂單總額</th>
 				<th scope="col">修改</th>
 				<th scope="col">刪除</th>
@@ -53,9 +54,9 @@ pageContext.setAttribute("list", list);
 		</thead>
 		<tbody>
 
-			<%@ include file="/backend/files/page1.file"%>
-			<c:forEach var="serviceOrderVO" items="${list}"
-				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+			<%-- <%@ include file="/backend/files/page1.file"%> --%>
+			<c:forEach var="serviceOrderVO" items="${list}">
+			<%-- begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" --%>
 
 				<tr>
 					<td scope="row">${serviceOrderVO.serv_odno}</td>
@@ -76,6 +77,7 @@ pageContext.setAttribute("list", list);
 					<td><fmt:formatDate value="${serviceOrderVO.serv_time}"
 							pattern="yyyy-MM-dd HH:mm:ss" /></td>
 					<td>${serviceOrderVO.serv_count}</td>
+					<td>${serviceOrderVO.location}</td>
 					<td>${serviceOrderVO.total_price}</td>
 					<td>
 						<FORM METHOD="post"
@@ -99,19 +101,18 @@ pageContext.setAttribute("list", list);
 			</c:forEach>
 		</tbody>
 	</table>
-	<%@ include file="/backend/files/page2.file"%>
+	<%-- <%@ include file="/backend/files/page2.file"%> --%>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script
+
+	<!-- <script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 		crossorigin="anonymous"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
 		integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> -->
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 	<script src='${pageContext.request.contextPath}/js/datatables.min.js'></script>
 	<script>
 		$(document).ready(function() {

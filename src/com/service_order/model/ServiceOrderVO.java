@@ -13,6 +13,7 @@ public class ServiceOrderVO implements java.io.Serializable {
 	private Timestamp serv_time;
 	private Integer serv_count;
 	private Integer total_price;
+	private String location;
 
 	public String getServ_odno() {
 		return serv_odno;
@@ -84,6 +85,14 @@ public class ServiceOrderVO implements java.io.Serializable {
 
 	public void setTotal_price(Integer total_price) {
 		this.total_price = total_price;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 }

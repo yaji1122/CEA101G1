@@ -87,6 +87,11 @@ max-width:300px;
 				value="<%=serviceOrderVO.getServ_count()%>" required>
 		</div>
 		<div class="form-group">
+			<label for="location">服務場所:</label> <input type="text"
+				class="form-control" id="location" name="location"
+				value="<%=serviceOrderVO.getLocation()%>" required>
+		</div>
+		<div class="form-group">
 			<label for="total_price">訂單總額:</label> <input type="text"
 				class="form-control" id="total_price" name="total_price"
 				value="<%=serviceOrderVO.getTotal_price()%>" required>
