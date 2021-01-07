@@ -108,15 +108,8 @@
 	<%@ include file="/frontend/files/login.file"%>
 	<%@ include file="/frontend/files/loginbox.file" %>
 	
-		<%
-		String mb_id = (String)session.getAttribute("mb_id");
-		if(member!=null){
-			mb_id = member.getMb_id();
-			System.out.println("mb_id = " + mb_id);
-			session.setAttribute("mb_id", mb_id);
-		} else {
-			
-		}
+	<%
+		String mb_id = member.getMb_id();
 	%>
 		<!-- Page Preloder -->
 	<div id="preloder">
@@ -296,12 +289,18 @@
 				</div>
 				<div class="tablepart">
 					<table class="cartlist" >
-					<c:forEach var="order_detailVO" items="${order_detailSvc.getOrder_detailByP_order_id(order_masterVO.p_order_id)}">
+					<c:forEach var="shop_order_detailVO" items="${shop_order_detailSvc.getShop_order_detailBySp_odno(shop_orderVO.sp_odno)}">
 						<tr>
-							<td class="imgframe"><img src="<%=request.getContextPath()%>/product/productPic.do?p_id=${order_detailVO.p_id}"></td>
-							<td>${productSvc.getOneProduct(order_detailVO.p_id).p_name}</td>
-							<td>${order_detailVO.od_pr}</td>
-							<td>${order_detailVO.od_qty}</td>
+							<td class="imgframe">
+								<c:forEach var="item_picsVO" items="${item_picsSvc.getAllPics(item_no)}">
+									<div class="picsize">
+										<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"/>
+									</div>
+								</c:forEach>
+							</td>
+							<td>${itemSvc.getOneItem(shop_order_detailVO.item_no).item_name}</td>
+							<td>${shop_order_detailVO.item_price}</td>
+							<td>${shop_order_detailVO.qty}</td>
 						</tr>
 					</c:forEach>
 					</table>
@@ -312,7 +311,7 @@
 							<th>總額</th>
 							<th></th>
 							<th></th>
-							<th><span>$NT </span>${order_masterVO.om_tpr}</th>
+							<th><span>$ </span>${shop_orderVO.total_price}</th>
 						</tr>
 					</table>
 				</div>

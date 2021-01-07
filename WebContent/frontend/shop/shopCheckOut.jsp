@@ -243,7 +243,7 @@
 								<td colspan="4">
 								<td>使用積分</td>
 								<%MembersVO mem = membersSvc.getOneByMbId(mb_id); %>
-								<td><input type="number" id="pointUsed" max="<%=mem.getMb_point()%>" min="0" name="pointCos"></td>
+								<td><input type="number" id="pointUsed" max="<%=mem.getMb_point()%>" min="0" name="pointCos" value="0"></td>
 								<td><%=mem.getMb_point()%>分可使用</td>
 							</tr>
 							<tr>
@@ -277,10 +277,6 @@
 		$("#priceAfPo").html(oraPri - poiUs);
 		$("#sendPri").val(oraPri - poiUs);
 	});
-	
-	
-	</script>
-	
-	
+	</script>	
 </body>
 </html>
