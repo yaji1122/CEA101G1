@@ -17,12 +17,12 @@ pageContext.setAttribute("list", list);
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
+<link href='${pageContext.request.contextPath}/css/datatables.min.css'
+	rel='stylesheet' />
 <title>服務管理</title>
 </head>
 <body>
-	<table>
+	<table id="myTable">
 		<tr>
 			<th>服務編號</th>
 			<th>服務名稱</th>
@@ -36,9 +36,10 @@ pageContext.setAttribute("list", list);
 			<th>刪除</th>
 		</tr>
 
-		<%@ include file="/backend/files/page1.file"%>
-		<c:forEach var="servicesVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
+		<%-- <%@ include file="/backend/files/page1.file"%> --%>
+		<c:forEach var="servicesVO" items="${list}"> 
+		<%-- begin="<%=pageIndex%>"
+			end="<%=pageIndex+rowsPerPage-1%>" --%>
 			<tr>
 				<td>${servicesVO.serv_no}</td>
 				<td>${servicesVO.serv_name}</td>
@@ -73,8 +74,14 @@ pageContext.setAttribute("list", list);
 			</tr>
 		</c:forEach>
 	</table>
-	<%@ include file="/backend/files/page2.file"%>
-
+	<%-- <%@ include file="/backend/files/page2.file"%> --%>
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<script src='${pageContext.request.contextPath}/js/datatables.min.js'></script>
+	<script>
+		$(document).ready(function() {
+			$('#myTable').DataTable();
+		});
+	</script>
 
 
 </body>
