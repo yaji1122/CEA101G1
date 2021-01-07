@@ -21,41 +21,6 @@
 </c:if>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/updateByEmp.css" />
 </head>
-<style>
-/*div.card {
-	position: absolute;
-	left:50%;
-	top:50%;
-	transform: translate(-50%, -50%);	
-	border-radius: 20px;
-	box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
-	border: none;
-	width: 650px !important;
-	padding: 20px;
-}
-
-div.card input {
-	height: 30px;
-	padding: 5px;
-}
-
-div.card .right {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	right: 10px;
-	top: 10px;
-	width: 250px;
-	height: 250px;
-	border-radius: 30%;
-	background: linear-gradient(145deg, #d6d6d6, #ffffff);
-	box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
-}
-
-div.card .right .upload-pic {
-	margin-top: 250px;
-}*/
-</style>
 <body>
 	<%@ include file="/backend/files/backend_sidebar.file"%>
 	<%
@@ -88,23 +53,23 @@ div.card .right .upload-pic {
 						到職日: &nbsp&nbsp<%=empVO.getEmp_date()%></h5>
 					<h5 class="mt-2">
 						電話:<input type="text" name="emp_phone" placeholder="Phone"
-							value="0${empVO.emp_phone}">
+							value="${empVO.emp_phone}">
 					</h5>
 					<h5 class="mt-2">
 						信箱:<input type="email" name="emp_email" placeholder="Email"
 							value="${empVO.emp_email}">
 					</h5>
 					<input type="hidden" name="emp_status" id="emp" value="1" />
-					<h5 class="mt-2">
-						地址: <div class="grid">
+					<div class="grid">
+					<h5 class="mt-2">地址: </h5>
 						<input type="text" name="emp_city" placeholder="City" value="${empVO.emp_city}">
 						<input type="text" name="emp_town" placeholder="Town" value="${empVO.emp_town}">
-						    </div>
-					</h5>
-					<span class="mt-4">&emsp;&emsp;<input type="text" name="emp_address"
+					</div>
+					
+					<span class="mt-4">&emsp;&emsp;&nbsp;&nbsp;<input type="text" name="emp_address"
 						size="24" placeholder="Address" value="${empVO.emp_address}"></span>
 					<div>
-						<input type="hidden" name="title_no" value="${empVO.title_no}">
+						  <input type="hidden" name="title_no" value="${empVO.title_no}">
                           <input type="hidden" name="dept_no" value="${empVO.dept_no}">
                           <input type="hidden" name="emp_id" value="${empVO.emp_id}">
                           <input type="hidden" name="emp_date" value="${empVO.emp_date}">

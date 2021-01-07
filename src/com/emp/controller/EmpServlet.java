@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.Date;
 import java.util.*;
 
+import javax.mail.Session;
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
@@ -604,6 +605,7 @@ public class EmpServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 					}
+
 				//開始員工自己修改資料
 				EmpService empSvc = new EmpService();
 				empVO = empSvc.updateEmp(emp_id, emp_name, emp_pwd, emp_pic, emp_phone, emp_email, emp_city, emp_town, 
