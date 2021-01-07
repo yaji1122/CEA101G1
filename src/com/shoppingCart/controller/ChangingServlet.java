@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import com.shoppingCart.model.CartService;
 import com.item.model.*;
+import com.members.model.MembersVO;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 500 * 1024 * 1024, maxRequestSize = 500 * 5 * 1024 * 1024)
 public class ChangingServlet extends HttpServlet {
@@ -31,16 +32,27 @@ public class ChangingServlet extends HttpServlet {
 		ItemService itemSvc = new ItemService();
 		
 		HttpSession session = req.getSession();
-		String mb_id = (String) session.getAttribute("mb_id");
+		MembersVO member = (MembersVO) session.getAttribute("member");
+		String mb_id = null;
+		String sessionID = null;
+		if(member!=null){
+			mb_id = member.getMb_id();
+			System.out.println("mb_id = "+ mb_id);		
+		} else {
+			sessionID = (String) session.getAttribute("sessionID");
+			System.out.println("sessionID = "+ sessionID);
+		}
 		String action = req.getParameter("action");
 
 		JSONObject output = new JSONObject();		
 		List<ItemVO> RedisBuylist = (List<ItemVO>) cartSvcMb.getAllItem_noByMb_id(mb_id);
-
+		List<ItemVO> buylist = (List<ItemVO>) cartSvcMb.getAllItem_noBysessionID(sessionID);
+		
 		//增加購物車商品
 		if (action.equals("AddQty")) {
 			System.out.println("AddQty開始");
 
+			if(mb_id!=null){
 			String item_no = req.getParameter("item_no");
 			int index = Integer.parseInt(req.getParameter("index"));
 			double item_price = Double.parseDouble(req.getParameter("item_price"));
@@ -64,12 +76,38 @@ public class ChangingServlet extends HttpServlet {
 		    out.write(output.toString());
 		    out.flush();
 		    out.close();
+			} else {
+				String item_no = req.getParameter("item_no");
+				int index = Integer.parseInt(req.getParameter("index"));
+				double item_price = Double.parseDouble(req.getParameter("item_price"));
+				
+				CartService cartSvc=new CartService();
+				int quantity=cartSvc.getValueByItem_noCo(sessionID, item_no);
+				
+				
+				System.out.println("sessionID=" + sessionID +",商品編號=" + item_no + ",數量=" + (quantity+1) + ",index=" + index);
+				cartSvcMb.replaceCo(sessionID, item_no, quantity+1);
+				
+				try {
+					output.put("amount",item_price*(quantity+1));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+			    res.setContentType("text/plain");
+			    PrintWriter out = res.getWriter();
+			    System.out.println(output);
+			    out.write(output.toString());
+			    out.flush();
+			    out.close();
+			}
 		}
 		
 		//減少購物車商品
 		else if (action.equals("SubQty")) {
 			System.out.println("SubQty開始");
 
+			if(mb_id!=null) {
 			String item_no = req.getParameter("item_no");
 			int index = Integer.parseInt(req.getParameter("index"));
 			double item_price = Double.parseDouble(req.getParameter("item_price"));
@@ -102,16 +140,43 @@ public class ChangingServlet extends HttpServlet {
 		    out.write(output.toString());
 		    out.flush();
 		    out.close();
+			} else {
+				String item_no = req.getParameter("item_no");
+				int index = Integer.parseInt(req.getParameter("index"));
+				double item_price = Double.parseDouble(req.getParameter("item_price"));
+				CartService cartSvc=new CartService();
+				int quantity=cartSvc.getValueByItem_noCo(sessionID, item_no);
+				//刪除數量0的商品
+				if(quantity==1) {
+					System.out.println("delete");
+					cartSvcMb.deleteCartCo(sessionID, item_no, quantity);	
+					try {
+						output.put("index", index);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				//減少購物車商品
+				}else {
+					System.out.println("sessionID=" + sessionID +",商品編號=" + item_no + ",數量=" + (quantity-1) + ",index" + index);
+					cartSvcMb.replaceCo(sessionID, item_no, quantity-1);
+					
+					try {
+						output.put("amount",item_price*(quantity-1));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+					
+			    res.setContentType("text/plain");
+			    PrintWriter out = res.getWriter();
+			    System.out.println(output);
+			    out.write(output.toString());
+			    out.flush();
+			    out.close();
+			}
 	    
 		} 
-//		else if(action.equals("BoxSelect")) {
-//		
-//		
-//		
-//		
-//		
-//		
-//		}
+
 		else if (action.equals("BoxSelect")) {
 			System.out.println("BoxSelect開始");
 			
@@ -143,6 +208,7 @@ public class ChangingServlet extends HttpServlet {
 		    out.write(output.toString());
 		    out.flush();
 		    out.close();
+		    
 		}
 	}	
 }

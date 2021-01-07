@@ -25,66 +25,132 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 
 		CartService cartSVC = new CartService();
 		ItemService itemSVC = new ItemService();
-
 		HttpSession session = req.getSession();
-		
-//		MembersVO member = (MembersVO) session.getAttribute("member");
-		
-		String mb_id = (String) session.getAttribute("mb_id");
-		String user_session_id = (String) session.getAttribute("user_session_id");
 		String action = req.getParameter("action");
+		MembersVO member = (MembersVO) session.getAttribute("member");
+		String mb_id = null;
+		String sessionID = null;
+		if(member!=null) {	
+		mb_id = member.getMb_id();
 		System.out.println("會員編號"+mb_id);
-		System.out.println("sessionID = "+user_session_id);
+		}else {
+		sessionID = (String) session.getAttribute("sessionID");		
+		System.out.println("sessionID = "+sessionID);
+		}
 		if (!action.equals("CHECKOUT")) {
 
 			// 針對非會員
 			if (mb_id == null) {
-				@SuppressWarnings("unchecked")
-				List<ItemVO> buylist = (Vector<ItemVO>) session.getAttribute("buylist");
+				List<ItemVO> buylist = (List<ItemVO>) cartSVC.getAllItem_noBysessionID(sessionID);
 				// 刪除購物車中被選的商品
 				if (action.equals("deleteSelected") && req.getParameterValues("checkact") != null) {
 
-					System.out.println("進deleteSelected");
+					System.out.println("deleteSelected開始");
 
 					String[] delArray = req.getParameterValues("checkact");
-					for (int i = (delArray.length - 1); i >= 0; i--) {
+					String[] item_noArray = req.getParameterValues("item_no");
+					String[] quantityArray = req.getParameterValues("quantity");
+			
+
+					for (int i = 0; i < delArray.length; i++) {
+
 						int d = Integer.parseInt(delArray[i]);
-						
-						buylist.remove(d);
+						String item_no = item_noArray[d];
+						int quantity = Integer.parseInt(quantityArray[d]);
+						cartSVC.deleteCartCo(sessionID, item_no, quantity);
+
 					}
 				}
 				// 刪除單個商品
-				if (action.equals("DELETE")) {
-					System.out.println("刪除單一商品");
+				else if (action.equals("DELETE")) {
+					System.out.println("會員delete");
 					String del = req.getParameter("del");
 					int d = Integer.parseInt(del);
-					buylist.remove(d);
-					
+					String item_no = req.getParameter("item_no");
+					Integer quantity = new Integer(req.getParameter("quantity"));
+					cartSVC.deleteCartCo(sessionID, item_no, quantity);
 				}
 
 				// 新增商品至購物車中
 				else if (action.equals("ADD")) {
-					// 取得後來新增的商品
+					System.out.println("非會員ADD");
 					ItemVO aitem = getItemVO(req);
-					System.out.println(mb_id + "----");
+					// 取得後來新增的商品
 					if (buylist == null) {
-						buylist = new Vector<ItemVO>();
-						buylist.add(aitem);
+						System.out.println("新增購物車");
+						String item_no = aitem.getItem_no();
+						Integer quantity = new Integer(aitem.getQuantity());
+						cartSVC.insertCartCo(sessionID, item_no, quantity);
 
 					} else {
+
 						if (buylist.contains(aitem)) {
-							ItemVO reItem = buylist.get(buylist.indexOf(aitem));
-							reItem.setQuantity(reItem.getQuantity() + aitem.getQuantity());
+							System.out.println("增加數量");
+							String item_no = aitem.getItem_no();
+							Integer quantity = new Integer(aitem.getQuantity());
+							cartSVC.updateCartCo(sessionID, item_no, quantity);
+
 						} else {
-							buylist.add(aitem);
+							System.out.println("新增商品");
+							String item_no = aitem.getItem_no();
+							Integer quantity = new Integer(aitem.getQuantity());
+							cartSVC.insertCartCo(sessionID, item_no, quantity);
 						}
 					}
 				}
-				session.setAttribute("buylist", buylist);
-				String url = "/frontend/shop/shopPage.jsp";
+
+				req.setAttribute("buylist", (List<ItemVO>) cartSVC.getAllItem_noBysessionID(sessionID));
+				String url = "/frontend/shop/shopItemDetail.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
+				
+//				@SuppressWarnings("unchecked")
+//				List<ItemVO> buylist = (List<ItemVO>) cartSVC.getAllItem_noBysessionID(sessionID);
+//				// 刪除購物車中被選的商品
+//				if (action.equals("deleteSelected") && req.getParameterValues("checkact") != null) {
+//
+//					System.out.println("deleteSelected開始");
+//
+//					String[] delArray = req.getParameterValues("checkact");
+//					for (int i = (delArray.length - 1); i >= 0; i--) {
+//						int d = Integer.parseInt(delArray[i]);
+//						
+//						buylist.remove(d);
+//					}
+//				}
+//				// 刪除單個商品
+//				if (action.equals("DELETE")) {
+//					System.out.println("刪除單一商品");
+//					String del = req.getParameter("del");
+//					int d = Integer.parseInt(del);
+//					buylist.remove(d);
+//					
+//				}
+//
+//				// 新增商品至購物車中
+//				else if (action.equals("ADD")) {
+//					// 取得後來新增的商品
+//					ItemVO aitem = getItemVO(req);
+//					System.out.println(mb_id + "----");
+//					if (buylist == null) {
+//						buylist = new Vector<ItemVO>();
+//						buylist.add(aitem);
+//
+//					} else {
+//						if (buylist.contains(aitem)) {
+//							ItemVO reItem = buylist.get(buylist.indexOf(aitem));
+//							reItem.setQuantity(reItem.getQuantity() + aitem.getQuantity());
+//						} else {
+//							buylist.add(aitem);
+//						}
+//					}
+//				}
+//				session.setAttribute("buylist", buylist);
+//				String url = "/frontend/shop/shopPage.jsp";
+//				RequestDispatcher rd = req.getRequestDispatcher(url);
+//				rd.forward(req, res);
 
+				
 				// 會員
 			} else {
 
@@ -92,7 +158,7 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 				// 刪除購物車中被選的商品
 				if (action.equals("deleteSelected") && req.getParameterValues("checkact") != null) {
 
-					System.out.println("進deleteSelected");
+					System.out.println("deleteSelected開始");
 
 					String[] delArray = req.getParameterValues("checkact");
 					String[] item_noArray = req.getParameterValues("item_no");
@@ -154,9 +220,9 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 		}
 		// 結帳，計算購物車商品價錢總數
 		else if (action.equals("CHECKOUT")) {
-			System.out.println("進CHECKOUT");
+			System.out.println("CHECKOUT開始");
 			// 非會員
-			if (mb_id == null) {
+			if (member == null) {
 
 //				String loginLocation = req.getParameter("loginLocation");
 //				String URL = req.getContextPath() + "/frontend/members/Login.jsp?requestURI=" + loginLocation;

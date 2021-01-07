@@ -460,3 +460,12 @@ body {
     color: black;
     cursor: pointer;
 }
+.checkBor{
+	border-top:solid 1px;
+}
+.itThBo{
+	text-align: center;
+}
+.itTdBo{
+	text-align: center;
+}

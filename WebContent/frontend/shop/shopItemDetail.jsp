@@ -38,17 +38,56 @@
 </head>
 <%@ include file="/frontend/files/loginCSS.file" %>
 <body>
-	<%@ include file="/frontend/files/login.file" %>
+<%-- 	<%@ include file="/frontend/files/login.file" %> --%>
+
+
+
+<%
+String sessionID = null;
+String mb_email = null;
+MembersVO member = null;
+member = (MembersVO) session.getAttribute("member");
+sessionID = (String) session.getAttribute("user_session_id");
+if (member == null && sessionID == null) { //表示session已失效
+	Cookie[] cookieList = request.getCookies();
+	if (cookieList != null) {
+		for (int i = 0; i < cookieList.length; i++) {
+			Cookie theCookie = cookieList[i];
+			if (theCookie.getName().equals("user_session_id")) {
+				sessionID = theCookie.getValue();
+			}
+			if (theCookie.getName().equals("user_email")) {
+				mb_email = theCookie.getValue();
+			}
+		}
+	}
+	if (mb_email != null) {
+		MembersService memberSvc = new MembersService();
+		member = memberSvc.getOneByMbEmail(mb_email);
+		session.setAttribute("member", member);
+	} else if (sessionID != null && mb_email == null) { //非會員，取得先前的SessionID，存入session
+		session.setAttribute("sessionID", sessionID);
+	} else { //如果都沒有，紀錄sessionID存在使用者cookie，追蹤使用
+		Cookie user_session_id = new Cookie("user_session_id", session.getId());
+		user_session_id.setMaxAge(24 * 60 * 60 * 30); //有效期30天
+		response.addCookie(user_session_id);
+		session.setAttribute("user_session_id", session.getId());
+	}
+}
+
+System.out.print("user_session_id = " + sessionID);
+
+%>
+
+
 	<%@ include file="/frontend/files/loginbox.file"%>
 	
  	<% 
-	String mb_id = (String)session.getAttribute("mb_id");
-	if(member!=null){
-	mb_id = member.getMb_id();
-	System.out.println("mb_id = "+mb_id);
-	session.setAttribute("mb_id", mb_id);
+ 	if(member!=null){
+		String mb_id = member.getMb_id();
+		System.out.println("mb_id = "+mb_id);		
 	} else {
-		
+		session.setAttribute("sessionID", sessionID);
 	}
  	%> 
 	

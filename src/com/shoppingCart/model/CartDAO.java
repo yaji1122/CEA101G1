@@ -17,7 +17,7 @@ public class CartDAO implements CartDAO_interface {
 
 //	private HttpServletRequest req;
 //	HttpSession session = req.getSession();
-//	String user_session_id = (String) session.getAttribute("user_session_id");
+//	String sessionID = (String) session.getAttribute("sessionID");
 	
 	@Override
 	public void insert(MembersVO membersVO, ItemVO itemVO) {
@@ -53,38 +53,39 @@ public class CartDAO implements CartDAO_interface {
 		}
 	}
 	
-//	public void insertCo(String user_session_id, ItemVO itemVO) {
-//		Jedis jedis = null;
-//		JedisPool pool = null;
-//		try {
-//			pool = new JedisPool(host, port);
-//			jedis = pool.getResource();
-//			jedis.auth(passwd);
-//			
-//			jedis.rpush(user_session_id + ":2",itemVO.getItem_no());
-//			jedis.hset(user_session_id + ":1",itemVO.getItem_no(),itemVO.getQuantity().toString());
-//			
-//			
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		// Clean up Jedis resources
-//		} finally {
-//			if (jedis != null) {
-//				try {
-//					jedis.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//			if (pool != null) {
-//				try {
-//					pool.destroy();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//	}
+	public void insertCo(String sessionID, ItemVO itemVO) {
+		Jedis jedis = null;
+		JedisPool pool = null;
+		System.out.println("DAO sessionID="+sessionID);
+		try {
+			pool = new JedisPool(host, port);
+			jedis = pool.getResource();
+			jedis.auth(passwd);
+			
+			jedis.rpush(sessionID + ":2",itemVO.getItem_no());
+			jedis.hset(sessionID + ":1",itemVO.getItem_no(),itemVO.getQuantity().toString());
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		// Clean up Jedis resources
+		} finally {
+			if (jedis != null) {
+				try {
+					jedis.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pool != null) {
+				try {
+					pool.destroy();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 	
 	@Override
 	public void update(MembersVO membersVO, ItemVO itemVO) {
@@ -97,6 +98,38 @@ public class CartDAO implements CartDAO_interface {
 			jedis.auth(passwd);
 			
 			jedis.hincrBy(membersVO.getMb_id() + ":1", itemVO.getItem_no(), itemVO.getQuantity());
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		// Clean up Jedis resources
+		} finally {
+			if (jedis != null) {
+				try {
+					jedis.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pool != null) {
+				try {
+					pool.destroy();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	public void updateCo(String sessionID, ItemVO itemVO) {
+		Jedis jedis = null;
+		JedisPool pool = null;
+		
+		try {
+			pool = new JedisPool(host, port);
+			jedis = pool.getResource();
+			jedis.auth(passwd);
+			
+			jedis.hincrBy(sessionID + ":1", itemVO.getItem_no(), itemVO.getQuantity());
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -152,6 +185,38 @@ public class CartDAO implements CartDAO_interface {
 		}
 	}
 	
+	public void replaceCo(String sessionID, ItemVO itemVO) {
+		Jedis jedis = null;
+		JedisPool pool = null;
+		
+		try {
+			pool = new JedisPool(host, port);
+			jedis = pool.getResource();
+			jedis.auth(passwd);
+			
+			jedis.hset(sessionID + ":1", itemVO.getItem_no(), itemVO.getQuantity().toString());
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		// Clean up Jedis resources
+		} finally {
+			if (jedis != null) {
+				try {
+					jedis.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pool != null) {
+				try {
+					pool.destroy();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void delete(MembersVO membersVO, ItemVO itemVO) {
 		Jedis jedis = null;
@@ -163,6 +228,38 @@ public class CartDAO implements CartDAO_interface {
 			
 			jedis.hdel(membersVO.getMb_id() + ":1", itemVO.getItem_no(), itemVO.getQuantity().toString());
 			jedis.lrem(membersVO.getMb_id() + ":2",1, itemVO.getItem_no());
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		// Clean up Jedis resources
+		} finally {
+			if (jedis != null) {
+				try {
+					jedis.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pool != null) {
+				try {
+					pool.destroy();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}	
+	}
+	
+	public void deleteCo(String sessionID, ItemVO itemVO) {
+		Jedis jedis = null;
+		JedisPool pool = null;
+		try {
+			pool = new JedisPool(host, port);
+			jedis = pool.getResource();
+			jedis.auth(passwd);
+			
+			jedis.hdel(sessionID + ":1", itemVO.getItem_no(), itemVO.getQuantity().toString());
+			jedis.lrem(sessionID + ":2",1, itemVO.getItem_no());
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -197,6 +294,40 @@ public class CartDAO implements CartDAO_interface {
 			jedis.auth(passwd);
 			
 			list = jedis.lrange(mb_id + ":2",0,-1);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		// Clean up Jedis resources
+		} finally {
+			if (jedis != null) {
+				try {
+					jedis.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pool != null) {
+				try {
+					pool.destroy();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	public List<String> getAllItem_noBysessionID(String sessionID) {
+		List<String> list = new ArrayList<String>();
+		Jedis jedis = null;
+		JedisPool pool = null;
+		try {
+			
+			pool = new JedisPool(host, port);
+			jedis = pool.getResource();
+			jedis.auth(passwd);
+			
+			list = jedis.lrange(sessionID + ":2",0,-1);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -256,6 +387,40 @@ public class CartDAO implements CartDAO_interface {
 		return quantity;
 	}
 	
+	public Integer getValueByItem_noCo(String sessionID,String item_no) {
+		Integer quantity = 0;
+		Jedis jedis = null;
+		JedisPool pool = null;
+		try {
+			
+			pool = new JedisPool(host, port);
+			jedis = pool.getResource();
+			jedis.auth(passwd);
+
+			quantity = new Integer(jedis.hget(sessionID + ":1", item_no));
+
+				
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		// Clean up Jedis resources
+		} finally {
+			if (jedis != null) {
+				try {
+					jedis.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pool != null) {
+				try {
+					pool.destroy();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return quantity;
+	}
 	
 	public static void main(String[] args) {
 

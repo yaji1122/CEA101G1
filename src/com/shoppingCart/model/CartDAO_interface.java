@@ -19,6 +19,15 @@ public interface CartDAO_interface {
 
 	Integer getValueByItem_no(String mb_id, String it);
 	
-//	void insertCo(String user_session_id, ItemVO itemVO);
+	void insertCo(String user_session_id, ItemVO itemVO);
 
+	public void updateCo(String sessionID, ItemVO itemVO);
+	
+	public void replaceCo(String sessionID, ItemVO itemVO);
+	
+	public void deleteCo(String sessionID, ItemVO itemVO);
+	
+	public List<String> getAllItem_noBysessionID(String sessionID);
+	
+	public Integer getValueByItem_noCo(String sessionID,String item_no);
 }

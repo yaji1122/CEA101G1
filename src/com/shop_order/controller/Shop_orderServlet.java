@@ -24,6 +24,9 @@ import com.shop_order.model.Shop_orderVO;
 import com.shop_order_detail.model.Shop_order_detailVO;
 import com.shoppingCart.model.CartService;
 
+import mail.MailAuthenticate;
+import mail.MailService;
+
 
 public class Shop_orderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -367,7 +370,20 @@ public class Shop_orderServlet extends HttpServlet {
 				
 				/**更改新增會員積分**/			
 				MembersService membersSvc=new MembersService();
-				membersSvc.updateMemPoint(mb_id, points_total);
+				Integer pointCos = new Integer(req.getParameter("pointCos"));
+				System.out.println("pointCos"+pointCos);
+				MembersVO members = membersSvc.getOneByMbId(mb_id);				
+				System.out.println("memPo" + members.getMb_point());
+				membersSvc.updateMemPoint(mb_id, points_total + members.getMb_point() - pointCos);
+				
+				/**寄訂單至會員e-mail**/	
+				MembersService membersService = new MembersService();
+				String mb_email = membersService.getOneByMbId(mb_id).getMb_email();
+				MailService mail = new MailService();
+				MailAuthenticate auth = new MailAuthenticate();
+				String mailMsg = "你已下訂戴蒙商城商品，請點及下列連結查看詳細或修改。http://localhost:8080/CEA101G1/MembersServlet?action=verify&authcode="
+						+ auth.insertCode(mb_id) + "&mb_id=" + mb_id;
+				mail.sendMail(mb_email, "戴蒙商城訂單", mailMsg);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/								
 				String url = "/frontend/shop/shopPage.jsp";

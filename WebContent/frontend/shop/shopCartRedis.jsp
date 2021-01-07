@@ -58,15 +58,13 @@
 	<%@ include file="/frontend/files/login.file" %>
 	<%@ include file="/frontend/files/loginbox.file" %>
 	
-	<%
-	
-	String mb_id = (String)session.getAttribute("mb_id");
+	<%	
+	String mb_id = null;
 	if(member!=null){
 		mb_id = member.getMb_id();
-		System.out.println("mb_id = "+mb_id);
-		session.setAttribute("mb_id", mb_id);
+		System.out.println("mb_id = "+mb_id);		
 	} else {
-		
+		session.setAttribute("sessionID", sessionID);
 	}
 	%>
 	
@@ -230,8 +228,9 @@
 					<% double total = 0;%>
 					<% 
 						List<ItemVO> RedisBuylist = (List<ItemVO>) cartSvc.getAllItem_noByMb_id(mb_id);
-						List<ItemVO> buylist = new ArrayList<>();
+						List<ItemVO> buylist = (List<ItemVO>) cartSvc.getAllItem_noBysessionID(sessionID);
 					%>
+			<%if(member!=null){ %>
 					<%  if(RedisBuylist != null && (RedisBuylist.size() > 0)) {%>
 					<%  for (int index = 0; index < RedisBuylist.size(); index++){
 						ItemVO order = RedisBuylist.get(index);
@@ -269,7 +268,7 @@
 							<td id="td<%= index %>">
 								<div class="priceItemCart">
 									<span>$ </span><span id="span<%= index %>" class="cartPrSi"><%= (cartSvc.getValueByItem_no(mb_id, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price())%></span>
-									<div class="poCaSi"><span>ポイント：</span><%=itemSvc.getOneItem(order.getItem_no()).getPoints()%></div>
+									<div class="poCaSi<%= index %>"><span>ポイント：</span><%=itemSvc.getOneItem(order.getItem_no()).getPoints()%></div>
 								</div>
 							</td>
 						</tr>
@@ -288,9 +287,69 @@
 				</form>
 			</div>
 			<% } else{%> 
-			<div>購物車是空的</div>
-			
+			<div>購物車是空的</div>			
 			<%} %>
+			
+			<%} else { %>
+				 <%  if(buylist != null && (buylist.size() > 0)) {%>
+					<%  for (int index = 0; index < buylist.size(); index++){
+						ItemVO order = buylist.get(index);
+						total += (cartSvc.getValueByItem_noCo(sessionID, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price());
+					%>
+						<tr class="itBorTop">
+							<td>
+								<label class="checklabel">
+									<input id="boxselect<%= index %>" type="checkbox" name="checkact" value="<%= index %>" required="required">
+									<input id="checknum<%= index %>" type="hidden" name="checkedItem" value="0">
+									<input id="forPlusnum<%= index %>" type="hidden" value="<%= (cartSvc.getValueByItem_noCo(sessionID, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price())%>">
+								</label>
+							</td>
+							<td class="imgframe"><img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"></td>
+						<td>
+								<div class="cartborderFi">
+									<div class="cartItemName"><%=itemSvc.getOneItem(order.getItem_no()).getItem_name()%></div>
+									<div class="number-input">
+                                           <!--數量選單 -->
+                                         <div class="qIn">																							
+                                         	<span id="btn<%= index + "_1" %>" class="minusIn" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ><i class="fas fa-minus"></i></span>
+											<input id="qty<%= index %>" class="quantity" min="0" name="quantity" value="<%=cartSvc.getValueByItem_noCo(sessionID, order.getItem_no())%>" type="number">						
+											<span id="btn<%= index %>" class="plusIn" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i class="fas fa-plus"></i></span>
+										</div>  
+									    <input type="hidden" name="action"  value="deleteSelected"> 
+										<input type="hidden" name="item_no"  value="<%=order.getItem_no()%>"> 
+										<input type="hidden" name="item_price"  value="<%=itemSvc.getOneItem(order.getItem_no()).getItem_price()%>"> 
+										<input type="hidden" name="quantity" value="1" id="qty<%= index + "_1"%>">
+										<input type="hidden" name="points" value="<%=itemSvc.getOneItem(order.getItem_no()).getPoints()%>" >
+										<input type="button" value="刪 除" class="deOnIt" 
+											onclick="location.href='<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=DELETE&del=<%=index%>&item_no=<%=order.getItem_no()%>&quantity=<%=cartSvc.getValueByItem_noCo(sessionID, order.getItem_no())%>'" >									
+									</div>										
+								</div>
+							</td>							
+							<td id="td<%= index %>">
+								<div class="priceItemCart">
+									<span>$ </span><span id="span<%= index %>" class="cartPrSi"><%= (cartSvc.getValueByItem_noCo(sessionID, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price())%></span>
+									<div class="poCaSi<%= index %>"><span>ポイント：</span><%=itemSvc.getOneItem(order.getItem_no()).getPoints()%></div>
+								</div>
+							</td>
+						</tr>
+					<% }%>
+					<tr>
+						<td colspan="5">
+						<td>總金額<span> $ </span></td>
+						<td id="checkTotal">0</td>
+						<td>
+					</tr>
+					</table>
+					<br>
+					<input type="button" value="清除勾選" class="paybtn cleanbtn" 
+									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=deleteSelected')">
+					<input type="button" value="前往結帳" class="goPay">
+				</form>
+			</div>
+			<% } else{%> 
+			<div>購物車是空的</div>			
+			<%} %>
+		<%} %>
 		</div>
 	</div>
 	<!-- Footer Section Start -->
@@ -307,9 +366,9 @@
 	}
 	
 $(function(){
-		
-		<%  for (int index = 0; index < RedisBuylist.size(); index++){%>			
-			 <%ItemVO order = RedisBuylist.get(index);%>
+		<% List<ItemVO> changinglist = (member!=null)? RedisBuylist : buylist;%>
+		<%  for (int index = 0; index < changinglist.size(); index++){%>			
+			 <%ItemVO order = changinglist.get(index);%>
 			<% ItemVO oneItem = itemSvc.getOneItem(order.getItem_no()); %>
 			var itemAdd_<%= index %> = {
 				"action":"AddQty",
@@ -317,6 +376,7 @@ $(function(){
 				"item_no":<%="\"" + order.getItem_no() + "\""%>,
 				"item_name":<%="\"" + oneItem.getItem_name() + "\""%>,
 				"item_price":<%=oneItem.getItem_price()%>,
+				"points":<%=oneItem.getPoints()%>,
 			};
 			$("#btn<%= index %>").click(function(event){
 				event.stopPropagation();
@@ -329,7 +389,7 @@ $(function(){
 					success: function (data){
 						console.log("增加"+data.amount);
 						$("#span<%= index %>").html(data.amount);	
-						
+						$(".poCaSi<%= index %>").html(data.poamount);
 						if($("#checknum<%= index %>").val()!=0){
 							$("#checknum<%= index %>").val(data.amount);
 						}	
@@ -422,13 +482,13 @@ $(function(){
 			return checkedJson;
 		}
 	
-	var mem = <%="\"" + mb_id + "\""%>;
+	var mem = <%="\""+ mb_id + "\""%>;
 	var checkedItem = document.getElementsByName('checkedItem');
 	
 		console.log("mb_id= "+mem);
 		$(".goPay").click(function(event){
 			console.log("checkedItem= "+checkedItem);
-			if(mem==null){
+			if(mem=="null"){
 				alert("Please Login ");
 				$(".offcanvas-menu-overlay").removeClass("active");
 				$(".login-window-overlay").addClass("active");

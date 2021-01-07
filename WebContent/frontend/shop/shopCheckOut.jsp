@@ -22,26 +22,14 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/slick-theme.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/front/shoppage.css" type="text/css" />
 </head>
-
 <%@ include file="/frontend/files/loginCSS.file"%>
-
 <body>
-
 	<%@ include file="/frontend/files/login.file"%>
 	<%@ include file="/frontend/files/loginbox.file" %>
-
 	<%
-		String mb_id = (String)session.getAttribute("mb_id");
-		if(member!=null){
-			mb_id = member.getMb_id();
-			System.out.println("mb_id = " + mb_id);
-			session.setAttribute("mb_id", mb_id);
-			
-		} else {
-			
-		}
-	%>
-	
+		String mb_id = member.getMb_id();
+		System.out.println("mb_id = "+mb_id);		
+	%>	
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<img id="preloaderpic" src="${pageContext.request.contextPath}/img/loading.png" />
@@ -212,21 +200,37 @@
 					<div class="outframe">
 						<div>
 							<h1>結帳前確認 Check</h1>
-						</div>
+						</div>	
+						<form method="POST"
+							action="<%=request.getContextPath()%>/shop_order/shop_order.do">
+						<table class="cartlist">
+							<thead>
+								<tr>
+									<th></th>
+									<th class="itThBo">商品編號</th>
+									<th class="itThBo">商品名稱</th>
+									<th class="itThBo">商品價格</th>
+									<th class="itThBo">數量</th>
+									<th class="itThBo">積分</th>
+									<th class="itThBo">積分小計</th>
+									<th class="itThBo">價格小計</th>
+								</tr>
+							</thead>						
 						<% for (int i = 0; i < buylist.size(); i++) {
 							ItemVO order = buylist.get(i);
 						%>
-						<table class="cartlist">
-							<tr>
+							<tr class="checkBor">
 								<td class="imgframe">
 									<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display">
 								</td>
-								<td><%=order.getItem_no()%></td>
-								<td><%=itemSvc.getOneItem(order.getItem_no()).getItem_name()%></td>
+								<td class="itTdBo"><%=order.getItem_no()%></td>
+								<td class="itTdBo"><%=itemSvc.getOneItem(order.getItem_no()).getItem_name()%></td>
+								
+								
 								<td><span>$ </span><%=order.getItem_price()%></td>
-								<td><%=order.getQuantity()%></td>
-								<td><%=order.getPoints()%></td>
-								<td><%= (cartSVC.getValueByItem_no(mb_id,order.getItem_no()))*(order.getPoints())%></td>
+								<td class="itTdBo"><%=order.getQuantity()%></td>
+								<td class="itTdBo"><%=order.getPoints()%></td>
+								<td class="itTdBo"><%= (cartSVC.getValueByItem_no(mb_id,order.getItem_no()))*(order.getPoints())%></td>
 								<td><span>$ </span><%= (cartSVC.getValueByItem_no(mb_id,order.getItem_no()))*(order.getItem_price())%></td>
 							</tr>
 						<% }%>
@@ -238,7 +242,9 @@
 							<tr>
 								<td colspan="4">
 								<td>使用積分</td>
-								<td><input type="number" id="pointUsed" max="<%=member.getMb_point()%>" min="0"></td>	
+								<%MembersVO mem = membersSvc.getOneByMbId(mb_id); %>
+								<td><input type="number" id="pointUsed" max="<%=mem.getMb_point()%>" min="0" name="pointCos"></td>
+								<td><%=mem.getMb_point()%>分可使用</td>
 							</tr>
 							<tr>
 								<td colspan="4">
@@ -247,10 +253,8 @@
 							</tr>
 						</table>
 						<br>
-						<form method="POST"
-							action="<%=request.getContextPath()%>/shop_order/shop_order.do">
+						
 							<input type="hidden" name="action" value="insertWithOrder_details"> 
-<%-- 							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
 							<input type="hidden" name="mb_id" value="${member.mb_id}">
 							<input type="hidden" name="total_price" id="sendPri"value="<%=amount%>">
 							<input type="hidden" name="points_total" value="<%=poamount%>">  
