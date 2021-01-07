@@ -48,7 +48,7 @@
 					<tr>
 						<th scope="col">餐點種類編號</th>
 						<th scope="col">種類名稱</th>
-						<th scope="col">修改</th>
+<!-- 						<th scope="col">修改</th> -->
 						<th scope="col">刪除</th>
 					</tr>
 				</thead>
@@ -57,11 +57,11 @@
 						<tr>
 							<td style="font-size: 16px; text-align: center; padding-top: 4%;">${mealTypeVO.meal_type_no}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 4%;">${mealTypeVO.type_name}</td>
-							<td><input type="hidden" name="meal_type_no"
-								value="${mealTypeVO.meal_type_no}">
-								<button type="submit" class="update btn btn-info">修改</button></td>
+<!-- 							<td><input type="hidden" name="meal_type_no" -->
+<%-- 								value="${mealTypeVO.meal_type_no}"> --%>
+<!-- 								<button type="submit" class="update btn btn-info">修改</button>
+								</td> -->
 							<td>
-
 								<form method="post"
 									action="${pageContext.request.contextPath}/MealTypeServlet">
 									<input type="hidden" name="delete-mealtype-no"
