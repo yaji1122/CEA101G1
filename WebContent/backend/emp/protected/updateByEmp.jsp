@@ -96,10 +96,10 @@ div.card .right .upload-pic {
 					</h5>
 					<input type="hidden" name="emp_status" id="emp" value="1" />
 					<h5 class="mt-2">
-						地址: <span class="mt-4"><input type="text" name="emp_city"
-							size="5" placeholder="City" value="${empVO.emp_city}">
-							<input type="text" name="emp_town" size="10"
-							placeholder="Town" value="${empVO.emp_town}"></span>
+						地址: <div class="grid">
+						<input type="text" name="emp_city" placeholder="City" value="${empVO.emp_city}">
+						<input type="text" name="emp_town" placeholder="Town" value="${empVO.emp_town}">
+						    </div>
 					</h5>
 					<span class="mt-4">&emsp;&emsp;<input type="text" name="emp_address"
 						size="24" placeholder="Address" value="${empVO.emp_address}"></span>

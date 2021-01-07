@@ -56,8 +56,8 @@ public class EmpAuthFilter implements Filter {
 		maps.put("06", new String[] {"shop_order", "shop_order_detail"});
 		maps.put("07", new String[] {"act", "actevent", "actpic", "acttype"});
 		maps.put("08", new String[] {"actorder"});
-		maps.put("09", new String[] {"services", "serviceType"});
-		maps.put("10", new String[] {"serviceOrder"});
+		maps.put("09", new String[] {"services", "serviceType","timeTable"});
+		maps.put("10", new String[] {"serviceOrder","timeTable"});
 		maps.put("11", new String[] {"meal","mealtype"});
 		maps.put("12", new String[] {"mealorder","mealordertail"});
 		EmpVO emp = (EmpVO)req.getSession().getAttribute("empVO");

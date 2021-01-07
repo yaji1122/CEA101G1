@@ -54,3 +54,12 @@ input{
 .btn{
 	margin-top:10px;
 }
+.grid{
+	width:100px;
+	display: grid;
+	grid-template-columns: 100px 50px;
+	grid-template-rows:30px;
+}
+..grid input{
+	width:50px;
+}
