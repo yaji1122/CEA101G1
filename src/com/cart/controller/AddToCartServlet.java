@@ -57,6 +57,9 @@ public class AddToCartServlet extends HttpServlet {
 					}
 				}
 			}
+			else if("RESET".equals(action)) {
+				buylist.removeAllElements();
+			}
 			session.setAttribute("cart", buylist);
 			String url = "/frontend/meal/meal.jsp";
 			RequestDispatcher dispatcher = req.getRequestDispatcher(url);

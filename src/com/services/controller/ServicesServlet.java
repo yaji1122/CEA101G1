@@ -319,9 +319,18 @@ public class ServicesServlet extends HttpServlet {
 			String servno = req.getParameter("servno").trim();
 			ServicesService servicesSvc = new ServicesService();
 			byte[] servpic = servicesSvc.getOneByPicNo(servno);
+			if(servpic != null) {
 			res.getOutputStream().write(servpic);
 			res.getOutputStream().flush();
 			return;
+			} else {
+				InputStream ispu = null;
+				ispu = req.getServletContext().getResourceAsStream("/img/nodata.png");
+				byte[] pic = new byte[ispu.available()];
+				ispu.read(pic);
+				res.getOutputStream().write(pic);
+				ispu.close();
+			}
 		}
 
 	}

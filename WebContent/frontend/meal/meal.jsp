@@ -49,7 +49,7 @@
 		for(BookingOrderVO list : newList){
 			bk_no = list.getBk_no();
 		}
-		System.out.println(bk_no);
+// 		System.out.println(bk_no);
 		
 		RoomsService roomsSvc = new RoomsService();
 		List<RoomsVO> roomList = roomsSvc.getAllByMbId(mb_id);
@@ -57,7 +57,7 @@
 		for(RoomsVO list : roomList){
 			roomnoList.add(list.getRm_no());
 		}
-		roomnoList.forEach(System.out::println);
+// 		roomnoList.forEach(System.out::println);
 			
 		session.setAttribute("roomnoList", roomnoList);
 	%>
@@ -124,13 +124,13 @@
         <div class="menu-item">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-md-8">
                         <div class="logobox">
 							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
 								src="${pageContext.request.contextPath}/img/logo.png" /> </a>
 						</div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-md-4">
                         <div class="nav-menu">
                             <nav class="mainmenu">
                                 <ul>
@@ -227,7 +227,7 @@
 			</div>
 		</div>
 
-		<div class="wrapper ">
+		<div class="wrapper" style="background-color: rgb(34, 39, 54);">
 			<div class="container ">
 				<div class="row ">
 					<div class="col-lg-3 type-wrapper nav-fixed-type ">
@@ -236,10 +236,10 @@
 								class="com.mealtype.model.MealTypeService" />
 							<c:forEach var="mealTypeVO" items="${mealTypeSvc.all}"
 								varStatus="i">
-								<a class="list-group-item list-group-item-action "
+								<a class="list-group-item list-group-item-action " style="background-color: rgb(44, 49, 64);"
 									href="#list-item-${i.index}">
 									<div class="type-box">
-										<h4 class="type-title ">${mealTypeVO.type_name}</h4>
+										<h4 class="type-title"><b>${mealTypeVO.type_name}</b></h4>
 									</div>
 								</a>
 							</c:forEach>
@@ -257,7 +257,7 @@
 								<hr style="width: 800px;">
 								<div class="row">
 									<div class="col-lg-12">
-										<h2 class="title">${mealTypeVO.type_name}</h2>
+										<h2 class="title" style="user-select: none;"><b>${mealTypeVO.type_name}</b></h2>
 									</div>
 								</div>
 								<div class="row ">
@@ -280,9 +280,9 @@
 																onclick="document.getElementById('form' + ${k.index} + '').submit();">加入購物車</a>
 														</div>
 														<figcaption>
-															<h3 id="meal_name${k.index}">${mealVO.meal_name}</h3>
-															<p>${mealVO.meal_info}</p>
-															<div class="row">
+															<h3 id="meal_name${k.index}" style="color: white; user-select: none;">${mealVO.meal_name}</h3>
+															<p style="color: white; user-select: none;">${mealVO.meal_info}</p>
+															<div class="row" style="display: none;">
 																<div class="col-lg-12">
 																	<i class="fas fa-minus-square display-icon-minus"
 																		field="quantity${k.index}"
@@ -297,8 +297,10 @@
 															</div>
 															<div class="row">
 																<i class="col-lg-2 fas fa-dollar-sign"
-																	style="float: left; margin-top: 25px; display: inline-block; color: rgba(0, 0, 0, 0.5)"></i>
-																<div class="col-lg-10 price" id="showprice${k.index}">${mealVO.price}</div>
+																	style="float: left; margin-top: 25px; display: inline-block; color: white; user-select: none;"></i>
+																<div class="col-lg-10 price" id="showprice${k.index}">
+																<h5 style="color: white; user-select: none;">${mealVO.price}</h5>
+																</div>
 																<input type="hidden" id="price${k.index}"
 																	value="${mealVO.price}">
 															</div>
@@ -325,7 +327,7 @@
 				</div>
 			</div>
 		</div>
-		<footer class="footer-section main-footer ">
+		<footer class="footer-section main-footer">
 			<div class="copyright-option ">
 				<div class="container ">
 					<div class="row ">
@@ -351,24 +353,25 @@
 	</div>
 
 	<div class="shopping-cart-box">
-		<a class="close-display-box"> <i class="fas fa-window-close"></i>
+		<a class="close-display-box"> <i class="fas fa-window-close" style="color: white;"></i>
 		</a>
 
 		<div class="display-wrapper">
-			<h2 style="text-align: center;">
+			<h2 style="text-align: center; color: white; margin-top: 20px;">
 				<b>購物車</b>
 			</h2>
+			<hr style="background-color: white;">
 			<div class="shopping-cart-detail">
 				<div class="container">
 					<div class="row" style="height: 330px;">
 						<div class="col-lg-12">
-							<h4 style="text-align: center;">您目前還沒添加商品至購物車唷！</h4>
+							<h4 style="text-align: center; color: white; margin-top: 140px;">您目前還沒添加商品至購物車唷！</h4>
 						</div>
 					</div>
 					<div class="row" style="height: 70px;">
 						<div class="col-lg-12">
 							<button class="display-button display-close"
-								style="margin: 10px auto;" type="submit">
+								style="margin: 10px auto; background-color: rgb(44, 49, 64);" type="submit">
 								<h5 class="display-button-word" style="margin: auto;">關閉</h5>
 							</button>
 						</div>
@@ -382,17 +385,25 @@
 	%>
 
 	<div class="shopping-cart-box">
-		<a class="close-display-box"> <i class="fas fa-window-close"></i>
+		<a class="close-display-box"> <i class="fas fa-window-close" style="color: white;"></i>
 		</a>
 
 		<div class="display-wrapper">
-			<h2 style="text-align: center;">
+			<h2 style="text-align: center; color: white; margin-top: 20px; display: inline-block; margin-left: 45%;">
 				<b>購物車</b>
 			</h2>
+			<form method="post" action="${pageContext.request.contextPath}/AddToCartServlet" style="display: inline; margin-left: 16%;">
+				<button class="remove-button" style="margin: 10px auto;"
+								type="submit">
+				<h6 class="display-button-word">清空購物車</h6>
+				</button>
+			<input type="hidden" name="action" value="RESET">
+			</form>
+			<hr style="background-color: white;">
 			<div class="shopping-cart-detail">
 				<div class="container">
 				
-					<div class="row" style="height: 330px; overflow-y:scroll;">
+					<div class="row scrollbar" style="height: 320px; overflow-y:scroll;">
 						<%
 							for (int index = 0; index < buylist.size(); index++) {
 									CartItem order = buylist.get(index);
@@ -403,17 +414,18 @@
 						<img style="width: 100%; height: 100%; border-radius: 5px;" src="${pageContext.request.contextPath}/MealServlet?action=view_mealpic&meal_no=<%= order.getItem_no() %>">
 						</div>
 						<div class="col-lg-3" style="margin-top: 20px;">
-							<h5 class="cart-name" style="text-align: center;"><%=order.getItem_name()%></h5>
+							<h5 class="cart-name" style="text-align: center; color: white;"><%=order.getItem_name()%></h5>
 							<input type="hidden" name="itemno" value="<%= order.getItem_no() %>" >
 						</div>
 						<div class="col-lg-3" style="margin-top: 20px;">
 							<i class="fas fa-minus-square cart-icon-minus"field="cart-quantity<%= index%>"id="cart-icon-minus<%= index%>"></i> 
-							<input type="text" value=<%=order.getQuantity()%> class="cart-qty"id="cart-qty<%= index%>" name="cart-quantity<%= index%>"style="margin-left:7.5%; border-radius: 5px;" disabled="disabled">
+							<input type="text" value=<%=order.getQuantity()%> class="cart-qty"id="cart-qty<%= index%>"
+							 name="cart-quantity<%= index%>"style="margin-left:7.5%; border-radius: 5px; background-color: white;" disabled="disabled">
 							<i class="fas fa-plus-square cart-icon-plus"field="cart-quantity<%= index%>"id="cart-icon-plus<%= index%>"></i>
 							
 						</div>
 						<div class="col-lg-2" style="margin-top: 20px;">
-							<h5 id="show-cartprice<%=index%>" style="text-align: center;"><%=order.getPrice()%></h5>
+							<h5 id="show-cartprice<%=index%>" style="text-align: center; color: white;"><%=order.getPrice()%></h5>
 							<input type="hidden" name="price" value="<%=order.getPrice()%>">
 							<input type="hidden" id="cart-price<%=index %>" value="<%=order.getPrice()%>">
 						</div>
@@ -424,7 +436,7 @@
 									type="hidden" name="del" value="<%=index%>">
 								<button type="submit">
 									<i class="fas fa-trash-alt"
-										style="margin-left: 10px; font-size: 21px"></i>
+										style="margin-left: 10px; font-size: 21px; color: white;"></i>
 								</button>
 							</form>
 						</div>
@@ -436,7 +448,7 @@
 					<form method="post" action="${pageContext.request.contextPath}/MealOrderServlet">
 					<div class="row" style="height: 70px;">
 						<div class="col-lg-3">
-							<h5 style="margin-top: 25px; margin-left: 5%; display:inline-block;"><b>房號</b></h5>
+							<h5 style="margin-top: 25px; margin-left: 5%; display:inline-block; color: white;"><b>房號</b></h5>
 							
 							<label>
 								<select id="rm_no" name="rm_no" class="custom-select custom-select-sm" style="font-size: 20px; margin-top: -8px; margin-left: 30%;">

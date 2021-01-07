@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Mode II 範例程式 - Cart.jsp</title>
+<title>服務預約</title>
 </head>
 <body bgcolor="#FFFFFF">
 

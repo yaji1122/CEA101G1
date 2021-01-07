@@ -39,7 +39,7 @@ pageContext.setAttribute("list", list);
 		<c:forEach var="timeTableVO" items="${list}" begin="<%=pageIndex%>" varStatus="vs"
 			end="<%=pageIndex+rowsPerPage-1%>">
 			<tr>
-				<th>${timeTableVO.serv_no}</th>
+				<td>${timeTableVO.serv_no}</td>
 				<td>${timeTableVO.serv_period}</td>
 				<td>${timeTableVO.max_serv_ppl}</td>
 

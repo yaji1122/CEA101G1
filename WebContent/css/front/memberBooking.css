@@ -21,6 +21,21 @@ body {
 	background-color: #ffffff90;
 	box-shadow: 0px 0px 3px grey;
 }
+#onGoingBooking .booking-order p.pkuptime {
+	position: absolute;
+	top:10px;
+	left:50%;
+	transform: translateX(-50%);
+	font-size: 14px;
+}
+#onGoingBooking .booking-order h5.booking-number {
+	position: absolute;
+	right:10px;
+	top:10px;
+	font-size: 14px;
+	font-family: 'Staatliches';
+	letter-spacing: 1px;
+}
 #onGoingBooking .booking-order .booking-date {
 	display:flex;
 	flex-direction: column;
@@ -67,7 +82,6 @@ body {
 }
 #onGoingBooking .booking-order .rooms {
 	border-left: 2px solid grey;
-	padding-left: 100px;
 }
 #onGoingBooking .booking-order .room {
 	display:flex;
@@ -80,11 +94,19 @@ body {
 	text-align: left;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
+	padding:20px 0px;
+}
+#onGoingBooking .booking-details p {
+	margin:0;
+	font-family: monospace;
+	font-size: 14px;
 }
 #onGoingBooking .booking-details i {
     font-weight: 400;
 	margin-right: 5px;
+	width:20px;
+	text-align: center;
 }
 #onGoingBooking .booking-details {
 	font-family: 'Noto Sans TC', sans-serif;
@@ -93,9 +115,13 @@ body {
 	position: absolute;
 	right:10px;
 	bottom:10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width:60%;
 }
 #onGoingBooking .booking-order .buttons button {
-	width:100px;
+	width:150px;
 	padding:5px 10px;
 	cursor:pointer;
 	border:none;
@@ -108,7 +134,6 @@ body {
 }
 #onGoingBooking .booking-order .buttons button.check-order-detail {
 	background-color: #0e918c;
-	margin-right: 10px;
 }
 #onGoingBooking .booking-order .buttons button.check-order-detail i {
 	margin-right: 5px;
@@ -149,7 +174,7 @@ body {
 #history-table tr td:first-child span {
 	font-size: 20px;
 	font-weight: 200;
-	margin-left: 5px;
+	margin: 0px 5px;
 }
 #history-table span.status-checked-in {
 	color:#03506f;
