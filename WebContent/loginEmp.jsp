@@ -18,6 +18,14 @@
                     <button class="button">Login</button>
                 </form>
             </div>
+            <%-- 錯誤表列 --%>
+				<c:if test="${not empty errorMsgs}">
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
         </div>
         <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
     </body>

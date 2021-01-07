@@ -39,6 +39,10 @@ public class EmpLogin extends HttpServlet {
         req.setCharacterEncoding("UTF8");
         res.setContentType("text/html; charset=UTF8");
         PrintWriter out = res.getWriter();
+    	HttpSession session = req.getSession();
+        //錯誤驗證
+        List<String> errorMsgs = new LinkedList<String>();
+		session.setAttribute("errorMsgs", errorMsgs);
         
         //取得員工帳號密碼
         String emp_id = req.getParameter("emp_id");
@@ -48,11 +52,11 @@ public class EmpLogin extends HttpServlet {
         
         //檢查員工帳號密碼(若非員工)
         if (allowEmp(emp_id, emp_pwd) == null) {
+          errorMsgs.add("帳號或密碼錯誤!");
           RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/failure.jsp");
 		  failureView.forward(req,res);
         }else {
         //若是員工
-        	HttpSession session = req.getSession();
         	session.setAttribute("empVO", empVO);//存入session中的empVO, 做已經登入過的標識
         	session.setAttribute("emp_id", emp_id);
         //並同時將員工資料存入快取
