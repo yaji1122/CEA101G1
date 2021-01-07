@@ -26,7 +26,7 @@
                         </div>
                          <div class="emp-func">
                             	 <a class="emp-logout" href="<%=request.getContextPath()%>/emp/emp.do?action=logout">登出</a>
-                           		 <a class="emp-personal" href="<%=request.getContextPath()%>/backend/emp/protected/updateByEmp.jsp">個人資訊</a>
+                           		 <a class="emp-personal" href="<%=request.getContextPath()%>/backend/update/updateByEmp.jsp">個人資訊</a>
                           </div>
                     </div>
 

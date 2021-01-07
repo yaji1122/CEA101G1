@@ -48,18 +48,18 @@ public class EmpAuthFilter implements Filter {
 		}
 		
 		TreeMap<String, String[]> maps = new TreeMap<>();
-		maps.put("01", new String[] {"emp", "auth", "dept","func", "title"});
-		maps.put("02", new String[] {"members", "payment"});
-		maps.put("03", new String[] {"rooms", "roomtype", "roompic", "pickup","choppers"});
-		maps.put("04", new String[] {"booking", "pickup","choppers"});
-		maps.put("05", new String[] {"item", "item_pics", "item_type"});
-		maps.put("06", new String[] {"shop_order", "shop_order_detail"});
-		maps.put("07", new String[] {"act", "actevent", "actpic", "acttype"});
-		maps.put("08", new String[] {"actorder"});
-		maps.put("09", new String[] {"services", "serviceType","timeTable"});
-		maps.put("10", new String[] {"serviceOrder","timeTable"});
-		maps.put("11", new String[] {"meal","mealtype"});
-		maps.put("12", new String[] {"mealorder","mealordertail"});
+		maps.put("01", new String[] {"emp", "auth", "dept","func", "title", "update"});
+		maps.put("02", new String[] {"members", "payment", "update"});
+		maps.put("03", new String[] {"rooms", "roomtype", "roompic", "pickup","choppers", "update"});
+		maps.put("04", new String[] {"booking", "pickup","choppers", "update"});
+		maps.put("05", new String[] {"item", "item_pics", "item_type", "update"});
+		maps.put("06", new String[] {"shop_order", "shop_order_detail", "update"});
+		maps.put("07", new String[] {"act", "actevent", "actpic", "acttype" , "update"});
+		maps.put("08", new String[] {"actorder",  "update"});
+		maps.put("09", new String[] {"services", "serviceType","timeTable",  "update"});
+		maps.put("10", new String[] {"serviceOrder","timeTable",  "update"});
+		maps.put("11", new String[] {"meal","mealtype",  "update"});
+		maps.put("12", new String[] {"mealorder","mealordertail" , "update"});
 		EmpVO emp = (EmpVO)req.getSession().getAttribute("empVO");
 		AuthService authSvc = new AuthService();
 		List<AuthVO> authList = authSvc.getAllByEmp(emp.getEmp_id());

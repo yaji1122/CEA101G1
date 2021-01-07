@@ -52,7 +52,6 @@
 		<th>員工姓名</th>
 		<th>員工職位</th>
 		<th>員工部門</th>	
-		<th>修改</th>
 		<th>刪除</th>
 	</tr>
 	<c:forEach var="authVO" items="${list}">
@@ -64,12 +63,6 @@
 		<td>${empSvc.getOneEmp(authVO.emp_id).emp_name}</td>
 		<td>${titleSvc.getOneTitle(empSvc.getOneEmp(authVO.emp_id).title_no).title}</td>
 		<td>${deptSvc.getOneDept(empSvc.getOneEmp(authVO.emp_id).dept_no).dept}</td>	
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="Update" class="btn btn-outline-secondary btn-sm">
-			     <input type="hidden" name="emp_id"  value="${authVO.emp_id}">
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="Delete" class="btn btn-light btn-sm">

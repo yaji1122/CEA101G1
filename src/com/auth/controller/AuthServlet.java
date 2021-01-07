@@ -126,8 +126,8 @@ public class AuthServlet extends HttpServlet {
         		AuthVO authVO = authSvc.getOneAuth(emp_id);
         		//查詢完成, 準備轉交
         		req.setAttribute("authVO", authVO);  //從資料庫取出的authVO物件, 存入req
-        		String url ="/backend/auth/update_auth_input.jsp";
-        		RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交給update_func_input.jsp
+        		String url ="/backend/emp/protected/update_emp_input.jsp";
+        		RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交給update_emp_input.jsp
         		successView.forward(req, res);
         	} catch (Exception e) {
         		errorMsgs.add("無法取得要修改的資料:"+e.getMessage());
