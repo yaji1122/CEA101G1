@@ -49,7 +49,7 @@
 		for(BookingOrderVO list : newList){
 			bk_no = list.getBk_no();
 		}
-		System.out.println(bk_no);
+// 		System.out.println(bk_no);
 		
 		RoomsService roomsSvc = new RoomsService();
 		List<RoomsVO> roomList = roomsSvc.getAllByMbId(mb_id);
@@ -57,7 +57,7 @@
 		for(RoomsVO list : roomList){
 			roomnoList.add(list.getRm_no());
 		}
-		roomnoList.forEach(System.out::println);
+// 		roomnoList.forEach(System.out::println);
 			
 		session.setAttribute("roomnoList", roomnoList);
 	%>
@@ -389,14 +389,21 @@
 		</a>
 
 		<div class="display-wrapper">
-			<h2 style="text-align: center; color: white; margin-top: 20px;">
+			<h2 style="text-align: center; color: white; margin-top: 20px; display: inline-block; margin-left: 45%;">
 				<b>購物車</b>
 			</h2>
+			<form method="post" action="${pageContext.request.contextPath}/AddToCartServlet" style="display: inline; margin-left: 16%;">
+				<button class="remove-button" style="margin: 10px auto;"
+								type="submit">
+				<h6 class="display-button-word">清空購物車</h6>
+				</button>
+			<input type="hidden" name="action" value="RESET">
+			</form>
 			<hr style="background-color: white;">
 			<div class="shopping-cart-detail">
 				<div class="container">
 				
-					<div class="row" style="height: 330px; overflow-y:scroll;">
+					<div class="row scrollbar" style="height: 320px; overflow-y:scroll;">
 						<%
 							for (int index = 0; index < buylist.size(); index++) {
 									CartItem order = buylist.get(index);
