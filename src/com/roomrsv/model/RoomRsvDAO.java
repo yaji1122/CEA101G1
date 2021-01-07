@@ -297,7 +297,7 @@ public class RoomRsvDAO implements RoomRsvDAO_interface {
 					RoomRsvVO rsvvo = new RoomRsvVO();
 					rsvvo.setRsv_date(rsvDate);
 					rsvvo.setRm_type(rmtypevo.getRm_type());
-					rsvvo.setRm_left(rmtypevo.getRm_capacity());
+					rsvvo.setRm_left(rmtypevo.getRm_qty());
 					roomRsv.add(rsvvo);
 				}
 			}

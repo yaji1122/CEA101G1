@@ -3,206 +3,326 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.roomtype.model.*"%>
 <%@ page import="com.roomrsv.model.*"%>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List"%>
 <%@ page import="com.bookingorder.model.*"%>
 <%@ page import="com.rooms.model.*"%>
 <%@ page import="java.time.LocalDate"%>
-<jsp:useBean id="rmtypeSvc" scope="page" class="com.roomtype.model.RoomTypeService" />
-<% 
+<jsp:useBean id="rmtypeSvc" scope="page"
+	class="com.roomtype.model.RoomTypeService" />
+<%
 	String authErrorMsg = (String) session.getAttribute("authErrorMsg");
-	if (authErrorMsg != null){
-		pageContext.setAttribute("msg", authErrorMsg);
-		session.removeAttribute("authErrorMsg");
-	}
-	RoomRsvService rsvService = new RoomRsvService();
-	List<RoomRsvVO> rsvList = rsvService.getAll();
-	pageContext.setAttribute("rsvList", rsvList);
-	
-	BookingOrderService bkodSvc = new BookingOrderService();
-	LocalDate today = LocalDate.now();
-	List<BookingOrderVO> checkIns = bkodSvc.getAllBeforeToday(today);
-	List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today); //取得當天尚未CheckOut的訂單
-	List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
+if (authErrorMsg != null) {
+	pageContext.setAttribute("msg", authErrorMsg);
+	session.removeAttribute("authErrorMsg");
+}
+RoomRsvService rsvService = new RoomRsvService();
+List<RoomRsvVO> rsvList = rsvService.getAll();
+pageContext.setAttribute("rsvList", rsvList);
+
+BookingOrderService bkodSvc = new BookingOrderService();
+LocalDate today = LocalDate.now();
+List<BookingOrderVO> checkIns = bkodSvc.getAllBeforeToday(today);
+List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today); //取得當天尚未CheckOut的訂單
+List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/img/loading.png" />
-	
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.datetimepicker.min.css" />
-    <link rel="stylesheet"
-		  href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-		  integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-		  crossorigin="anonymous" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/back/backend_sidebar.css" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/img/loading.png" />
+
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/css/jquery.datetimepicker.min.css" />
+<link rel="stylesheet"
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+	crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/css/back/backend_sidebar.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 <title>戴蒙後台作業系統</title>
 </head>
 <style>
-.arrow {
-    position: absolute;
-    color: #bbbfca;
-    font-size: 25px;
-    padding: 0px 10px;
-    z-index: 10;
-}
-.aval-title {
-    width: 90%;
-    margin: 0 auto;
-}
-.calendar-forward {
-    right: 5%;
-    top: 0;
-    cursor: pointer;
-}
-.calendar-backward {
-    right: 10%;
-    top: 0;
-    cursor: pointer;
-}
-.arrow:hover {
-    color: #495464;
-}
-.view {
-	position:relative;
-    width: 900px;
-    overflow: hidden;
-    margin:0 auto;
-}
-#display {
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    transition: 0.3s ease-in-out;
-    margin: 0 auto;
-    padding-top:60px;
-}
-.calendar-wrapper {
-    min-width: 900px;
-    opacity: 0;
-    transition: 0.3s ease-in-out;
-}
-.title {
-    display: flex;
-    flex-direction: row;
-    height: min-content;
-    text-align: left;
-    letter-spacing: 5px;
-    font-size: 20px;
-    width: fit-content;
-}
-.title b {
-    height: fit-content;
-}
-.title p {
-    margin: 0px;
-}
-.calendar-td {
-    padding: 1px 1px;
-}
-.week-title th {
-    text-align: center;
-    padding: 10px 0px;
-    font-size: 18px;
-    font-weight: 700;
-}
-a.calendar-box {
-    position: relative;
-    display: block;
-    background-color: #b9b9b9;
-    height: 75px;
-    width: 125px;
-    margin: 0 auto;
-}
-a.calendar-default {
-    display: flexbox;
-    border: 1.5px solid #e8e8e8;
-    background-color: white;
-    color:grey;
-}
-a.calendar-box:hover {
-    color: rgb(255, 109, 109);
-    border-color: black;
-    text-decoration: none;
-}
-a div.calendar-date {
-	width:fit-content;
-    position: absolute;
-    right: 5px;
-    top: 0px;
-    font-size: 12px;
-    text-align: right;
-    align-self: flex-end;
-}
-a.calendar-isEmpty .calendar-price {
-    position: absolute;
-    bottom: 2px;
-    right: 2px;
-    font-size: 12px;
-    font-weight: 500;
-}
-a.calendar-today .calendar-date {
-    color: rgb(228, 104, 104);
-}
-.logo img {
-    width: 150px;
-}
-.logo {
-    text-align: center;
+.main-wrapper {
+	min-width: 1100px;
 }
 
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 10px;
+	text-align: center;
+	padding: 10px 0px 10px 60px;
+}
+
+.header div {
+	width: 250px;
+	height: 80px;
+	padding: 10px;
+	margin: 0px 10px;
+	background-color: transparent;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	border: 2px solid grey;
+}
+
+.header div:nth-child(1) {
+	border: 2px solid #11698e;
+}
+
+.header div h3 {
+	font-size: 18px;
+	margin: 0px;
+}
+
+.header div h4 {
+	font-size: 14px;
+	margin: 0px;
+	letter-spacing: 1px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid grey;
+}
+
+.arrow {
+	position: absolute;
+	color: #bbbfca;
+	font-size: 25px;
+	z-index: 10;
+}
+
+.aval-title {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.calendar-forward {
+	right: 10px;
+	top: 25px;
+	transform: translateY(-50%);
+	cursor: pointer;
+}
+
+.calendar-backward {
+	left: 0;
+	top: 25px;
+	transform: translateY(-50%);
+	cursor: pointer;
+}
+
+.arrow:hover {
+	color: #495464;
+}
+
+.view {
+	position: relative;
+	width: 900px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+#display {
+	display: flex;
+	flex-direction: row;
+	width: fit-content;
+	transition: 0.3s ease-in-out;
+	margin: 0 auto;
+}
+
+.calendar-wrapper {
+	min-width: 900px;
+	opacity: 0;
+	transition: 0.3s ease-in-out;
+}
+
+.title {
+	display: flex;
+	flex-direction: row;
+	height: min-content;
+	text-align: left;
+	letter-spacing: 5px;
+	font-size: 20px;
+	width: fit-content;
+}
+
+.title b {
+	height: fit-content;
+}
+
+.title p {
+	margin: 0px;
+}
+
+.calendar-td {
+	padding: 1px 1px;
+}
+
+.week-title th {
+	text-align: center;
+	padding: 10px 0px;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+a.calendar-box {
+	position: relative;
+	display: block;
+	background-color: #b9b9b9;
+	height: 75px;
+	width: 125px;
+	margin: 0 auto;
+}
+
+a.calendar-default {
+	display: flexbox;
+	border: 1.5px solid #e8e8e8;
+	background-color: white;
+	color: grey;
+}
+
+a.calendar-default img {
+	max-width: 50px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+a.calendar-box:hover {
+	color: rgb(255, 109, 109);
+	border-color: black;
+	text-decoration: none;
+}
+
+a div.calendar-date {
+	width: fit-content;
+	position: absolute;
+	right: 5px;
+	top: 0px;
+	font-size: 20px;
+	text-align: right;
+	align-self: flex-end;
+}
+
+a.calendar-today .calendar-date {
+	color: rgb(228, 104, 104);
+}
+
+div.calendar-rm-condition {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	overflow: hidden;
+}
+
+.rmtype {
+	font-size: 12px;
+	text-align: center;
+	height: 20px;
+	min-width: 32px;
+	line-height: 20px;
+	display: inline-block;
+	width: fit-content;
+}
+
+.rmtype1 {
+	background-color: #008891;
+	color: white;
+}
+
+.rmtype2 {
+	background-color: #00587a;
+	color: white;
+}
+
+.rmtype3 {
+	background-color: #0f3057;
+	color: white;
+}
+
+.rmtype9 {
+	background-color: #433d3c;
+	color: white;
+}
+
+div.rmtype.noleft {
+	color: crimson;
+	font-weight: 600;
+}
+#clock {
+	font-size:14px;
+	width:100px;
+	float:right;
+	padding-top: 5px;
+	text-align:right;
+}
 </style>
 <body>
-<jsp:useBean id="bkdetailSvc" scope="page"
-	class="com.bookingdetail.model.BookingDetailService" />
+	<jsp:useBean id="bkdetailSvc" scope="page"
+		class="com.bookingdetail.model.BookingDetailService" />
 	<%@ include file="/backend/files/backend_sidebar.file"%>
-	<div class="header">
+	<div class="main-wrapper">
+		<div class="header">
 			<div>
-				<h3><%=LocalDate.now()%></h3>
+				<h4>現在時間</h4>
+				<h3><%=LocalDate.now()%> <span id="clock"></span></h3>
 			</div>
 			<div>
 				<h4>今日待入住訂單</h4>
-				<h3><%=checkIns.size()%> 筆</h3>
+				<h3><%=checkIns.size()%>
+					筆
+				</h3>
 			</div>
 			<div>
 				<h4>今日待退房訂單</h4>
-				<h3><%=checkOuts.size()%> 筆</h3>
+				<h3><%=checkOuts.size()%>
+					筆
+				</h3>
 			</div>
-			
-			<% 
+
+			<%
 				List<BookingOrderVO> list = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
-				int totalGuest = 0;
-				for (BookingOrderVO bkodvo: list){
-					int i = bkdetailSvc.getAllByBkNo(bkodvo.getBk_no()).stream()
-							.mapToInt(e -> e.getRm_guest())
-							.sum();
-					totalGuest += i;
-				}
+			int totalGuest = 0;
+			for (BookingOrderVO bkodvo : list) {
+				int i = bkdetailSvc.getAllByBkNo(bkodvo.getBk_no()).stream().mapToInt(e -> e.getRm_guest()).sum();
+				totalGuest += i;
+			}
 			%>
 			<div>
 				<h4>當前度假村人數</h4>
-				<h3><%=totalGuest%> 人</h3>
+				<h3><%=totalGuest%>
+					人
+				</h3>
 			</div>
+		</div>
+		<div class="view">
+			<div id="display">
+			</div>
+			<div class="calendar-backward arrow">
+				<i class="fas fa-chevron-left"></i>
+			</div>
+			<div class="calendar-forward arrow">
+				<i class="fas fa-chevron-right"></i>
+			</div>
+		</div>
+
 	</div>
-	<div class="view">
-            <div id="display"></div>
-	        <div class="calendar-backward arrow">
-	            <i class="fas fa-chevron-left"></i>
-	        </div>
-	        <div class="calendar-forward arrow">
-	            <i class="fas fa-chevron-right"></i>
-	        </div>
-    </div>
 
-
-
-	<%@ include file="/backend/files/backend_footer.file"%> <!-- 加入常用 js -->
-	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>  
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+	<%@ include file="/backend/files/backend_footer.file"%>
+	<!-- 加入常用 js -->
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script>
 	$(document).ready(function () {
         let display = document.getElementById("display");
@@ -215,7 +335,7 @@ a.calendar-today .calendar-date {
         console.log(todayStr);
         let current = 0;
         var loaded = [0, 1]
-        getCalendars(12); //拿一年份的月曆！
+        getCalendars(12); //一年！
         fetchAvalibility(current);
         fetchAvalibility(current+1);
         
@@ -224,16 +344,12 @@ a.calendar-today .calendar-date {
             let monthOfDay = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
             let wrapper = document.createElement("div"); //包住個別日曆
             wrapper.classList.add("calendar-wrapper");
-            let title = document.createElement("div"); //產生日曆標頭
-            title.classList.add("title");
-            title.innerHTML = "<b>" + (month + 1) + "月</b><p>" + "," + year + "年</p>";
             let table = document.createElement("table"); //產生日曆表格
             table.classList.add("calendar");
             let firstTr = document.createElement("tr"); //產生標頭列
             firstTr.classList.add("week-title");
 
             table.append(firstTr);
-            wrapper.append(title);
             wrapper.append(table);
             //建立抬頭
             for (let i = 0; i < 7; i++) {
@@ -292,7 +408,7 @@ a.calendar-today .calendar-date {
             for (let i = thisMonthDate; i <= monthOfDay[month]; i++) {
                 let celldate = document.createElement("div");
                 let cellprice = document.createElement("div");
-                cellprice.classList.add("calendar-price");
+                cellprice.classList.add("calendar-rm-condition");
                 celldate.classList.add("calendar-date");
                 let id = year.toString() + "-" + (month + 1).toString().padStart(2, "0") + "-" + i.toString().padStart(2, "0");
                 let box = document.getElementById(id);
@@ -385,44 +501,42 @@ a.calendar-today .calendar-date {
             
             for (let i = 0 ; i < allDays.length; i++){
             	let currentDate = allDays.eq(i);
-               <%--  $.ajax({
+            	let theDate = currentDate.attr("id")
+            	let cond = allDays.eq(i).find(".calendar-rm-condition");
+               $.ajax({
                      url: "<%=request.getContextPath()%>/booking/Available",
                      data:{
-                         date: currentDate.attr("id"),
-                         stay: stayDays,
-                         rmtype: roomType,
-                         guest: guests,
-                         action:"roomCheck"
+                         date: theDate,
+                         action:"checkLeft"
                      },
                      type: 'POST',
                      beforeSend: function() {
                     	 currentDate.children("img").show();
                       },
                      success: function(str){
-                        var data = JSON.parse(str)
-    					if(data.isFull == "true"){
-    						currentDate.addClass("calendar-isFull");
-    						/* currentDate.attr("href",""); */
-    					} else {
-    						for (let i = 1; i < 10; i++){
-    							if (data[i] != null){
-    								currentDate.children(".calendar-price").text("$" + rm_price[i] + "-")
-    								break;
-    							}
-    						}
-    						currentDate.addClass("calendar-isEmpty");
-    						let length = currentDate.attr("href").length;
-    						let href = currentDate.attr("href").split("stay")[0] 
-    									+ "stay=" + $("#stay").val() 
-    									+ "&guest=" + $("#guest").val();
-    						
-    						
-    						
-    						currentDate.attr("href", href);
-    					}
+                        var data = JSON.parse(str);
+                        for (let i = 0; i < data.length; i++){
+                        	let json = data[i];
+                        	let div = document.createElement("div");
+                        	div.classList.add("rmtype" + json.rmtype);
+                        	div.classList.add("rmtype")
+                        	if (json.rmleft == "0"){
+                        		div.classList.add("noleft")
+                        	}
+                        	div.innerText = json.rmleft;
+                        	cond.append(div);
+                        }
                         currentDate.children("img").hide();
                      }
-                }) --%>
+                }) 
+               $.ajax({
+            	   url:"<%=request.getContextPath()%>/bookingServlet",
+            	   data:{
+            		   date: theDate,
+            		   action: "checkInOut"
+            	   },
+            	   
+               })
             } 
         }
         //WS
@@ -438,6 +552,11 @@ a.calendar-today .calendar-date {
     		let odno = jsonObj.odno;
     		Command: toastr["info"]( type + "編號為：" + odno, "有一筆新的訂單")
     	};
+    	let clock = $("#clock");
+    	clock.text(new Date().toLocaleTimeString());
+    	setInterval(function(){
+    		clock.text(new Date().toLocaleTimeString());
+    	}, 1000)
     	
     	<c:if test="${msg != null}">
     		Command: toastr["warning"]("請向主管申請開通權限", " 權限不足")
