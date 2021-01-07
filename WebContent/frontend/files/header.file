@@ -80,7 +80,7 @@
 						</li>
 						<li class="nav-list"><a class="nav-event"> 
 						<c:choose>
-									<c:when test="${member != null}"><i class="far fa-gem"></i></i>${member.mb_name}</a>
+									<c:when test="${member != null}"><i class="far fa-gem"></i></i></a>
 							<ul class="dropdown">
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberBooking.jsp">我的假期</a></li>
