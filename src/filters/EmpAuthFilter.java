@@ -48,7 +48,7 @@ public class EmpAuthFilter implements Filter {
 		}
 		
 		TreeMap<String, String[]> maps = new TreeMap<>();
-		maps.put("01", new String[] {"emp", "auth", "title","func", "title"});
+		maps.put("01", new String[] {"emp", "auth", "dept","func", "title"});
 		maps.put("02", new String[] {"members", "payment"});
 		maps.put("03", new String[] {"rooms", "roomtype", "roompic", "pickup","choppers"});
 		maps.put("04", new String[] {"booking", "pickup","choppers"});
