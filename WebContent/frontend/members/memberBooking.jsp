@@ -10,7 +10,7 @@
 <%@ page import="java.time.LocalDate"%>
 
 <%
-	BookingOrderService bkodSvc = new BookingOrderService();
+BookingOrderService bkodSvc = new BookingOrderService();
 MembersVO member = (MembersVO) session.getAttribute("member");
 List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(member.getMb_id());
 Collections.sort(bkodList, new Comparator<BookingOrderVO>() {
@@ -47,7 +47,7 @@ pageContext.setAttribute("history", history);
 	#pkupbooking {
 		z-index:-99;
 		opacity:0;
-		position: absolute;
+		position: fixed;
 		left:50%;
 		top:-100%;
 		transform:translate(-50%, -50%);
@@ -83,6 +83,8 @@ pageContext.setAttribute("history", history);
 						class="com.roomtype.model.RoomTypeService" />
 					<jsp:useBean id="rmpicSvc" scope="page"
 						class="com.roompic.model.RoomPicService" />
+					<jsp:useBean id="pkupSvc" scope="page"
+						class="com.pickup.model.PickupService" />
 					<div class="tab-panels">
 						<section id="onGoingBooking" class="tab-panel">
 							<c:if test="${onGoing.size() == 0}">
@@ -93,6 +95,7 @@ pageContext.setAttribute("history", history);
 							</c:if>
 							<c:forEach var="booking" items="${onGoing}">
 								<div class="booking-order">
+									<h5 class="booking-number">NO:${booking.bk_no}</h5>
 									<div class="date-information">
 										<div class="booking-date">
 											<span>${booking.dateIn.getDayOfMonth()}</span> <span>${booking.dateIn.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}</span>
@@ -105,6 +108,10 @@ pageContext.setAttribute("history", history);
 											<span>${booking.dateOut.getYear()}</span>
 										</div>
 									</div>
+									<p class="pkuptime">
+										<i class="fas fa-helicopter"></i> 預約接送時間：
+										<c:out value="${pkupSvc.getOneByBkNo(booking.bk_no).arrive_datetime.toLocaleString()}" default="尚未預約接送"/>
+									</p>
 									<div class="rooms">
 										<c:forEach var="detail"
 											items="${bkdetailSvc.getAllByBkNo(booking.bk_no)}">
@@ -115,9 +122,13 @@ pageContext.setAttribute("history", history);
 												</div>
 												<div class="booking-details">
 													<p>
-														<i class="fa fa-calendar"></i> ${booking.dateIn} ~
-														${booking.dateOut}
-														(${booking.dateOut.compareTo(booking.dateIn)} Night)
+														<i class="fa fa-calendar"></i>入住日期：${booking.dateIn}
+													</p>
+													<p>
+														<i class="fa fa-calendar"></i>退房日期：${booking.dateOut}
+													</p>
+													<p>
+														<i class="far fa-moon"></i>共入住${booking.dateOut.compareTo(booking.dateIn)}晚
 													</p>
 													<p>
 														<i class="fas fa-home"></i>${rmtypeSvc.getOne(detail.rm_type).type_name}
@@ -130,7 +141,7 @@ pageContext.setAttribute("history", history);
 										</c:forEach>
 									</div>
 									<div class="buttons">
-										<button id="pkup">
+										<button class="pkup">
 											<i class="fas fa-helicopter"></i>接送預約
 										</button>
 										<button class="check-order-detail">
@@ -154,6 +165,11 @@ pageContext.setAttribute("history", history);
 									<th>付款卡號</th>
 									<th>收據明細</th>
 								</tr>
+								<c:if test="${history.size() == 0}">
+								<tr>
+									<td colspan="6" style="text-align:center; color:#e8e8e8;">尚無訂購紀錄</td>
+								</tr>
+								</c:if>
 								<c:forEach var="histo" items="${history}">
 								<tr>
 									<td><i class="fas fa-receipt"></i>${histo.bk_no} 
@@ -186,7 +202,7 @@ pageContext.setAttribute("history", history);
 	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			$("#pkup").click(function(){
+			$(".pkup").click(function(){
 				$("#pkupbooking").addClass("show");
 			})
 			

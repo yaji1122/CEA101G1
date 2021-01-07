@@ -123,8 +123,8 @@
 .sidebar-wrapper .sidebar-header .user-info .user-status {
     padding-left: 10px;
     font-size: 14px;
-    margin-top: 4px;
     color: rgb(155, 155, 155);
+	margin-bottom: 5px;
 }
 
 .sidebar-wrapper .sidebar-header .user-info .user-status i {
@@ -132,7 +132,30 @@
     margin-right: 4px;
     color: #5cb85c;
 }
-
+.sidebar-wrapper .sidebar-header .emp-func {
+	display:flex;
+	flex-direction: row;
+	justify-content: space-between;
+	text-align: center;
+	padding-right: 5px;
+	margin: 10px 0px;
+}
+.sidebar-wrapper .sidebar-header .emp-func a.emp-logout{
+	width:50%;
+	color:black;
+	background-color: white;
+	padding:1px;
+	font-size: 12px;
+	margin:0px 2px;
+}
+.sidebar-wrapper .sidebar-header .emp-func a.emp-personal {
+	width:50%;
+	color:white;
+	background-color: green;
+	padding:1px;
+	font-size: 12px;
+	margin:0px 2px;
+}
 /*----------------------sidebar-menu-------------------------*/
 
 .sidebar-wrapper .sidebar-menu {
