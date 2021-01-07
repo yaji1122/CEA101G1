@@ -2,6 +2,8 @@ package com.service_order.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -112,13 +114,18 @@ public class ServiceOrderServlet extends HttpServlet {
 //				String serv_odno = req.getParameter("serv_odno").trim();
 //				MembersVO member = (MembersVO)req.getSession().getAttribute("member");
 //				String bk_no = member.getBk_no();
-				String bk_no = req.getParameter("rm_id");
-				String rm_no = req.getParameter("rm_no");
+				String bk_no = "BKOD000001";
+				String rm_no = "101";
 				String serv_no = req.getParameter("serv_no");
-
+				
+				String str = req.getParameter("serv_time");
+				LocalDateTime servTime = LocalDateTime.parse(str);
+				
+				System.out.println("order LocalDateTime:"+servTime);
+				
 				java.sql.Timestamp serv_time = null;
-				serv_time = java.sql.Timestamp.valueOf(req.getParameter("serv_time").trim());
-				System.out.println(serv_time);
+				serv_time = java.sql.Timestamp.valueOf(servTime);
+				System.out.println("order Timestamp:"+serv_time);
 
 				Integer serv_count = null;
 				serv_count = new Integer(req.getParameter("serv_count").trim());

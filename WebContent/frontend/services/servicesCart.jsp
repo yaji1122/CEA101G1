@@ -35,8 +35,6 @@
 		<tbody>
 			<tr>
 				<td><%=order.getServicesNo()%></td>
-			    <%-- <td><fmt:formatDate value="${order.servTime}"
-							pattern="yyyy-MM-dd HH:mm" /></td> --%>
 				<td><%=order.getServTime()%></td>
 				<td><%=order.getPrice()%></td>
 				<td><%=order.getQuantity()%></td>

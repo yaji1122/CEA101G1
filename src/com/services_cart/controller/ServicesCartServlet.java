@@ -33,7 +33,6 @@ public class ServicesCartServlet extends HttpServlet {
 
 		HttpSession session = req.getSession();
 		Vector<ServicesItem> buylist = (Vector<ServicesItem>) session.getAttribute("shoppingcart");
-//		String action = req.getParameter("action");
 
 		if (!action.equals("CHECKOUT")) {
 
@@ -60,7 +59,9 @@ public class ServicesCartServlet extends HttpServlet {
 
 						// 假若新增的服務和購物車的服務一樣時
 						if (servicesItem.getServicesNo().equals(aServicesItem.getServicesNo())) {
+							servicesItem.setServicesNo(servicesItem.getServicesNo());
 							servicesItem.setQuantity(servicesItem.getQuantity() + aServicesItem.getQuantity());
+							servicesItem.setPrice(servicesItem.getPrice() + aServicesItem.getPrice());
 							buylist.setElementAt(servicesItem, i);
 							match = true;
 						} // end of if name matches
@@ -80,10 +81,10 @@ public class ServicesCartServlet extends HttpServlet {
 
 		// 結帳，計算購物車服務價錢總數
 		else if (action.equals("CHECKOUT")) {
-			float total = 0;
+			Integer total = 0;
 			for (int i = 0; i < buylist.size(); i++) {
 				ServicesItem order = buylist.get(i);
-				float price = order.getPrice();
+				int price = order.getPrice();
 				int quantity = order.getQuantity();
 				total += (price * quantity);
 			}
@@ -106,7 +107,7 @@ public class ServicesCartServlet extends HttpServlet {
 		String str = req.getParameter("hiredate");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		LocalDateTime servTime = LocalDateTime.parse(str, formatter);
-		System.out.print(servTime);
+		System.out.print("cart:"+servTime);
 		
 		ServicesItem theServicesItem = new ServicesItem();
 

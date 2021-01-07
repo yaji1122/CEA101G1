@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+.menu-item {
+	background-color: rgb(34, 39, 54);
+}
+
 #banner img {
   width: 100%;
 }

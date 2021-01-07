@@ -36,31 +36,84 @@ pageContext.setAttribute("list", list);
 </head>
 
 <body>
+<div class="black"></div>
+	<%@ include file="/frontend/files/loginCSS.file"%>
+	<%@ include file="/frontend/files/login.file"%>
+	<%@ include file="/frontend/files/loginbox.file"%>
+
+	<!-- preloader -->
+	<div id="preloder">
+		<img id="preloaderpic"
+			src="${pageContext.request.contextPath}/img/loading.png" />
+		<div class="loader"></div>
+	</div>
+	<!-- preloader -->
+
+
+	<!-- offcanvas menu start -->
+
+	<div class="offcanvas-menu-overlay"></div>
+	<div class="canvas-open">
+		<i class="icon_menu"></i>
+	</div>
+	<i class="fas fa-user-circle offcanvs-log-in"></i>
+	<div class="offcanvas-menu-wrapper">
+		<div class="canvas-close">
+			<i class="icon_close"></i>
+		</div>
+		<div class="header-configure-area">
+			<a href="#" class="bk-btn">立刻訂房</a>
+		</div>
+		<nav class="mainmenu mobile-menu">
+			<ul>
+				<li><a class="nav-event">住客專區</a>
+					<ul class="dropdown">
+						<li><a href="./activity.html">活動報名</a></li>
+						<li><a href="">預約服務</a></li>
+						<li><a href="">訂購餐點</a></li>
+					</ul></li>
+				<li><a href="shop.html" class="nav-evnet">戴蒙商城</a></li>
+				<li><a class="nav-event" href="./rooms.html">客房介紹</a></li>
+				<li><a class="nav-event log-in">會員登入</a></li>
+				<li><a href="" class="nav-event"
+					style="color: rgb(240, 218, 162)">加入會員</a></li>
+			</ul>
+		</nav>
+		<div id="mobile-menu-wrap"></div>
+		<div class="top-social">
+			<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
+				class="fa fa-twitter"></i></a> <a href="#"><i
+				class="fa fa-tripadvisor"></i></a> <a href="#"><i
+				class="fa fa-instagram"></i></a>
+		</div>
+		<ul class="top-widget">
+			<li><i class="fa fa-phone"></i> (12) 345 67890</li>
+			<li><i class="fa fa-envelope"></i> info.colorlib@gmail.com</li>
+		</ul>
+	</div>
+	<!-- offcanvas menu end -->
 
 	<!-- Header Section Begin -->
-	<header class="header-section">
-		<div class="menu-item">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-3">
-						<div class="logo">
-							<a href="./index.html"> <img src="img/logo.png" alt="" />
-							</a>
+	<header class="header-section nav-fixed">
+        <div class="menu-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="logobox">
+							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
+								src="${pageContext.request.contextPath}/img/logo.png" /> </a>
 						</div>
-					</div>
-					<div class="col-lg-9">
-						<div class="nav-menu">
-							<nav class="mainmenu">
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="nav-menu">
+                            <nav class="mainmenu">
 								<ul>
-									<li class="active"><a href="index.html">回首頁</a></li>
-									<li><a href="./pages.html" class="nav-event">至尊服務</a>
+									<li><a href="#" class="nav-event">至尊服務</a>
 										<ul class="dropdown">
-											<li><a href="./room-details.html">美容美體</a></li>
-											<li><a href="./blog-details.html">各式服務</a></li>
+											<li><a href="#">美容美體</a></li>
+											<li><a href="#">各式服務</a></li>
 										</ul></li>
-									<li><a class="nav-event">已預約服務</a>
-										<ul class="dropdown">
-										</ul></li>
+									<li><a class="nav-event">已預約服務</a></li>
 									<li><a href="<%=request.getContextPath()%>/frontend/services/servicesCart.jsp" class="nav-event">購物車</a>
 								</ul>
 							</nav>
@@ -144,7 +197,7 @@ pageContext.setAttribute("list", list);
 								<p>請選擇日期:</p>
 								<input name="hiredate" class="f_date1" type="text">
 
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<label for="exampleFormControlSelect1">預約時段</label> <select
 										class="form-control" id="exampleFormControlSelect1">
 										<option>2020/12/28 13:00-14:00</option>
@@ -152,7 +205,7 @@ pageContext.setAttribute("list", list);
 										<option>2020/12/28 15:00-16:00</option>
 										<option>2020/12/28 16:00-17:00</option>
 									</select>
-								</div>
+								</div> -->
 
 								<div class="form-group">
 									<label for="exampleFormControlSelect1">服務人數</label> <select name="quantity"

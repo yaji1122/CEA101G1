@@ -27,14 +27,14 @@ public class ServicesItem implements Serializable{
 		this.servicesNo = servicesNo;
 	}
 	
-	public float getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
 	
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(Integer quantity) {
