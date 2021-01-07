@@ -63,9 +63,9 @@
 		<input type="hidden" name="action" value="insert"> <input
 			type="hidden" name="serv_no" value="<%=servicesNo%>"> <input
 			type="hidden" name="serv_time" value="<%=servTime%>">
-			<!-- 2020-12-25 00:00:00.0 -->
 		<input type="hidden" name="serv_count" value="<%=quantity%>">
 		<input type="hidden" name="total_price" value="<%=amount%>">
+		<input type="hidden" name="location" value="<%=location%>">
 
 	</form>
 	<%

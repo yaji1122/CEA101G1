@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.members.model.MembersVO;
 import com.service_order.model.*;
@@ -77,6 +78,8 @@ public class ServiceOrderServlet extends HttpServlet {
 			serv_count = new Integer(req.getParameter("serv_count").trim());
 			Integer total_price = null;
 			total_price = new Integer(req.getParameter("total_price").trim());
+			
+			String location = req.getParameter("location");
 
 			ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
 
@@ -91,10 +94,11 @@ public class ServiceOrderServlet extends HttpServlet {
 			serviceOrderVO.setServ_time(serv_time);
 			serviceOrderVO.setServ_count(serv_count);
 			serviceOrderVO.setTotal_price(total_price);
+			serviceOrderVO.setLocation(location);
 
 			ServiceOrderService serviceOrderSvc = new ServiceOrderService();
 			serviceOrderVO = serviceOrderSvc.updateServiceOrder(serv_odno, bk_no, /* od_time, */ od_status, rm_no,
-					serv_no, serv_time, serv_count, total_price);
+					serv_no, serv_time, serv_count, total_price, location);
 
 			req.setAttribute("serviceOrderVO", serviceOrderVO);
 
@@ -114,6 +118,7 @@ public class ServiceOrderServlet extends HttpServlet {
 //				String serv_odno = req.getParameter("serv_odno").trim();
 //				MembersVO member = (MembersVO)req.getSession().getAttribute("member");
 //				String bk_no = member.getBk_no();
+				
 				String bk_no = "BKOD000001";
 				String rm_no = "101";
 				String serv_no = req.getParameter("serv_no");
@@ -131,6 +136,8 @@ public class ServiceOrderServlet extends HttpServlet {
 				serv_count = new Integer(req.getParameter("serv_count").trim());
 				Integer total_price = null;
 				total_price = new Integer(req.getParameter("total_price").trim());
+				
+				String location = req.getParameter("location");
 
 				ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
 
@@ -145,19 +152,23 @@ public class ServiceOrderServlet extends HttpServlet {
 				serviceOrderVO.setServ_time(serv_time);
 				serviceOrderVO.setServ_count(serv_count);
 				serviceOrderVO.setTotal_price(total_price);
+				serviceOrderVO.setLocation(location);
 
 				ServiceOrderService serviceOrderSvc = new ServiceOrderService();
 				serviceOrderVO = serviceOrderSvc.addServiceOrder(/*serv_odno,*/ bk_no, /* od_time, */ /*od_status,*/ rm_no,
-						serv_no, serv_time, serv_count, total_price);
+						serv_no, serv_time, serv_count, total_price, location);
+				
+				HttpSession session = req.getSession();
+				session.removeAttribute("shoppingcart");
 
-				String url = "/backend/serviceOrder/serviceOrderInfo.jsp";
+				String url = "/frontend/services/services.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/serviceOrder/serviceOrderInfo.jsp");
+						.getRequestDispatcher("/frontend/services/services.jsp");
 				failureView.forward(req, res);
 			}
 

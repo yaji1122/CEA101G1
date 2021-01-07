@@ -54,6 +54,11 @@ form {
 				class="form-control" id="serv_count" name="serv_count"
 				value="<%=(serviceOrderVO == null) ? "1" : serviceOrderVO.getServ_count()%>">
 		</div>
+		<div class="form-group">
+			<label for="location">服務場所:</label> <input type="text"
+				class="form-control" id="location" name="location"
+				value="<%=(serviceOrderVO == null) ? "露天按摩A區" : serviceOrderVO.getLocation()%>">
+		</div>
 		
 		<div class="form-group">
 			<label for="total_price">訂單總額:</label> <input type="text"

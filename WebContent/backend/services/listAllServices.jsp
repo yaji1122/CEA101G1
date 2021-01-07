@@ -23,6 +23,7 @@ pageContext.setAttribute("list", list);
 </head>
 <body>
 	<table id="myTable">
+	<thead>
 		<tr>
 			<th>服務編號</th>
 			<th>服務名稱</th>
@@ -35,6 +36,8 @@ pageContext.setAttribute("list", list);
 			<th>修改</th>
 			<th>刪除</th>
 		</tr>
+		</thead>
+		<tbody>
 
 		<%-- <%@ include file="/backend/files/page1.file"%> --%>
 		<c:forEach var="servicesVO" items="${list}"> 
@@ -73,6 +76,7 @@ pageContext.setAttribute("list", list);
 				</td>
 			</tr>
 		</c:forEach>
+		</tbody>
 	</table>
 	<%-- <%@ include file="/backend/files/page2.file"%> --%>
 	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>

@@ -152,7 +152,7 @@
 		<input type="hidden" name="update-mealorder-no"
 			id="update-mealorder-to-servlet">
 		<button type="submit" class="btn btn-success"
-			style="width: 100px; margin: 50px auto; background-color: pink;">更新資料</button>
+			style="width: 100px; margin: 50px auto; background-color: #C4E1FF;">更新資料</button>
 
 	</form>
 

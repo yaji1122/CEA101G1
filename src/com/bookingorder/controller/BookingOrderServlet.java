@@ -282,6 +282,23 @@ public class BookingOrderServlet extends HttpServlet {
 			} 
 		}
 		
+		if ("getDateInOut".equals(action)) {
+			dispatcher = req.getRequestDispatcher("/backend/booking/bookingInfo.jsp");
+			try {
+				String dateOutStr = req.getParameter("date_out");
+				LocalDate dateOut = LocalDate.parse(dateOutStr); 
+				BookingOrderService bkodSvc = new BookingOrderService();
+				List<BookingOrderVO> bkodList = bkodSvc.getAllByDateOut(dateOut);
+				req.setAttribute("bkodList", bkodList);
+				dispatcher.forward(req, res);
+				return;
+			} catch (Exception e){
+				e.printStackTrace();
+				req.setAttribute("msg", "查無單號訊息");
+				dispatcher.forward(req, res);
+			} 
+		}
+		
 		if ("getall_bkod".equals(action)) {
 			dispatcher = req.getRequestDispatcher("/backend/booking/bookingInfo.jsp");
 			res.setContentType("text/html; charset=utf-8");

@@ -15,6 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.members.model.MembersVO;
@@ -198,6 +200,28 @@ public class RoomRsvServlet extends HttpServlet {
 				bookingCart.remove(json);
 				req.getSession().setAttribute("bookingCart", bookingCart); //不管是不是會員都存在session，限定時間內結帳，不存資料庫
 				out.print("success");
+				return;
+			} catch (Exception e) {
+				out.print("fail");
+				e.printStackTrace();
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		
+		if("checkLeft".equals(action)) {
+			out = res.getWriter();
+			try {
+				LocalDate date = LocalDate.parse(req.getParameter("date"));
+				RoomRsvService rsvSvc = new RoomRsvService();
+				List<RoomRsvVO> rsvList = rsvSvc.getOneByDate(date);
+				JSONArray jsonArr= new JSONArray();
+				rsvList.forEach(e -> {
+					JSONObject json = new JSONObject();
+					json.put("rmtype", e.getRm_type());
+					json.put("rmleft", e.getRm_left());
+					jsonArr.put(json);
+				});
+				out.print(jsonArr.toString());
 				return;
 			} catch (Exception e) {
 				out.print("fail");

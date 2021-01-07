@@ -7,3 +7,7 @@ $(".sidebar-dropdown").mouseleave(function(){
         $(this).removeClass("active");
         $(this).children(".sidebar-submenu").slideUp(0);
 })
+$(window).on("load", function() {
+	$(".loader").delay(400).fadeOut();
+	$("#preloder").delay(600).fadeOut("slow");
+});

@@ -34,7 +34,7 @@
 		</div>
 
 		<input type="hidden" name="action" value="insert_meal_type">
-		<button type="submit" class="btn btn-success" style="background-color:pink;">確認送出</button>
+		<button type="submit" class="btn btn-success" style="background-color: #BEBEBE;">確認送出</button>
 
 	</form>
 <%-- 	<c:if test="${not empty errorMsgs}"> --%>

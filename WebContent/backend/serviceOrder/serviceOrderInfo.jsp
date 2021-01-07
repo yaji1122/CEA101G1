@@ -12,7 +12,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-<title>服務時段表</title>
+<title>服務訂單</title>
 </head>
 <body>
 <%@ include file="/backend/files/backend_sidebar.file" %>

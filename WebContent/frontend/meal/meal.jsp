@@ -332,7 +332,7 @@
 					<div class="row ">
 						<div>
 							<div class="co-text ">
-								<p>
+								<p style="color: white;">
 									Copyright &copy;
 									<script>
 										document
