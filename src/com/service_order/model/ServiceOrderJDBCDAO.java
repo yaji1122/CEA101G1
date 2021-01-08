@@ -45,7 +45,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 			pstmt.setTimestamp(4, serviceOrderVO.getServ_time());
 			pstmt.setInt(5, serviceOrderVO.getServ_count());
 			pstmt.setInt(6, serviceOrderVO.getTotal_price());
-			pstmt.setString(7, serviceOrderVO.getLocation());
+			pstmt.setString(7, serviceOrderVO.getLocations());
 
 			pstmt.executeUpdate();
 
@@ -97,7 +97,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 			pstmt.setTimestamp(4, serviceOrderVO.getServ_time());
 			pstmt.setInt(5, serviceOrderVO.getServ_count());
 			pstmt.setInt(6, serviceOrderVO.getTotal_price());
-			pstmt.setString(7, serviceOrderVO.getLocation());
+			pstmt.setString(7, serviceOrderVO.getLocations());
 
 			pstmt.executeUpdate();
 
@@ -200,7 +200,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 				serviceOrderVO.setServ_time(rs.getTimestamp("serv_time"));
 				serviceOrderVO.setServ_count(rs.getInt("serv_count"));
 				serviceOrderVO.setTotal_price(rs.getInt("total_price"));
-				serviceOrderVO.setLocation(rs.getString("location"));
+				serviceOrderVO.setLocations(rs.getString("locations"));
 			}
 
 			// Handle any driver errors
@@ -265,7 +265,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 				serviceOrderVO.setServ_time(rs.getTimestamp("serv_time"));
 				serviceOrderVO.setServ_count(rs.getInt("serv_count"));
 				serviceOrderVO.setTotal_price(rs.getInt("total_price"));
-				serviceOrderVO.setLocation(rs.getString("location"));
+				serviceOrderVO.setLocations(rs.getString("locations"));
 				list.add(serviceOrderVO); // Store the row in the list
 			}
 
@@ -334,7 +334,7 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 				serviceOrderVO.setServ_time(rs.getTimestamp("serv_time"));
 				serviceOrderVO.setServ_count(rs.getInt("serv_count"));
 				serviceOrderVO.setTotal_price(rs.getInt("total_price"));
-				serviceOrderVO.setLocation(rs.getString("location"));
+				serviceOrderVO.setLocations(rs.getString("locations"));
 				list.add(serviceOrderVO); // Store the row in the list
 			}
 

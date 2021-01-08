@@ -79,7 +79,7 @@ public class ServiceOrderServlet extends HttpServlet {
 			Integer total_price = null;
 			total_price = new Integer(req.getParameter("total_price").trim());
 			
-			String location = req.getParameter("location");
+			String locations = req.getParameter("locations");
 
 			ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
 
@@ -93,11 +93,11 @@ public class ServiceOrderServlet extends HttpServlet {
 			serviceOrderVO.setServ_time(serv_time);
 			serviceOrderVO.setServ_count(serv_count);
 			serviceOrderVO.setTotal_price(total_price);
-			serviceOrderVO.setLocation(location);
+			serviceOrderVO.setLocations(locations);
 
 			ServiceOrderService serviceOrderSvc = new ServiceOrderService();
 			serviceOrderVO = serviceOrderSvc.updateServiceOrder(serv_odno, bk_no, /* od_time, */ od_status,
-					serv_no, serv_time, serv_count, total_price, location);
+					serv_no, serv_time, serv_count, total_price, locations);
 
 			req.setAttribute("serviceOrderVO", serviceOrderVO);
 
@@ -136,7 +136,7 @@ public class ServiceOrderServlet extends HttpServlet {
 				Integer total_price = null;
 				total_price = new Integer(req.getParameter("total_price").trim());
 				
-				String location = req.getParameter("location");
+				String locations = req.getParameter("locations");
 
 				ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
 
@@ -150,11 +150,11 @@ public class ServiceOrderServlet extends HttpServlet {
 				serviceOrderVO.setServ_time(serv_time);
 				serviceOrderVO.setServ_count(serv_count);
 				serviceOrderVO.setTotal_price(total_price);
-				serviceOrderVO.setLocation(location);
+				serviceOrderVO.setLocations(locations);
 
 				ServiceOrderService serviceOrderSvc = new ServiceOrderService();
 				serviceOrderVO = serviceOrderSvc.addServiceOrder(/*serv_odno,*/ bk_no, /* od_time, */ /*od_status,*/
-						serv_no, serv_time, serv_count, total_price, location);
+						serv_no, serv_time, serv_count, total_price, locations);
 				
 				HttpSession session = req.getSession();
 				session.removeAttribute("shoppingcart");

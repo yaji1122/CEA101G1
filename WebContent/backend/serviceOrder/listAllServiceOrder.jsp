@@ -42,7 +42,6 @@ pageContext.setAttribute("list", list);
 				<th scope="col">訂房單號</th>
 				<th scope="col">訂單成立時間</th>
 				<th scope="col">訂單狀態</th>
-				<th scope="col">客房編號</th>
 				<th scope="col">服務名稱</th>
 				<th scope="col">預約時間</th>
 				<th scope="col">服務人數</th>
@@ -70,14 +69,13 @@ pageContext.setAttribute("list", list);
 						</c:choose></td>
 
 					<%-- <td>${serviceOrderVO.od_status}</td> --%>
-					<td>${serviceOrderVO.rm_no}</td>
 					<%-- <td>${serviceOrderVO.serv_no}</td> --%>
 					<td>
 						${servicesSvc.getOneServices(serviceOrderVO.serv_no).serv_name}</td>
 					<td><fmt:formatDate value="${serviceOrderVO.serv_time}"
 							pattern="yyyy-MM-dd HH:mm:ss" /></td>
 					<td>${serviceOrderVO.serv_count}</td>
-					<td>${serviceOrderVO.location}</td>
+					<td>${serviceOrderVO.locations}</td>
 					<td>${serviceOrderVO.total_price}</td>
 					<td>
 						<FORM METHOD="post"

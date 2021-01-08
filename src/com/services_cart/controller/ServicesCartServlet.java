@@ -102,7 +102,7 @@ public class ServicesCartServlet extends HttpServlet {
 		Integer quantity = (new Integer(req.getParameter("quantity")).intValue());
 		String servicesNo = req.getParameter("servicesNo");
 		Integer price = (new Integer(req.getParameter("price")).intValue());
-		String location = req.getParameter("location");
+		String locations = req.getParameter("locations");
 		
 		String str = req.getParameter("hiredate");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -114,7 +114,7 @@ public class ServicesCartServlet extends HttpServlet {
 		theServicesItem.setServicesNo(servicesNo);
 		theServicesItem.setPrice(price);
 		theServicesItem.setQuantity(quantity);
-		theServicesItem.setLocation(location);
+		theServicesItem.setLocations(locations);
 		theServicesItem.setServTime(servTime);
 		return theServicesItem;
 	}

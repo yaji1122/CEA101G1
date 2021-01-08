@@ -20,7 +20,7 @@
 			String servicesNo = order.getServicesNo();
 			Integer price = order.getPrice();
 			Integer quantity = order.getQuantity();
-			String location = order.getLocation();
+			String locations = order.getLocations();
 			LocalDateTime servTime = order.getServTime();
 		%>
 	<table>
@@ -39,7 +39,7 @@
 			<td><%=servTime%></td>
 			<td><%=price%></td>
 			<td><%=quantity%></td>
-			<td><%=location%></td>
+			<td><%=locations%></td>
 		</tr>
 
 		<tr>
@@ -65,7 +65,7 @@
 			type="hidden" name="serv_time" value="<%=servTime%>">
 		<input type="hidden" name="serv_count" value="<%=quantity%>">
 		<input type="hidden" name="total_price" value="<%=amount%>">
-		<input type="hidden" name="location" value="<%=location%>">
+		<input type="hidden" name="locations" value="<%=locations%>">
 
 	</form>
 	<%

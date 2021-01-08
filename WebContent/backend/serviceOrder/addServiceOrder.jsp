@@ -55,9 +55,9 @@ form {
 				value="<%=(serviceOrderVO == null) ? "1" : serviceOrderVO.getServ_count()%>">
 		</div>
 		<div class="form-group">
-			<label for="location">服務場所:</label> <input type="text"
-				class="form-control" id="location" name="location"
-				value="<%=(serviceOrderVO == null) ? "露天按摩A區" : serviceOrderVO.getLocation()%>">
+			<label for="locations">服務場所:</label> <input type="text"
+				class="form-control" id="locations" name="locations"
+				value="<%=(serviceOrderVO == null) ? "露天按摩A區" : serviceOrderVO.getLocations()%>">
 		</div>
 		
 		<div class="form-group">

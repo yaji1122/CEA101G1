@@ -10,7 +10,7 @@ public class ServicesItem implements Serializable{
 		servicesNo = "";
 		price = 0;
 		quantity = 0;
-		location = "";
+		locations = "";
 		servTime = null;
 	}
 
@@ -18,7 +18,7 @@ public class ServicesItem implements Serializable{
 	private LocalDateTime servTime;
 	private Integer price;
 	private Integer quantity;
-	private String location;
+	private String locations;
 	
 	public String getServicesNo() {
 		return servicesNo;
@@ -40,11 +40,11 @@ public class ServicesItem implements Serializable{
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	public String getLocation() {
-		return location;
+	public String getLocations() {
+		return locations;
 	}
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocations(String locations) {
+		this.locations = locations;
 	}
 	public LocalDateTime getServTime() {
 		return servTime;

@@ -38,7 +38,7 @@
 				<td><%=order.getServTime()%></td>
 				<td><%=order.getPrice()%></td>
 				<td><%=order.getQuantity()%></td>
-				<td><%=order.getLocation()%></td>
+				<td><%=order.getLocations()%></td>
 				<td><div align="center">
 						<form name="deleteForm"
 							action="${pageContext.request.contextPath}/ServicesCartServlet"

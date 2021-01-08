@@ -12,7 +12,7 @@ public class ServiceOrderVO implements java.io.Serializable {
 	private Timestamp serv_time;
 	private Integer serv_count;
 	private Integer total_price;
-	private String location;
+	private String locations;
 
 	public String getServ_odno() {
 		return serv_odno;
@@ -78,12 +78,12 @@ public class ServiceOrderVO implements java.io.Serializable {
 		this.total_price = total_price;
 	}
 	
-	public String getLocation() {
-		return location;
+	public String getLocations() {
+		return locations;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocations(String locations) {
+		this.locations = locations;
 	}
 
 }
