@@ -69,7 +69,6 @@
 						<%	
 							boolean isGuest = false;
 							if (member != null) {
-								System.out.print("in");
 								isGuest = bkodSvc2.getAllByMbId(member.getMb_id()).stream().anyMatch(e -> e.getBk_status().equals("2"));
 							} 
 						%>
