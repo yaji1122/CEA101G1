@@ -65,10 +65,9 @@
 						<li  class="nav-list"><a class="nav-event"
 							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房介紹</a>
 						</li>
-						<%@ page import="com.BookingOrder.model.*"%>
+						<jsp:useBean id="bkodSvc" scope="page" class="com.bookingorder.model.BookingOrderService"/>
 						<%	
-							BookingOrderService bkodSvc2 = new BookingOrderService();
-							boolean isGuest = bkodSvc2.getAllByMbId(member.getMb_id()).stream().anyMatch(e -> e.getBk_status().equals('2'));
+							boolean isGuest = bkodSvc.getAllByMbId(member.getMb_id()).stream().anyMatch(e -> e.getBk_status().equals('2'));
 						%>
 						<c:if test="<%=isGuest%>">
 						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event" class="nav-event"><i class="fas fa-glass-cheers"></i>住客專區</a>
