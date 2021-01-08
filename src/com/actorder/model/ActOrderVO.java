@@ -21,8 +21,8 @@ public class ActOrderVO implements java.io.Serializable{
 	public String getActNo() {
 		return actNo;
 	}
-	public void setActNo(String bk_no) {
-		this.bk_no = bk_no;
+	public void setActNo(String actNo) {
+		this.actNo = actNo;
 	}
 	public String getBkNo() {
 		return bk_no;
