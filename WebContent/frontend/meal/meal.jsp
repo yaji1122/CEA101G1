@@ -254,13 +254,13 @@
 		<div class="wrapper" style="background-color: rgb(34, 39, 54);">
 			<div class="container ">
 				<div class="row ">
-					<div class="col-lg-3 type-wrapper nav-fixed-type ">
+					<div class="col-lg-3 type-wrapper nav-fixed-type">
 						<div id="list" class="list-group type-list">
 							<jsp:useBean id="mealTypeSvc" scope="page"
 								class="com.mealtype.model.MealTypeService" />
 							<c:forEach var="mealTypeVO" items="${mealTypeSvc.all}"
 								varStatus="i">
-								<a class="list-group-item list-group-item-action "
+								<a class="list-group-item list-group-item-action"
 									style="background-color: rgb(44, 49, 64);"
 									href="#list-item-${i.index}">
 									<div class="type-box">

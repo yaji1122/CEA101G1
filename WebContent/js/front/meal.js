@@ -150,4 +150,4 @@ $(".hover").mouseleave(function() {
 	$(this).removeClass("hover");
 });
 
-
+$('body').scrollspy({ target: '#list'});
