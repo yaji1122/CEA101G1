@@ -2,12 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>selectPage</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/selectPage.css" />
 </head>
 <body>
+<%@ include file="/backend/files/backend_sidebar.file"%>
  <div class="container">
  <button class="btn"><i class="fa fa-home">
                            <a href="<%=request.getContextPath()%>/backend/backend_index.jsp" >Home</a></i></button>
@@ -45,5 +47,6 @@
                 });
             });
         </script>
+   <%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

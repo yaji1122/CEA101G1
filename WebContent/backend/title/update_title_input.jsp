@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <title>職位資料修改 - update_title_input.jsp</title>
 
@@ -64,7 +65,8 @@
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
+<%@ include file="/backend/files/backend_sidebar.file"%>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -89,5 +91,6 @@
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="title_no" value="<%=titleVO.getTitle_no()%>">
 </FORM>
+<%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

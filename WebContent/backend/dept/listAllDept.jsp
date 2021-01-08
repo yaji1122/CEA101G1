@@ -13,13 +13,14 @@
 
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <title>所有部門資料 - listAllDept.jsp</title>
  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/list.css" />
 </head>
 
 <body>
-
+<%@ include file="/backend/files/backend_sidebar.file"%>
 <i class="fa fa-home"><a href="<%=request.getContextPath()%>/backend/emp/protected/selectPage.jsp"> Back</a></i>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -45,7 +46,7 @@
 		<td>${deptVO.dept}</td>	
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/dept/dept.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="Update" class="btn btn-primary btn-sm">
+			     <input type="submit" value="Update">
 			     <input type="hidden" name="dept_no"  value="${deptVO.dept_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
@@ -96,5 +97,6 @@
             	});
 
         </script>
+        <%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

@@ -15,12 +15,12 @@
     pageContext.setAttribute("list",list);
 %>
 <jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" />
-<jsp:useBean id="titleSvc" scope="page" class="com.title.model.TitleService" />
 <jsp:useBean id="funcSvc" scope="page" class="com.func.model.FuncService" />
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <title>所有權限資料 - listAllAuthByFunc.jsp</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -30,7 +30,7 @@
 </head>
 
 <body>
-
+	<%@ include file="/backend/files/backend_sidebar.file"%>
 <button class="btn"><i class="fa fa-home">
                            <a href="<%=request.getContextPath()%>/backend/emp/protected/listAllEmp.jsp" >Back</a></i></button>
 <%-- 錯誤表列 --%>
@@ -74,5 +74,6 @@
 	</tr>
 </c:forEach>
 </table>
+<%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

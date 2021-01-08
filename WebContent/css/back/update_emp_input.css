@@ -8,7 +8,7 @@
 }
 
 body {
-    display: grid;
+ /*   display: grid;*/
     place-items: center;
     background: white;
     height: 100%;
@@ -23,6 +23,7 @@ body {
     margin-bottom: 30px;
     width: 650px !important;
     padding-botton:20px;
+    left:23%;
 }
 
 .card img {
@@ -33,24 +34,14 @@ body {
     box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
 }
 
-a {
+a#Back {
     text-align: right;
     font-size: 18px;
 }
 .button {
     text-align: center;
 }
-header {
-    padding: 10px;
-    text-align: center;
-    color: black;
-    font-size: 22px;
-    font-family: "Raleway", sans-serif;
-}
-.display-show {
-    z-index: 99;
-    opacity: 1;
-}
+
 .listOne {
     margin: 0 90px;
     display: inline-block;
@@ -60,7 +51,7 @@ header {
     width: 250px;
     float: left;
     margin-right: 10px;
-    font-size:18px;
+    font-size:14px;
 }
 .right {
     float: left;
@@ -75,4 +66,23 @@ header {
     margin-top: 30px;
     display: grid;
     text-align: left;
+}
+input{
+	text-align:right;
+	font-size:14px;
+	margin:0.7px;
+}
+div.bottom{
+	font-size:14px;
+}
+p.mt-1.clearfix{
+	margin:0;
+	font-size:14px;
+}
+div#status{
+	margin:0;
+	font-size:14px;
+}
+p.mt-2{
+	margin:0;
 }

@@ -15,13 +15,13 @@ pageContext.setAttribute("list",list);
 
 
 <jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" />
-<jsp:useBean id="titleSvc" scope="page" class="com.title.model.TitleService" />
 <jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
 <jsp:useBean id="funcSvc" scope="page" class="com.func.model.FuncService" />
 
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <meta charset="UTF-8">
 <title>所有員工資料 - listAllEmpByDept.jsp</title>
@@ -32,7 +32,7 @@ pageContext.setAttribute("list",list);
 
 </head>
 <body>
-
+	<%@ include file="/backend/files/backend_sidebar.file"%>
 <button class="btn"><i class="fa fa-home">
                            <a href="<%=request.getContextPath()%>/backend/emp/protected/listAllEmp.jsp" >Back</a></i></button>
 <%-- 錯誤表列 --%>
@@ -101,6 +101,6 @@ pageContext.setAttribute("list",list);
 	 </c:forEach>
 </table>
 <%@ include file="pages/page2" %>
-	
+	<%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

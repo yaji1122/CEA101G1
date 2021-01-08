@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
@@ -23,6 +24,7 @@
 
 </head>
 <body>
+<%@ include file="/backend/files/backend_sidebar.file"%>
 	<div class="container mt-5">
 		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do"
 			name="form1" enctype="multipart/form-data">
@@ -47,8 +49,6 @@
 										name="emp_pwd"
 										value="<%=(empVO == null) ? "12345" : empVO.getEmp_pwd()%>" />
 
-									<jsp:useBean id="titleSvc" scope="page"
-										class="com.title.model.TitleService" />
 									<span class="d-block head">職位</span> <span><select
 										size="1" name="title_no" class="equal">
 											<c:forEach var="titleVO" items="${titleSvc.all}">
@@ -167,6 +167,7 @@
 			}
 		};
 	</script>
+ <%@ include file="/backend/files/backend_footer.file"%>
 </body>
 
 </html>

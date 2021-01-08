@@ -16,24 +16,24 @@
 
 
 <jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" />
-<jsp:useBean id="titleSvc" scope="page" class="com.title.model.TitleService" />
 <jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
 <jsp:useBean id="funcSvc" scope="page" class="com.func.model.FuncService" />
 
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <title>所有員工資料 - listAllEmp.jsp</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/listAllEmp.css" />
  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/Searching.css" /> 
- <style>
- </style>
+ 
 </head>
 
 <body>
+	<%@ include file="/backend/files/backend_sidebar.file"%>
 <button class="btn"><i class="fa fa-home">
                            <a href="<%=request.getContextPath()%>/backend/emp/protected/selectPage.jsp" >Home</a></i></button>
 
@@ -47,7 +47,7 @@
 	</ul>
 </c:if>
  <a href='<%=request.getContextPath()%>/backend/emp/protected/addEmp.jsp'>
-    <img src="${pageContext.request.contextPath}/img/Add.png" width="50" />
+    <img src="${pageContext.request.contextPath}/img/Add.png" width="50" id="Add"/>
  </a>
 	<table>
 	   <tr><th colspan="7"><h4>所有員工資料表</h4></th><th colspan="2" id="search">進階搜尋</th></tr>
@@ -208,5 +208,6 @@
                 });
             });
         </script>
+               <%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>
