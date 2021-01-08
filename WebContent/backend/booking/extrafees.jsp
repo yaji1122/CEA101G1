@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.actorder.model.*" %>
 <%@ page import="com.service_order.model.*" %>
 <%@ page import="com.mealorder.model.*" %>
@@ -142,7 +143,7 @@
             </td>
 
             <td>
-              Invoice #:<%=bk_no%> <br> Created: <%=LocalDate.now()%>
+              Invoice #:${bk_no} <br> Created: <%=LocalDate.now()%>
             </td>
           </tr>
         </table>
@@ -159,7 +160,8 @@
 			<jsp:useBean id="mbSvc" scope="page" class="com.members.model.MembersService"/>
 			<jsp:useBean id="bkodSvc" scope="page" class="com.bookingorder.model.BookingOrderService"/>
             <td>
-              <br>${mbSvc.getOneByMbId(bkodSvc.getOneByBkNo(bk_no).mb_id).mb_name} 君
+              ${bkodSvc.getOneByBkNo(bk_no)} 君
+               ${mbSvc.getOneByMbId(bkodSvc.getOneByBkNo(bk_no).mb_id).mb_name} 君
             </td>
           </tr>
         </table>
@@ -168,7 +170,7 @@
 
     <tr class="heading">
       <td colspan="3">Payment Method</td>
-      <td>Check #</td>
+      <td>Credit Card #</td>
     </tr>
 
     <tr class="details">
