@@ -605,10 +605,7 @@ public class EmpServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 					}
-
-				//清除session中內容
-//				req.getSession().removeAttribute("empVO");
-				
+			
 				//開始員工自己修改資料
 				EmpService empSvc = new EmpService();
 				empVO = empSvc.updateEmp(emp_id, emp_name, emp_pwd, emp_pic, emp_phone, emp_email, emp_city, emp_town, 
@@ -616,6 +613,8 @@ public class EmpServlet extends HttpServlet {
 
 				//修改完成, 準備轉交
 				req.setAttribute("empVO",empVO);
+				//re-set session中內容
+				req.getSession().setAttribute("empVO", empVO);
 				System.out.println(emp_id);
 				
 				String url = "/backend/backend_index.jsp";
