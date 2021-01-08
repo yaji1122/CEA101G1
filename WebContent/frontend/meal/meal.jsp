@@ -6,15 +6,14 @@
 <%@ page import="com.cart.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.rooms.model.*"%>
-<%@ page import="com.bookingorder.model.*" %>
+<%@ page import="com.bookingorder.model.*"%>
 <%@ page import="java.util.*"%>
-<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.util.stream.Collectors"%>
 
 <%
 	MealTypeVO mealTypeVO = (MealTypeVO) request.getAttribute("mealTypeVO");
 	MealVO mealVO = (MealVO) request.getAttribute("mealVO");
 	RoomsVO roomsVO = (RoomsVO) request.getAttribute("rooms");
-
 %>
 
 <!DOCTYPE html>
@@ -40,25 +39,25 @@
 
 	<%
 		String mb_id = member.getMb_id();
+	System.out.println(mb_id);
 		BookingOrderService bkodSvc = new BookingOrderService();
 		List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
-		List<BookingOrderVO> newList = bkodList.stream()
-									.filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
-									.collect(Collectors.toList());
+		List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
+				.collect(Collectors.toList());
 		String bk_no = "";
-		for(BookingOrderVO list : newList){
+		for (BookingOrderVO list : newList) {
 			bk_no = list.getBk_no();
 		}
-// 		System.out.println(bk_no);
-		
+				System.out.println(bk_no);
+
 		RoomsService roomsSvc = new RoomsService();
 		List<RoomsVO> roomList = roomsSvc.getAllByMbId(mb_id);
 		List<String> roomnoList = new ArrayList<>();
-		for(RoomsVO list : roomList){
+		for (RoomsVO list : roomList) {
 			roomnoList.add(list.getRm_no());
 		}
-// 		roomnoList.forEach(System.out::println);
-			
+				roomnoList.forEach(System.out::println);
+
 		session.setAttribute("roomnoList", roomnoList);
 	%>
 
@@ -120,61 +119,86 @@
 	%>
 
 	<!-- header menu -->
-	<header class="header-section nav-fixed">
-        <div class="menu-item">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="logobox">
+	<header class="header-section">
+		<div class="menu-item">
+			<div class="nav-menu">
+				<nav class="mainmenu">
+					<ul class="mainmenu-row">
+						<div class="logobox">
 							<a href="${pageContext.request.contextPath}/frontend/index.jsp"><img
 								src="${pageContext.request.contextPath}/img/logo.png" /> </a>
 						</div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="nav-menu">
-                            <nav class="mainmenu">
-                                <ul>
-                                    <li>
-                                        <a href="" class="nav-evnet">您的訂單</a>
-                                    </li>
-                                    <li>
-                                    <c:choose>
-                                    	<c:when test="${buylist.isEmpty()}">
-                                    	<a class="nav-event">
-                                            <i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="font-size: 20px">
-                                            </i>                                                                                      
-                                        </a>  
-                                        </c:when>
-                                         
-                                    	<c:when test="${buylist.size() > 0}">
-                                        <a class="nav-event">
-                                            <i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="font-size: 20px">
-                                            <div class="nav-counter nav-counter-blue">
-                                            <h6 style="letter-spacing: normal;">
-                                            <%= buylist.size() %>
-                                            </h6>
-                                            </div>                                             
-                                            </i>                                                                                      
-                                        </a>           
-                                        </c:when>
-                                        <c:otherwise>
-                                        <a class="nav-event">
-                                            <i class="fas fa-shopping-cart shopping-cart shopping-cart-icon" style="font-size: 20px">
-                                            </i>                                                                                      
-                                        </a>  
-                                        </c:otherwise>
-                                       </c:choose>                
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-	<!-- header menu -->
+						<li class="nav-list"><a href="#" class="nav-evnet">最新消息</a></li>
 
+						<li class="nav-list"><a class="nav-event"
+							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房介紹</a>
+						</li>
+
+						<li class="nav-list"><a
+							href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp"
+							class="nav-evnet">戴蒙商城</a></li>
+
+						<li class="nav-list"><a
+							href="<%=request.getContextPath()%>/frontend/guestSection.jsp"
+							class="nav-event" class="nav-event"><i
+								class="fas fa-glass-cheers"></i>住客專區</a>
+							<ul class="dropdown">
+								<li><a
+									href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
+								<li><a
+									href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
+								<li><a
+									href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
+							</ul></li>
+
+						<li>
+						<c:choose>
+								<c:when test="${buylist.isEmpty()}">
+									<a class="nav-event"> <i
+										class="fas fa-shopping-cart shopping-cart shopping-cart-icon"
+										style="font-size: 20px"> </i>
+									</a>
+								</c:when>
+
+								<c:when test="${buylist.size() > 0}">
+									<a class="nav-event"> <i
+										class="fas fa-shopping-cart shopping-cart shopping-cart-icon"
+										style="font-size: 20px">
+											<div class="nav-counter nav-counter-blue">
+												<h6 style="letter-spacing: normal;">
+													<%=buylist.size()%>
+												</h6>
+											</div>
+									</i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a class="nav-event"> <i
+										class="fas fa-shopping-cart shopping-cart shopping-cart-icon"
+										style="font-size: 20px"> </i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+							</li>
+
+						<li class="nav-list"><a class="nav-event"> <i
+								class="far fa-gem"></i>
+						</a>
+							<ul class="dropdown">
+								<li><a
+									href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/frontend/members/memberBooking.jsp">我的假期</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/frontend/members/memberHistory.jsp">歷史訂單</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
+							</ul></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
 
 	<div class="body-wrapper">
 		<div class="img-slide">
@@ -231,15 +255,18 @@
 			<div class="container ">
 				<div class="row ">
 					<div class="col-lg-3 type-wrapper nav-fixed-type ">
-						<div id="list type-list " class="list-group ">
+						<div id="list" class="list-group type-list">
 							<jsp:useBean id="mealTypeSvc" scope="page"
 								class="com.mealtype.model.MealTypeService" />
 							<c:forEach var="mealTypeVO" items="${mealTypeSvc.all}"
 								varStatus="i">
-								<a class="list-group-item list-group-item-action " style="background-color: rgb(44, 49, 64);"
+								<a class="list-group-item list-group-item-action "
+									style="background-color: rgb(44, 49, 64);"
 									href="#list-item-${i.index}">
 									<div class="type-box">
-										<h5 class="type-title"><b>${mealTypeVO.type_name}</b></h5>
+										<h5 class="type-title">
+											<b>${mealTypeVO.type_name}</b>
+										</h5>
 									</div>
 								</a>
 							</c:forEach>
@@ -247,7 +274,7 @@
 					</div>
 
 					<div class=" col-lg-9 card-wrapper ">
-						<div data-spy="scroll " data-target="#list " data-offset="0"
+						<div data-spy="scroll " data-target="#list" data-offset="0"
 							class="scrollspy-example ">
 							<c:forEach var="mealTypeVO" items="${mealTypeSvc.all}"
 								varStatus="j">
@@ -257,7 +284,9 @@
 								<hr style="width: 800px;">
 								<div class="row">
 									<div class="col-lg-12">
-										<h2 class="title" style="user-select: none;"><b>${mealTypeVO.type_name}</b></h2>
+										<h2 class="title" style="user-select: none;">
+											<b>${mealTypeVO.type_name}</b>
+										</h2>
 									</div>
 								</div>
 								<div class="row ">
@@ -280,32 +309,49 @@
 																onclick="document.getElementById('form' + ${k.index} + '').submit();">加入購物車</a>
 														</div>
 														<figcaption>
-															<h5 id="meal_name${k.index}" style="color: white; user-select: none; float: left;">${mealVO.meal_name}</h5>
-															<p style="color: white; user-select: none;">${mealVO.meal_info}</p>
-															<div class="row" style="display: none;">
-																<div class="col-lg-12">
-																	<i class="fas fa-minus-square display-icon-minus"
-																		field="quantity${k.index}"
-																		id="display-icon-minus${k.index}"></i> <input
-																		type="text" value=1 class="display-qty"
-																		id="display-qty${k.index}" name="quantity${k.index}"
-																		style="border-radius: 5px;" disabled="disabled"><i
-																		class="fas fa-plus-square display-icon-plus"
-																		field="quantity${k.index}"
-																		id="display-icon-plus${k.index}"></i>
+															<div class="container">
+																<div class="row">
+																	<div class="col-lg-12">
+																		<h4 id="meal_name${k.index}"
+																			style="color: white; user-select: none; float: left;">
+																			<b>${mealVO.meal_name}</b>
+																		</h4>
+																	</div>
 																</div>
-															</div>
-															<div class="row">
-																<div class="col-lg-12 price" id="showprice${k.index}">
-																<h5 style="color: white; user-select: none; margin-top: 40px; display: inline-block;">${mealVO.price}</h5>
-																<h5 style="color: white; display: inline-block">元</h5>
+																<div class="row">
+																	<div class="col-lg-12">
+																		<p style="color: white; user-select: none;">${mealVO.meal_info}</p>
+																	</div>
 																</div>
-																<input type="hidden" id="price${k.index}"
-																	value="${mealVO.price}">
+																<div class="row" style="display: none;">
+																	<div class="col-lg-12">
+																		<i class="fas fa-minus-square display-icon-minus"
+																			field="quantity${k.index}"
+																			id="display-icon-minus${k.index}"></i> <input
+																			type="text" value=1 class="display-qty"
+																			id="display-qty${k.index}" name="quantity${k.index}"
+																			style="border-radius: 5px;" disabled="disabled"><i
+																			class="fas fa-plus-square display-icon-plus"
+																			field="quantity${k.index}"
+																			id="display-icon-plus${k.index}"></i>
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-lg-4 price">
+																		<h5 style="color: white; display: inline-block"><b>USD$</b></h5>
+																	</div>
+																	<div class="col-lg-8 price" id="showprice${k.index}">
+																		<h5
+																			style="color: white; user-select: none; display: inline-block;"><b>${mealVO.price}</b></h5>
+																	</div>
+																	<input type="hidden" id="price${k.index}"
+																		value="${mealVO.price}">
+																</div>
 															</div>
 														</figcaption>
 
-														<input type="hidden" id="item_no${k.index}" name="item_no" value="${mealVO.meal_no}">
+														<input type="hidden" id="item_no${k.index}" name="item_no"
+															value="${mealVO.meal_no}">
 														<input type="hidden" id="item_name${k.index}"
 															name="item_name" value="${mealVO.meal_name}">
 														<input type="hidden" id="item_quantity${k.index}"
@@ -352,7 +398,8 @@
 	</div>
 
 	<div class="shopping-cart-box">
-		<a class="close-display-box"> <i class="fas fa-window-close" style="color: white;"></i>
+		<a class="close-display-box"> <i class="fas fa-window-close"
+			style="color: white;"></i>
 		</a>
 
 		<div class="display-wrapper">
@@ -370,7 +417,8 @@
 					<div class="row" style="height: 70px;">
 						<div class="col-lg-12">
 							<button class="display-button display-close"
-								style="margin: 10px auto; background-color: rgb(44, 49, 64);" type="submit">
+								style="margin: 10px auto; background-color: rgb(44, 49, 64);"
+								type="submit">
 								<h5 class="display-button-word" style="margin: auto;">關閉</h5>
 							</button>
 						</div>
@@ -384,100 +432,128 @@
 	%>
 
 	<div class="shopping-cart-box">
-		<a class="close-display-box"> <i class="fas fa-window-close" style="color: white;"></i>
+		<a class="close-display-box"> <i class="fas fa-window-close"
+			style="color: white;"></i>
 		</a>
 
 		<div class="display-wrapper">
-			<h2 style="text-align: center; color: white; margin-top: 20px; display: inline-block; margin-left: 45%;">
+			<h2
+				style="text-align: center; color: white; margin-top: 20px; display: inline-block; margin-left: 45%;">
 				<b>購物車</b>
 			</h2>
-			<form method="post" action="${pageContext.request.contextPath}/AddToCartServlet" style="display: inline; margin-left: 16%;">
+			<form method="post"
+				action="${pageContext.request.contextPath}/AddToCartServlet"
+				style="display: inline; margin-left: 16%;">
 				<button class="remove-button" style="margin: 10px auto;"
-								type="submit">
-				<h6 class="display-button-word">清空購物車</h6>
+					type="submit">
+					<h6 class="display-button-word">清空購物車</h6>
 				</button>
-			<input type="hidden" name="action" value="RESET">
+				<input type="hidden" name="action" value="RESET">
 			</form>
 			<hr style="background-color: white;">
 			<div class="shopping-cart-detail">
 				<div class="container">
-				
-					<div class="row scrollbar" style="height: 320px; overflow-y:scroll;">
+
+					<div class="row scrollbar"
+						style="height: 320px; overflow-y: scroll;">
 						<%
 							for (int index = 0; index < buylist.size(); index++) {
 									CartItem order = buylist.get(index);
 						%>
 						<div class="container" style="height: 80px;">
-						<div class="row" style="height: 80px;">
-						<div class="col-lg-2" style="width: 72px;height: 72px; padding: 0px 25px;">
-						<img style="width: 100%; height: 100%; border-radius: 5px;" src="${pageContext.request.contextPath}/MealServlet?action=view_mealpic&meal_no=<%= order.getItem_no() %>">
+							<div class="row" style="height: 80px;">
+								<div class="col-lg-2"
+									style="width: 72px; height: 72px; padding: 0px 25px;">
+									<img style="width: 100%; height: 100%; border-radius: 5px;"
+										src="${pageContext.request.contextPath}/MealServlet?action=view_mealpic&meal_no=<%= order.getItem_no() %>">
+								</div>
+								<div class="col-lg-3" style="margin-top: 20px;">
+									<h5 class="cart-name" style="text-align: center; color: white;"><%=order.getItem_name()%></h5>
+									<input type="hidden" name="itemno"
+										value="<%=order.getItem_no()%>">
+								</div>
+								<div class="col-lg-3" style="margin-top: 20px;">
+									<i class="fas fa-minus-square cart-icon-minus"
+										field="cart-quantity<%=index%>"
+										id="cart-icon-minus<%=index%>"></i> <input type="text"
+										value=<%=order.getQuantity()%> class="cart-qty"
+										id="cart-qty<%=index%>" name="cart-quantity<%=index%>"
+										style="margin-left: 7.5%; border-radius: 5px; background-color: white;"
+										disabled="disabled"> <i
+										class="fas fa-plus-square cart-icon-plus"
+										field="cart-quantity<%=index%>"
+										id="cart-icon-plus<%=index%>"></i>
+
+								</div>
+								<div class="col-lg-2" style="margin-top: 20px;">
+									<h5 id="show-cartprice<%=index%>"
+										style="text-align: center; color: white;"><b><%=order.getPrice()%></b></h5>
+									<input type="hidden" name="price" value="<%=order.getPrice()%>">
+									<input type="hidden" id="cart-price<%=index%>"
+										value="<%=order.getPrice()%>">
+								</div>
+								<div class="col-lg-2" style="margin-top: 20px;">
+									<form method="post"
+										action="${pageContext.request.contextPath}/AddToCartServlet">
+										<input type="hidden" name="action" value="DELETE"> <input
+											type="hidden" name="del" value="<%=index%>">
+										<button type="submit">
+											<i class="fas fa-trash-alt"
+												style="margin-left: 10px; font-size: 21px; color: rgb(238, 53, 76);"></i>
+										</button>
+									</form>
+								</div>
+							</div>
 						</div>
-						<div class="col-lg-3" style="margin-top: 20px;">
-							<h5 class="cart-name" style="text-align: center; color: white;"><%=order.getItem_name()%></h5>
-							<input type="hidden" name="itemno" value="<%= order.getItem_no() %>" >
-						</div>
-						<div class="col-lg-3" style="margin-top: 20px;">
-							<i class="fas fa-minus-square cart-icon-minus"field="cart-quantity<%= index%>"id="cart-icon-minus<%= index%>"></i> 
-							<input type="text" value=<%=order.getQuantity()%> class="cart-qty"id="cart-qty<%= index%>"
-							 name="cart-quantity<%= index%>"style="margin-left:7.5%; border-radius: 5px; background-color: white;" disabled="disabled">
-							<i class="fas fa-plus-square cart-icon-plus"field="cart-quantity<%= index%>"id="cart-icon-plus<%= index%>"></i>
-							
-						</div>
-						<div class="col-lg-2" style="margin-top: 20px;">
-							<h5 id="show-cartprice<%=index%>" style="text-align: center; color: white;"><%=order.getPrice()%></h5>
-							<input type="hidden" name="price" value="<%=order.getPrice()%>">
-							<input type="hidden" id="cart-price<%=index %>" value="<%=order.getPrice()%>">
-						</div>
-						<div class="col-lg-2" style="margin-top: 20px;">
-							<form method="post"
-								action="${pageContext.request.contextPath}/AddToCartServlet">
-								<input type="hidden" name="action" value="DELETE"> <input
-									type="hidden" name="del" value="<%=index%>">
-								<button type="submit">
-									<i class="fas fa-trash-alt"
-										style="margin-left: 10px; font-size: 21px; color: white;"></i>
-								</button>
-							</form>
-						</div>
-						</div>
-						</div>
-						<% } %>
+						<%
+							}
+						%>
 					</div>
-					
-					<form method="post" action="${pageContext.request.contextPath}/MealOrderServlet">
-					<div class="row" style="height: 70px;">
-						<div class="col-lg-3">
-							<h5 style="margin-top: 25px; margin-left: 5%; display:inline-block; color: white;"><b>房號</b></h5>
-							
-							<label>
-								<select id="rm_no" name="rm_no" class="custom-select custom-select-sm" style="font-size: 20px; margin-top: -8px; margin-left: 30%;">
-								<c:forEach var="roomsVO" items="${roomnoList}" varStatus="rmno">
-									<option value="${roomsVO}">${roomsVO}</option>
-								</c:forEach>
+
+					<form method="post"
+						action="${pageContext.request.contextPath}/MealOrderServlet">
+						<div class="row" style="height: 70px;">
+							<div class="col-lg-3">
+								<h5
+									style="margin-top: 25px; margin-left: 5%; display: inline-block; color: white;">
+									<b>房號</b>
+								</h5>
+
+								<label> <select id="rm_no" name="rm_no"
+									class="custom-select custom-select-sm"
+									style="font-size: 20px; margin-top: -8px; margin-left: 30%;">
+										<c:forEach var="roomsVO" items="${roomnoList}"
+											varStatus="rmno">
+											<option value="${roomsVO}">${roomsVO}</option>
+										</c:forEach>
 								</select>
-							</label>
-							
+								</label>
+
+							</div>
+							<div class="col-lg-9">
+								<button class="display-button" style="margin: 10px auto;"
+									type="submit">
+									<h5 class="display-button-word">確定送出 $</h5>
+									<h5 id="totalprice" style="margin-top: 10px; color: white;"></h5>
+								</button>
+								<input type="hidden" name="action" value="insert_meal_order">
+								<input type="hidden" name="amount" id="cart-to-servlet" value=1>
+								<%
+									for (int index = 0; index < buylist.size(); index++) {
+											CartItem order = buylist.get(index);
+								%>
+								<input type="hidden" id="hidden-cartqty<%=index%>"
+									field="hidden-cartqty<%=index%>" name="qty"
+									value="<%=order.getQuantity()%>" style="background-color: white;">
+								<%
+									}
+								%>
+							</div>
 						</div>
-						<div class="col-lg-9">
-							<button class="display-button" style="margin: 10px auto;"
-								type="submit">
-								<h5 class="display-button-word">確定送出 $</h5>
-								<h5 id="totalprice" style="margin-top: 10px; color:white;"></h5>	
-							</button>
-							<input type="hidden" name="action" value="insert_meal_order">
-							<input type="hidden" name="amount" id="cart-to-servlet" value=1>
-							<%
-							for (int index = 0; index < buylist.size(); index++) {
-								CartItem order = buylist.get(index);
-							%>
-							<input type="hidden" id="hidden-cartqty<%=index %>" field="hidden-cartqty<%=index %>" name="qty" value="<%=order.getQuantity()%>">
-							<% } %>						
-						</div>
-					</div>
 					</form>
-					
+
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
