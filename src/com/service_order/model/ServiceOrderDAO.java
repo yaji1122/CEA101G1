@@ -36,7 +36,7 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 	private static final String UPDATE = 
 			"UPDATE SERVICE_ORDER set BK_NO=?, OD_STATUS=?, RM_NO=?, SERV_NO=?, SERV_TIME=?, SERV_COUNT=?, TOTAL_PRICE=?, LOCATION=? where SERV_ODNO=?";
 	private static final String GET_ALL_BY_BKNO_STMT = 
-			"SELECT BK_NO, SERV_ODNO, OD_TIME, OD_STATUS, RM_NO, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATION FROM SERVICE_ORDER order by BK_NO";
+			"SELECT * FROM SERVICE_ORDER WHERE BK_NO = ?";
 
 	@Override
 	public void insert(ServiceOrderVO serviceOrderVO) {
