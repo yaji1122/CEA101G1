@@ -13,5 +13,6 @@ public interface MealOrderDAO_interface {
 	public void delete(String meal_odno);
 	public MealOrderVO findByPrimaryKey(String meal_odno);
     public List<MealOrderVO> getAll();
+    public List<MealOrderVO> getAllByBkNo(String bk_no);
     public void insertWithDetails(MealOrderVO mealOrderVO, List<MealOrderDetailVO> meallist);
 }

@@ -11,7 +11,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<%@ include file="/frontend/files/commonCSS.file" %>
+<%@ include file="/frontend/files/commonCSS.file" %>
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/rooms.css" />
 </head>
 <%@ include file="/frontend/files/loginCSS.file" %>

@@ -51,6 +51,10 @@ public class MealOrderService {
 		return dao.getAll();
 	}	
 	
+	public List<MealOrderVO> getAllByBkNo(String bk_no) {
+		return dao.getAllByBkNo(bk_no);
+	}	
+	
 	synchronized public void insertWithDetails(MealOrderVO mealOrderVO, List<MealOrderDetailVO> meallist) {
 		dao.insertWithDetails(mealOrderVO, meallist);
 	}

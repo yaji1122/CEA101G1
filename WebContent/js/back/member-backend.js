@@ -29,6 +29,7 @@ $(".show-memberupdate").click(function () {   //開啟修改視窗
 	$("#update-mbtown").val(tr.children(".mb_town").text());
 	$("#update-mbaddress").val(tr.children(".mb_address").text());
 });
+
 //關閉視窗
 $(".icon").click(function () {
     let display = $(this).parents(".display-show");
@@ -58,42 +59,30 @@ $("#mb_id").keyup(function () {
     $(".showmsg p b").text(currentTotal - count);
 });
 
-/* function filter(){ 
-    let selected_val = roomTypeFilter.val();
-    let selected_val2 = roomStatusFilter.val();
-    if(selected_val2 === "all" && selected_val === "all") {
-        allTr.show();
-        $(".showmsg p b").text(currentTotal);
-        return;
-    }
-    allTr.show();
+$("#mb_name").keyup(function () {
+    let name = $("#mb_name").val().toUpperCase();
     let count = 0;
-    console.log("room_status:" + selected_val2)
-    console.log("room_type:" + selected_val)
-    
     for (let i = 1; i < allTr.length; i++) {
-        if(selected_val === "all") {
-            if (!allTr.eq(i).children().hasClass(selected_val2)){
-                allTr.eq(i).hide();
-                count++;
-            }
-            continue;
-        }
-        if (selected_val2 === "all") {
-            if (!allTr.eq(i).children().hasClass(selected_val)) {
-                allTr.eq(i).hide();
-                count++;
-            }
-            continue;
-        }
-        if(!allTr.eq(i).children().hasClass(selected_val2) || !allTr.eq(i).children().hasClass(selected_val)) {
+        if (allTr.eq(i).children().eq(1).text().toUpperCase().indexOf(name) < 0) {
             allTr.eq(i).hide();
             count++;
+        } else {
+            allTr.eq(i).show();
         }
-        /* if(!allTr.eq(i).children().hasClass(selected_val2) || !allTr.eq(i).children().hasClass(selected_val)){
-            allTr.eq(i).hide();
-            count++;
-        } 
     }
     $(".showmsg p b").text(currentTotal - count);
-} */
+});
+
+$("#mb_email").keyup(function () {
+    let name = $("#mb_email").val().toUpperCase();
+    let count = 0;
+    for (let i = 1; i < allTr.length; i++) {
+        if (allTr.eq(i).children().eq(2).text().toUpperCase().indexOf(name) < 0) {
+            allTr.eq(i).hide();
+            count++;
+        } else {
+            allTr.eq(i).show();
+        }
+    }
+    $(".showmsg p b").text(currentTotal - count);
+});

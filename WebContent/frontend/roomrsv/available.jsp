@@ -9,7 +9,10 @@
 RoomRsvService rsvService = new RoomRsvService();
 List<RoomRsvVO> rsvList = rsvService.getAll();
 pageContext.setAttribute("rsvList", rsvList);
-
+String stay = request.getParameter("stay");
+if (stay == null) stay = "1";
+String guest = request.getParameter("guest");
+if (guest == null) guest = "2";
 %>
 <!DOCTYPE html>
 <html>
@@ -297,6 +300,9 @@ pageContext.setAttribute("rsvList", rsvList);
                     })
                 } 
             }
+            
+            $("#stay").val("<%=stay%>");
+            $("#guest").val("<%=guest%>");
             $("#stay").change(function(){
             	loaded = [current, current+1];
             	fetchAvalibility(current)

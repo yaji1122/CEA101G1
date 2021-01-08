@@ -12,7 +12,7 @@
 BookingOrderService bkodSvc = new BookingOrderService();
 LocalDate today = LocalDate.now();
 List<BookingOrderVO> checkIns = bkodSvc.getAllBeforeToday(today);
-List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today); //取得當天尚未CheckOut的訂單
+List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today).stream().filter(e -> e.getBk_status().equals("2")).collect(Collectors.toList()); //取得當天尚未CheckOut的訂單
 List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 pageContext.setAttribute("checkIns", checkIns);
 pageContext.setAttribute("checkOuts", checkOuts);
@@ -46,13 +46,6 @@ pageContext.setAttribute("checkeds", checkeds);
 </head>
 <body>
 	<%@ include file="/backend/files/backend_sidebar.file"%>
-	<!-- preloader -->
-	<div id="preloder">
-		<img id="preloaderpic"
-			src="${pageContext.request.contextPath}/img/loading.png" />
-		<div class="loader"></div>
-	</div>
-	<!-- preloader -->
 	<div class="wrapper">
 		<div class="header">
 			<div>

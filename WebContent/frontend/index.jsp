@@ -13,6 +13,14 @@
 <title>Diamond Resort 戴蒙度假村</title>
 
 </head>
+<style>
+	.nice-select.open .list {
+	    transform: scale(1) translateY(-100%)
+	}
+	.nice-select .list {
+		top:0;
+	}
+</style>
 <%@ include file="/frontend/files/loginCSS.file" %> <!-- 登入必要檔案 -->
 <body>
 <%@ include file="/frontend/files/login.file" %>   <!-- 登入必要檔案 -->
@@ -46,7 +54,7 @@
 			<div class="booking-form">
 				<div class="box">
 					<div class="check-date">
-						<input type="text" class="date-input" id="date-in" name="date"
+						<input type="text" class="date-input" id="date-in" name="date-in"
 							autocomplete="off" placeholder="入住日期" required/> <label for="date-in"><i
 							class="icon_calendar"></i></label>
 					</div>

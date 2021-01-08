@@ -226,8 +226,28 @@
             	})
             	$("button.pkup-confirm").click(function(){
             		let time = $("#time").text();
-            		let bkno = $("#bkno").val().split(":")[0];
             		let chopno = $(".slick-active").eq(0).attr("data-chopno");
+            		if ($('#bkno').val() == null) {
+            			Swal.fire({
+            				position:"center",
+        					icon:"info",
+        					showConfirmButton:false,
+        					timer:1000,
+        					title:"請選擇訂單",
+            			})
+            			return;
+            		}
+            		let bkno = $("#bkno").val().split(":")[0];
+            		if (time == "") {
+            			Swal.fire({
+            				position:"center",
+        					icon:"info",
+        					showConfirmButton:false,
+        					timer:1000,
+        					title:"請選擇接送時間",
+            			})
+            			return;
+            		}
             		$.ajax({
             			url: "<%=request.getContextPath()%>/PickupServlet?action=insert_pkup",
             			data:{
