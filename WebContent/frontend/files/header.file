@@ -20,30 +20,24 @@
 			<i class="icon_close"></i>
 		</div>
 		<div class="header-configure-area">
-			<a href="#" class="bk-btn">立刻訂房</a>
+			<a href="<%=request.getContextPath()%>/frontend/roomrsv/available.jsp" class="bk-btn">查看空房</a>
 		</div>
 		<nav class="mainmenu mobile-menu">
 			<ul>
 				<li><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event">住客專區</a>
 					<ul class="dropdown">
-						<li><a href="./activity.html">活動報名</a></li>
-						<li><a href="">預約服務</a></li>
-						<li><a href="">訂購餐點</a></li>
+						<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
+						<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
+						<li><a href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
 					</ul></li>
-				<li><a href="shop.html" class="nav-evnet">戴蒙商城</a></li>
-				<li><a class="nav-event" href="./rooms.html">客房介紹</a></li>
+				<li><a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" class="nav-evnet" class="nav-evnet">戴蒙商城</a></li>
+				<li><a class="nav-event" href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房介紹</a></li>
 				<li><a class="nav-event log-in">會員登入</a></li>
-				<li><a href="" class="nav-event"
+				<li><a href="<%=request.getContextPath()%>/frontend/registration.jsp" class="nav-event"
 					style="color: rgb(240, 218, 162)">加入會員</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
-		<div class="top-social">
-			<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-				class="fa fa-twitter"></i></a> <a href="#"><i
-				class="fa fa-tripadvisor"></i></a> <a href="#"><i
-				class="fa fa-instagram"></i></a>
-		</div>
 		<ul class="top-widget">
 			<li><i class="fa fa-phone"></i> (12) 345 67890</li>
 			<li><i class="fa fa-envelope"></i> info.colorlib@gmail.com</li>
@@ -71,13 +65,20 @@
 						<li  class="nav-list"><a class="nav-event"
 							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房介紹</a>
 						</li>
-						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event" class="nav-event">住客專區</a>
+						<%@ page import="com.BookingOrder.model.*"%>
+						<%	
+							BookingOrderService bkodSvc2 = new BookingOrderService();
+							boolean isGuest = bkodSvc2.getAllByMbId(member.getMb_id()).stream().anyMatch(e -> e.getBk_status().equals('2'));
+						%>
+						<c:if test="<%=isGuest%>">
+						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event" class="nav-event"><i class="fas fa-glass-cheers"></i>住客專區</a>
 							<ul class="dropdown">
 								<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
 								<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
 								<li><a href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
 							</ul>
 						</li>
+						</c:if>
 						<li class="nav-list"><a class="nav-event"> 
 						<c:choose>
 									<c:when test="${member != null}"><i class="far fa-gem"></i></i></a>

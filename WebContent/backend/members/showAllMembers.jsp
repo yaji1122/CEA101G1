@@ -107,9 +107,11 @@ img {
 				<thead class="firstTr">
 					<tr>
 						<th><input type="text" id="mb_id" maxlength="10"
-							placeholder="會員編號" style="text-transform: uppercase"></th>
-						<th>會員姓名</th>
-						<th>E-MAIL</th>
+							placeholder="會員編號" style="text-transform: uppercase" autocomplete="off"></th>
+						<th><input type="text" id="mb_name" maxlength="50"
+							placeholder="會員姓名" style="text-transform: uppercase" autocomplete="off"></th>
+						<th><input type="text" id="mb_email" maxlength="50"
+							placeholder="E-MAIL" style="text-transform: uppercase" autocomplete="off"></th>
 						<th>擁有積分</th>
 						<th>帳號狀態</th>
 						<th>會員詳情</th>
@@ -192,7 +194,7 @@ img {
 	<div class="close-icon">
 		<i class="fas fa-times icon"></i>
 	</div>
-		<form method="post" class="update-form" enctype="multipart/form-data"
+		<form method="post" class="update-form" id="update-member-form" enctype="multipart/form-data"
 			action="${pageContext.request.contextPath}/MembersServlet">
 			<h3>
 				會員編號：<b id="update-mbID"></b>
@@ -243,6 +245,34 @@ img {
 	<script>
 		$("#update-mbbd").datetimepicker({
 			timepicker:false,
+		})
+		
+		$("#update-member-form").submit(function(e){
+			e.preventDefault();
+			var myform = document.getElementById("update-member-form");
+		    var fd = new FormData(myform);
+		    $.ajax({
+		        url: "<%=request.getContextPath()%>/MembersServlet",
+		        data: fd,
+		        cache: false,
+		        processData: false,
+		        contentType: false,
+		        type: 'POST',
+		        success: function (msg) {
+		        	if (msg == "success") {
+						Swal.fire({
+							position: "center",
+							title:"修改成功",
+							icon:"success",
+							showConfirmButton: false,
+							timeout: 1000,
+						})
+						setTimeout(function(){
+							window.location.reload();
+						}, 1000)
+					}
+		        }
+		    });
 		})
 	</script>
 </body>

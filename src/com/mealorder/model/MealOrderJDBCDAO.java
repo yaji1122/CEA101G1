@@ -368,4 +368,10 @@ public class MealOrderJDBCDAO implements MealOrderDAO_interface {
 //			System.out.println();
 //		}	
 	}
+
+	@Override
+	public List<MealOrderVO> getAllByBkNo(String bk_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

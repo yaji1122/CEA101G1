@@ -32,6 +32,8 @@ public class MealOrderDAO implements MealOrderDAO_interface {
 			"INSERT INTO MEAL_ORDER (MEAL_ODNO, BK_NO, RM_NO, TOTAL_PRICE) VALUES ('MEALOD' || LPAD(to_char(MEALODNO_SEQ.NEXTVAL), 4, '0'), ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT MEAL_ODNO, BK_NO, RM_NO, OD_TIME, TOTAL_PRICE, OD_STATUS FROM MEAL_ORDER ORDER BY MEAL_ODNO DESC";
+	private static final String GETALLBYBKNO = 
+			"SELECT * FROM MEAL_ORDER WHERE BK_NO = ?";
 	private static final String GET_ONE_STMT = 
 			"SELECT MEAL_ODNO, BK_NO, RM_NO, OD_TIME, TOTAL_PRICE, OD_STATUS FROM MEAL_ORDER WHERE MEAL_ODNO= ?";
 	private static final String DELETE = 
@@ -217,6 +219,57 @@ public class MealOrderDAO implements MealOrderDAO_interface {
 				mealOrderVO = new MealOrderVO();
 				mealOrderVO.setMeal_odno(rs.getString("meal_odno"));
 				mealOrderVO.setBk_no(rs.getString("bk_no"));
+				mealOrderVO.setRm_no(rs.getString("rm_no"));
+				mealOrderVO.setOd_time(rs.getTimestamp("od_time"));
+				mealOrderVO.setTotal_price(rs.getInt("total_price"));
+				mealOrderVO.setOd_status(rs.getString("od_status"));
+				list.add(mealOrderVO);
+			}
+			
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}	
+	
+	@Override
+	public List<MealOrderVO> getAllByBkNo(String bk_no) {
+		List<MealOrderVO> list = new ArrayList<MealOrderVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GETALLBYBKNO);
+			pstmt.setString(1, bk_no);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				MealOrderVO mealOrderVO = new MealOrderVO();
+				mealOrderVO.setMeal_odno(rs.getString("meal_odno"));
+				mealOrderVO.setBk_no(bk_no);
 				mealOrderVO.setRm_no(rs.getString("rm_no"));
 				mealOrderVO.setOd_time(rs.getTimestamp("od_time"));
 				mealOrderVO.setTotal_price(rs.getInt("total_price"));
