@@ -63,9 +63,7 @@
 	</tr>
 	<tr>
 	    <td><%=actEventVO.getActEventNo()%></td>
-	    <td><%=actEventVO.getActTypeNo()%></td>
 		<td><%=actEventVO.getActEventName()%></td>
-		<td><%=actEventVO.getActInfo()%></td>
 	</tr>
 </table>
 

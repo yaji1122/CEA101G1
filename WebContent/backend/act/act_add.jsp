@@ -35,10 +35,10 @@
 		</div>
 		<div class="form-title">
 			<img src="<%=request.getContextPath()%>/img/loading.png">
-			<h2 style="margin-left:80px;">活動查詢</h2>
+			<h2 style="margin-left:80px;">活動新增</h2>
 		</div>
 
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet" name="form1"  enctype="multipart/form-data">
 <div id="form">
              <li>
                 <label for="inputEmail4" class="alert alert-primary" role="alert">活動編號: (ACT_No):</label>
@@ -81,7 +81,7 @@
                 name="actTime" size="45" value="<%= (actVO==null)? "" :actVO.getActTime()%>" />
             </li>
             <li>
-                <label class="alert alert-danger">會員姓名: (ACT_Status):</label>
+                <label class="alert alert-danger">會員姓名: (Participant):</label>
                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="請填入姓名"
                 name="participant" size="45" value="<%= (actVO==null)? "" :actVO.getParticipant()%>" />
             </li>
@@ -90,9 +90,24 @@
                 <input type="text" class="form-control" id="input-Act-Namel4" name="actPrice" size="45"
                  placeholder="請填入數字" value="<%= (actVO==null)? "" :actVO.getActPrice()%>" />
             </li>
+            <li class="pic">
+                <label class="alert alert-primary" style="margin-left:200px;" >活動照片:(Pic_Load):</label>
+                 <div id="pic-area">
+                      <img  id="show"  src="#">
+                 </div>
+                 <input  onchange="showImg(this)"  type="file" class="form-control" style="margin-left:200px;"
+                 aria-label="Amount (to the nearest dollar)" name="ActPic" size="45"
+                 value="<%= (actVO==null)? "" :actVO.getActPic()%>" >
+            </li>
+           
+            <li>
+                <label class="alert alert-primary" role="alert">活動敘述:</label>
+                 <input type="text" class="form-control" id="input-Act-Namel4" name="actInfo" size="100" 
+                 placeholder="活動內容敘述" value="<%= (actVO==null)? "" :actVO.getActInfo()%>" />
+            </li>
       </div> 
         
-	    <div class="message" style="margin-left:600px; margin-top:500px;">
+	    <div class="message" style="margin-left:600px; margin-top:900px;">
 	              <input type="hidden" name="action" value="insert">
                   <button type="submit" class="btn btn-primary">新增</button>
                   <button type="reset" class="btn btn-primary">重設</button>
@@ -103,6 +118,22 @@
     
 </FORM>>
       <!-- 頁面內容結束 -->
+      
+      <script>
+	function showImg(thisimg) {
+		var file = thisimg.files[0];
+		if(window.FileReader) {
+			var fr = new FileReader();
+			
+			var showimg = document.getElementById('show');
+			fr.onloadend = function(e) {
+			showimg.src = e.target.result;
+		};
+		fr.readAsDataURL(file);
+		showimg.style.display = 'block';
+		}
+	}
+	</script>
   
     <script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>

@@ -10,15 +10,15 @@ public class ActEventJDBCDAO implements ActEventDAO_interface {
 	String password = "123456";
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO ACT_EVENT (ACT_EVENT_NO,ACT_TYPE_NO,ACT_EVENT_NAME,ACT_INFO) VALUES(?,?,?,?)";
+			"INSERT INTO ACT_EVENT (ACT_EVENT_NO,ACT_EVENT_NAME) VALUES(?,?)";
 	private static final String GET_ALL_STMT =
-			"SELECT ACT_EVENT_NO,ACT_TYPE_NO,ACT_EVENT_NAME,ACT_INFO FROM ACT_EVENT ORDER BY ACT_EVENT_NO";
+			"SELECT ACT_EVENT_NO,ACT_EVENT_NAME FROM ACT_EVENT ORDER BY ACT_EVENT_NO";
 	private static final String GET_ONE_STMT = 
-			"SELECT ACT_EVENT_NO,ACT_TYPE_NO,ACT_EVENT_NAME,ACT_INFO FROM ACT_EVENT WHERE ACT_EVENT_NO = ?";
+			"SELECT ACT_EVENT_NO,ACT_EVENT_NAME FROM ACT_EVENT WHERE ACT_EVENT_NO = ?";
 	private static final String DELETE =
 			"DELETE FROM ACT_EVENT WHERE ACT_EVENT_NO = ?";
 	private static final String UPDATE =
-			"UPDATE ACT_EVENT SET ACT_TYPE_NO=?,ACT_EVENT_NAME=?,ACT_INFO=? WHERE ACT_EVENT_NO = ?";
+			"UPDATE ACT_EVENT SET ACT_EVENT_NAME=? WHERE ACT_EVENT_NO = ?";
 	
 	@Override
 	public void insert(ActEventVO actEventVO) {
@@ -31,9 +31,7 @@ public class ActEventJDBCDAO implements ActEventDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1,actEventVO.getActEventNo());
-			pstmt.setString(2,actEventVO.getActTypeNo());
 			pstmt.setString(3,actEventVO.getActEventName());
-			pstmt.setString(4,actEventVO.getActInfo());
 			
 			pstmt.executeUpdate();
 		}catch(ClassNotFoundException e) {
@@ -71,10 +69,7 @@ public class ActEventJDBCDAO implements ActEventDAO_interface {
 			con = DriverManager.getConnection(url,userid,password);
 			pstmt = con.prepareStatement(UPDATE);
 			
-			
-			pstmt.setString(1,actEventVO.getActTypeNo());
 			pstmt.setString(2,actEventVO.getActEventName());
-			pstmt.setString(3,actEventVO.getActInfo());
 			pstmt.setString(4,actEventVO.getActEventNo());
 			
 			
@@ -163,9 +158,7 @@ public class ActEventJDBCDAO implements ActEventDAO_interface {
 				actEventVO = new ActEventVO();
 				
 				actEventVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
-				actEventVO.setActTypeNo(rs.getString("ACT_TYPE_NO"));
 				actEventVO.setActEventName(rs.getString("ACT_EVENT_NAME"));
-				actEventVO.setActInfo(rs.getString("ACT_INFO"));
 		       		
 			}
 		}catch(ClassNotFoundException e) {
@@ -213,9 +206,7 @@ public class ActEventJDBCDAO implements ActEventDAO_interface {
 				actEventVO = new ActEventVO();
 				
 				actEventVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
-				actEventVO.setActTypeNo(rs.getString("ACT_TYPE_NO"));
 				actEventVO.setActEventName(rs.getString("ACT_EVENT_NAME"));
-				actEventVO.setActInfo(rs.getString("ACT_INFO"));
 				list.add(actEventVO);
 		       		
 			}
@@ -248,26 +239,26 @@ public class ActEventJDBCDAO implements ActEventDAO_interface {
 	public static void main(String[] args) {
 		ActEventJDBCDAO dao = new ActEventJDBCDAO();
 		
-		//·s¼W
+		//ï¿½sï¿½W
 //		ActEventVO actEventVO1 = new ActEventVO();
 //		actEventVO1.setActEventNo("91");
 //		actEventVO1.setActTypeNo("2");
-//		actEventVO1.setActEventName("¸õ¤ô");
-//		actEventVO1.setActInfo("¦w");
+//		actEventVO1.setActEventName("ï¿½ï¿½ï¿½ï¿½");
+//		actEventVO1.setActInfo("ï¿½w");
 //		dao.insert(actEventVO1);
 		
-		//­×§ï
-		ActEventVO actEventVO2 = new ActEventVO();
-		actEventVO2.setActTypeNo("0");
-		actEventVO2.setActEventName("¤S¸õ");
-		actEventVO2.setActInfo("¦w¦w");
-		actEventVO2.setActEventNo("91");
-		dao.update(actEventVO2);
+		//ï¿½×§ï¿½
+//		ActEventVO actEventVO2 = new ActEventVO();
+//		actEventVO2.setActTypeNo("0");
+//		actEventVO2.setActEventName("ï¿½Sï¿½ï¿½");
+//		actEventVO2.setActInfo("ï¿½wï¿½w");
+//		actEventVO2.setActEventNo("91");
+//		dao.update(actEventVO2);
 //		
-//		//§R°£
+//		//ï¿½Rï¿½ï¿½
 //		dao.delete("1000011110");
 //		
-//		//³æ¶µ¬d¸ß
+//		//ï¿½æ¶µï¿½dï¿½ï¿½
 //		ActEventVO actEventVO3 = dao.findByPrimaryKey("1000000001");
 //		System.out.print(actEventVO3.getActEventNo()+",");
 //		System.out.print(actEventVO3.getActTypeNo()+",");
@@ -275,7 +266,7 @@ public class ActEventJDBCDAO implements ActEventDAO_interface {
 //		System.out.print(actEventVO3.getActInfo()+",");
 //		System.out.println("===========================");
 //		
-//		//¬d¸ß¥þ³¡
+//		//ï¿½dï¿½ß¥ï¿½ï¿½ï¿½
 //		List<ActEventVO> list = dao.getAll();
 //		for(ActEventVO actEvent : list) {
 //			System.out.print(actEvent.getActEventNo()+",");

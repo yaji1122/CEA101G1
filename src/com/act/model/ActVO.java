@@ -16,7 +16,21 @@ public class ActVO implements java.io.Serializable{
 	private String actTime;
 	private String participant;
 	private Integer actPrice;
+	private byte[] actPic;
+	private String actInfo;
 	
+	public byte[] getActPic() {
+		return actPic;
+	}
+	public void setActPic(byte[] actPic) {
+		this.actPic = actPic;
+	}
+	public String getActInfo() {
+		return actInfo;
+	}
+	public void setActInfo(String actInfo) {
+		this.actInfo = actInfo;
+	}
 	public String getActNo() {
 		return actNo;
 	}

@@ -64,7 +64,7 @@ public class ActOrderServlet extends HttpServlet{
 						ActOrderVO actOrderVO =   actOrderSvc.getOneActOrder(actOdno);
 						
 						if (actOrderVO == null) {
-							errorMsgs.add("�d�L���");
+							errorMsgs.add("輸入資訊不可為空白");
 						}
 						
 						// Send the use back to the form, if there were errors

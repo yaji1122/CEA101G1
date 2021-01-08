@@ -2,14 +2,12 @@ package com.act.controller;
 
 import java.io.*;
 import java.util.*;
-
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
-
 import com.act.model.*;
-import com.actevent.model.ActEventService;
-import com.actevent.model.ActEventVO;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class ActServlet extends HttpServlet{
 		
 		public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -22,6 +20,7 @@ public class ActServlet extends HttpServlet{
 
 			req.setCharacterEncoding("UTF-8");
 			String action = req.getParameter("action");
+			System.out.println(action);
 			
 			if ("getOne_For_Display".equals(action)) { // 嚙諉佗蕭act_event_select_page.jsp嚙踝蕭嚙請求
 
@@ -34,7 +33,7 @@ public class ActServlet extends HttpServlet{
 					/***************************1.嚙踝蕭嚙踝蕭嚙請求嚙諸潘蕭 - 嚙踝蕭J嚙賣式嚙踝蕭嚙踝蕭嚙羯嚙畿嚙緲**********************/
 					String str = req.getParameter("actNo");
 					if (str == null || (str.trim()).length() == 0) {
-						errorMsgs.add("嚙請選蕭傰s嚙踝蕭嚙諄塚蕭嚙諍名嚙踝蕭");
+						errorMsgs.add("ACT_NO為空白");
 					}
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
@@ -62,7 +61,7 @@ public class ActServlet extends HttpServlet{
 					ActService actSvc = new ActService();
 					ActVO actVO = actSvc.getOneAct(actNo);
 					if (actVO == null) {
-						errorMsgs.add("嚙範嚙盤嚙踝蕭嚙�");
+						errorMsgs.add("請輸入活動編號");
 					}
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
@@ -80,7 +79,7 @@ public class ActServlet extends HttpServlet{
 
 					/***************************嚙踝蕭L嚙箠嚙賞的嚙踝蕭嚙羯嚙畿嚙緲*************************************/
 				} catch (Exception e) {
-					errorMsgs.add("嚙盤嚙糊嚙踝蕭嚙緻嚙踝蕭嚙�:" + e.getMessage());
+					errorMsgs.add( e.getMessage());
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/backend/act/backend-act_select_page.jsp");
 					failureView.forward(req, res);
@@ -93,22 +92,23 @@ public class ActServlet extends HttpServlet{
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
+				System.out.println(action);
 
 				try {
 					/***********************1.嚙踝蕭嚙踝蕭嚙請求嚙諸潘蕭 - 嚙踝蕭J嚙賣式嚙踝蕭嚙踝蕭嚙羯嚙畿嚙緲*************************/
 					String actNo = req.getParameter("actNo").trim();
 					String actNameReg = "^(A,C,T0-9_){10}$";
 					if (actNo == null || actNo.trim().length() == 0) {
-						errorMsgs.add("嚙請確嚙緹嚙踝蕭嚙褊編嚙踝蕭嚙賣式嚙瞌嚙稻嚙踝蕭嚙確");
+						errorMsgs.add("請勿空白");
 					} 
 					
 					String actEventNo = req.getParameter("actEventNo");
 					if (actEventNo == null || actEventNo.trim().length() == 0) {
-						errorMsgs.add("嚙踝蕭嚙踝蕭嚙踝蕭嚙踝蕭嚙編嚙踝蕭: 嚙請勿空伐蕭");
+						errorMsgs.add("請勿空白");
 					}
 					String actName = req.getParameter("actName");
 					if (actName == null || actName.trim().length() == 0) {
-						errorMsgs.add("嚙踝蕭嚙踝蕭嚙踝蕭嚙踝蕭嚙編嚙踝蕭: 嚙請勿空伐蕭");
+						errorMsgs.add("請勿空白");
 					}
 					
 					String actStatus = req.getParameter("actStatus");
@@ -119,7 +119,7 @@ public class ActServlet extends HttpServlet{
 						actRegTime = java.sql.Date.valueOf(req.getParameter("actRegTime").trim());
 					} catch (IllegalArgumentException e) {
 						actRegTime = new java.sql.Date(System.currentTimeMillis());
-						errorMsgs.add("嚙請選蕭J嚙踝蕭嚙�!");
+						errorMsgs.add("日期請勿空白");
 					}
 					
 					java.sql.Date deadLine = null;
@@ -127,14 +127,14 @@ public class ActServlet extends HttpServlet{
 						deadLine = java.sql.Date.valueOf(req.getParameter("deadLine").trim());
 					} catch (IllegalArgumentException e) {
 						actRegTime = new java.sql.Date(System.currentTimeMillis());
-						errorMsgs.add("嚙請選蕭J嚙踝蕭嚙�!");
+						errorMsgs.add("日期請勿空白");
 					}
 					java.sql.Date actDate = null;
 					try {
 						actDate = java.sql.Date.valueOf(req.getParameter("actDate").trim());
 					} catch (IllegalArgumentException e) {
 						actRegTime = new java.sql.Date(System.currentTimeMillis());
-						errorMsgs.add("嚙請選蕭J嚙踝蕭嚙�!");
+						errorMsgs.add("日期請勿空白");
 					}
 					
 					String actTime = req.getParameter("actTime");
@@ -146,14 +146,32 @@ public class ActServlet extends HttpServlet{
 					try {
 						act_price = new Integer(actPrice);
 						if(act_price<=0){
-							errorMsgs.add("嚙踝蕭嚙賣不嚙箠嚙踝蕭0");
+							errorMsgs.add("金額不得小於0");
 						}
 					} catch (Exception e) {
-						errorMsgs.add("嚙踝蕭嚙賣不嚙踝蕭嚙確");
+						errorMsgs.add("actPrice有異常");
+					}
+					
+					Part actPic = req.getPart("ActPic");
+					if(actPic == null) {
+						errorMsgs.add("照片不得空白");
+					}
+					InputStream picIn = actPic.getInputStream();
+					byte[] act_pic = new byte[picIn.available()];
+					picIn.read(act_pic);
+					picIn.close();
+					
+					
+					String actInfo = req.getParameter("actInfo");
+//					String actNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,30}$";
+					if ( actInfo == null ||  actInfo.trim().length() == 0) {
+						errorMsgs.add("請輸入活動內容");
+					}else if(! actInfo.trim().matches(actInfo)) {
+						errorMsgs.add("內容格式不符合");
 					}
 				
-					
 					ActVO actVO = new ActVO();
+					
 					actVO.setActNo(actNo);
 					actVO.setActEventNo(actEventNo);
 					actVO.setActName(actName);
@@ -164,7 +182,8 @@ public class ActServlet extends HttpServlet{
 					actVO.setActTime(actTime);
 					actVO.setParticipant(participant);
 					actVO.setActPrice(act_price);
-				
+					actVO.setActPic(act_pic);
+					actVO.setActInfo(actInfo);
 
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
@@ -178,7 +197,7 @@ public class ActServlet extends HttpServlet{
 					/***************************2.嚙罷嚙締嚙編嚙磕嚙踝蕭嚙�***************************************/
 					ActService ActSvc = new ActService();
 					actVO = ActSvc.addAct(actNo, actEventNo, actName, actStatus, actRegTime, 
-							actDate, deadLine, actTime, participant, act_price);
+							actDate, deadLine, actTime, participant, act_price,act_pic,actInfo);
 					
 					/***************************3.嚙編嚙磕嚙踝蕭嚙踝蕭,嚙褒喉蕭嚙踝蕭嚙�(Send the Success view)***********/
 					String url = "/backend/act/backend-act_listAll.jsp";
@@ -187,7 +206,7 @@ public class ActServlet extends HttpServlet{
 					
 					/***************************嚙踝蕭L嚙箠嚙賞的嚙踝蕭嚙羯嚙畿嚙緲**********************************/
 				} catch (Exception e) {
-					errorMsgs.add("嚙踝蕭J嚙踝蕭嚙踝蕭嚙踝蕭躑嚙�");
+					errorMsgs.add("輸入格式異常");
 					e.printStackTrace();
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/backend/act/backend-act_add.jsp");
@@ -321,6 +340,22 @@ public class ActServlet extends HttpServlet{
 					} catch (Exception e) {
 						errorMsgs.add("嚙踝蕭嚙賣不嚙踝蕭嚙確");
 					}
+					
+					Part actPic = req.getPart("actPic");
+					if(actPic == null) {
+						errorMsgs.add("圖片是空白");
+					}
+					InputStream picIn = actPic.getInputStream();
+					byte[] act_pic = new byte[picIn.available()];
+					picIn.read(act_pic);
+					picIn.close();
+					
+					
+					String actInfo = req.getParameter("actInfo");
+//					String actNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,30}$";
+					if ( actInfo == null ||  actInfo.trim().length() == 0) {
+						errorMsgs.add("請輸入活動內容");
+					}
 				
 					
 					ActVO actVO = new ActVO();
@@ -334,6 +369,8 @@ public class ActServlet extends HttpServlet{
 					actVO.setActTime(actTime);
 					actVO.setParticipant(participant);
 					actVO.setActPrice(act_price);
+					actVO.setActPic(act_pic);
+					actVO.setActInfo(actInfo);
 	  				
 	  				
 	  				// Send the use back to the form, if there were errors
@@ -347,7 +384,8 @@ public class ActServlet extends HttpServlet{
 	  				
 	  				/***************************2.嚙罷嚙締嚙論改蕭嚙踝蕭*****************************************/
 	  				ActService ActSvc = new ActService();
-	  				actVO = ActSvc.updateAct(actNo, actEventNo, actName, actStatus, actRegTime, actDate, deadLine, actTime, participant, act_price);
+	  				actVO = ActSvc.updateAct(actNo, actEventNo, actName, actStatus, actRegTime, actDate, 
+	  						deadLine, actTime, participant, act_price,act_pic,actInfo);
 	  				
 	  				/***************************3.嚙論改完嚙踝蕭,嚙褒喉蕭嚙踝蕭嚙�(Send the Success view)*************/
 	  				req.setAttribute("actVO", actVO); // 嚙踝蕭wupdate嚙踝蕭嚙穀嚙踝蕭,嚙踝蕭嚙確嚙踝蕭嚙踝蕭actTypeVO嚙踝蕭嚙踝蕭,嚙編嚙皚req
@@ -363,6 +401,8 @@ public class ActServlet extends HttpServlet{
 	  				failureView.forward(req, res);
 	  			}
 	  		}
+	        
+	        
 	
        }
 	}

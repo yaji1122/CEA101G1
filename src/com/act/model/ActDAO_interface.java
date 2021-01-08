@@ -11,5 +11,6 @@ public interface ActDAO_interface {
 	public ActVO findByPrimaryKey(String actNo);
 	public List<ActVO> getAll();
 	public List<ActVO> getAllByActStatus();
+	public byte[] getOnePic(String  actNo);
 
 }

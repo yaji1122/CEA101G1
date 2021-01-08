@@ -9,4 +9,5 @@ public interface ActPicDAO_interface {
 	public ActPicVO findByPrimaryKey(String actPicNo);
 	public byte[] getOnePic(String  actPicNo);
 	public List<ActPicVO> getAll();
+	
 }

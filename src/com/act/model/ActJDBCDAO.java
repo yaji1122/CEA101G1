@@ -12,25 +12,25 @@ public class ActJDBCDAO implements ActDAO_interface{
 	String password = "123456";
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO ACT (ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,ACT_REG_TIME,ACT_DATE,DEADLINE,ACT_TIME,PARTICIPANT,ACT_PRICE)"
-			+ "VALUES (('ACT' || LPAD(to_char(ACTNO_SEQ.NEXTVAL), 7, '0'),?,?,?,?,?,?,?,?,?)";
+			"INSERT INTO ACT (ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,ACT_REG_TIME,ACT_DATE,DEADLINE,ACT_TIME,PARTICIPANT,ACT_PRICE,ACT_PIC,ACT_INFO)"
+			+ "VALUES (('ACT' || LPAD(to_char(ACTNO_SEQ.NEXTVAL), 7, '0'),?,?,?,?,?,?,?,?,?,?,?)";
 	
 	private static final String GET_ALL_STMT =
 			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_REG_TIME,'yyyy-mm-dd')ACT_REG_TIME,"
 			+ "TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,TO_CHAR(DEADLINE,'yyyy-mm-dd')DEADLINE,ACT_TIME," + 
-			"PARTICIPANT,ACT_PRICE FROM ACT order By ACT_NO";
+			"PARTICIPANT,ACT_PRICE,ACT_PRICE,ACT_PIC,ACT_INFO FROM ACT order By ACT_NO";
 	
 	private static final String GET_ONE_STMT = 
 			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_REG_TIME,'yyyy-mm-dd')ACT_REG_TIME,"
 			+ "TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,TO_CHAR(DEADLINE,'yyyy-mm-dd')DEADLINE,ACT_TIME" + 
-			",PARTICIPANT,ACT_PRICE FROM ACT where ACT_NO=?";
+			",PARTICIPANT,ACT_PRICE,ACT_PRICE,ACT_PIC,ACT_INFO FROM ACT where ACT_NO=?";
 	
 	private static final String DELETE =
 			"DELETE FROM ACT WHERE ACT_NO = ?";
 	
 	private static final String UPDATE =
 			"UPDATE ACT set ACT_EVENT_NO=?,ACT_NAME=?,ACT_STATUS=?,ACT_REG_TIME=?,ACT_DATE=?,"
-			+ "DEADLINE=?,ACT_TIME=?,PARTICIPANT=?,ACT_PRICE=? where ACT_NO=?";
+			+ "DEADLINE=?,ACT_TIME=?,PARTICIPANT=?,ACT_PRICE=?,ACT_PRICE,ACT_PIC=?,ACT_INFO=? where ACT_NO=?";
 	
 	       
 	
@@ -54,6 +54,8 @@ public class ActJDBCDAO implements ActDAO_interface{
 			pstmt.setString(7,actVO.getActTime());
 			pstmt.setString(8,actVO.getParticipant());
 			pstmt.setInt(9,actVO.getActPrice());
+			pstmt.setBytes(10, actVO.getActPic());
+			pstmt.setString(11, actVO.getActInfo());
 			
 			pstmt.executeUpdate();
 			
@@ -102,7 +104,9 @@ public class ActJDBCDAO implements ActDAO_interface{
 			pstmt.setString(7,actVO.getActTime());
 			pstmt.setString(8,actVO.getParticipant());
 			pstmt.setInt(9,actVO.getActPrice());
-			pstmt.setString(10,actVO.getActNo());
+			pstmt.setBytes(10, actVO.getActPic());
+			pstmt.setString(11, actVO.getActInfo());
+			pstmt.setString(12,actVO.getActNo());
 			pstmt.executeUpdate();
 			
 		}catch(ClassNotFoundException e) {
@@ -193,6 +197,8 @@ public class ActJDBCDAO implements ActDAO_interface{
 				actVO.setActTime(rs.getString("ACT_TIME"));
 				actVO.setParticipant(rs.getString("PARTICIPANT"));
 				actVO.setActPrice(rs.getInt("ACT_PRICE"));
+				actVO.setActPic(rs.getBytes("ACT_PIC"));
+				actVO.setActInfo(rs.getString("ACT_INFO"));
 		       		
 			}
 		}catch(ClassNotFoundException e) {
@@ -245,6 +251,8 @@ public class ActJDBCDAO implements ActDAO_interface{
 				actVO.setActTime(rs.getString("ACT_TIME"));
 				actVO.setParticipant(rs.getString("PARTICIPANT"));
 				actVO.setActPrice(rs.getInt("ACT_PRICE"));
+				actVO.setActPic(rs.getBytes("ACT_PIC"));
+				actVO.setActInfo(rs.getString("ACT_INFO"));
 				list.add(actVO);
 		       		
 			}
@@ -278,9 +286,9 @@ public class ActJDBCDAO implements ActDAO_interface{
 		ActJDBCDAO dao = new  ActJDBCDAO();
 		
 		//�s�W
-//		ActVO actVO1 = new ActVO();
-//		actVO1.setActEventNo("1000011110");
-//		actVO1.setActName("����");
+		ActVO actVO1 = new ActVO();
+//		actVO1.setActEventNo("11");
+//		actVO1.setActName("10");
 //		actVO1.setActStatus("0");
 //		actVO1.setActRegTime(java.sql.Date.valueOf("2020-12-09"));
 //		actVO1.setActDate(java.sql.Date.valueOf("2020-12-15"));
@@ -288,12 +296,14 @@ public class ActJDBCDAO implements ActDAO_interface{
 //		actVO1.setActTime("1800");
 //		actVO1.setParticipant("NJJKK");
 //		actVO1.setActPrice(1000);
+//		actVO1.setActPic(null);
+//		actVO1.setActInfo(null);
 //		dao.insert(actVO1);
 				
 		// �ק�
 //		ActVO actVO2 = new ActVO();
-//		actVO2.setActNo("1000000012");
-//		actVO2.setActEventNo("1000011110");
+//		actVO2.setActNo("ACT0000001");
+//		actVO2.setActEventNo("10");
 //		actVO2.setActName("AAAA");
 //		actVO2.setActStatus("0");
 //		actVO2.setActRegTime(java.sql.Date.valueOf("2020-12-10"));
@@ -302,6 +312,8 @@ public class ActJDBCDAO implements ActDAO_interface{
 //		actVO2.setActTime("1000");
 //		actVO2.setParticipant("NURAF");
 //		actVO2.setActPrice(2000);
+//		actVO2.setActPic(null);
+//		actVO2.setActInfo(null);
 //		dao.update(actVO2);		
 				
 		// �R��
@@ -321,23 +333,28 @@ public class ActJDBCDAO implements ActDAO_interface{
 //		System.out.println("---------------------");
 //		
 		// �d��
-		List<ActVO> list = dao.getAll();
-			for (ActVO actVO : list) {
-				System.out.print(actVO.getActNo() + ",");
-				System.out.print(actVO.getActName() + ",");
-				System.out.print(actVO.getActStatus() + ",");
-				System.out.print(actVO.getActRegTime() + ",");
-				System.out.print(actVO.getActDate() + ",");
-				System.out.print(actVO.getDeadLine() + ",");
-				System.out.print(actVO.getActTime());
-				System.out.print(actVO.getParticipant());
-				System.out.print(actVO.getActPrice());
-				System.out.println();
-				}
+//		List<ActVO> list = dao.getAll();
+//			for (ActVO actVO : list) {
+//				System.out.print(actVO.getActNo() + ",");
+//				System.out.print(actVO.getActName() + ",");
+//				System.out.print(actVO.getActStatus() + ",");
+//				System.out.print(actVO.getActRegTime() + ",");
+//				System.out.print(actVO.getActDate() + ",");
+//				System.out.print(actVO.getDeadLine() + ",");
+//				System.out.print(actVO.getActTime());
+//				System.out.print(actVO.getParticipant());
+//				System.out.print(actVO.getActPrice());
+//				System.out.println();
+//				}
 
 	}
 	@Override
 	public List<ActVO> getAllByActStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public byte[] getOnePic(String actEventNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -4,7 +4,7 @@
 
 <%
      ActVO actVO = (ActVO) request.getAttribute("actVO"); 
-    //ActServlet.java(Concroller), 存入req的ActVO物件 (包括幫忙取出的ActEventVO物件, 也包括輸入資料錯誤時的empActTYpeVO物件)
+    //ActServlet.java(Concroller), 存入req的ActVO物件 (包括幫忙取出的ActVO物件, 也包括輸入資料錯誤時的ActVO物件)
 %>
 
 <html>
@@ -38,11 +38,11 @@
 		</div>
 
 
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet" name="form1" enctype="multipart/form-data">
 <div id="form">
              <li>
-                <label for="inputEmail4" class="alert alert-primary" role="alert">活動編號: (ACT_ODNo):</label>
-                <input type="text" class="form-control" id="input-Act-no" placeholder="ACT_ODNo" name="actNo" size="45"
+                <label for="inputEmail4" class="alert alert-primary" role="alert">活動編號: (ACT_No):</label>
+                <input type="text" class="form-control" id="input-Act-no" placeholder="ACT_No" name="actNo" size="45"
                 size="45" required placeholder="請輸入活動編號" value="<%= (actVO==null)? "" : actVO.getActNo()%>" />
             </li>
             <li>
@@ -81,7 +81,7 @@
                 name="actTime" size="45" value="<%= (actVO==null)? "" :actVO.getActTime()%>" />
             </li>
             <li>
-                <label class="alert alert-danger">會員姓名: (ACT_Status):</label>
+                <label class="alert alert-danger">會員姓名: (Participant):</label>
                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="請填入姓名"
                 name="participant" size="45" value="<%= (actVO==null)? "" :actVO.getParticipant()%>" />
             </li>
@@ -90,11 +90,25 @@
                 <input type="text" class="form-control" id="input-Act-Namel4" name="actPrice" size="45"
                  placeholder="請填入數字" value="<%= (actVO==null)? "" :actVO.getActPrice()%>" />
             </li>
+            <li class="pic">
+                <label class="alert alert-primary" style="margin-left:200px;" >活動照片:(Pic_Load):</label>
+                 <div id="pic-area">
+                      <img  id="show"  src="#">
+                 </div>
+                 <input  onchange="showImg(this)"  type="file" class="form-control" style="margin-left:200px;"
+                 aria-label="Amount (to the nearest dollar)" name="actPic" size="45"
+                 value="<%= (actVO==null)? "" :actVO.getActPic()%>" >
+            </li>
+            <li>
+                <label class="alert alert-primary" role="alert">活動敘述:</label>
+                 <input type="text" class="form-control" id="input-Act-Namel4" name="actInfo" size="100" 
+                 placeholder="活動內容敘述" value="<%= (actVO==null)? "" :actVO.getActInfo()%>" />
+            </li> 
       </div> 
         
-	    <div class="message" style="margin-left:600px; margin-top:500px;">
+	    <div class="message" style="margin-left:600px; margin-top:900px;">
 	              <input type="hidden" name="action" value="update">
-                  <input type="hidden" name="ActNo" value="<%=actVO.getActNo()%>">
+                  <input type="hidden" name="empno" value="<%=actVO.getActNo()%>">
                   <button type="submit" class="btn btn-primary">送出修改</button>
                   <button type="reset" class="btn btn-primary">重設</button>
                   <button type="button" class="btn btn-outline-danger"
@@ -104,6 +118,21 @@
     
 </FORM>>
 <!-- 頁面內容結束 -->
+   <script>
+	function showImg(thisimg) {
+		var file = thisimg.files[0];
+		if(window.FileReader) {
+			var fr = new FileReader();
+			
+			var showimg = document.getElementById('show');
+			fr.onloadend = function(e) {
+			showimg.src = e.target.result;
+		};
+		fr.readAsDataURL(file);
+		showimg.style.display = 'block';
+		}
+	}
+	</script>
 	
 	<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>

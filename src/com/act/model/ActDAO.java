@@ -22,25 +22,25 @@ public class ActDAO implements ActDAO_interface{
 	}
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO ACT (ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,ACT_REG_TIME,ACT_DATE,DEADLINE,ACT_TIME,PARTICIPANT,ACT_PRICE)"
-			+ "VALUES ('ACT' || LPAD(to_char(ACTNO_SEQ.NEXTVAL), 7, '0'),?,?,?,?,?,?,?,?,?)";
+			"INSERT INTO ACT (ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,ACT_REG_TIME,ACT_DATE,DEADLINE,ACT_TIME,PARTICIPANT,ACT_PRICE,ACT_PIC,ACT_INFO)"
+			+ "VALUES ('ACT' || LPAD(to_char(ACTNO_SEQ.NEXTVAL), 7, '0'),?,?,?,?,?,?,?,?,?,?,?)";
 	
 	private static final String GET_ALL_STMT =
 			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_REG_TIME,'yyyy-mm-dd')ACT_REG_TIME,"
 			+ "TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,TO_CHAR(DEADLINE,'yyyy-mm-dd')DEADLINE,ACT_TIME," + 
-			"PARTICIPANT,ACT_PRICE FROM ACT order By ACT_NO";
+			"PARTICIPANT,ACT_PRICE,ACT_PIC,ACT_INFO FROM ACT order By ACT_NO";
 	
 	private static final String GET_ONE_STMT = 
 			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_REG_TIME,'yyyy-mm-dd')ACT_REG_TIME,"
 			+ "TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,TO_CHAR(DEADLINE,'yyyy-mm-dd')DEADLINE,ACT_TIME" + 
-			",PARTICIPANT,ACT_PRICE FROM ACT where ACT_NO=?";
+			",PARTICIPANT,ACT_PRICE,ACT_PIC,ACT_INFO FROM ACT where ACT_NO=?";
 	
 	private static final String DELETE =
 			"DELETE FROM ACT WHERE ACT_NO = ?";
 	
 	private static final String UPDATE =
 			"UPDATE ACT set ACT_EVENT_NO=?,ACT_NAME=?,ACT_STATUS=?,ACT_REG_TIME=?,ACT_DATE=?,"
-			+ "DEADLINE=?,ACT_TIME=?,PARTICIPANT=?,ACT_PRICE=? where ACT_NO=?";
+			+ "DEADLINE=?,ACT_TIME=?,PARTICIPANT=?,ACT_PRICE=?,ACT_PIC=?,ACT_INFO=? where ACT_NO=?";
 
 	private static final String GET_ALL_BY_ACT_STATUS =
 			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_REG_TIME,'yyyy-mm-dd')ACT_REG_TIME,"
@@ -57,6 +57,7 @@ public class ActDAO implements ActDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
+			
 			pstmt.setString(1,actVO.getActEventNo());
 			pstmt.setString(2,actVO.getActName());
 			pstmt.setString(3,actVO.getActStatus());
@@ -66,7 +67,9 @@ public class ActDAO implements ActDAO_interface{
 			pstmt.setString(7,actVO.getActTime());
 			pstmt.setString(8,actVO.getParticipant());
 			pstmt.setInt(9,actVO.getActPrice());
-
+			pstmt.setBytes(10, actVO.getActPic());
+			pstmt.setString(11, actVO.getActInfo());
+			
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors
@@ -112,7 +115,9 @@ public class ActDAO implements ActDAO_interface{
 			pstmt.setString(7,actVO.getActTime());
 			pstmt.setString(8,actVO.getParticipant());
 			pstmt.setInt(9,actVO.getActPrice());
-			pstmt.setString(10,actVO.getActNo());
+			pstmt.setBytes(10, actVO.getActPic());
+			pstmt.setString(11, actVO.getActInfo());
+			pstmt.setString(12,actVO.getActNo());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -206,6 +211,8 @@ public class ActDAO implements ActDAO_interface{
 				actVO.setActTime(rs.getString("ACT_TIME"));
 				actVO.setParticipant(rs.getString("PARTICIPANT"));
 				actVO.setActPrice(rs.getInt("ACT_PRICE"));
+				actVO.setActPic(rs.getBytes("ACT_PIC"));
+				actVO.setActInfo(rs.getString("ACT_INFO"));
 			}
 			
 			// Handle any driver errors
@@ -267,6 +274,8 @@ public class ActDAO implements ActDAO_interface{
 			actVO.setActTime(rs.getString("ACT_TIME"));
 			actVO.setParticipant(rs.getString("PARTICIPANT"));
 			actVO.setActPrice(rs.getInt("ACT_PRICE"));
+			actVO.setActPic(rs.getBytes("ACT_PIC"));
+			actVO.setActInfo(rs.getString("ACT_INFO"));
 			list.add(actVO);
 		}
 	
@@ -327,6 +336,8 @@ public class ActDAO implements ActDAO_interface{
 				actVO.setDeadLine(rs.getDate("DEADLINE"));
 				actVO.setActTime(rs.getString("ACT_TIME"));
 				actVO.setActPrice(rs.getInt("ACT_PRICE"));
+				actVO.setActPic(rs.getBytes("ACT_PIC"));
+				actVO.setActInfo(rs.getString("ACT_INFO"));
 				list.add(actVO);
 			}
 		
@@ -360,6 +371,48 @@ public class ActDAO implements ActDAO_interface{
 		}
 		return list;
 	  }
+	
+	@Override
+	public byte[] getOnePic(String actNo) {
+		byte[] actpic = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setString(1,actNo);
+			ResultSet rs = pstmt.executeQuery();
+		
+			rs.next();
+                
+		    actpic = rs.getBytes("ACT_PIC");
+			
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. "
+		            +se.getMessage());
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				}catch(SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				}catch(Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return actpic;
+		
+	}	
 
 	@Override
 	public List<ActVO> getAllByActStatus() {
