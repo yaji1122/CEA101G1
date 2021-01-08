@@ -25,7 +25,9 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 			"DELETE FROM SERVICE_ORDER where SERV_ODNO = ?";
 	private static final String UPDATE = 
 			"UPDATE SERVICE_ORDER set BK_NO=?, OD_STATUS=?, RM_NO=?, SERV_NO=?, SERV_TIME=?, SERV_COUNT=?, TOTAL_PRICE=?, LOCATION=? where SERV_ODNO=?";
-
+	private static final String GET_ALL_BY_BKNO_STMT = 
+			"SELECT BK_NO, SERV_ODNO, OD_TIME, OD_STATUS, RM_NO, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATION FROM SERVICE_ORDER order by BK_NO";
+	
 	@Override
 	public void insert(ServiceOrderVO serviceOrderVO) {
 		Connection con = null;
@@ -305,6 +307,75 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 		}
 		return list;
 	}
+	
+	@Override
+	public List<ServiceOrderVO> getAllByBkNo() {
+		List<ServiceOrderVO> list = new ArrayList<ServiceOrderVO>();
+		ServiceOrderVO serviceOrderVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_BY_BKNO_STMT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// serviceOrderVO 也稱為 Domain objects
+				serviceOrderVO = new ServiceOrderVO();
+				serviceOrderVO.setBk_no(rs.getString("bk_no"));
+				serviceOrderVO.setServ_odno(rs.getString("serv_odno"));
+				serviceOrderVO.setOd_time(rs.getTimestamp("od_time"));
+				serviceOrderVO.setOd_status(rs.getString("od_status"));
+				serviceOrderVO.setRm_no(rs.getString("rm_no"));
+				serviceOrderVO.setServ_no(rs.getString("serv_no"));
+				serviceOrderVO.setServ_time(rs.getTimestamp("serv_time"));
+				serviceOrderVO.setServ_count(rs.getInt("serv_count"));
+				serviceOrderVO.setTotal_price(rs.getInt("total_price"));
+				serviceOrderVO.setLocation(rs.getString("location"));
+				list.add(serviceOrderVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		ServiceOrderDAO_interface dao = new ServiceOrderJDBCDAO();

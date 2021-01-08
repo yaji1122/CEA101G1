@@ -68,5 +68,9 @@ public class ServiceOrderService {
 	public List<ServiceOrderVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<ServiceOrderVO> getAllByBkNo() {
+		return dao.getAllByBkNo();
+	}
 
 }
