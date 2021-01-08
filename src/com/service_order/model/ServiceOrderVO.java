@@ -8,7 +8,6 @@ public class ServiceOrderVO implements java.io.Serializable {
 	private String bk_no;
 	private Timestamp od_time;
 	private String od_status;
-	private String rm_no;
 	private String serv_no;
 	private Timestamp serv_time;
 	private Integer serv_count;
@@ -45,14 +44,6 @@ public class ServiceOrderVO implements java.io.Serializable {
 
 	public void setOd_status(String od_status) {
 		this.od_status = od_status;
-	}
-
-	public String getRm_no() {
-		return rm_no;
-	}
-
-	public void setRm_no(String rm_no) {
-		this.rm_no = rm_no;
 	}
 
 	public String getServ_no() {

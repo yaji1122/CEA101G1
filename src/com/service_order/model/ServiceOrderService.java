@@ -15,7 +15,7 @@ public class ServiceOrderService {
 		dao = new ServiceOrderDAO();
 	}
 	
-	public ServiceOrderVO addServiceOrder(/*String serv_odno,*/ String bk_no, /*Timestamp od_time,*/ /*String od_status,*/ String rm_no, String serv_no, Timestamp serv_time, Integer serv_count, Integer total_price, String location) {
+	public ServiceOrderVO addServiceOrder(/*String serv_odno,*/ String bk_no, /*Timestamp od_time,*/ /*String od_status,*/ String serv_no, Timestamp serv_time, Integer serv_count, Integer total_price, String location) {
 		
 		ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
 		
@@ -23,7 +23,6 @@ public class ServiceOrderService {
 		serviceOrderVO.setBk_no(bk_no);
 //		serviceOrderVO.setOd_time(od_time);
 //		serviceOrderVO.setOd_status(od_status);
-		serviceOrderVO.setRm_no(rm_no);
 		serviceOrderVO.setServ_no(serv_no);
 		serviceOrderVO.setServ_time(serv_time);
 		serviceOrderVO.setServ_count(serv_count);
@@ -36,7 +35,7 @@ public class ServiceOrderService {
 		
 	}
 	
-	public ServiceOrderVO updateServiceOrder(String serv_odno, String bk_no, /*Timestamp od_time,*/ String od_status, String rm_no, String serv_no, Timestamp serv_time, Integer serv_count, Integer total_price, String location) {
+	public ServiceOrderVO updateServiceOrder(String serv_odno, String bk_no, /*Timestamp od_time,*/ String od_status, String serv_no, Timestamp serv_time, Integer serv_count, Integer total_price, String location) {
 		
 		ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
 		
@@ -44,7 +43,6 @@ public class ServiceOrderService {
 		serviceOrderVO.setBk_no(bk_no);
 //		serviceOrderVO.setOd_time(od_time);
 		serviceOrderVO.setOd_status(od_status);
-		serviceOrderVO.setRm_no(rm_no);
 		serviceOrderVO.setServ_no(serv_no);
 		serviceOrderVO.setServ_time(serv_time);
 		serviceOrderVO.setServ_count(serv_count);
