@@ -67,7 +67,8 @@
 						</li>
 						<jsp:useBean id="bkodSvc" scope="page" class="com.bookingorder.model.BookingOrderService"/>
 						<%	
-							boolean isGuest = bkodSvc.getAllByMbId(member.getMb_id()).stream().anyMatch(e -> e.getBk_status().equals('2'));
+							boolean isGuest = false;
+							if (member != null) isGuest = bkodSvc.getAllByMbId(member.getMb_id()).stream().anyMatch(e -> e.getBk_status().equals('2'));
 						%>
 						<c:if test="<%=isGuest%>">
 						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event" class="nav-event"><i class="fas fa-glass-cheers"></i>住客專區</a>
