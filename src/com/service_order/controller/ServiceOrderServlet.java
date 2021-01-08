@@ -89,7 +89,6 @@ public class ServiceOrderServlet extends HttpServlet {
 			serviceOrderVO.setBk_no(bk_no);
 //			serviceOrderVO.setOd_time(od_time);
 			serviceOrderVO.setOd_status(od_status);
-			serviceOrderVO.setRm_no(rm_no);
 			serviceOrderVO.setServ_no(serv_no);
 			serviceOrderVO.setServ_time(serv_time);
 			serviceOrderVO.setServ_count(serv_count);
@@ -97,7 +96,7 @@ public class ServiceOrderServlet extends HttpServlet {
 			serviceOrderVO.setLocation(location);
 
 			ServiceOrderService serviceOrderSvc = new ServiceOrderService();
-			serviceOrderVO = serviceOrderSvc.updateServiceOrder(serv_odno, bk_no, /* od_time, */ od_status, rm_no,
+			serviceOrderVO = serviceOrderSvc.updateServiceOrder(serv_odno, bk_no, /* od_time, */ od_status,
 					serv_no, serv_time, serv_count, total_price, location);
 
 			req.setAttribute("serviceOrderVO", serviceOrderVO);
@@ -147,7 +146,6 @@ public class ServiceOrderServlet extends HttpServlet {
 				serviceOrderVO.setBk_no(bk_no);
 //			serviceOrderVO.setOd_time(od_time);
 //				serviceOrderVO.setOd_status(od_status);
-				serviceOrderVO.setRm_no(rm_no);
 				serviceOrderVO.setServ_no(serv_no);
 				serviceOrderVO.setServ_time(serv_time);
 				serviceOrderVO.setServ_count(serv_count);
@@ -155,7 +153,7 @@ public class ServiceOrderServlet extends HttpServlet {
 				serviceOrderVO.setLocation(location);
 
 				ServiceOrderService serviceOrderSvc = new ServiceOrderService();
-				serviceOrderVO = serviceOrderSvc.addServiceOrder(/*serv_odno,*/ bk_no, /* od_time, */ /*od_status,*/ rm_no,
+				serviceOrderVO = serviceOrderSvc.addServiceOrder(/*serv_odno,*/ bk_no, /* od_time, */ /*od_status,*/
 						serv_no, serv_time, serv_count, total_price, location);
 				
 				HttpSession session = req.getSession();

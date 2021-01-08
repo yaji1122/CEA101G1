@@ -16,17 +16,17 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO SERVICE_ORDER (SERV_ODNO, BK_NO, OD_STATUS, RM_NO, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATION) VALUES ('SERV' || LPAD(to_char(SERVODNO_SEQ.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO SERVICE_ORDER (SERV_ODNO, BK_NO, OD_STATUS, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATIONS) VALUES ('SERV' || LPAD(to_char(SERVODNO_SEQ.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT SERV_ODNO, BK_NO, OD_TIME, OD_STATUS, RM_NO, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATION FROM SERVICE_ORDER order by SERV_ODNO";
+			"SELECT SERV_ODNO, BK_NO, OD_TIME, OD_STATUS, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATIONS FROM SERVICE_ORDER order by SERV_ODNO";
 	private static final String GET_ONE_STMT = 
-			"SELECT SERV_ODNO, BK_NO, OD_TIME, OD_STATUS, RM_NO, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATION FROM SERVICE_ORDER where SERV_ODNO = ?";
+			"SELECT SERV_ODNO, BK_NO, OD_TIME, OD_STATUS, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATIONS FROM SERVICE_ORDER where SERV_ODNO = ?";
 	private static final String DELETE = 
 			"DELETE FROM SERVICE_ORDER where SERV_ODNO = ?";
 	private static final String UPDATE = 
-			"UPDATE SERVICE_ORDER set BK_NO=?, OD_STATUS=?, RM_NO=?, SERV_NO=?, SERV_TIME=?, SERV_COUNT=?, TOTAL_PRICE=?, LOCATION=? where SERV_ODNO=?";
+			"UPDATE SERVICE_ORDER set BK_NO=?, OD_STATUS=?, SERV_NO=?, SERV_TIME=?, SERV_COUNT=?, TOTAL_PRICE=?, LOCATIONS=? where SERV_ODNO=?";
 	private static final String GET_ALL_BY_BKNO_STMT = 
-			"SELECT BK_NO, SERV_ODNO, OD_TIME, OD_STATUS, RM_NO, SERV_NO, SERV_TIME, SERV_COUNT, TOTAL_PRICE, LOCATION FROM SERVICE_ORDER order by BK_NO";
+			"SELECT * FROM SERVICE_ORDER WHERE BK_NO = ?";
 	
 	@Override
 	public void insert(ServiceOrderVO serviceOrderVO) {
@@ -41,12 +41,11 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 
 			pstmt.setString(1, serviceOrderVO.getBk_no());
 			pstmt.setString(2, serviceOrderVO.getOd_status());
-			pstmt.setString(3, serviceOrderVO.getRm_no());
-			pstmt.setString(4, serviceOrderVO.getServ_no());
-			pstmt.setTimestamp(5, serviceOrderVO.getServ_time());
-			pstmt.setInt(6, serviceOrderVO.getServ_count());
-			pstmt.setInt(7, serviceOrderVO.getTotal_price());
-			pstmt.setString(8, serviceOrderVO.getLocation());
+			pstmt.setString(3, serviceOrderVO.getServ_no());
+			pstmt.setTimestamp(4, serviceOrderVO.getServ_time());
+			pstmt.setInt(5, serviceOrderVO.getServ_count());
+			pstmt.setInt(6, serviceOrderVO.getTotal_price());
+			pstmt.setString(7, serviceOrderVO.getLocation());
 
 			pstmt.executeUpdate();
 
@@ -94,12 +93,11 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 			pstmt.setString(1, serviceOrderVO.getBk_no());
 //			pstmt.setTimestamp(2, serviceOrderVO.getOd_time());
 			pstmt.setString(2, serviceOrderVO.getOd_status());
-			pstmt.setString(3, serviceOrderVO.getRm_no());
-			pstmt.setString(4, serviceOrderVO.getServ_no());
-			pstmt.setTimestamp(5, serviceOrderVO.getServ_time());
-			pstmt.setInt(6, serviceOrderVO.getServ_count());
-			pstmt.setInt(7, serviceOrderVO.getTotal_price());
-			pstmt.setString(8, serviceOrderVO.getLocation());
+			pstmt.setString(3, serviceOrderVO.getServ_no());
+			pstmt.setTimestamp(4, serviceOrderVO.getServ_time());
+			pstmt.setInt(5, serviceOrderVO.getServ_count());
+			pstmt.setInt(6, serviceOrderVO.getTotal_price());
+			pstmt.setString(7, serviceOrderVO.getLocation());
 
 			pstmt.executeUpdate();
 
@@ -198,7 +196,6 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 				serviceOrderVO.setBk_no(rs.getString("bk_no"));
 				serviceOrderVO.setOd_time(rs.getTimestamp("od_time"));
 				serviceOrderVO.setOd_status(rs.getString("od_status"));
-				serviceOrderVO.setRm_no(rs.getString("rm_no"));
 				serviceOrderVO.setServ_no(rs.getString("serv_no"));
 				serviceOrderVO.setServ_time(rs.getTimestamp("serv_time"));
 				serviceOrderVO.setServ_count(rs.getInt("serv_count"));
@@ -264,7 +261,6 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 				serviceOrderVO.setBk_no(rs.getString("bk_no"));
 				serviceOrderVO.setOd_time(rs.getTimestamp("od_time"));
 				serviceOrderVO.setOd_status(rs.getString("od_status"));
-				serviceOrderVO.setRm_no(rs.getString("rm_no"));
 				serviceOrderVO.setServ_no(rs.getString("serv_no"));
 				serviceOrderVO.setServ_time(rs.getTimestamp("serv_time"));
 				serviceOrderVO.setServ_count(rs.getInt("serv_count"));
@@ -334,7 +330,6 @@ public class ServiceOrderJDBCDAO implements ServiceOrderDAO_interface{
 				serviceOrderVO.setServ_odno(rs.getString("serv_odno"));
 				serviceOrderVO.setOd_time(rs.getTimestamp("od_time"));
 				serviceOrderVO.setOd_status(rs.getString("od_status"));
-				serviceOrderVO.setRm_no(rs.getString("rm_no"));
 				serviceOrderVO.setServ_no(rs.getString("serv_no"));
 				serviceOrderVO.setServ_time(rs.getTimestamp("serv_time"));
 				serviceOrderVO.setServ_count(rs.getInt("serv_count"));
