@@ -9,5 +9,6 @@ public interface ActOrderDAO_interface {
 	public void delete(String actOdno);
 	public ActOrderVO findByPrimaryKey(String actOdno);
 	public List<ActOrderVO> getAll();
+	List<ActOrderVO> getAllByBkNo(String bk_no);
 
 }

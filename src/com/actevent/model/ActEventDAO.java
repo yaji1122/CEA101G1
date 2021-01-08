@@ -25,15 +25,15 @@ public class ActEventDAO implements ActEventDAO_interface{
 	}
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO ACT_EVENT (ACT_EVENT_NO,ACT_TYPE_NO,ACT_EVENT_NAME,ACT_INFO) VALUES(?,?,?,?)";
+			"INSERT INTO ACT_EVENT (ACT_EVENT_NO,ACT_EVENT_NAME) VALUES(?,?)";
 	private static final String GET_ALL_STMT =
-			"SELECT ACT_EVENT_NO,ACT_TYPE_NO,ACT_EVENT_NAME,ACT_INFO FROM ACT_EVENT ORDER BY ACT_EVENT_NO";
+			"SELECT ACT_EVENT_NO,ACT_EVENT_NAME FROM ACT_EVENT ORDER BY ACT_EVENT_NO";
 	private static final String GET_ONE_STMT = 
-			"SELECT ACT_EVENT_NO,ACT_TYPE_NO,ACT_EVENT_NAME,ACT_INFO FROM ACT_EVENT WHERE ACT_EVENT_NO = ?";
+			"SELECT ACT_EVENT_NO,ACT_EVENT_NAME FROM ACT_EVENT WHERE ACT_EVENT_NO = ?";
 	private static final String DELETE =
 			"DELETE FROM ACT_EVENT WHERE ACT_EVENT_NO = ?";
 	private static final String UPDATE =
-			"UPDATE ACT_EVENT SET ACT_TYPE_NO=?,ACT_EVENT_NAME=?,ACT_INFO=? WHERE ACT_EVENT_NO = ?";
+			"UPDATE ACT_EVENT SET ACT_EVENT_NAME=? WHERE ACT_EVENT_NO = ?";
 
 	@Override
 	public void insert(ActEventVO actEventVO) {
@@ -45,9 +45,7 @@ public class ActEventDAO implements ActEventDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1,actEventVO.getActEventNo());
-			pstmt.setString(2,actEventVO.getActTypeNo());
 			pstmt.setString(3,actEventVO.getActEventName());
-			pstmt.setString(4,actEventVO.getActInfo());
 			
 			pstmt.executeUpdate();
 		
@@ -83,9 +81,7 @@ public class ActEventDAO implements ActEventDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setString(1,actEventVO.getActTypeNo());
 			pstmt.setString(2,actEventVO.getActEventName());
-			pstmt.setString(3,actEventVO.getActInfo());
 			pstmt.setString(4,actEventVO.getActEventNo());
 			
 			pstmt.executeUpdate();
@@ -166,9 +162,7 @@ public class ActEventDAO implements ActEventDAO_interface{
 				actEventVO = new ActEventVO();
 				
 				actEventVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
-				actEventVO.setActTypeNo(rs.getString("ACT_TYPE_NO"));
 				actEventVO.setActEventName(rs.getString("ACT_EVENT_NAME"));
-				actEventVO.setActInfo(rs.getString("ACT_INFO"));
 		       		
 			}
 		
@@ -212,9 +206,7 @@ public class ActEventDAO implements ActEventDAO_interface{
 				actEventVO = new ActEventVO();
 				
 				actEventVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
-				actEventVO.setActTypeNo(rs.getString("ACT_TYPE_NO"));
 				actEventVO.setActEventName(rs.getString("ACT_EVENT_NAME"));
-				actEventVO.setActInfo(rs.getString("ACT_INFO"));
 				list.add(actEventVO);
 		       		
 			}

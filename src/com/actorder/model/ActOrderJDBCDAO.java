@@ -322,4 +322,10 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 //				}
 	}
 
+	@Override
+	public List<ActOrderVO> getAllByBkNo(String bk_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

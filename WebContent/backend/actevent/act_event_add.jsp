@@ -72,21 +72,13 @@
 		<td><input type="TEXT" name="actEventNo" size="45" required placeholder="請輸入活動項目編號"
 			 value="<%= (actEventVO==null)? "" : actEventVO.getActEventNo()%>" /></td>
 	</tr>
-	<tr>
-		<td>活動種類編號:</td>
-		<td><input type="TEXT" name="actTypeNo" size="45" required placeholder="請選擇活動種類編號"
-			 value="<%= (actEventVO==null)? "" :actEventVO.getActEventName()%>" /></td>
-	</tr>
+	
 	<tr>
 		<td>活動項目名稱:</td>
 		<td><input type="TEXT" name="actEventName" size="45" required placeholder="請輸入活動項目名稱"
 			 value="<%= (actEventVO==null)? "" :actEventVO.getActEventName()%>" /></td>
 	</tr>
-	<tr>
-		<td>內容敘述:</td>
-		<td><input type="TEXT" name="actInfo" size="45" required placeholder="請簡述活動內容"
-			 value="<%= (actEventVO==null)? "" :actEventVO.getActInfo()%>" /></td>
-	</tr>
+
 
 	
 

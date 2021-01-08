@@ -104,29 +104,16 @@ public class ActEventServlet extends HttpServlet {
 				errorMsgs.add("�ж�g�s���ʶ��ؽs��");
 			} 
 			
-			String actTypeNo = req.getParameter("actTypeNo");
-			if (actTypeNo == null || actTypeNo.trim().length() == 0) {
-				errorMsgs.add("���������s��: �ФŪť�");
-			}
-			
 			String actEventName = req.getParameter("actEventName");
 			if (actEventName == null || actEventName.trim().length() == 0) {
 				errorMsgs.add("���ʶ��ئW��: �ФŪť�");
 			}
 			
-			String actInfo = req.getParameter("actInfo");
-			String actNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,30}$";
-			if ( actInfo == null ||  actInfo.trim().length() == 0) {
-				errorMsgs.add("���ʱԭz: �ФŪť�");
-			}else if(! actInfo.trim().matches(actInfo)) {
-				errorMsgs.add("�ԭz���e�ФŹL��");
-			}
 			
 			ActEventVO actEventVO = new ActEventVO();
 			actEventVO.setActEventNo(actEventNo);
-			actEventVO.setActTypeNo(actTypeNo);
 			actEventVO.setActEventName(actEventName);
-			actEventVO.setActInfo(actInfo);
+
 		
 
 			// Send the use back to the form, if there were errors
@@ -140,7 +127,7 @@ public class ActEventServlet extends HttpServlet {
 			
 			/***************************2.�}�l�s�W���***************************************/
 			ActEventService ActEventSvc = new ActEventService();
-			actEventVO = ActEventSvc.addActEvent(actEventNo, actTypeNo, actEventName, actInfo);
+			actEventVO = ActEventSvc.addActEvent(actEventNo, actEventName);
 			
 			/***************************3.�s�W����,�ǳ����(Send the Success view)***********/
 			String url = "/backend/actevent/act_event_listAll.jsp";
@@ -231,8 +218,6 @@ public class ActEventServlet extends HttpServlet {
   				if(actEventNo == null || actEventNo.trim().length() == 0) {
   					errorMsgs.add("�п�J�s���ʶ��ؽs��");
   				}
-  				
-  				String actTypeNo = req.getParameter("actTypeNo");
 
   				
   				String actEventName = req.getParameter("actEventName");
@@ -243,14 +228,11 @@ public class ActEventServlet extends HttpServlet {
 					errorMsgs.add("�W��: �u��O���B�^��r���B�Ʀr�M_ , �B���ץ��ݦb2��10����");
 	            }
 				
-				String actInfo = req.getParameter("actInfo");
-
-  				
+			
 				ActEventVO actEventVO = new ActEventVO();
 				actEventVO.setActEventNo(actEventNo);
-				actEventVO.setActTypeNo(actTypeNo);
 				actEventVO.setActEventName(actEventName);
-				actEventVO.setActInfo(actInfo);
+
   				
   				
   				// Send the use back to the form, if there were errors
@@ -264,7 +246,7 @@ public class ActEventServlet extends HttpServlet {
   				
   				/***************************2.�}�l�ק���*****************************************/
   				ActEventService ActEventSvc = new ActEventService();
-  				actEventVO = ActEventSvc.updateActEvent(actEventNo, actTypeNo, actEventName, actInfo);
+  				actEventVO = ActEventSvc.updateActEvent(actEventNo,actEventName);
   				
   				/***************************3.�ק粒��,�ǳ����(Send the Success view)*************/
   				req.setAttribute("actEventVO", actEventVO); // ��Ʈwupdate���\��,���T����actTypeVO����,�s�Jreq

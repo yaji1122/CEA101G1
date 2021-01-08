@@ -74,21 +74,13 @@
 		<td><input type="TEXT" name="actEventNo" size="45"	placeholder="請輸入新活動項目編號"
 		value="<%=actEventVO.getActEventNo()%>" /></td>
 	</tr>
-	<tr>
-		<td>活動種類編號:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="actTypeNo" size="45"	placeholder="請輸入活動種類編號"
-		value="<%=actEventVO.getActTypeNo()%>" /></td>
-	</tr>
+
 	<tr>
 		<td>活動項目名稱:<font color=red><b>*</b></font></td>
 		<td><input type="TEXT" name="actEventName" size="45"	placeholder="請輸入活動項目名稱"
 		value="<%=actEventVO.getActEventName()%>" /></td>
 	</tr>
-	<tr>
-		<td>活動敘述:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="actInfo" size="45"	placeholder="請輸入活動敘述"
-		value="<%=actEventVO.getActInfo()%>" /></td>
-	</tr>
+
 
 </table>
 <br>

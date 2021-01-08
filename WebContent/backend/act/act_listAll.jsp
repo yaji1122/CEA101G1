@@ -11,6 +11,7 @@
 %>
 
 
+
 <html>
 <head>
 <title>所有活動資料 - listAllAct.jsp</title>
@@ -83,6 +84,8 @@
 					<th>活動時段</th>
 					<th>參加者</th>
 					<th>活動價格</th>
+					<th>活動照片</th>
+					<th>活動資訊</th>
 					<th>修改</th>
 				</tr>
 			</thead>
@@ -106,6 +109,10 @@
 							<td>${actVO.actTime}</td>
 							<td>${actVO.participant}</td>
 							<td>${actVO.actPrice}</td>
+							<td>
+						       <img src="<%=request.getContextPath()%>/act/ActPicReaderServlet?actNo=${actVO.actNo}&action=getOnePic">
+						    </td>
+						    <td>${actVO.actInfo}</td>
 
 							<td>
 								<FORM METHOD="post"

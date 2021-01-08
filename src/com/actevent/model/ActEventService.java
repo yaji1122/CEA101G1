@@ -11,27 +11,23 @@ public class ActEventService{
 		dao = new ActEventDAO();
 	}
 	
-    public ActEventVO addActEvent(String actEventNo,String actTypeNo,String actEventName
-    		,String actInfo){
+    public ActEventVO addActEvent(String actEventNo,String actEventName
+    		){
 		
     	ActEventVO actEventVO = new ActEventVO();
     	actEventVO.setActEventNo(actEventNo);
-    	actEventVO.setActTypeNo(actTypeNo);
     	actEventVO.setActEventName(actEventName);
-    	actEventVO.setActInfo(actInfo);
 		
 		dao.insert(actEventVO);
 		return actEventVO;
 	}
     
-    public ActEventVO updateActEvent(String actEventNo,String actTypeNo,String actEventName
-    		,String actInfo){
+    public ActEventVO updateActEvent(String actEventNo,String actEventName
+    		){
 		
     	ActEventVO actEventVO = new ActEventVO();
     	actEventVO.setActEventNo(actEventNo);
-    	actEventVO.setActTypeNo(actTypeNo);
     	actEventVO.setActEventName(actEventName);
-    	actEventVO.setActInfo(actInfo);
 		
 		dao.update(actEventVO);
 		return actEventVO;

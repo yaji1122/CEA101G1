@@ -55,6 +55,8 @@
 		        <th>活動時段</th>
 		        <th>參加人數</th>
 		        <th>活動價格</th>
+		        <th>活動照片</th>
+				<th>活動資訊</th>
 		        <th>修改</th>
               </tr>
         </thead>
@@ -76,6 +78,10 @@
 	              <td>${actVO.actTime}</td>
 	              <td>${actVO.participant}</td>
 	              <td>${actVO.actPrice}</td>
+				  <td>
+					  <img src="<%=request.getContextPath()%>/ActPicReaderServlet?actEventNo=${actVO.actEventNo}&action=getOnePic">
+				  </td>
+				  <td>${actVO.actInfo}</td>
                    
                     <td>
                     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet" style="margin-bottom: 0px;">

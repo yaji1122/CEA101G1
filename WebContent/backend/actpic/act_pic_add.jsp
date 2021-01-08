@@ -29,7 +29,7 @@
             <li>
                 <label for="inputEmail4" class="alert alert-primary" role="alert">活動照片編號: (Pic_No):</label>
                 <input type="text" class="form-control" id="input-Act-no" placeholder="Pic_No"
-                name="ActPicNo" size="45" value="<%= (actPicVO==null)? "000" : actPicVO.getActPicNo()%>" />
+                name="ActPicNo" size="45" value="<%= (actPicVO==null)? "" : actPicVO.getActPicNo()%>" />
             </li>
             <li>
                 <label for="inputPassword4" class="alert alert-danger">活動項目編號: (ACT_Event_No):</label>
@@ -45,6 +45,7 @@
                  <input  onchange="showImg(this)"  type="file" class="form-control" 
                  aria-label="Amount (to the nearest dollar)" name="ActPic" size="45"
                  value="<%= (actPicVO==null)? "" :actPicVO.getActPic()%>" >
+               
              
         </div>
         <div class="btn_area" style="margin:60px auto; margin-left:500px;">

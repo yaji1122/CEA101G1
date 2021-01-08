@@ -172,6 +172,7 @@
 	<servlet-mapping>
 		<servlet-name>ActServlet</servlet-name>
 		<url-pattern>/act/ActServlet</url-pattern>
+		<url-pattern>/act/ActPicReaderServlet</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

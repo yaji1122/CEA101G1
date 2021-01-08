@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.actpic.model.*"%>
+<%@ page import="com.act.model.*"%>
 <%
-	ActPicService actPicSvc = new ActPicService();
-	List<ActPicVO> list = actPicSvc.getAll();
+	ActService actSvc = new ActService();
+	List<ActVO> list = actSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
 

@@ -3,6 +3,8 @@ package com.actorder.model;
 import java.sql.Date;
 import java.util.*;
 
+import com.mealorder.model.MealOrderVO;
+
 public class ActOrderService {
 	
     private ActOrderDAO dao;
@@ -57,5 +59,9 @@ public class ActOrderService {
     public List<ActOrderVO> getAll() {
 		return dao.getAll();
 	}
+    
+    public List<ActOrderVO> getAllByBkNo(String bk_no) {
+		return dao.getAllByBkNo(bk_no);
+	}	
 
 }

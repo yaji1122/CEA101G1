@@ -31,10 +31,6 @@
 				onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_add.jsp'">
 				  新增活動
 				</button>
-				<button class="btn btn-outline-dark" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/backend/actpic/backend-act_pic_add.jsp'">
-				  新增照片
-				</button>
 			</form>
 		</nav>
 
@@ -72,22 +68,7 @@
 				</div>
 			</FORM>
 		</li>
-		<li id="font">
-			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet">
-				<div class="input-group mb-3">
-					<h5>活動編號:</h5>
-					<select size="1" name="actNo" class="custom-select" id="inputGroupSelect02">
-                       <c:forEach var="actVO" items="${ActSvc.all}" > 
-                           <option value="${actVO.actNo}">${actVO.actEventNo}
-                       </c:forEach>   
-                    </select> 
-                    <input type="hidden" name="action" value="getOne_For_Display">
-					<button class="btn btn-outline-secondary" type="submit"
-						id="button-addon2">送出</button>
-				</div>
-			</FORM>
-		</li>
-  
+		
 </ul>
 
 <!-- 頁面內容結束 -->

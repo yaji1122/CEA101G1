@@ -35,10 +35,6 @@
 				onclick="location.href='<%=request.getContextPath()%>/backend/actorder/backend-order_add.jsp'">
 				  新增訂單
 				</button>
-				<button class="btn btn-outline-success" type="button" 
-				onclick="location.href='<%=request.getContextPath()%>/backend/actpic/backend-act_pic_add.jsp'">
-				  新增照片
-				</button>
 			</form>
 		</nav>
 		

@@ -3,6 +3,8 @@ package com.act.model;
 import java.sql.Date;
 import java.util.*;
 
+import com.act.model.ActVO;
+
 public class ActService {
 	
 	private ActDAO dao;
@@ -14,7 +16,7 @@ public class ActService {
 	
 	public ActVO addAct(String actNo,String actEventNo,String actName,
 			String actStatus,Date actRegTime,Date actDate,Date deadLine,
-			String actTime,String participant,Integer actPrice) {
+			String actTime,String participant,Integer actPrice,byte[] actPic,String actInfo) {
 		
 		ActVO actVO = new ActVO();
 		actVO.setActNo(actNo);
@@ -27,6 +29,8 @@ public class ActService {
 		actVO.setActTime(actTime);
 		actVO.setParticipant(participant);
 		actVO.setActPrice(actPrice);
+		actVO.setActPic(actPic);
+		actVO.setActInfo(actInfo);
 		
 		dao.insert(actVO);
 		return actVO;
@@ -35,7 +39,7 @@ public class ActService {
 	
 	public ActVO updateAct(String actNo,String actEventNo,String actName,
 			String actStatus,Date actRegTime,Date actDate,Date deadLine,
-			String actTime,String participant,Integer actPrice) {
+			String actTime,String participant,Integer actPrice,byte[] actPic,String actInfo) {
 		
 		ActVO actVO = new ActVO();
 		actVO.setActNo(actNo);
@@ -48,6 +52,8 @@ public class ActService {
 		actVO.setActTime(actTime);
 		actVO.setParticipant(participant);
 		actVO.setActPrice(actPrice);
+		actVO.setActPic(actPic);
+		actVO.setActInfo(actInfo);
 		
 		dao.update(actVO);
 		return actVO;
@@ -74,6 +80,11 @@ public class ActService {
     	return dao.getAllActStatus(ActNo);
     	
     }
+    public ActVO getOneActPic(String actNo) {
+   	 
+     	return dao.findByPrimaryKey(actNo);
+     	
+     }
 
 
 }
