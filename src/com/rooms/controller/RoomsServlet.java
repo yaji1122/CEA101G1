@@ -35,7 +35,6 @@ public class RoomsServlet extends HttpServlet {
 				RoomsService rmSvc = new RoomsService();
 				RoomsVO rmvo = rmSvc.addRoom(rm_type, "");
 				RoomTypeService rmtypeSvc = new RoomTypeService();
-				rmtypeSvc.updateRoomQty(rm_type, 1);
 				req.setAttribute("msg", "新增的房號為" + rmvo.getRm_no());
 				dispatcher.forward(req, res);
 			} catch (Exception e) {
@@ -65,7 +64,6 @@ public class RoomsServlet extends HttpServlet {
 				System.out.println(rooms.size());
 				for (RoomsVO rm: rooms) {
 					System.out.println(rm.getRm_no().equals(rm_no));
-					System.out.println("有跑到");
 					if (rm.getRm_no().equals(rm_no)) {
 						req.setAttribute("msg", "房號已重複" ); 
 						dispatcher.forward(req, res);
@@ -74,7 +72,6 @@ public class RoomsServlet extends HttpServlet {
 				}
 				RoomsVO rmvo = rmSvc.addRoom(rm_type, rm_no);
 				RoomTypeService rmtypeSvc = new RoomTypeService();
-				rmtypeSvc.updateRoomQty(rm_type, 1); //呼叫服務增加房間數量
 				req.setAttribute("msg", "新增的房號為" + rmvo.getRm_no()); //將新增的房號丟回新增頁面
 				dispatcher.forward(req, res);
 			} catch (Exception e) {
@@ -124,24 +121,6 @@ public class RoomsServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				out.print("fail");
-			}
-		}
-
-		if ("delete_room".equals(action)) {
-			RequestDispatcher dispatcher = req.getRequestDispatcher("backend/rooms/roomInfo.jsp");
-			try {
-				String rm_no = req.getParameter("rm_no");
-				String rm_type = req.getParameter("rm_type");
-				RoomsService rmSvc = new RoomsService();
-				rmSvc.delete(rm_no);
-				RoomTypeService rmtypeSvc = new RoomTypeService();
-				rmtypeSvc.updateRoomQty(rm_type, -1);
-				req.setAttribute("msg", "房號" + rm_no + "已刪除");
-				dispatcher.forward(req, res);
-			} catch (Exception e) {
-				e.printStackTrace();
-				req.setAttribute("msg", "刪除失敗");
-				dispatcher.forward(req, res);
 			}
 		}
 

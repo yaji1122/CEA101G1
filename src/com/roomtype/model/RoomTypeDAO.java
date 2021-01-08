@@ -184,8 +184,7 @@ public class RoomTypeDAO implements RoomTypeDAO_interface {
 		}
 	}
 	@Override
-	public void updateQty(RoomTypeVO rmtypevo, int number) {
-		Connection conn = null;
+	public void updateQty(RoomTypeVO rmtypevo, int number, Connection conn) {
 		PreparedStatement pstmt = null;
 		Integer qty = getOneRmType(rmtypevo.getRm_type()).getRm_qty();
 		try {
@@ -204,36 +203,29 @@ public class RoomTypeDAO implements RoomTypeDAO_interface {
 					se.printStackTrace(System.err);
 				}
 			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
-
 	@Override
 	public RoomTypeVO getOneRmType(String rmtype) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		RoomTypeVO rmtypevo = new RoomTypeVO();
+		RoomTypeVO rmtypevo = null;
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(GETONEROOMTYPE);
 			pstmt.setString(1, rmtype);
 			ResultSet rs = pstmt.executeQuery();
-			rs.next();
-			rmtypevo.setRm_type(rmtype);
-			rmtypevo.setType_eng_name(rs.getString("TYPE_ENG_NAME"));
-			rmtypevo.setRm_price(rs.getInt("RM_PRICE"));
-			rmtypevo.setRm_capacity(rs.getInt("RM_CAPACITY"));
-			rmtypevo.setRm_qty(rs.getInt("RM_QTY"));
-			rmtypevo.setRm_info(rs.getString("RM_INFO"));
-			rmtypevo.setRm_info_title(rs.getString("RM_INFO_TITLE"));
-			rmtypevo.setType_name(rs.getString("TYPE_NAME"));
-			
+			while(rs.next()) {
+				rmtypevo = new RoomTypeVO();
+				rmtypevo.setRm_type(rmtype);
+				rmtypevo.setType_eng_name(rs.getString("TYPE_ENG_NAME"));
+				rmtypevo.setRm_price(rs.getInt("RM_PRICE"));
+				rmtypevo.setRm_capacity(rs.getInt("RM_CAPACITY"));
+				rmtypevo.setRm_qty(rs.getInt("RM_QTY"));
+				rmtypevo.setRm_info(rs.getString("RM_INFO"));
+				rmtypevo.setRm_info_title(rs.getString("RM_INFO_TITLE"));
+				rmtypevo.setType_name(rs.getString("TYPE_NAME"));
+			}
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {

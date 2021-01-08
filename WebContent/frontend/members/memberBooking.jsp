@@ -183,7 +183,7 @@ pageContext.setAttribute("history", history);
 									<td>${histo.dateIn}</td>
 									<td>${histo.total_price}</td>
 									<td>${histo.card_no}</td>
-									<td><a class="checkout-invoice" data-bkno="${histo.bk_no}">INVOICE<i class="fas fa-file-invoice-dollar"></i></a></td>
+									<td><a <c:if test="${histo.bk_status != 4}">class="checkout-invoice" data-bkno="${histo.bk_no}"</c:if>>INVOICE<i class="fas fa-file-invoice-dollar"></i></a></td>
 								</tr>
 								</c:forEach>
 							</table>

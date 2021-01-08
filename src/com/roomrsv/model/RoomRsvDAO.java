@@ -268,7 +268,46 @@ public class RoomRsvDAO implements RoomRsvDAO_interface {
 		}
 		return roomRsv;
 	}
-
+	
+	public void renewQty(String rm_type, Integer upordown, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(UPDATE);
+			List<RoomRsvVO> rsvList =  getAllByRmType(rm_type);
+			for (RoomRsvVO rsvvo: rsvList) {
+				int rmleft = rsvvo.getRm_left() + upordown;
+				pstmt.setInt(1, rmleft);
+				pstmt.setDate(2, java.sql.Date.valueOf(rsvvo.getRsv_date()));
+				pstmt.setString(3, rm_type);
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	
 	@Override
 	public List<RoomRsvVO> getOneDayByDate(LocalDate rsvDate) {
 		Connection conn = null;
@@ -301,7 +340,6 @@ public class RoomRsvDAO implements RoomRsvDAO_interface {
 					roomRsv.add(rsvvo);
 				}
 			}
-			
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {

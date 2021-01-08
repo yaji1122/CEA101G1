@@ -12,6 +12,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.bookingorder.model.BookingOrderService;
+import com.roomrsv.model.RoomRsvService;
+import com.roomtype.model.RoomTypeService;
 
 public class RoomsDAO implements RoomsDAO_interface {
 
@@ -41,14 +43,14 @@ public class RoomsDAO implements RoomsDAO_interface {
 	public String insert(RoomsVO rmvo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+		String rm_no = null;
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(INSERT);
 			String rm_type = rmvo.getRm_type();
-			String rm_no = rmvo.getRm_no();
+			rm_no = rmvo.getRm_no();
 			
-			if (rm_no.equals("")) { // 如果沒有自訂房號，自動新增
+			if (rm_no == null) { // 如果沒有自訂房號，自動新增
 				for (int i = 0; i < 100; i++) {
 					List<RoomsVO> list = getAllByRmType(rm_type);
 					List<String> rm_no_list = new ArrayList<>();
@@ -64,12 +66,13 @@ public class RoomsDAO implements RoomsDAO_interface {
 					}
 				}
 			}
-
 			pstmt.setString(1, rm_no);
 			pstmt.setString(2, rm_type);
 			pstmt.executeUpdate();
-			return rm_no;
-
+			RoomRsvService rsvSvc = new RoomRsvService();
+			RoomTypeService rmtypeSvc = new RoomTypeService();
+			rsvSvc.renewQty(rm_type, 1, conn);
+			rmtypeSvc.updateRoomQty(rmvo.getRm_type(), 1, conn);
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -88,6 +91,7 @@ public class RoomsDAO implements RoomsDAO_interface {
 				}
 			}
 		}
+		return rm_no;
 	}
 
 	@Override
@@ -100,9 +104,14 @@ public class RoomsDAO implements RoomsDAO_interface {
 			pstmt = conn.prepareStatement(UPDATE);
 			pstmt.setString(1, rmvo.getRm_status());
 			pstmt.setString(2, rmvo.getRm_no());
-			pstmt.setString(3, rmvo.getBk_no());
 			pstmt.executeUpdate();
-
+			
+			RoomRsvService rsvSvc = new RoomRsvService();
+			RoomTypeService rmtypeSvc = new RoomTypeService();
+			if (rmvo.getRm_status().equals("3") || rmvo.getRm_status().equals("2")) {
+				rsvSvc.renewQty(rmvo.getRm_type(), -1, conn);
+				rmtypeSvc.updateRoomQty(rmvo.getRm_type(), -1, conn);
+			}
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {

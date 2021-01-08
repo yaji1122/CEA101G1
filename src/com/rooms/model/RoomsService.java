@@ -30,6 +30,7 @@ public class RoomsService {
 		RoomsVO rmvo = new RoomsVO();
 		rmvo.setRm_no(rm_no);
 		rmvo.setRm_status(rm_status);
+		rmvo.setRm_type(rm_no.substring(0, 1));
 		dao.update(rmvo);
 		return rmvo;
 	}
@@ -48,10 +49,6 @@ public class RoomsService {
 		rmvo.setRm_no(rm_no);
 		dao.update_checkout(rmvo);
 		return rmvo;
-	}
-	
-	public void delete(String rm_no) {
-		dao.delete(rm_no);
 	}
 	
 	public List<RoomsVO> getAllByStatus(String rmstatus) {

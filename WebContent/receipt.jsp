@@ -10,7 +10,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.time.LocalDate"%>
 <%
-	String bk_no = request.getParameter("bk_no");
+String bk_no = request.getParameter("bk_no");
 pageContext.setAttribute("bkno", bk_no.toUpperCase());
 %>
 <!DOCTYPE html>
@@ -134,7 +134,8 @@ pageContext.setAttribute("bkno", bk_no.toUpperCase());
 			<tr class="information">
 				<td colspan="6">
 					${mbSvc.getOneByMbId(bkodSvc.getOneByBkNo(bkno).mb_id).mb_name} 君 <br>
-					${mbSvc.getOneByMbId(bkodSvc.getOneByBkNo(bkno).mb_id).mb_email}
+					${mbSvc.getOneByMbId(bkodSvc.getOneByBkNo(bkno).mb_id).mb_email} <br>
+					<%=LocalDate.now()%>
 				</td>
 			</tr>
 
@@ -147,7 +148,7 @@ pageContext.setAttribute("bkno", bk_no.toUpperCase());
 					style="font-size: 12px; font-weight: 400">卡號：${bkodSvc.getOneByBkNo(bkno).card_no}</span></td>
 			</tr>
 			<tr>
-				<th class="booking-title" colspan="6">訂房明細 <span>No#
+				<th class="booking-title" colspan="6">訂房明細 ${bkodSvc.getOneByBkNo(bkno).dateIn} ~ ${bkodSvc.getOneByBkNo(bkno).dateOut}<span>No#
 						${bkno}</span></th>
 			</tr>
 			<tr class="booking">

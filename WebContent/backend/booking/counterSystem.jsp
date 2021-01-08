@@ -49,7 +49,8 @@ pageContext.setAttribute("checkeds", checkeds);
 	<div class="wrapper">
 		<div class="header">
 			<div>
-				<h3><%=LocalDate.now()%></h3>
+				<h4>現在時間</h4>
+				<h3><%=LocalDate.now()%><span id="clock"></span></h3>
 			</div>
 			<div>
 				<h4>今日待入住訂單</h4>
@@ -242,6 +243,13 @@ pageContext.setAttribute("checkeds", checkeds);
 	});
 
 	$(document).ready(function () {
+		let clock = $("#clock");
+    	clock.text(new Date().toLocaleTimeString());
+    	setInterval(function(){
+    		clock.text(new Date().toLocaleTimeString());
+    	}, 1000)
+		
+		
 	    let bookingDetail = $("#booking-detail-info");
 	    $(".booking-detail").click(function (e) {
 	        e.preventDefault();

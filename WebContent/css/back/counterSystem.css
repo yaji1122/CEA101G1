@@ -18,6 +18,13 @@ body {
 button {
 	cursor:pointer;
 }
+#clock {
+	font-size:14px;
+	width:100px;
+	float:right;
+	padding-top: 5px;
+	text-align:right;
+}
 /* Preloder */
 #preloder {
     position: fixed;
@@ -89,30 +96,37 @@ button {
     }
 }
 .wrapper {
-    padding: 20px 20px 0px 60px;
+    padding: 0px 20px 0px 60px;
 }
 .wrapper .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 10px;
+   display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	text-align: center;
+	padding: 10px 0px 10px 0px;
+	border-bottom: 1px solid #e8e8e8;
 }
 .wrapper .header div {
-    width: 300px;
-    height: 100px;
+    width: 250px;
+	height: 80px;
 	padding: 10px;
 	margin: 0px 10px;
-	background-color: #e7e7de;
-	display:flex;
+	background-color: white;
+	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 }
 .wrapper .header div h3 {
+	font-size: 18px;
 	margin:0px;
 }
 .wrapper .header div h4 {
-	margin:0px;
+	font-size: 14px;
+	margin: 0px;
+	padding-bottom: 5px;
+	letter-spacing: 1px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid grey;
 }
 table {
 	width:100%;

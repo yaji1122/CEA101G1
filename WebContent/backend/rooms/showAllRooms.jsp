@@ -84,12 +84,11 @@ th {
 								<option value="all" selected>全部</option>
 								<option value="0">閒置中</option>
 								<option value="1">已入住</option>
-								<option value="2">清潔中</option>
-								<option value="3">整修中</option>
+								<option value="2">整修中</option>
+								<option value="3">已廢棄</option>
 						</select></th>
 						<th>目前入住會員</th>
 						<th>更新狀態</th>
-						<th>刪除客房</th>
 					</tr>
 				</thead>
 				<%
@@ -110,8 +109,8 @@ th {
 						<td class="${rmvo.rm_status}"><c:choose>
 								<c:when test="${rmvo.rm_status.equals('0')}">閒置中</c:when>
 								<c:when test="${rmvo.rm_status.equals('1')}">已入住</c:when>
-								<c:when test="${rmvo.rm_status.equals('2')}">清潔中</c:when>
-								<c:otherwise>整修中</c:otherwise>
+								<c:when test="${rmvo.rm_status.equals('2')}">整修中</c:when>
+								<c:otherwise>已廢棄</c:otherwise>
 							</c:choose></td>
 						<td><c:choose>
 								<c:when test="${rmvo.mb_id==null}">
@@ -125,15 +124,6 @@ th {
 							value="修改"> <input type="hidden" name="rm_no"
 							value="${rmvo.rm_no}"> <input type="hidden" name="action"
 							value=""></td>
-						<td>
-							<form method="post"
-								action="${pageContext.request.contextPath}/RoomsServlet">
-								<input type="hidden" name="rm_no" value="${rmvo.rm_no}">
-								<input type="hidden" name="rm_type" value="${rmvo.rm_type}">
-								<input type="hidden" name="action" value="delete_room">
-								<input class="delete btn btn-danger" type="submit" value="刪除">
-							</form>
-						</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -156,8 +146,8 @@ th {
 				required>
 					<option value="0">閒置中</option>
 					<option value="1">已入住</option>
-					<option value="2">清潔中</option>
-					<option value="3">整修中</option>
+					<option value="2">整修中</option>
+					<option value="3">已廢棄</option>
 			</select></label> <input name="action" value="update_room" style="display: none">
 			<input id="update-room" name="update-rm-no" type="text"
 				style="display: none">
@@ -180,7 +170,7 @@ th {
 			case "已入住":
 				status = '1';
 				break;
-			case "清潔中":
+			case "整修中":
 				status = '2';
 				break;
 			default:

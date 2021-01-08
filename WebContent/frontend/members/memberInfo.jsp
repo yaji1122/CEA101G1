@@ -100,6 +100,12 @@ MembersVO member = (MembersVO)session.getAttribute("member");
 										id="mb_email" value="${member.mb_email}"
 										placeholder="guest@gmail.com" readonly />
 								</div>
+								<div>
+									<label for="mb_point">消費積分</label> <input
+										class="input-disabled" type="text" name="mb_point"
+										id="mb_point" value="${member.mb_point}"
+										placeholder="guest@gmail.com" readonly />
+								</div>
 								<div style="display: none" class="password_reset">
 									<label for="mb_name">請輸入舊密碼</label> <input
 										class="input-disabled" type="password" name="old_mb_pwd"

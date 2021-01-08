@@ -26,6 +26,10 @@ public class RoomRsvService {
 		dao.cancel(stay, startDate, rmType, conn);
 	}
 	
+	public void renewQty(String rm_type, Integer upordown, Connection conn) {
+		dao.renewQty(rm_type, upordown, conn);
+	}
+	
 	public void deleteRsvDate(LocalDate rsvDate) {
 		dao.delete(rsvDate);
 	}

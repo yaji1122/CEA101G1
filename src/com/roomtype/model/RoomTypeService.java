@@ -1,5 +1,6 @@
 package com.roomtype.model;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class RoomTypeService {
@@ -44,10 +45,10 @@ public class RoomTypeService {
 		return roomTypeVO;
 	}
 
-	public void updateRoomQty(String rm_type, int number) {
+	public void updateRoomQty(String rm_type, int number, Connection conn) {
 		RoomTypeVO roomTypeVO = new RoomTypeVO();
 		roomTypeVO.setRm_type(rm_type);
-		dao.updateQty(roomTypeVO, number);
+		dao.updateQty(roomTypeVO, number, conn);
 	}
 
 	public List<RoomTypeVO> getAll() {
