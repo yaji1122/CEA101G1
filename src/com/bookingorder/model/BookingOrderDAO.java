@@ -509,6 +509,7 @@ public class BookingOrderDAO implements BookingOrderDAO_interface {
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(GETONEBYBKNO);
+			bk_no = bk_no.toUpperCase();
 			pstmt.setString(1, bk_no);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
