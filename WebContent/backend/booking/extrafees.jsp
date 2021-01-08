@@ -10,12 +10,7 @@
 <%@ page import="java.time.LocalDate" %>
 <%
 	String bk_no = request.getParameter("bk_no");
-	pageContext.setAttribute("bk_no", bk_no);
-	ActOrderService actSvc = new ActOrderService();
-	MealOrderService mealSvc = new MealOrderService();
-	ServiceOrderService svc = new ServiceOrderService();
-	List<ServiceOrderVO> svcList = svc.getAllByBkNo(bk_no);
-	List<MealOrderVO> mealodList = mealSvc.getAllByBkNo(bk_no);
+	pageContext.setAttribute("bkno", bk_no.toUpperCase());
 %>
 <!DOCTYPE html>
 <html>
@@ -69,8 +64,12 @@
   background: #eee;
   border-bottom: 1px solid #ddd;
   font-weight: bold;
+  text-align: left;
 }
 
+.invoice-box table tr.heading td:last-child {
+	text-align: right;
+}
 .invoice-box table tr.details td {
   padding-bottom: 20px;
 }
@@ -91,7 +90,6 @@
   margin-left: -5px;
   width: 100%;
 }
-
 .invoice-box table tr.total td:nth-child(2) {
   border-top: 2px solid #eee;
   font-weight: bold;
@@ -143,7 +141,7 @@
             </td>
 
             <td>
-              Invoice #:${bk_no} <br> Created: <%=LocalDate.now()%>
+              Invoice #:${bkno} <br> Created: <%=LocalDate.now()%>
             </td>
           </tr>
         </table>
@@ -159,9 +157,9 @@
             </td>
 			<jsp:useBean id="mbSvc" scope="page" class="com.members.model.MembersService"/>
 			<jsp:useBean id="bkodSvc" scope="page" class="com.bookingorder.model.BookingOrderService"/>
+			
             <td>
-              ${bkodSvc.getOneByBkNo(bk_no)} 君
-               ${mbSvc.getOneByMbId(bkodSvc.getOneByBkNo(bk_no).mb_id).mb_name} 君
+               ${mbSvc.getOneByMbId(bkodSvc.getOneByBkNo(bkno).mb_id).mb_name} 君
             </td>
           </tr>
         </table>
@@ -170,34 +168,75 @@
 
     <tr class="heading">
       <td colspan="3">Payment Method</td>
-      <td>Credit Card #</td>
+      <td>No #</td>
     </tr>
 
     <tr class="details">
-      <td colspan="3">Check</td>
-      <td>1000</td>
+      <td colspan="3">Credit Card</td>
+      <td>1239 2939 1234 2312</td>
     </tr>
 
     <tr class="heading">
-      <td>Item</td>
-      <td>Unit Cost</td>
-      <td>Quantity</td>
-      <td>Price</td>
+      <td>訂單類型</td>
+      <td>訂單編號</td>
+      <td>下單時間</td>
+      <td>訂單總額</td>
     </tr>
-
-    <tr class="item" v-for="item in items">
-      <td><input v-model="item.description" /></td>
-      <td>$<input type="number" v-model="item.price" /></td>
-      <td><input type="number" v-model="item.quantity" /></td>
-      <td></td>
+    
+	<jsp:useBean id="mealodSvc" scope="page" class="com.mealorder.model.MealOrderService"/>
+	<c:forEach var="mealod" items="${mealodSvc.getAllByBkNo(bkno)}">
+	<tr class="item">
+      <td>餐飲服務</td>
+      <td>${mealod.meal_odno}</td>
+      <td>${mealod.od_time}</td>
+      <td>${mealod.total_price}</td>
     </tr>
-
-    <tr>
-      <td colspan="4">
-        <button class="btn-add-row" @click="addRow">Add row</button>
-      </td>
+    <tr class="item-detail">
+    	<td>
+    		<table>
+    			<tr>
+    				<th>餐點名稱</th>
+    				<th>單價</th>
+    				<th>數量</th>
+    				<th>小計</th>
+    			</tr>
+    			<jsp:useBean id="mealdetailSvc" scope="page" class="com.mealorderdetail.model.MealOrderDetailService"/>
+    			<jsp:useBean id="mealSvc" scope="page" class="com.meal.model.MealService"/>
+    			<c:forEach var="detail" items="${mealdetailSvc.getAllByOdno(mealod.meal_odno)}">
+    			<tr>
+    				<td>${mealSvc.getOneMeal(detail.meal_no).meal_name}</td>
+    				<td>${detail.price}</td>
+    				<td>${detail.qty}</td>
+    				<td>\$ ${detail.price * detail.qty}</td>
+    			</tr>
+    			</c:forEach>
+    		</table>
+    	</td>
     </tr>
-
+	</c:forEach>
+	
+	<jsp:useBean id="svcodSvc" scope="page" class="com.service_order.model.ServiceOrderService"/>
+	<jsp:useBean id="svcSvc" scope="page" class="com.services.model.ServicesService"/>
+    <c:forEach var="serviceod" items="${svcodSvc.getAllByBkNo(bkno)}">
+    <tr class="item">
+      <td>${svcSvc.getOneServices(serviceod.serv_no).serv_name}</td>
+      <td>${serviceod.serv_odno}</td>
+      <td>${serviceod.od_time}</td>
+      <td>${serviceod.total_price}</td>
+    </tr>
+    </c:forEach>
+<%-- 
+	<jsp:useBean id="actodSvc" scope="page" class="com.actorder.model.ActOrderService"/>
+	<jsp:useBean id="actSvc" scope="page" class="com.act.model.ActService"/>
+	<c:forEach var="actod" items="${actodSvc.getAllByBkNo(bkno)}">
+    <tr class="item">
+      <td>${actSvc.getOneAct(actod.actNo).actName}</td>
+      <td>${actod.actOdno}</td>
+      <td>${actod.odTime}</td>
+      <td>${actod.totalPrice}</td>
+    </tr>
+    </c:forEach>
+	 --%>
     <tr class="total">
       <td colspan="3"></td>
       <td></td>

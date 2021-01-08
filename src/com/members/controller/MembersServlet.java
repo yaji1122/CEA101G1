@@ -72,7 +72,7 @@ public class MembersServlet extends HttpServlet {
 				paySvc.insertCrdt(mb_id, card_no, card_name, exp_mon, exp_year, csc); //新增付款訊息
 				MailService mail = new MailService(); //發送驗證郵件
 				MailAuthenticate auth = new MailAuthenticate();
-				String mailMsg = "點擊以下連結啟用帳號，享受更多服務。http://localhost:8080/CEA101G1/MembersServlet?action=verify&authcode="
+				String mailMsg = "點擊以下連結啟用帳號，享受更多服務。http://104.199.188.155/CEA101G1/MembersServlet?action=verify&authcode="
 						+ auth.insertCode(mb_id) + "&mb_id=" + mb_id;
 				mail.sendMail(mb_email, "戴蒙會員資格啟用驗證", mailMsg);
 				out.print("success");
