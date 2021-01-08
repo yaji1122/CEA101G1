@@ -144,8 +144,8 @@ pageContext.setAttribute("history", history);
 										<button class="pkup">
 											<i class="fas fa-helicopter"></i>接送預約
 										</button>
-										<button class="check-order-detail">
-											<i class="fas fa-clipboard-list"></i></i>訂單詳情
+										<button class="check-order-detail checkout-invoice" data-bkno="${booking.bk_no}">
+											<i class="fas fa-clipboard-list"></i>訂單詳情
 										</button>
 										<button class="cancel-order" data-bkno="${booking.bk_no}">
 											<i class="far fa-bell-slash"></i>取消訂單
@@ -183,7 +183,7 @@ pageContext.setAttribute("history", history);
 									<td>${histo.dateIn}</td>
 									<td>${histo.total_price}</td>
 									<td>${histo.card_no}</td>
-									<td><a>收據 <i class="fas fa-file-invoice-dollar"></i></a></td>
+									<td><a class="checkout-invoice" data-bkno="${histo.bk_no}">INVOICE<i class="fas fa-file-invoice-dollar"></i></a></td>
 								</tr>
 								</c:forEach>
 							</table>
@@ -202,6 +202,13 @@ pageContext.setAttribute("history", history);
 	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
 	<script>
 		$(document).ready(function(){
+			$(".checkout-invoice").click(function(){
+		    	let bkno = $(this).attr("data-bkno");
+		    	url = "<%=request.getContextPath()%>/receipt.jsp?bk_no=" + bkno;
+		    	window.open(url, '_blank');
+		    })
+			
+			
 			$(".pkup").click(function(){
 				$("#pkupbooking").addClass("show");
 			})

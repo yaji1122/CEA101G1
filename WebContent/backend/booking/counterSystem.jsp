@@ -174,7 +174,7 @@ pageContext.setAttribute("checkeds", checkeds);
 							<fmt:parseDate pattern="yyyy-MM-dd'T'HH:mm" type="both" value="${checkOut.checkIn}" var="parsedDateTime"/> 
 							<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${parsedDateTime}"/></td>
 							<td>${checkOut.dateOut}</td>
-							<td>receipt</td>
+							<td><button class="checkout-invoice" data-mbid="${checked.mb_id}" data-bkno="${checked.bk_no}">INVOICE</button></td>
 							<td><button class="checkout-confirm" data-mbid="${checkOut.mb_id}" data-bkno="${checkOut.bk_no}">CHECK OUT</button></td>
 						</tr>
 					</c:forEach>
@@ -201,10 +201,9 @@ pageContext.setAttribute("checkeds", checkeds);
 						<tr class="list-data">
 							<td><i class="fas fa-receipt"></i>${checked.bk_no}</td>
 							<td>
-								<i class="far fa-user member-icon"></i>
 								<a class="booking-detail member"
 								href="<%=request.getContextPath()%>/MembersServlet?mb_id=${checked.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${checked.mb_id}</a><br>
-								${mbSvc.getOneByMbId(checked.mb_id).mb_name}
+								<i class="far fa-user member-icon"></i>${mbSvc.getOneByMbId(checked.mb_id).mb_name}
 							</td>
 							<fmt:parseDate pattern="yyyy-MM-dd'T'HH:mm" type="both" value="${checked.checkIn}" var="parsedDateTime"/> 
 							<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${parsedDateTime}"/></td>
@@ -214,7 +213,10 @@ pageContext.setAttribute("checkeds", checkeds);
 									<span class="all-rooms">${room.rm_no}</span>
 								</c:forEach>
 							</td>
-							<td><button class="checkout-confirm" data-mbid="${checked.mb_id}" data-bkno="${checked.bk_no}">CHECK OUT</button></td>
+							<td>
+								<button class="checkout-invoice" data-mbid="${checked.mb_id}" data-bkno="${checked.bk_no}">INVOICE</button>
+								<button class="checkout-confirm" data-mbid="${checked.mb_id}" data-bkno="${checked.bk_no}">CHECK OUT</button>
+							</td>
 						</tr>
 					</c:forEach>
 					<tr>
@@ -262,6 +264,13 @@ pageContext.setAttribute("checkeds", checkeds);
 	        $(this).siblings(".empty").removeClass("selected");
 	        $(this).addClass("selected");
 	    });
+	    
+	    $(".checkout-invoice").click(function(){
+	    	let bkno = $(this).attr("data-bkno");
+	    	url = "<%=request.getContextPath()%>/receipt.jsp?bk_no=" + bkno;
+	    	window.open(url, '_blank');
+	    })
+	    
 	    $(".checkin-confirm").click(function () {
 	        let selects = $(this).siblings(".checkin-option");
 	        let mbid = $(this).attr("data-mbid");

@@ -57,9 +57,9 @@ List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin-bottom: 10px;
 	text-align: center;
 	padding: 10px 0px 10px 60px;
+	border-bottom: 1px solid #e8e8e8;
 }
 
 .header div {
@@ -67,17 +67,11 @@ List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 	height: 80px;
 	padding: 10px;
 	margin: 0px 10px;
-	background-color: transparent;
+	background-color: white;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	border: 2px solid grey;
 }
-
-.header div:nth-child(1) {
-	border: 2px solid #11698e;
-}
-
 .header div h3 {
 	font-size: 18px;
 	margin: 0px;
@@ -86,37 +80,27 @@ List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 .header div h4 {
 	font-size: 14px;
 	margin: 0px;
+	padding-bottom: 5px;
 	letter-spacing: 1px;
 	margin-bottom: 5px;
 	border-bottom: 1px solid grey;
 }
-
+.arrows {
+	display: flex;
+	flex-direction : row;
+	justify-content: space-around;
+}
 .arrow {
-	position: absolute;
 	color: #bbbfca;
-	font-size: 25px;
+	font-size: 20px;
 	z-index: 10;
+	cursor: pointer;
 }
 
 .aval-title {
 	width: 90%;
 	margin: 0 auto;
 }
-
-.calendar-forward {
-	right: 10px;
-	top: 25px;
-	transform: translateY(-50%);
-	cursor: pointer;
-}
-
-.calendar-backward {
-	left: 0;
-	top: 25px;
-	transform: translateY(-50%);
-	cursor: pointer;
-}
-
 .arrow:hover {
 	color: #495464;
 }
@@ -148,7 +132,7 @@ List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 	height: min-content;
 	text-align: left;
 	letter-spacing: 5px;
-	font-size: 20px;
+	font-size: 18px;
 	width: fit-content;
 }
 
@@ -166,9 +150,10 @@ List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 
 .week-title th {
 	text-align: center;
-	padding: 10px 0px;
-	font-size: 18px;
-	font-weight: 700;
+	padding: 5px 0px;
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: 1px;
 }
 
 a.calendar-box {
@@ -266,6 +251,26 @@ div.rmtype.noleft {
 	padding-top: 5px;
 	text-align:right;
 }
+div.color-info {
+	width: 900px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	padding: 10px 0px;
+	margin: 0 auto;
+}
+div.color-info div.colors {
+	font-size: 14px;
+	display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+div.color-info div.colors div.rmtype {
+	height: 16px;
+	min-width:16px;
+	margin-right: 5px;
+}
 </style>
 <body>
 	<jsp:useBean id="bkdetailSvc" scope="page"
@@ -305,17 +310,24 @@ div.rmtype.noleft {
 				</h3>
 			</div>
 		</div>
+		<div class="arrows">
+			<div class="calendar-backward arrow">
+				<i class="fas fa-caret-left"></i> PREV MONTH
+			</div>
+			<div class="calendar-forward arrow">
+				NEXT MONTH <i class="fas fa-caret-right"></i>
+			</div>
+		</div>
 		<div class="view">
 			<div id="display">
 			</div>
-			<div class="calendar-backward arrow">
-				<i class="fas fa-chevron-left"></i>
-			</div>
-			<div class="calendar-forward arrow">
-				<i class="fas fa-chevron-right"></i>
-			</div>
+			
 		</div>
-
+		<div class="color-info">
+			<c:forEach var="rmtype" items="${rmtypeSvc.all}">
+			<div class="colors"><div class="rmtype rmtype${rmtype.rm_type}"></div>${rmtype.type_name}</div>
+			</c:forEach>
+		</div>
 	</div>
 
 	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
@@ -326,7 +338,7 @@ div.rmtype.noleft {
 	<script>
 	$(document).ready(function () {
         let display = document.getElementById("display");
-        let weeks = ["ㄧ", "二", "三", "四", "五", "六", "日"];
+        let weeks = ["MON", "TUE", "WED", "THUR", "FRI", "SAT", "SUN"];
         let today = new Date();
         let thisYear = today.getFullYear();
         let thisMonth = today.getMonth();
