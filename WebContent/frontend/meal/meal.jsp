@@ -39,7 +39,7 @@
 
 	<%
 		String mb_id = member.getMb_id();
-	System.out.println(mb_id);
+// 	System.out.println(mb_id);
 		BookingOrderService bkodSvc = new BookingOrderService();
 		List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
 		List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
@@ -48,7 +48,7 @@
 		for (BookingOrderVO list : newList) {
 			bk_no = list.getBk_no();
 		}
-				System.out.println(bk_no);
+// 				System.out.println(bk_no);
 
 		RoomsService roomsSvc = new RoomsService();
 		List<RoomsVO> roomList = roomsSvc.getAllByMbId(mb_id);
@@ -56,7 +56,7 @@
 		for (RoomsVO list : roomList) {
 			roomnoList.add(list.getRm_no());
 		}
-				roomnoList.forEach(System.out::println);
+// 				roomnoList.forEach(System.out::println);
 
 		session.setAttribute("roomnoList", roomnoList);
 	%>
