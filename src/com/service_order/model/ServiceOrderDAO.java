@@ -294,7 +294,7 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 	}
 	
 	@Override
-	public List<ServiceOrderVO> getAllByBkNo() {
+	public List<ServiceOrderVO> getAllByBkNo(String bk_no) {
 		List<ServiceOrderVO> list = new ArrayList<ServiceOrderVO>();
 		ServiceOrderVO serviceOrderVO = null;
 
@@ -306,6 +306,9 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_BY_BKNO_STMT);
+			
+			pstmt.setString(1, bk_no);
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
