@@ -46,15 +46,13 @@
 				class="form-control" id="input-Act-Namel4" name="actName" size="45"
 				placeholder="請輸入活動名稱"
 				value="<%=(actVO == null) ? "" : actVO.getActName()%>" /> <label
-				class=" -danger">活動狀態: (ACT_Status):</label> <input type="text"
-				class="form-control" aria-label="Amount (to the nearest dollar)"
+				>活動狀態: (ACT_Status):</label> <input type="text"
 				name="actStatus" size="45"
 				value="<%=(actVO == null) ? "" : actVO.getActStatus()%>" /> 
 				<label>活動時段: (ACT_Time):</label> 
 				<input type="text" class="form-control" id="actTime" name="actTime" size="45" value="<%=actVO.getActTime()%>" />
-				<label>活動價格:</label> <input type="text"
-				class="form-control" id="input-Act-Namel4" name="actPrice" size="45"
-				placeholder="請填入數字"
+				<label>活動價格:</label> 
+				<input type="number"name="actPrice" size="45" placeholder="請填入數字"
 				value="<%=(actVO == null) ? "" : actVO.getActPrice()%>" /> <label
 				class=" ">活動照片:(Pic_Load):</label>
 			<div id="pic-area">
@@ -72,10 +70,9 @@
 		</div>
 
 		<div class="message">
-			<input type="hidden" name="action" value="update"> <input
-				type="hidden" name="empno" value="<%=actVO.getActNo()%>">
+			<input type="hidden" name="action" value="update"> 
+			<input type="hidden" name="empno" value="<%=actVO.getActNo()%>">
 			<button type="submit" class="btn btn-primary">送出修改</button>
-			<button type="reset" class="btn btn-primary">重設</button>
 		</div>
 
 	</FORM>
@@ -95,7 +92,7 @@
                 xhr.onload = function () {
                     if (xhr.readyState === xhr.DONE) {
                         if (xhr.status === 200) {
-                            if (xhr.responseText === "新增成功") {
+                            if (xhr.responseText === "success") {
                                 Swal.fire({
                                     position: "top-end",
                                     icon: "success",
@@ -104,7 +101,7 @@
                                     timer: 1500,
                                 });
                                 setTimeout(function () {
-                                    location.reload();
+                                    window.parent.location.reload();
                                 }, 1400);
                             } else if (xhr.responseText === "編號重複") {
                                 Swal.fire({

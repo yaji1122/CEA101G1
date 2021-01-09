@@ -83,7 +83,7 @@
                                 <div class="sidebar-submenu">
                                     <ul>
                                         <li><a href="<%=request.getContextPath()%>/backend/item/itemInfo.jsp">商品管理</a></li>
-                                        <li><a href="<%=request.getContextPath()%>/backend/shop_order/select_shop_order.jsp">商品訂單管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/shop_order/listAllShop_order.jsp.jsp">商品訂單管理</a></li>
                                         <li><a href="#">商品促銷管理</a></li>
                                     </ul>
                                 </div>
