@@ -14,6 +14,10 @@
 	#show {
 	max-width: 100%;
 	}
+	#pic-area {
+		width:400px;
+		margin: 0 auto;
+	}
 </style>
 <body>
 	<div>
@@ -23,104 +27,110 @@
 					<font style="color: red">請修正以下錯誤:</font>
 					<ul>
 						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
+							<li style="color: red">${message}
 						</c:forEach>
 					</ul>
 				</c:if>
 			</h3>
 		</div>
-		<FORM METHOD="post"
-			ACTION="<%=request.getContextPath()%>/act/ActServlet" name="form1"
-			enctype="multipart/form-data">
-			<div id="form">
-				<li><label for="inputEmail4" class=" "
-					role="">活動編號: (ACT_No):</label> <input type="text"
-					class="form-control" id="input-Act-no" placeholder="ACT_No"
-					name="actNo" size="45" size="45" required placeholder="請輸入活動編號"
-					value="<%=(actVO == null) ? "" : actVO.getActNo()%>" /></li>
-				<li><label for="inputPassword4" class=" -danger">活動項目編號:(ACT_Event_No):</label>
-					<input type="text" class="form-control" id="input-Act-Event-No"
-					name="actEventNo" size="45" placeholder="請選擇活動項目編號"
-					value="<%=(actVO == null) ? "" : actVO.getActEventNo()%>" /></li>
-				<li><label class=" " role="">活動名稱:
+		<jsp:useBean id="eventSvc" scope="page" class="com.actevent.model.ActEventService" />
+		<FORM METHOD="post" id="act-form" enctype="multipart/form-data">
+			<div id="form" class="insert">
+				<label for="actEventNo" class="">活動類型</label>
+				<select name="actEventNo" id="actEventNo">
+					<c:forEach var="event" items="${eventSvc.all}">
+					<option value="${event.actEventNo}">${event.actEventName}</option>
+					</c:forEach>
+				</select>
+				<label class=" " role="">活動名稱:
 						(ACT_Name):</label> <input type="text" class="form-control"
 					id="input-Act-Namel4" name="actName" size="45"
-					placeholder="請輸入活動名稱"
-					value="<%=(actVO == null) ? "" : actVO.getActName()%>" /></li>
-				<li><label class=" -danger">活動狀態:
-						(ACT_Status):</label> <input type="text" class="form-control"
-					aria-label="Amount (to the nearest dollar)" name="actStatus"
-					size="45" value="<%=(actVO == null) ? "" : actVO.getActStatus()%>" />
-				</li>
-				<li><label class=" " role="">活動報名日期:</label>
-					<input type="date" class="form-control" id="input-Act-Namel4"
-					name="actRegTime" size="45"
-					value="<%=(actVO == null) ? "" : actVO.getActRegTime()%>" /></li>
-				<li><label class=" " role="">活動舉辦日期:</label>
-					<input type="date" class="form-control" id="input-Act-Namel4"
-					name="actDate" size="45"
-					value="<%=(actVO == null) ? "" : actVO.getActDate()%>" /></li>
-				<li><label class=" " role="">活動截止日期:</label>
-					<input type="date" class="form-control" id="input-Act-Namel4"
-					name="deadLine" size="45"
-					value="<%=(actVO == null) ? "" : actVO.getDeadLine()%>" /></li>
-				<li><label class=" -danger">活動時段: (ACT_Time):</label>
-					<input type="text" class="form-control"
-					aria-label="Amount (to the nearest dollar)"
-					placeholder="活動時段請填入整點數字,如:1600" name="actTime" size="45"
-					value="<%=(actVO == null) ? "" : actVO.getActTime()%>" /></li>
-				<li><label class=" -danger">會員姓名:
-						(Participant):</label> <input type="text" class="form-control"
-					aria-label="Amount (to the nearest dollar)" placeholder="請填入姓名"
-					name="participant" size="45"
-					value="<%=(actVO == null) ? "" : actVO.getParticipant()%>" /></li>
-				<li><label class=" " role="">活動價格:</label>
+					placeholder="請輸入活動名稱"/>
+				<label class=" -danger">活動狀態:(ACT_Status):</label> 
+				<select name="actStatus">
+					<option value="0">已停止</option>
+					<option value="1">進行中</option>
+					<option value="2">已停辦</option>
+				</select>
+				<label>活動時段: (ACT_Time):</label> 
+				<input type="text" class="form-control" id="actTime" name="actTime" size="45"/>
+				<label class=" " role="">活動價格:</label>
 					<input type="text" class="form-control" id="input-Act-Namel4"
-					name="actPrice" size="45" placeholder="請填入數字"
-					value="<%=(actVO == null) ? "" : actVO.getActPrice()%>" /></li>
-				<li class="pic"><label>活動照片:(Pic_Load):</label>
-					<input onchange="showImg(this)" type="file" class="form-control"
-					aria-label="Amount (to the nearest dollar)" name="ActPic" size="45"
-					value="<%=(actVO == null) ? "" : actVO.getActPic()%>"></li>
+					name="actPrice" size="45" placeholder="請填入數字" />
+				<label>活動照片:(Pic_Load):</label>
+					<input onchange="showImg(this)" type="file" class="form-control" name="ActPic">
 					<div id="pic-area">
-						<img id="show" src="">
+						<img id="show">
 					</div>
-				<li><label class=" " role="">活動敘述:</label>
-					<input type="text" class="form-control" id="input-Act-Namel4"
-					name="actInfo" size="100" placeholder="活動內容敘述"
-					value="<%=(actVO == null) ? "" : actVO.getActInfo()%>" /></li>
+				<label class=" " role="">活動敘述:</label>
+					<textarea class="form-control" id="input-Act-Namel4" name="actInfo" placeholder="活動內容敘述"></textarea>
 			</div>
-
 			<div class="message">
 				<input type="hidden" name="action" value="insert">
 				<button type="submit" class="btn btn-primary">新增</button>
 				<button type="reset" class="btn btn-primary">重設</button>
-				<button type="button" class="btn btn-outline-danger"
-					onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_select_page.jsp'">
-					回首頁</button>
 			</div>
 		</FORM>
 	</div>
-	
-	<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>
-	<script src="<%=request.getContextPath()%>/js/index-back.js"></script>
-	<script src="https://kit.fontawesome.com/dc3c868026.js"
-		crossorigin="anonymous"></script>
 	<script>
-		function showImg(thisimg) {
-			var file = thisimg.files[0];
-			if (window.FileReader) {
-				var fr = new FileReader();
+		$( document ).ready(function(){
+			
+			 let formElem = document.querySelector("#act-form");
+	            formElem.addEventListener("submit", (e) => {
+	                e.preventDefault();
+	               
+	                let data = new FormData(formElem);
+	                let xhr = new XMLHttpRequest();
+	                xhr.open("post", "${pageContext.request.contextPath}/ActServlet");
+	                xhr.onload = function () {
+	                    if (xhr.readyState === xhr.DONE) {
+	                        if (xhr.status === 200) {
+	                            if (xhr.responseText === "success") {
+	                                Swal.fire({
+	                                    position: "top-end",
+	                                    icon: "success",
+	                                    title: xhr.responseText,
+	                                    showConfirmButton: false,
+	                                    timer: 1500,
+	                                });
+	                                setTimeout(function () {
+	                                    location.reload();
+	                                }, 1400);
+	                            } else {
+	                                Swal.fire({
+	                                    position: "top-end",
+	                                    icon: "error",
+	                                    title:"發生錯誤",
+	                                    text: xhr.responseText,
+	                                    showConfirmButton: false,
+	                                    timer: 1500,
+	                                });
+	                            }
+	                        }
+	                    }
+	                };
+	                xhr.send(data);
+	            });
+			
+			function showImg(thisimg) {
+				var file = thisimg.files[0];
+				if (window.FileReader) {
+					var fr = new FileReader();
 
-				var showimg = document.getElementById('show');
-				fr.onloadend = function(e) {
-					showimg.src = e.target.result;
-				};
-				fr.readAsDataURL(file);
-				showimg.style.display = 'block';
+					var showimg = document.getElementById('show');
+					fr.onloadend = function(e) {
+						showimg.src = e.target.result;
+					};
+					fr.readAsDataURL(file);
+					showimg.style.display = 'block';
+				}
 			}
-		}
+			$("#actTime").datetimepicker({
+				datepicker:false,
+				format: "h:i",
+				step: 60,
+			});
+		}) 
 	</script>
 </body>
 </html>

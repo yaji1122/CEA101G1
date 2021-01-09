@@ -157,22 +157,12 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ActPicServlet</servlet-name>
-		<servlet-class>com.actpic.controller.ActPicServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ActPicServlet</servlet-name>
-		<url-pattern>/actpic/ActPicServlet</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
 		<servlet-name>ActServlet</servlet-name>
 		<servlet-class>com.act.controller.ActServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActServlet</servlet-name>
-		<url-pattern>/act/ActServlet</url-pattern>
-		<url-pattern>/act/ActPicReaderServlet</url-pattern>
+		<url-pattern>/ActServlet</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

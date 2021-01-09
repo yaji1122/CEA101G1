@@ -204,11 +204,9 @@ public class ActEventDAO implements ActEventDAO_interface{
 			
 			while(rs.next()) {
 				actEventVO = new ActEventVO();
-				
 				actEventVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
 				actEventVO.setActEventName(rs.getString("ACT_EVENT_NAME"));
 				list.add(actEventVO);
-		       		
 			}
 		
 		}catch(SQLException se) {

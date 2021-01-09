@@ -5,7 +5,7 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-	ActService actSvc = new ActService();
+ActService actSvc = new ActService();
 List<ActVO> list = actSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
@@ -46,8 +46,7 @@ pageContext.setAttribute("list", list);
 					</tr>
 				</thead>
 				<tbody>
-					<jsp:useBean id="eventSvc" scope="page"
-						class="com.actevent.model.ActEventService" />
+				<jsp:useBean id="eventSvc" scope="page" class="com.actevent.model.ActEventService" />
 					<c:forEach var="actVO" items="${list}">
 						<tr>
 							<td>${actVO.actNo}</td>
@@ -58,103 +57,34 @@ pageContext.setAttribute("list", list);
 									<c:when test="${actVO.actStatus == 1}">進行中</c:when>
 								</c:choose></td>
 							<td>${actVO.actTime}</td>
-							<td><input class="update btn btn-primary" type="button"
-								value="修改"> <input type="hidden" name="rm_no"
-								value="${rmvo.rm_no}"> <input type="hidden"
-								name="action" value=""></td>
+							<td>
+								<button class="update btn btn-primary" data-actno="${actVO.actNo}">修改</button>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
-		<form class="update-display update-form" method="post"
-			action="${pageContext.request.contextPath}/act.do">
-			<div class="close-icon">
-				<i class="fas fa-times icon"></i>
-			</div>
-			<h3>
-				活動編號：<b id="update-actno"></b>
-			</h3>
-			<label for="update-actevent">活動類型</label> <select id="update-actevent" name="update-actevent" required>
-				<c:forEach var="event" items="${eventSvc.getAll()}">
-					<option value="${event.actEventNo}">${event.actEventName}</option>
-				</c:forEach>
-			</select> <label for="update-actname">活動名稱</label> <input type="text"
-				name="update-actname" id="update-actname"  maxlength="20"
-				min="1" autocomplete="off" required />
-				 <label for="update-actstatus">活動狀態</label> 
-				<select name="update-actstatus" id="update-actstatus"
-				class="rm-select" required>
-					<option value="0">已停止</option>
-					<option value="1">進行中</option>
-					<option value="2">已停辦</option>
-			</select><label for="update-acttime">活動開始時間</label> <input type="text"
-				name="update-acttime" id="update-acttime" class="rm-input" max="9"
-				min="1" autocomplete="off" required /> <label for="update-actprice">活動價格</label>
-			<input type="number" name="update-actprice" id="update-actprice"
-				class="rm-input" max="9" min="1" autocomplete="off" required />
-				 <label for="update-mbname">活動內容介紹</label> 
-				 <textarea id="update-mbname" name="update-mbname"> </textarea>
-				 <label for="update-mbname">活動圖片</label>
-			<input type="text" name="update-mbname" id="update-mbname"
-				class="rm-input" max="9" min="1" autocomplete="off" required /> <input
-				name="action" value="update_room" style="display: none"> <input
-				id="update-act" name="update-act-no" type="text"
-				style="display: none">
-			<button class="update-data" type="submit" style="width: 100%">更新資料</button>
-		</form>
+		<div class="info-display" id="update-frame">
+		<div class="close-icon">
+			<i class="fas fa-times icon"></i>
+		</div>
+		<iframe src="" style="border:none;height:100%;width:100%;"></iframe>
+	</div>
 	</div>
 	<script>
-		$(".update").click(function() { //開啟修改視窗
-			$(".update-display").addClass("display-show")
-			let tr = $(this).parents("tr");
-			let children = tr.children();
-			$("#update-rmno").text(children.eq(0).text());
-			$("#update-room").val(children.eq(0).text());
-			$("#update-rmtype").text(children.eq(1).text());
-			let status;
-			console.log(children.eq(2).text())
-			switch (children.eq(2).text().trim()) {
-			case "已停止":
-				status = '0';
-				break;
-			case "進行中":
-				status = '1';
-				break;
-			case "已停辦":
-				status = '2';
-				break;
-			}
-			$("#update-rmstatus").val(status).change();
-		})
+	let display = $("#update-frame");
+    $(".update").click(function (e) {
+        e.preventDefault();
+        let actno = $(this).attr("data-actno");
+        let url = "<%=request.getContextPath()%>/ActServlet?action=getOne_For_Update&actNo=" + actno;
+        display.addClass("display-show");
+        display.children("iframe").attr("src", url);
+    });
 
-		$(".icon").click(function() { //關閉修改視窗
-			let display = $(this).parents(".display-show");
-			display.removeClass("display-show");
-			$("#showroom").attr("src", "");
-		})
-
-		let roomTypeFilter = $("#room-type-select");
-		let roomStatusFilter = $("#room-status-select");
-		let currentTotal = parseInt($(".showmsg p b").text());
-		let allTr = $("tr");
-
-		roomTypeFilter.change(filter);
-		roomStatusFilter.change(filter);
-
-		$("#room_number").keyup(function() {
-			let rmno = $("#room_number").val();
-			let count = 0;
-			for (let i = 1; i < allTr.length; i++) {
-				if (allTr.eq(i).children().eq(0).text().indexOf(rmno) < 0) {
-					allTr.eq(i).hide();
-					count++;
-				} else {
-					allTr.eq(i).show();
-				}
-			}
-			$(".showmsg p b").text(currentTotal - count);
-		})
+    $(".icon").click(function () {
+        $(this).parents(".display-show").removeClass("display-show");
+    });
 	</script>
 </body>
 </html>

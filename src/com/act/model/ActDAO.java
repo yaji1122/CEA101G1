@@ -21,53 +21,35 @@ public class ActDAO implements ActDAO_interface{
 		}
 	}
 	
-	private static final String INSERT_STMT =
-			"INSERT INTO ACT (ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,ACT_DATE,ACT_TIME,PARTICIPANT,ACT_PRICE,ACT_PIC,ACT_INFO)"
-			+ "VALUES ('ACT' || LPAD(to_char(ACTNO_SEQ.NEXTVAL), 7, '0'),?,?,?,?,?,?,?,?,?)";
-	
-	private static final String GET_ALL_STMT =
-			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,ACT_TIME," + 
-			"PARTICIPANT,ACT_PRICE,ACT_PIC,ACT_INFO FROM ACT order By ACT_NO";
-	
-	private static final String GET_ONE_STMT = 
-			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,ACT_TIME" + 
-			",PARTICIPANT,ACT_PRICE,ACT_PIC,ACT_INFO FROM ACT where ACT_NO=?";
-	
-	private static final String DELETE =
-			"DELETE FROM ACT WHERE ACT_NO = ?";
-	
-	private static final String UPDATE =
-			"UPDATE ACT set ACT_EVENT_NO=?,ACT_NAME=?,ACT_STATUS=?,ACT_DATE=?,"
-			+ "ACT_TIME=?,PARTICIPANT=?,ACT_PRICE=?,ACT_PIC=?,ACT_INFO=? where ACT_NO=?";
-
-	private static final String GET_ALL_BY_ACT_STATUS =
-			"SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,TO_CHAR(ACT_DATE,'yyyy-mm-dd')ACT_DATE,ACT_TIME," + 
-			"ACT_PRICE FROM ACT order WHERE ACT_STATUS <> '0' ";
+	private static final String INSERT_STMT = "INSERT INTO ACT (ACT_NO, ACT_EVENT_NO, ACT_NAME, ACT_STATUS, ACT_TIME, ACT_PRICE, ACT_PIC, ACT_INFO) VALUES ('ACT' || LPAD(to_char(ACTNO_SEQ.NEXTVAL), 7, '0'), ?, ?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT * FROM ACT ORDER BY ACT_NO";
+	private static final String GET_ONE_STMT = "SELECT ACT_NO,ACT_EVENT_NO,ACT_NAME,ACT_STATUS,ACT_TIME, ACT_PRICE, ACT_PIC, ACT_INFO FROM ACT WHERE ACT_NO=?";
+	private static final String DELETE = "DELETE FROM ACT WHERE ACT_NO = ?";
+	private static final String UPDATE = "UPDATE ACT set ACT_EVENT_NO=?, ACT_NAME=?, ACT_STATUS=?, ACT_TIME=?, ACT_PRICE=?, ACT_PIC=?, ACT_INFO=? where ACT_NO=?";
+	private static final String GET_ALL_BY_ACT_STATUS = "SELECT * FROM ACT WHERE ACT_STATUS = ? ORDER BY ACT_NO";
 	
 	@Override
-	public void insert(ActVO actVO) {
+	public ActVO insert(ActVO actVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+		ResultSet rs = null;
 		try {
-
+			String[] keyGen = new String[]{"ACT_NO"};
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
-			
+			pstmt = con.prepareStatement(INSERT_STMT, keyGen);
 			
 			pstmt.setString(1,actVO.getActEventNo());
 			pstmt.setString(2,actVO.getActName());
 			pstmt.setString(3,actVO.getActStatus());
-			pstmt.setDate(4,actVO.getActDate());
-			pstmt.setString(5,actVO.getActTime());
-			pstmt.setString(6,actVO.getParticipant());
-			pstmt.setInt(7,actVO.getActPrice());
-			pstmt.setBytes(8, actVO.getActPic());
-			pstmt.setString(9, actVO.getActInfo());
-			
+			pstmt.setTime(4, java.sql.Time.valueOf(actVO.getActTime()));
+			pstmt.setInt(5,actVO.getActPrice());
+			pstmt.setBytes(6, actVO.getActPic());
+			pstmt.setString(7, actVO.getActInfo());
 			pstmt.executeUpdate();
-
-			// Handle any SQL errors
+			rs = pstmt.getGeneratedKeys();
+			while (rs.next()){
+				actVO.setActNo(rs.getString(1));
+			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -88,7 +70,7 @@ public class ActDAO implements ActDAO_interface{
 				}
 			}
 		}
-
+		return actVO;
 	}
 
 	@Override
@@ -104,13 +86,11 @@ public class ActDAO implements ActDAO_interface{
 			pstmt.setString(1,actVO.getActEventNo());
 			pstmt.setString(2,actVO.getActName());
 			pstmt.setString(3,actVO.getActStatus());
-			pstmt.setDate(4,actVO.getActDate());
-			pstmt.setString(5,actVO.getActTime());
-			pstmt.setString(6,actVO.getParticipant());
-			pstmt.setInt(7,actVO.getActPrice());
-			pstmt.setBytes(8, actVO.getActPic());
-			pstmt.setString(9, actVO.getActInfo());
-			pstmt.setString(10,actVO.getActNo());
+			pstmt.setTime(4, java.sql.Time.valueOf(actVO.getActTime()));
+			pstmt.setInt(5,actVO.getActPrice());
+			pstmt.setBytes(6, actVO.getActPic());
+			pstmt.setString(7, actVO.getActInfo());
+			pstmt.setString(8,actVO.getActNo());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -198,9 +178,7 @@ public class ActDAO implements ActDAO_interface{
 				actVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
 				actVO.setActName(rs.getString("ACT_NAME"));
 				actVO.setActStatus(rs.getString("ACT_STATUS"));
-				actVO.setActDate(rs.getDate("ACT_DATE"));
-				actVO.setActTime(rs.getString("ACT_TIME"));
-				actVO.setParticipant(rs.getString("PARTICIPANT"));
+				actVO.setActTime(rs.getTime("ACT_TIME").toLocalTime());
 				actVO.setActPrice(rs.getInt("ACT_PRICE"));
 				actVO.setActPic(rs.getBytes("ACT_PIC"));
 				actVO.setActInfo(rs.getString("ACT_INFO"));
@@ -259,9 +237,7 @@ public class ActDAO implements ActDAO_interface{
 			actVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
 			actVO.setActName(rs.getString("ACT_NAME"));
 			actVO.setActStatus(rs.getString("ACT_STATUS"));
-			actVO.setActDate(rs.getDate("ACT_DATE"));
-			actVO.setActTime(rs.getString("ACT_TIME"));
-			actVO.setParticipant(rs.getString("PARTICIPANT"));
+			actVO.setActTime(rs.getTime("ACT_TIME").toLocalTime());
 			actVO.setActPrice(rs.getInt("ACT_PRICE"));
 			actVO.setActPic(rs.getBytes("ACT_PIC"));
 			actVO.setActInfo(rs.getString("ACT_INFO"));
@@ -320,8 +296,7 @@ public class ActDAO implements ActDAO_interface{
 				actVO.setActEventNo(rs.getString("ACT_EVENT_NO"));
 				actVO.setActName(rs.getString("ACT_NAME"));
 				actVO.setActStatus(rs.getString("ACT_STATUS"));
-				actVO.setActDate(rs.getDate("ACT_DATE"));
-				actVO.setActTime(rs.getString("ACT_TIME"));
+				actVO.setActTime(rs.getTime("ACT_TIME").toLocalTime());
 				actVO.setActPrice(rs.getInt("ACT_PRICE"));
 				actVO.setActPic(rs.getBytes("ACT_PIC"));
 				actVO.setActInfo(rs.getString("ACT_INFO"));

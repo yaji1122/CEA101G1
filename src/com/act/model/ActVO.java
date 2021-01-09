@@ -1,6 +1,6 @@
 package com.act.model;
 
-import java.sql.Date;
+import java.time.LocalTime;
 
 public class ActVO implements java.io.Serializable{
 	
@@ -10,9 +10,7 @@ public class ActVO implements java.io.Serializable{
 	private String actEventNo;
 	private String actName;
 	private String actStatus;
-	private Date actDate;
-	private String actTime;
-	private String participant;
+	private LocalTime actTime;
 	private Integer actPrice;
 	private byte[] actPic;
 	private String actInfo;
@@ -53,23 +51,11 @@ public class ActVO implements java.io.Serializable{
 	public void setActStatus(String actStatus) {
 		this.actStatus = actStatus;
 	}
-	public Date getActDate() {
-		return actDate;
-	}
-	public void setActDate(Date actDate) {
-		this.actDate = actDate;
-	}
-	public String getActTime() {
+	public LocalTime getActTime() {
 		return actTime;
 	}
-	public void setActTime(String actTime) {
+	public void setActTime(LocalTime actTime) {
 		this.actTime = actTime;
-	}
-	public String getParticipant() {
-		return participant;
-	}
-	public void setParticipant(String participant) {
-		this.participant = participant;
 	}
 	public Integer getActPrice() {
 		return actPrice;
