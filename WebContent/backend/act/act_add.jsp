@@ -73,8 +73,20 @@
 		</FORM>
 	</div>
 	<script>
+		function showImg(thisimg) {
+			var file = thisimg.files[0];
+			if (window.FileReader) {
+				var fr = new FileReader();
+	
+				var showimg = document.getElementById('show');
+				fr.onloadend = function(e) {
+					showimg.src = e.target.result;
+				};
+				fr.readAsDataURL(file);
+				showimg.style.display = 'block';
+			}
+		}
 		$( document ).ready(function(){
-			
 			 let formElem = document.querySelector("#act-form");
 	            formElem.addEventListener("submit", (e) => {
 	                e.preventDefault();
@@ -111,23 +123,9 @@
 	                };
 	                xhr.send(data);
 	            });
-			
-			function showImg(thisimg) {
-				var file = thisimg.files[0];
-				if (window.FileReader) {
-					var fr = new FileReader();
-
-					var showimg = document.getElementById('show');
-					fr.onloadend = function(e) {
-						showimg.src = e.target.result;
-					};
-					fr.readAsDataURL(file);
-					showimg.style.display = 'block';
-				}
-			}
 			$("#actTime").datetimepicker({
 				datepicker:false,
-				format: "h:i",
+				format: "H:i",
 				step: 60,
 			});
 		}) 

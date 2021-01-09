@@ -169,28 +169,17 @@ public class ActServlet extends HttpServlet{
 	  			
 	  			List<String> errorMsgs = new LinkedList<String>();
 	  			req.setAttribute("errorMsgs", errorMsgs);
-	  		
+	  			PrintWriter out = res.getWriter();
 	  			try {
-	  				String actNo = req.getParameter("actNo").trim();
-					String actNameReg = "^(A,C,T0-9_){10}$";
-					if (actNo == null || actNo.trim().length() == 0) {
-						errorMsgs.add("");
-					} 
-					
+	  				String actNo = req.getParameter("actNo");
 					String actEventNo = req.getParameter("actEventNo");
-					if (actEventNo == null || actEventNo.trim().length() == 0) {
-						errorMsgs.add("");
-					}
 					String actName = req.getParameter("actName");
 					if (actName == null || actName.trim().length() == 0) {
 						errorMsgs.add("");
 					}
-					
 					String actStatus = req.getParameter("actStatus");
-					
 					String actTimeStr = req.getParameter("actTime");
 					LocalTime actTime = LocalTime.parse(actTimeStr);
-				
 					String actPrice = req.getParameter("actPrice");
 					Integer act_price = null;
 					try {
@@ -199,6 +188,7 @@ public class ActServlet extends HttpServlet{
 							errorMsgs.add("價格不得為負");
 						}
 					} catch (Exception e) {
+						e.printStackTrace();
 						errorMsgs.add("操你媽又哪裡錯了？");
 					}
 					
@@ -229,27 +219,20 @@ public class ActServlet extends HttpServlet{
 					actVO.setActInfo(actInfo);
 	  				
 	  				
-	  				if (!errorMsgs.isEmpty()) {
-	  					req.setAttribute("actVO", actVO); 
-	  					RequestDispatcher failureView = req
-	  							.getRequestDispatcher("/backend/act/actInfo.jsp");
-	  					failureView.forward(req, res);
-	  					return; 
-	  				}
+					if (!errorMsgs.isEmpty()) {
+						StringBuilder str = new StringBuilder();
+						errorMsgs.stream().forEach(e -> str.append(e + ", "));
+						out.print(str.toString());
+						return;
+					}
 	  				
 	  				ActService ActSvc = new ActService();
 	  				actVO = ActSvc.updateAct(actNo, actEventNo, actName, actStatus, actTime, act_price, actpic, actInfo);
 	  				
 	  				req.setAttribute("actVO", actVO); 
-	  				String url = "/backend/act/actInfo.jsp";
-	  				RequestDispatcher successView = req.getRequestDispatcher(url); 
-	  				successView.forward(req, res);
-
+	  				out.print("success");
 	  			} catch (Exception e) {
-	  				errorMsgs.add(e.getMessage());
-	  				RequestDispatcher failureView = req
-	  						.getRequestDispatcher("/backend/act/actInfo.jsp");
-	  				failureView.forward(req, res);
+	  				throw new RuntimeException(e);
 	  			}
 	  		}
 	        
