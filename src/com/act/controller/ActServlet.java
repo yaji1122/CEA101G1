@@ -22,7 +22,7 @@ public class ActServlet extends HttpServlet{
 			String action = req.getParameter("action");
 			System.out.println(action);
 			
-			if ("getOne_For_Display".equals(action)) { // 嚙諉佗蕭act_event_select_page.jsp嚙踝蕭嚙請求
+			if ("getOne_For_Display".equals(action)) { 
 
 				List<String> errorMsgs = new LinkedList<String>();
 				// Store this set in the request scope, in case we need to
@@ -30,7 +30,6 @@ public class ActServlet extends HttpServlet{
 				req.setAttribute("errorMsgs", errorMsgs);
 
 				try {
-					/***************************1.嚙踝蕭嚙踝蕭嚙請求嚙諸潘蕭 - 嚙踝蕭J嚙賣式嚙踝蕭嚙踝蕭嚙羯嚙畿嚙緲**********************/
 					String str = req.getParameter("actNo");
 					if (str == null || (str.trim()).length() == 0) {
 						errorMsgs.add("ACT_NO為空白");
@@ -40,21 +39,21 @@ public class ActServlet extends HttpServlet{
 						RequestDispatcher failureView = req
 								.getRequestDispatcher("/backend/act/backend-act_select_page.jsp");
 						failureView.forward(req, res);
-						return;//嚙緹嚙踝蕭嚙踝蕭嚙稻
+						return;
 					}
 					
 					String actNo = null;
 					try {
 						actNo = new String(str);
 					} catch (Exception e) {
-						errorMsgs.add("嚙編嚙踝蕭嚙賣式嚙踝蕭嚙踝蕭嚙確");
+						errorMsgs.add("");
 					}
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						RequestDispatcher failureView = req
 								.getRequestDispatcher("/backend/act/backend-act_select_page.jsp");
 						failureView.forward(req, res);
-						return;//嚙緹嚙踝蕭嚙踝蕭嚙稻
+						return;
 					}
 					
 					/***************************2.嚙罷嚙締嚙範嚙賠賂蕭嚙�*****************************************/

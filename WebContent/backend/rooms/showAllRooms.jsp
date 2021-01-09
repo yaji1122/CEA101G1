@@ -58,7 +58,7 @@ th {
 		<div class="showmsg">
 			<h3 class="msg">
 				<%
-					String msg = (String) request.getAttribute("msg");
+				String msg = (String) request.getAttribute("msg");
 				if (msg != null) {
 				%>
 				<%=msg%>

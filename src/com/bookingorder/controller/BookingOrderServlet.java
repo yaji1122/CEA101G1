@@ -81,7 +81,7 @@ public class BookingOrderServlet extends HttpServlet {
 								.mapToInt(e -> Integer.parseInt(e.getString("subtotal")))
 								.sum();
 					BookingOrderVO bkodvo =  bkodSvc.addBkOd(mb_id, dateIn, dateOut, totalPrice, dateGroup, card_no);
-					if (wsSessions != null) {
+					if (wsSessions != null && wsSessions.size() > 0) {
 						JSONObject data = new JSONObject();
 						data.put("type", "訂房訂單");
 						data.put("odno", bkodvo.getBk_no());
