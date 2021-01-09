@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="com.services_cart.model.*"%>
 <%@ page import="com.services_cart.controller.*"%>
 
@@ -14,7 +15,6 @@
 
 	<%Vector<ServicesItem> buylist = (Vector<ServicesItem>) session.getAttribute("shoppingcart");%>
 	<%if (buylist != null && (buylist.size() > 0)) {%>
-
 
 	<table class="table table-striped">
 		<thead>
@@ -34,10 +34,10 @@
 		%>
 		<tbody>
 			<tr>
-				<td><%=order.getServicesNo()%></td>
+				<td><%=order.getServicesName()%></td>
 				<td><%=order.getServTime()%></td>
-				<td><%=order.getPrice()%></td>
-				<td><%=order.getQuantity()%></td>
+<%-- <td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
+ --%>				<td><%=order.getQuantity()%></td>
 				<td><%=order.getLocations()%></td>
 				<td><div align="center">
 						<form name="deleteForm"

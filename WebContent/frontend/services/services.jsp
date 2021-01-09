@@ -265,8 +265,8 @@ pageContext.setAttribute("list", list);
 											</select>
 										</div>
 										<p>服務價格:${servicesVO.serv_price}</p>
-										<input type="hidden" name="servicesNo"
-											value="${servicesVO.serv_no}"> <input type="hidden"
+										<input type="hidden" name="servicesName"
+											value="${servicesVO.serv_name}"> <input type="hidden"
 											name="price" value="${servicesVO.serv_price}">
 										<!-- <input type="hidden" name="hiredate" value="2017-03-08T12:30:54">  -->
 										<input type="hidden" name="action" value="ADD">
@@ -339,7 +339,7 @@ pageContext.setAttribute("list", list);
 		$('.f_date1').datetimepicker({
 			theme : '', //theme: 'dark',
 			timepicker : true, //timepicker: false,
-			step : 15, //step: 60 (這是timepicker的預設間隔60分鐘)
+			step : 60, //step: 60 (這是timepicker的預設間隔60分鐘)
 			format : 'Y-m-d H:i',
 			value : new Date(),
 		//disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含

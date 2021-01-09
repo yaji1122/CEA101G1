@@ -7,24 +7,24 @@ public class ServicesItem implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	public ServicesItem() {
-		servicesNo = "";
+		servicesName = "";
 		price = 0;
 		quantity = 0;
 		locations = "";
 		servTime = null;
 	}
 
-	private String servicesNo;
+	private String servicesName;
 	private LocalDateTime servTime;
 	private Integer price;
 	private Integer quantity;
 	private String locations;
 	
-	public String getServicesNo() {
-		return servicesNo;
+	public String getServicesName() {
+		return servicesName;
 	}
-	public void setServicesNo(String servicesNo) {
-		this.servicesNo = servicesNo;
+	public void setServicesName(String servicesName) {
+		this.servicesName = servicesName;
 	}
 	
 	public Integer getPrice() {
