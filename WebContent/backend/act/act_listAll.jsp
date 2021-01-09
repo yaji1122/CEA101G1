@@ -33,31 +33,6 @@ pageContext.setAttribute("list", list);
 				當前活動總數<b><%=list.size()%></b>
 			</p>
 		</div>
-
-<%-- 		<div class="btn1" style="margin-right: 80px;">
-			<button type="button" class="btn btn-outline-danger"
-				onclick="location.href='<%=request.getContextPath()%>/backend/act/backend-act_select_page.jsp?action=getAll'">
-				回首頁</button>
-			<a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-				id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false"> 訂單狀態 </a>
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item" href="#">報名中</a> <a class="dropdown-item"
-					href="#">已完成</a> <a class="dropdown-item" href="#">已取消</a>
-			</div>
-			<a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-				id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true">
-				活動項目 </a>
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item" href="#">沙灘車</a> <a class="dropdown-item"
-					href="#">射箭</a> <a class="dropdown-item" href="#">燈會</a> <a
-					class="dropdown-item" href="#">衝浪</a> <a class="dropdown-item"
-					href="#">浮潛</a> <a class="dropdown-item" href="#">賞鯨</a> <a
-					class="dropdown-item" href="#">BBQ</a> <a class="dropdown-item"
-					href="#">深潛</a> <a class="dropdown-item" href="#">狩獵</a>
-			</div>
-		</div> --%>
-
 		<div class="table-content" id="content">
 			<table class="table table-hover" id="table">
 				<thead class="title">
@@ -66,59 +41,68 @@ pageContext.setAttribute("list", list);
 						<th>活動類別</th>
 						<th>活動名稱</th>
 						<th>活動狀態</th>
-						<th>活動期間</th>
-						<th>活動時段</th>
-						<th>查看詳情</th>
+						<th>活動開始時間</th>
+						<th>修改活動</th>
 					</tr>
 				</thead>
 				<tbody>
-						<jsp:useBean id="eventSvc" scope="page" class="com.actevent.model.ActEventService"/>
-						<c:forEach var="actVO" items="${list}">
-							<tr>
-								<td>${actVO.actNo}</td>
-								<td>${eventSvc.getOneActEvent(actVO.actEventNo).actEventName}</td>
-								<td>${actVO.actName}</td>
-								<td><c:choose>
-										<c:when test="${actVO.actStatus == 0}">進行中</c:when>
-										<c:when test="${actVO.actStatus == 1}">已完成</c:when>
-										<c:otherwise>已取消</c:otherwise>
-									</c:choose></td>
-								<td>${actVO.actRegTime} <br> ${actVO.deadLine}</td>
-								<td>${actVO.actTime}</td>
-								<td>
-									<input class="update btn btn-primary" type="button"
-									value="修改"> <input type="hidden" name="rm_no"
-									value="${rmvo.rm_no}"> <input type="hidden" name="action"
-									value="">
-								</td>
-							</tr>
-						</c:forEach>
+					<jsp:useBean id="eventSvc" scope="page"
+						class="com.actevent.model.ActEventService" />
+					<c:forEach var="actVO" items="${list}">
+						<tr>
+							<td>${actVO.actNo}</td>
+							<td>${eventSvc.getOneActEvent(actVO.actEventNo).actEventName}</td>
+							<td>${actVO.actName}</td>
+							<td><c:choose>
+									<c:when test="${actVO.actStatus == 0}">未開始</c:when>
+									<c:when test="${actVO.actStatus == 1}">進行中</c:when>
+								</c:choose></td>
+							<td>${actVO.actTime}</td>
+							<td><input class="update btn btn-primary" type="button"
+								value="修改"> <input type="hidden" name="rm_no"
+								value="${rmvo.rm_no}"> <input type="hidden"
+								name="action" value=""></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 		<form class="update-display update-form" method="post"
-		action="${pageContext.request.contextPath}/Act.do">
+			action="${pageContext.request.contextPath}/act.do">
 			<div class="close-icon">
 				<i class="fas fa-times icon"></i>
 			</div>
 			<h3>
-				客房編號：<b id="update-rmno"></b>
+				活動編號：<b id="update-actno"></b>
 			</h3>
-			<h3>
-				客房類型：<b id="update-rmtype"></b>
-			</h3>
-			<label for="update-rmstatus"><p>客房狀態</p> <select
-				name="update-rmstatus" id="update-rmstatus" class="rm-select"
-				required>
-					<option value="0">閒置中</option>
-					<option value="1">已入住</option>
-					<option value="2">整修中</option>
-					<option value="3">已廢棄</option>
-			</select></label> <input name="action" value="update_room" style="display: none">
-			<input id="update-room" name="update-rm-no" type="text"
+			<label for="update-actevent">活動類型</label> <select id="update-actevent" name="update-actevent" required>
+				<c:forEach var="event" items="${eventSvc.getAll()}">
+					<option value="${event.actEventNo}">${event.actEventName}</option>
+				</c:forEach>
+			</select> <label for="update-actname">活動名稱</label> <input type="text"
+				name="update-actname" id="update-actname"  maxlength="20"
+				min="1" autocomplete="off" required />
+				 <label for="update-actstatus">活動狀態</label> 
+				<select name="update-actstatus" id="update-actstatus"
+				class="rm-select" required>
+					<option value="0">已停止</option>
+					<option value="1">進行中</option>
+					<option value="2">已停辦</option>
+			</select><label for="update-acttime">活動開始時間</label> <input type="text"
+				name="update-acttime" id="update-acttime" class="rm-input" max="9"
+				min="1" autocomplete="off" required /> <label for="update-actprice">活動價格</label>
+			<input type="number" name="update-actprice" id="update-actprice"
+				class="rm-input" max="9" min="1" autocomplete="off" required />
+				 <label for="update-mbname">活動內容介紹</label> 
+				 <textarea id="update-mbname" name="update-mbname"> </textarea>
+				 <label for="update-mbname">活動圖片</label>
+			<input type="text" name="update-mbname" id="update-mbname"
+				class="rm-input" max="9" min="1" autocomplete="off" required /> <input
+				name="action" value="update_room" style="display: none"> <input
+				id="update-act" name="update-act-no" type="text"
 				style="display: none">
 			<button class="update-data" type="submit" style="width: 100%">更新資料</button>
-	</form>
+		</form>
 	</div>
 	<script>
 		$(".update").click(function() { //開啟修改視窗
@@ -131,17 +115,14 @@ pageContext.setAttribute("list", list);
 			let status;
 			console.log(children.eq(2).text())
 			switch (children.eq(2).text().trim()) {
-			case "閒置中":
+			case "已停止":
 				status = '0';
 				break;
-			case "已入住":
+			case "進行中":
 				status = '1';
 				break;
-			case "整修中":
+			case "已停辦":
 				status = '2';
-				break;
-			default:
-				status = '3';
 				break;
 			}
 			$("#update-rmstatus").val(status).change();
@@ -174,45 +155,6 @@ pageContext.setAttribute("list", list);
 			}
 			$(".showmsg p b").text(currentTotal - count);
 		})
-
-		function filter() {
-			let selected_val = roomTypeFilter.val();
-			let selected_val2 = roomStatusFilter.val();
-			if (selected_val2 === "all" && selected_val === "all") {
-				allTr.show();
-				$(".showmsg p b").text(currentTotal);
-				return;
-			}
-			allTr.show();
-			let count = 0;
-
-			for (let i = 1; i < allTr.length; i++) {
-				if (selected_val === "all") {
-					if (!allTr.eq(i).children().hasClass(selected_val2)) {
-						allTr.eq(i).hide();
-						count++;
-					}
-					continue;
-				}
-				if (selected_val2 === "all") {
-					if (!allTr.eq(i).children().hasClass(selected_val)) {
-						allTr.eq(i).hide();
-						count++;
-					}
-					continue;
-				}
-				if (!allTr.eq(i).children().hasClass(selected_val2)
-						|| !allTr.eq(i).children().hasClass(selected_val)) {
-					allTr.eq(i).hide();
-					count++;
-				}
-				/* if(!allTr.eq(i).children().hasClass(selected_val2) || !allTr.eq(i).children().hasClass(selected_val)){
-					allTr.eq(i).hide();
-					count++;
-				} */
-			}
-			$(".showmsg p b").text(currentTotal - count);
-		}
 	</script>
 </body>
 </html>
