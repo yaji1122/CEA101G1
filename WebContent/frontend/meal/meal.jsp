@@ -486,8 +486,8 @@
 
 								</div>
 								<div class="col-lg-2" style="margin-top: 20px;">
-									<h5 id="show-cartprice<%=index%>"
-										style="text-align: center; color: white;"><b><%=order.getPrice()%></b></h5>
+									<b><h5 id="show-cartprice<%=index%>"
+										style="text-align: center; color: white;"><%=order.getPrice()%></h5></b>
 									<input type="hidden" name="price" value="<%=order.getPrice()%>">
 									<input type="hidden" id="cart-price<%=index%>"
 										value="<%=order.getPrice()%>">
