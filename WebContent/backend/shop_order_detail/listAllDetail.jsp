@@ -42,7 +42,7 @@
 }
 
 table {
-	width: 100%;
+	width: 1100px !important;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -70,10 +70,10 @@ th, td {
 <%@ include file="/backend/files/backend_sidebar.file" %>
 	<div id="title">
 
-		<div class="titleAll">商品資料</div>
+		<div class="titleAll">訂單細項資料</div>
 		<div>
 			<a href="<%=request.getContextPath()%>/backend/shop_order/select_shop_order.jsp"
-				class="home">回商品管理</a>
+				class="home">回商品訂單管理</a>
 		</div>
 
 	</div>

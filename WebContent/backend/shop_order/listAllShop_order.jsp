@@ -22,8 +22,9 @@ sp_status.put("4", "已取消");
 <head>
 <title>所有商品訂單資料 - listAllShop_order.jsp</title>
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/datatables.min.css" />
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/back/backend-shop.css" />
-<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <style>
 #title {
 	width: 100%;
@@ -50,22 +51,22 @@ sp_status.put("4", "已取消");
 	font-size: 27px;
 }
 
-table {
-	width: 100%;
+#myTable{
+	width: 1100px !important;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	margin-left: 60px;
+	margin-left: auto;
 	margin-right: auto;
 	border: 1px gray;
 }
 
 tr:nth-of-type(even) {
-	background-color: #f3f3f3;
+	background-color: #f3f3f3  !important;
 }
 
 tr:nth-of-type(odd) {
-	background-color: #ddd;
+	background-color: #ddd  !important;
 }
 
 th, td {
@@ -83,6 +84,12 @@ th, td {
 
 .inputData {
 	float: left;
+}
+.dataTables_wrapper .dataTables_length {
+    margin-left: 100px;
+}
+.dataTables_wrapper .dataTables_info {
+    margin-left: 100px;
 }
 </style>
 <%@ include file="/backend/files/backend_header.file" %>
@@ -110,27 +117,22 @@ th, td {
 		</ul>
 	</c:if>
 
-	<table>
+	<table id="myTable">
+	<thead>
 		<tr>
 			<th>訂單編號</th>
 			<th>會員編號</th>
 			<th>訂單成立時間</th>
-			<th>訂單狀態</th>
+			<th>狀態</th>
 			<th>出貨時間</th>
 			<th>訂單細項</th>
 			<th>訂單總額</th>
-			<th>總積分</th>
+			<th>積分</th>
 			<th>客房編號</th>
 			<th>修改</th>
-
 		</tr>
-
-
-
-		<%@ include file="/backend/files/page1.file"%>
-
-		<c:forEach var="shop_orderVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
+	</thead>
+		<c:forEach var="shop_orderVO" items="${list}">
 
 			<tr>
 				<td>${shop_orderVO.sp_odno}</td>
@@ -162,9 +164,13 @@ th, td {
 			</tr>
 		</c:forEach>
 	</table>
-	<h5 class="footer">
-		<%@ include file="/backend/files/page2.file"%></h5>
 	<%@ include file="/backend/files/backend_footer.file" %>
-	<script src="${pageContext.request.contextPath}/js/back/backShopItem.js"></script>
+		<script src="${pageContext.request.contextPath}/js/datatables.min.js"></script>
+		<script src="${pageContext.request.contextPath}/js/back/backShopItem.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('#myTable').DataTable();
+			});
+		</script>
 </body>
 </html>
