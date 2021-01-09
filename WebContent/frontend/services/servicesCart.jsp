@@ -59,8 +59,10 @@
 		action="${pageContext.request.contextPath}/ServicesCartServlet"
 		method="POST">
 		<input type="hidden" name="action" value="CHECKOUT"> <input
-			type="submit" value="付款結帳">
+			type="submit" value="預約送出">
 	</form>
-	<%}%>
+	<%}else{ %>
+	<p>購物車尚無內容</p>
+	<%} %>
 </body>
 </html>

@@ -154,75 +154,32 @@ pageContext.setAttribute("list", list);
 		<div class="row">
 			<div id="context">
 				<h2>讓你煥發身心的一切所需</h2>
-				<p>擁有 360 度無死角的美麗壯觀印度洋海景，全館每時段提前預訂按摩體驗，選擇喜歡的頂級奢華方案，
-					享受按摩師嫻熟的技巧與貴婦等級的服務，度過美好的南洋之旅時光！</p>
+				<p></p>
 			</div>
 		</div>
 	</div>
-	<div class="container">
-	    
+
+	<div id="boxServ">
 		<c:forEach var="servicesVO" items="${list}" varStatus="vs">
-		<c:if test="${servicesVO.serv_type_no == '1'}"> 
-		<c:choose>
-							      
-							      <c:when test="${vs.count%2==1}">
-							      <div class="box1and2">
-					<div class="container box-1-spa">
-						<div class="row box-row">
-							<div class="col-6 pic-1-spa">
-								<img
-									src="<%=request.getContextPath()%>/ServicesServlet?servno=${servicesVO.serv_no}&action=getOneServicesPic"
-									class="card-img-top" alt="...">
-							</div>
-							<div class="col-6 content-1-spa">
-								<div class="spa-title">
-									<p>${servicesVO.serv_name}</p>
-								</div>
-								<div class="spa-para">
-									<p>擁有 360 度無死角的美麗壯觀印度洋海景，全館每時段提前預訂按摩體驗，選擇喜歡的頂級奢華方案，
-										享受按摩師嫻熟的技巧與貴婦等級的服務，度過美好的南洋之旅時光！</p>
-								</div>
-								<div class="price-spa">價格:${servicesVO.serv_price}</div>
-								<div class="btn-spa">
-									<button type="button" class="btn btn-primary" data-toggle="modal"
+			<div class="box-serv">
+				<div class="card" style="width: 25rem;">
+					<img
+						src="<%=request.getContextPath()%>/ServicesServlet?servno=${servicesVO.serv_no}&action=getOneServicesPic"
+						class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">${servicesVO.serv_name}</h5>
+						<div class="card-p">
+							<p class="card-text">${servicesVO.serv_info}</p>
+						</div>
+						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#exampleModal${vs.index}"
 							id="viewDetailButton${vs.index}">立即預約</button>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
-							      </c:when>
-							      <c:otherwise>
-							      <div class="box1and2">
-					<div class="container box-2-spa">
-						<div class="row box-row">
-							<div class="col-6 content-2-spa">
-								<div class="spa-title">
-									<p>${servicesVO.serv_name}</p>
-								</div>
-								<div class="spa-para">
-									<p>擁有 360 度無死角的美麗壯觀印度洋海景，全館每時段提前預訂按摩體驗，選擇喜歡的頂級奢華方案，
-										享受按摩師嫻熟的技巧與貴婦等級的服務，度過美好的南洋之旅時光！</p>
-								</div>
-								<div class="price-spa">價格:${servicesVO.serv_price}</div>
-								<div class="btn-spa">
-									<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#exampleModal${vs.index}"
-							id="viewDetailButton${vs.index}">立即預約</button>
-								</div>
-							</div>
-							<div class="col-6 pic-2-spa">
-								<img
-									src="<%=request.getContextPath()%>/ServicesServlet?servno=${servicesVO.serv_no}&action=getOneServicesPic"
-									class="card-img-top" alt="...">
-							</div>
-						</div>
-					</div>
-				</div>
-							      </c:otherwise>
-							</c:choose>
-					<div class="modal fade" id="exampleModal${vs.index}" tabindex="-1"
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal${vs.index}" tabindex="-1"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -278,13 +235,11 @@ pageContext.setAttribute("list", list);
 						</form>
 					</div>
 				</div>
-			</div>		
-			</c:if>
+			</div>
 		</c:forEach>
-		
+
+		<%-- <jsp:include page="servicesCart.jsp" flush="true" /> --%>
 	</div>
-
-
 
 
 

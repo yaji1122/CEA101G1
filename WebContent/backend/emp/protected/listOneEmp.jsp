@@ -7,18 +7,32 @@
 <%@ page import="com.auth.model.*"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*"%>
-<%-- 取出 Concroller EmpServlet.java已存入request的EmpVO物件--%>
-<%
-	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
-%>
-<%
-	String emp_date = request.getParameter("emp_date"); 
-%>
 
-<%-- 取出 對應的TitleVO物件--%>
-<%
-  TitleService titleSvc = new TitleService();
-  TitleVO titleVO = titleSvc.getOneTitle(empVO.getTitle_no());
+
+
+<jsp:useBean id="funcSvc" scope="page" class="com.func.model.FuncService" />
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>員工資料 - listOneEmp.jsp</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/listOneEmp.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/phone.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/Email.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+<%@ include file="/backend/files/backend_header.file"%>
+
+</head>
+<body>
+ 	<%@ include file="/backend/files/backend_sidebar.file"%>
+ 	<%
+	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
+String emp_date = request.getParameter("emp_date"); 
 %>
 
 <%-- 取出 對應的DeptVO物件--%>
@@ -33,38 +47,18 @@
    List<AuthVO> list = authSvc.getAllByEmp(emp_id);
    pageContext.setAttribute("list",list);
 %>
-
-<jsp:useBean id="funcSvc" scope="page" class="com.func.model.FuncService" />
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-<title>員工資料 - listOneEmp.jsp</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/listOneEmp.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/phone.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/Email.css" />
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-
-
-</head>
-<body>
 <div>
    <div>
       <div>
          <div class="card" style="width:30rem;">
             <button class="btn"><i class="fa fa-home">
-              <a href="<%=request.getContextPath()%>/backend/emp/protected/listAllEmp.jsp"> Back</a></i></button>
+              <a id="Back" href="<%=request.getContextPath()%>/backend/emp/protected/listAllEmp.jsp"> Back</a></i></button>
                  <div class="listOne">
                    <div class="left">
                      <img src="${pageContext.request.contextPath}/emp/emp.do?emp_id=${empVO.emp_id}&action=getEmpPic">
                         <h3 class="mt-2"><%=empVO.getEmp_name()%></h3>
                         <h5 class="mt-1 clearfix"><%=empVO.getEmp_id()%></h5>
-                        <h4 class="mt-1 clearfix"><%=titleVO.getTitle()%></h4>
+                        
                         <h4 class="mt-1 clearfix"><%=deptVO.getDept()%></h4>
                         <span class="mt-4"><%=empVO.getEmp_city()%><%=empVO.getEmp_town()%><%=empVO.getEmp_address()%></span>
                         <div class="button">
@@ -147,5 +141,6 @@ let closeForm = function () {
 };
 
  </script>
+ <%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

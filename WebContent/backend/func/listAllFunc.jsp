@@ -3,15 +3,9 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.func.model.*"%>
 
-<%
-    FuncService funcSvc = new FuncService();
-    List<FuncVO> list = funcSvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
-
-
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <title>所有功能資料 - listAllFunc.jsp</title>
  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/list.css" />
@@ -19,16 +13,21 @@
  table{
   width:50%;
  }
- img{
+img#add{
 	width:50px;
 	position:fixed;
-	left:20%;
+	left:75%;
 }
  </style>
 </head>
 
-<body bgcolor='white'>
-
+<body>
+	<%@ include file="/backend/files/backend_sidebar.file"%>
+	<%
+    FuncService funcSvc = new FuncService();
+    List<FuncVO> list = funcSvc.getAll();
+    pageContext.setAttribute("list",list);
+%>
 <a href="<%=request.getContextPath()%>/backend/emp/protected/selectPage.jsp">Back</a>
 </table>
 <%-- 錯誤表列 --%>
@@ -116,5 +115,6 @@
             	});
 
         </script>
+       <%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

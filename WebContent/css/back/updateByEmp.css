@@ -16,7 +16,7 @@
 .card img {
     width: 250px;
     height: 250px;
-    border-radius: 30%;
+    border-radius: 16%;
     background: linear-gradient(145deg, #d6d6d6, #ffffff);
     box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
 }

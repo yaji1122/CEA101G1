@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <title>功能資料修改 - update_func_input.jsp</title>
 
@@ -65,6 +66,7 @@
 
 </head>
 <body>
+<%@ include file="/backend/files/backend_sidebar.file"%>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -92,5 +94,6 @@
 
 </table>
 </FORM>
+<%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

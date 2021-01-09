@@ -21,6 +21,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <title>員工資料修改 - update_emp_input.jsp</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/update_emp_input.css" />
@@ -34,42 +35,42 @@
 	</ul>
 </c:if>
 </head>
-<body bgcolor="white">
+<body>
+	<%@ include file="/backend/files/backend_sidebar.file"%>
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1" enctype="multipart/form-data">
 <div>
    <div>
       <div>
          <div class="card" style="width:30rem;">
             <button class="btn"><i class="fa fa-home">
-              <a href="<%=request.getContextPath()%>/emp/emp.do?emp_id=${empVO.emp_id}&action=getOne_For_Display"> Back</a></i></button>
+              <a id="back" href="<%=request.getContextPath()%>/emp/emp.do?emp_id=${empVO.emp_id}&action=getOne_For_Display"> Back</a></i></button>
                 <div class="listOne">
                    <div class="left">
                       <img src="${pageContext.request.contextPath}/emp/emp.do?emp_id=${empVO.emp_id}&action=getEmpPic">
-                      <input type="file" name="emp_pic" size="45" value="${empVO.emp_pic}" />
-                       <h5 class="mt-2"><input type="text" name="emp_name" value="${empVO.emp_name}" placeholder="Name"></h5>
-                        <h5 class="mt-1 clearfix"><%=empVO.getEmp_id()%></h5>
+                      <input type="file" name="emp_pic" value="${empVO.emp_pic}" />
+                       <p class="mt-2"><input type="text" name="emp_name" value="${empVO.emp_name}" placeholder="Name"></p>
+                        <p class="mt-1 clearfix"><%=empVO.getEmp_id()%></p>
                         <input type="hidden" name="emp_pwd" size="45" value="${empVO.emp_pwd}" />
-                        <jsp:useBean id="titleSvc" scope="page" class="com.title.model.TitleService" />
-                        <h5 class="mt-1 clearfix">選擇職位
+                        <p class="mt-1 clearfix">選擇職位
                           <select size ="1" name="title_no">
 	                        <c:forEach var="titleVO" items="${titleSvc.all}">
 				              <option value="${titleVO.title_no}" ${(empVO.title_no==titleVO.title_no)?'selected':'' } >${titleVO.title}
 			                </c:forEach>
 		                  </select>
-		                </h5>
+		                </p>
 		               <jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> 
-		               <h5 class="mt-1 clearfix"> 選擇部門
+		               <p class="mt-1 clearfix"> 選擇部門
 		               <select size="1" name="dept_no">
 			              <c:forEach var="deptVO" items="${deptSvc.all}">
 				            <option value="${deptVO.dept_no}" ${(empVO.dept_no==deptVO.dept_no)?'selected':'' } >${deptVO.dept}
 			              </c:forEach>
-		               </select>
+		               </select></p>
                        <span class="mt-4"><input type="text" name="emp_phone" placeholder="Phone" value="${empVO.emp_phone}"></span>
                        <span class="mt-4"><input type="email" name="emp_email" placeholder="Email" value="${empVO.emp_email}"></span>
 	                   <span class="mt-4"><input type="text" name="emp_city" size= "10" placeholder="City" value="${empVO.emp_city}"></span>
 	                   <span class="mt-4"><input type="text" name="emp_town" size= "10" placeholder="Town" value="${empVO.emp_town}"></span>
 	                   <span class="mt-4"><input type="text" name="emp_address" size= "24" placeholder="Address" value="${empVO.emp_address}"></span>
-                       <div><span class="mt-4">員工狀態:</span>
+                       <div id="status"><span class="mt-4">員工狀態:</span>
 		                 <input type="radio" name="emp_status" id="emp" size="45" value="1" checked/>已啟用
 		                 <input type="radio" name="emp_status" id="emp" size="45" value="2"/>已離職
 		               </div>
@@ -101,5 +102,8 @@
                 </div>
               </div> 
             </div>
+          </div>
+          </FORM>
+    <%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

@@ -8,10 +8,11 @@
 }
 
 body {
-    display: grid;
+  /*  display: grid;*/
     place-items: center;
     background: #eee;
     height: 100%;
+    margin:0 auto;
 }
 
 .card {
@@ -23,6 +24,7 @@ body {
     margin-bottom: 30px;
     width: 700px !important;
     padding-botton:20px;
+    left:23%;
 }
 
 .card img {
@@ -82,7 +84,7 @@ body {
     text-align: right;
     bottom: 0;
 }
-a {
+a#Back {
     text-align: right;
     font-size: 18px;
 }
@@ -156,6 +158,6 @@ a {
 	display:none;
 }
 #change{
-	top:85%;
+	top:89%;
 	left:75%;
 }

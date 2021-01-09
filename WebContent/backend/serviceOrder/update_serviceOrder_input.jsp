@@ -57,11 +57,7 @@ max-width:300px;
 				class="form-control" id="od_status" name="od_status"
 				value="<%=serviceOrderVO.getOd_status()%>" required> --%>
 		</div>
-		<div class="form-group">
-			<label for="rm_no">客房編號:</label> <input type="text"
-				class="form-control" id="rm_no" name="rm_no"
-				value="<%=serviceOrderVO.getRm_no()%>">
-		</div>
+		
 		<div class="form-group">
 			<label for="serv_no">服務名稱:</label> 
 			<select name="serv_no"

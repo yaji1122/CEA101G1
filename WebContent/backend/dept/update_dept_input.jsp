@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <title>部門資料修改 - update_dept_input.jsp</title>
 
@@ -64,7 +65,7 @@
         </style>
 </head>
 <body>
-
+<%@ include file="/backend/files/backend_sidebar.file"%>
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/dept/dept.do" name="form1">
 <table>
 	<tr>
@@ -81,5 +82,6 @@
     </tr>
 </table>
 </FORM>
+<%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </html>

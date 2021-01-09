@@ -3,15 +3,9 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.title.model.*"%>
 
-<%
-    TitleService titleSvc = new TitleService();
-    List<TitleVO> list = titleSvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
-
-
 <html>
 <head>
+<%@ include file="/backend/files/backend_header.file"%>
 <meta charset="UTF-8">
 <title>所有職位資料 - listAllTitle.jsp</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/list.css" />
@@ -19,7 +13,11 @@
 </head>
 
 <body>
-
+	<%@ include file="/backend/files/backend_sidebar.file"%>
+	<%
+    List<TitleVO> list = titleSvc.getAll();
+    pageContext.setAttribute("list",list);
+%>
 <a href="<%=request.getContextPath()%>/backend/emp/protected/selectPage.jsp" >Back</a>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -95,6 +93,7 @@
             	});
 
         </script>
+        <%@ include file="/backend/files/backend_footer.file"%>
 </body>
 </body>
 </html>
