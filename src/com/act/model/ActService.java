@@ -23,9 +23,7 @@ public class ActService {
 		actVO.setActEventNo(actEventNo);
 		actVO.setActName(actName);
 		actVO.setActStatus(actStatus);
-		actVO.setActRegTime(actRegTime);
 		actVO.setActDate(actDate);
-		actVO.setDeadLine(deadLine);
 		actVO.setActTime(actTime);
 		actVO.setParticipant(participant);
 		actVO.setActPrice(actPrice);
@@ -46,9 +44,7 @@ public class ActService {
 		actVO.setActEventNo(actEventNo);
 		actVO.setActName(actName);
 		actVO.setActStatus(actStatus);
-		actVO.setActRegTime(actRegTime);
 		actVO.setActDate(actDate);
-		actVO.setDeadLine(deadLine);
 		actVO.setActTime(actTime);
 		actVO.setParticipant(participant);
 		actVO.setActPrice(actPrice);

@@ -175,8 +175,6 @@ public class ActServlet extends HttpServlet{
 					actVO.setActEventNo(actEventNo);
 					actVO.setActName(actName);
 					actVO.setActStatus(actStatus);
-					actVO.setActRegTime(actRegTime);
-					actVO.setDeadLine(deadLine);
 					actVO.setActDate(actDate);
 					actVO.setActTime(actTime);
 					actVO.setParticipant(participant);
@@ -362,8 +360,6 @@ public class ActServlet extends HttpServlet{
 					actVO.setActEventNo(actEventNo);
 					actVO.setActName(actName);
 					actVO.setActStatus(actStatus);
-					actVO.setActRegTime(actRegTime);
-					actVO.setDeadLine(deadLine);
 					actVO.setActDate(actDate);
 					actVO.setActTime(actTime);
 					actVO.setParticipant(participant);

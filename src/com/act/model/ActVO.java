@@ -10,9 +10,7 @@ public class ActVO implements java.io.Serializable{
 	private String actEventNo;
 	private String actName;
 	private String actStatus;
-	private Date actRegTime;
 	private Date actDate;
-	private Date deadLine;
 	private String actTime;
 	private String participant;
 	private Integer actPrice;
@@ -55,23 +53,11 @@ public class ActVO implements java.io.Serializable{
 	public void setActStatus(String actStatus) {
 		this.actStatus = actStatus;
 	}
-	public Date getActRegTime() {
-		return actRegTime;
-	}
-	public void setActRegTime(Date actRegTime) {
-		this.actRegTime = actRegTime;
-	}
 	public Date getActDate() {
 		return actDate;
 	}
 	public void setActDate(Date actDate) {
 		this.actDate = actDate;
-	}
-	public Date getDeadLine() {
-		return deadLine;
-	}
-	public void setDeadLine(Date deadLine) {
-		this.deadLine = deadLine;
 	}
 	public String getActTime() {
 		return actTime;
