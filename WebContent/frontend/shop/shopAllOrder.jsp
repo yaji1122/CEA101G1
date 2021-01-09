@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
@@ -16,7 +17,6 @@
 		sp_status.put("2", "交易完成");
 		sp_status.put("3", "退貨");
 		sp_status.put("4", "已取消");
-	pageContext.setAttribute("sp_status", sp_status);
 %>
 <jsp:useBean id="itemSvc" scope="page" class="com.item.model.ItemService" />
 <jsp:useBean id="shop_order_detailSvc" scope="page" class="com.shop_order_detail.model.Shop_order_detailService" />
@@ -35,18 +35,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/slick-theme.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/front/shoppage.css" type="text/css" />
 
-<style type="text/css">
-	.leftside {
-	    background: none repeat scroll 0 0 transparent;
-	    float: left;
-	    width: 212px;
-	}
-	.rightside {
-		float: right;
-		width: calc(100% - 18.5em);
-		height: 100%;
-		overflow-x: hidden;
-	}
+
+	<style type="text/css">
 	body{
         background-image: url('<%=request.getContextPath()%>/front-end/shop/images/background5.jpg') !important;
         background-repeat: no-repeat !important;
@@ -57,48 +47,11 @@
 	.nav {
 		display: block !important;
 	}
-	.container_48 {
-		top: 8em;
-		margin-left:auto;
-		margin-right:auto;
-		width: 1350px !important; 
-	}
-	.sale_category li {
-		list-style-type: disc !important;
-	}
-	.shopping-cart {
-		position: fixed;
-		height: 50px;
-		width: auto;
-		cursor: pointer;
-		top:80%;
-		left:95%;
-		transition: all 0.5s; 
-	}
-	.shopping-cart:hover {
-		transform: scale(1.2,1.2); 
-	}
-	.side1 {
-		top: 8em;
-        position: fixed; 
-    }
-    .imgd {
-    	border: none;
-		background-color: rgba(0,0,0,0);
-    }
-    .btnhome{
-    	background-color:orange;
-    	color:#111;
-    }
-    .tablepart th,.tablepart td{
-    	width: 230px;
-    	text-align: center;
-    }
 	table {
 		margin:auto;
 	}
 	</style>
-	
+
 </head>
 
 <%@ include file="/frontend/files/loginCSS.file"%>
@@ -110,6 +63,11 @@
 	
 	<%
 		String mb_id = member.getMb_id();
+		System.out.println("Shop_order mb_id= " + mb_id);
+		pageContext.setAttribute("sp_status", sp_status);
+		Shop_orderService spSvc = new Shop_orderService();
+		List <Shop_orderVO> list = spSvc.getSp_odnoByMb_id(mb_id);
+		pageContext.setAttribute("list", list);
 	%>
 		<!-- Page Preloder -->
 	<div id="preloder">
@@ -249,30 +207,29 @@
 		</div>
 	</header>
 	
-	<div class="container_48">
-		<div class="rightside">
+	<div>
 			<br>
-			<div class="outframe">
+			<div class="shopOrderView">
 				<div>
 					<h1>訂單明細 OrderDetail</h1>
 				</div>
-				 
+				 <div class="shopOrderBor">
 				<c:forEach var="shop_orderVO" items="${list}">
-				<div class="tablepart">
-					<table class="tabletitle">
-					    <tr style="background-color:orange;">
+				<div>
+					<table class="tablepart">
+					    <tr style="background-color:#fbc15752;">
 					    	<th colspan="4"><h3>訂單編號 :${shop_orderVO.sp_odno}</h3></th>
 					    </tr>
 					    <tr>
-					    	<th>下單時間：</th>
+					    	<th class="tableLeftDa">下單時間：</th>
 					    	<th><fmt:formatDate value='${shop_orderVO.sp_time}' pattern='yyyy-MM-dd HH:mm:ss'/></th>
 					    	<th></th>
-					    	<th></th>	
+					    	<th><button id="${shop_orderVO.sp_odno}">取消訂單</button></th>	
 					    </tr>	
-					    <tr>
-					    	<th>狀態：</th>
+					    <tr class="borBeTQty">
+					    	<th class="tableLeftDa">出貨時間：</th>
 					    	<th><fmt:formatDate value='${order_masterVO.sp_dlvr}' pattern='yyyy-MM-dd HH:mm'/></th>
-					    	<th></th>
+					    	<th>訂單狀態:</th>
 					    	<th>
 					    		<c:forEach var="status" items="${sp_status}">
 									${shop_orderVO.sp_status==status.key? status.value : ''}
@@ -288,11 +245,12 @@
 					</table>
 				</div>
 				<div class="tablepart">
+				<jsp:useBean id="item_picsSvc" scope="page" class="com.item_pics.model.Item_picsService" />
 					<table class="cartlist" >
 					<c:forEach var="shop_order_detailVO" items="${shop_order_detailSvc.getShop_order_detailBySp_odno(shop_orderVO.sp_odno)}">
 						<tr>
 							<td class="imgframe">
-								<c:forEach var="item_picsVO" items="${item_picsSvc.getAllPics(item_no)}">
+								<c:forEach var="item_picsVO" begin="0" end="0" items="${item_picsSvc.getAllPics(shop_order_detailVO.item_no)}" >
 									<div class="picsize">
 										<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"/>
 									</div>
@@ -312,14 +270,19 @@
 							<th></th>
 							<th></th>
 							<th><span>$ </span>${shop_orderVO.total_price}</th>
+							<th>獲得總積分</th>
+							<th></th>
+							<th></th>
+							<th>${shop_orderVO.points_total}</th>
 						</tr>
 					</table>
 				</div>
 				<br><br><br>
 				</c:forEach>
+				</div>
 			</div>
 			<br>
-		</div>
+		
 	</div>
 	<%@ include file="/frontend/files/commonJS.file" %>
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>

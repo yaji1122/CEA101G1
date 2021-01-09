@@ -241,15 +241,18 @@
 	<div class="wrapper">
 		<div class="pageheader">
 
-			<div class="pageslider">
+			<div class="pageslider">				
 				<div class="pagepic">
-					<img src="${pageContext.request.contextPath}/img/page1.png" alt="" />
-				</div>
+					<a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=12">
+						<img src="${pageContext.request.contextPath}/img/page1.png" alt="" />
+					</a>
+				</div>								
 				<div class="pagepic">
-					<img src="${pageContext.request.contextPath}/img/page2.png" alt="" />
-				</div>
+					<a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp?item_type_no=10">
+						<img src="${pageContext.request.contextPath}/img/page2.png" alt="" />
+					</a>
+				</div>				
 			</div>
-
 			<jsp:useBean id="item_picsSvc" scope="page"
 				class="com.item_pics.model.Item_picsService" />
 
@@ -258,25 +261,21 @@
 					<c:forEach var="itemVO" items="${list}">
 						<div class="col col-12 col-sm-6 col-md-4">
 							<div class="itemslider">
-								<c:forEach var="item_picsVO"
-									items="${item_picsSvc.getAllPics(itemVO.item_no)}">
+								<c:forEach var="item_picsVO" items="${item_picsSvc.getAllPics(itemVO.item_no)}">
 									<div class="itempic">
 										<a href="<%=request.getContextPath()%>/frontend/shop/shopItemDetail.jsp?item_no=${itemVO.item_no}">
 											<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?action=getOne_Pic_Display&item_pic_no=${item_picsVO.item_pic_no}"/> 
 										</a>
 									</div>
 								</c:forEach>
-							</div>
-						
+							</div>						
 							<div class="itemdetail">
 								<span class="itemdescribe">${itemVO.item_name}</span> 
 								<span class="itemprice">$ ${itemVO.item_price}</span>
+								<button class="itemPageInCart">Place In Cart</button>
 							</div>
-						
 						</div>
-
 					</c:forEach>
-
 				</div>
 			</div>
 		</div>
@@ -288,5 +287,10 @@
 	<%@ include file="/frontend/files/commonJS.file" %>
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+		});
+	</script>
 </body>
 </html>
