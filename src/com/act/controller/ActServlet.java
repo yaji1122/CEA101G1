@@ -21,7 +21,6 @@ public class ActServlet extends HttpServlet{
 
 			req.setCharacterEncoding("UTF-8");
 			String action = req.getParameter("action");
-			System.out.println(action);
 			
 			if ("get_actpic".equals(action)) {
 				res.setContentType("img/jpg");
@@ -46,28 +45,26 @@ public class ActServlet extends HttpServlet{
 				
 				List<String> errorMsgs = new LinkedList<String>();
 				req.setAttribute("errorMsgs", errorMsgs);
+				res.setContentType("utf-8");
 				PrintWriter out = res.getWriter();
 				System.out.println(action);
 
 				try {
 					String actEventNo = req.getParameter("actEventNo");
-					if (actEventNo == null || actEventNo.trim().length() == 0) {
-						errorMsgs.add("請勿空白");
-					}
+				
 					String actName = req.getParameter("actName");
 					if (actName == null || actName.trim().length() == 0) {
 						errorMsgs.add("請勿空白");
 					}
-					
 					String actStatus = req.getParameter("actStatus");
 					
 					String actTimeStr = req.getParameter("actTime");
 					LocalTime actTime = LocalTime.parse(actTimeStr);
 					
-					String actPrice = req.getParameter("actPrice");
+					String actPrice = req.getParameter("actPrice").trim();
 					Integer act_price = null;
 					try {
-						act_price = new Integer(actPrice);
+						act_price = Integer.valueOf(actPrice);
 						if(act_price<=0){
 							errorMsgs.add("金額不得小於0");
 						}
@@ -108,17 +105,15 @@ public class ActServlet extends HttpServlet{
 						StringBuilder str = new StringBuilder();
 						errorMsgs.stream().forEach(e -> str.append(e + ", "));
 						out.print(str.toString());
+						System.out.print(str);
 						return;
 					}
 					ActService ActSvc = new ActService();
 					actVO = ActSvc.addAct(actEventNo, actName, actStatus, actTime, act_price, act_pic, actInfo);
 					out.print("success");
 				} catch (Exception e) {
-					errorMsgs.add("輸入格式異常");
 					e.printStackTrace();
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/act/actInfo.jsp");
-					failureView.forward(req, res);
+					out.print("fail");
 				}
 			} 
 			

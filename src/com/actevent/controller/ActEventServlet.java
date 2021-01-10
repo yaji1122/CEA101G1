@@ -41,35 +41,6 @@ public class ActEventServlet extends HttpServlet {
 		}
 	} 
     
-    //�R��
-    if ("delete".equals(action)) { // �Ӧ�listAllAct.jsp
-
-		List<String> errorMsgs = new LinkedList<String>();
-		// Store this set in the request scope, in case we need to
-		// send the ErrorPage view.
-		req.setAttribute("errorMsgs", errorMsgs);
-
-		try {
-			/***************************1.�����ШD�Ѽ�***************************************/
-			String actEventNo = req.getParameter("actEventNo");
-			
-			/***************************2.�}�l�R�����***************************************/
-			ActEventService ActEventSvc = new ActEventService();
-			ActEventSvc.deleteActEvent(actEventNo);
-			
-			/***************************3.�R������,�ǳ����(Send the Success view)***********/								
-			String url = "/backend/actevent/act_event_listAll.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// �R�����\��,���^�e�X�R�����ӷ�����
-			successView.forward(req, res);
-			
-			/***************************��L�i�઺���~�B�z**********************************/
-		} catch (Exception e) {
-			errorMsgs.add("�R����ƥ���:"+e.getMessage());
-			RequestDispatcher failureView = req
-					.getRequestDispatcher("/backend/actevent/act_event_listAll.jsp");
-			failureView.forward(req, res);
-		}
-	}
         if ("update".equals(action)) { 
         	PrintWriter out = res.getWriter();
   			try {

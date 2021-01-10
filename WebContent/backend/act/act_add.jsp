@@ -42,7 +42,7 @@
 					</c:forEach>
 				</select>
 				<label>活動名稱(ACT_Name):</label> 
-				<input type="text" placeholder="請輸入活動名稱"/>
+				<input type="text" name="actName" placeholder="請輸入活動名稱"/>
 				<label>活動狀態:(ACT_Status):</label> 
 				<select name="actStatus">
 					<option value="0">已停止</option>
