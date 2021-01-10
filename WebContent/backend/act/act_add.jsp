@@ -33,7 +33,6 @@
 				</c:if>
 			</h3>
 		</div>
-		<jsp:useBean id="eventSvc" scope="page" class="com.actevent.model.ActEventService" />
 		<FORM METHOD="post" id="act-form" enctype="multipart/form-data">
 			<div id="form" class="insert">
 				<label for="actEventNo" class="">活動類型</label>
@@ -42,20 +41,18 @@
 					<option value="${event.actEventNo}">${event.actEventName}</option>
 					</c:forEach>
 				</select>
-				<label class=" " role="">活動名稱:
-						(ACT_Name):</label> <input type="text" class="form-control"
-					id="input-Act-Namel4" name="actName" size="45"
-					placeholder="請輸入活動名稱"/>
-				<label class=" -danger">活動狀態:(ACT_Status):</label> 
+				<label>活動名稱(ACT_Name):</label> 
+				<input type="text" placeholder="請輸入活動名稱"/>
+				<label>活動狀態:(ACT_Status):</label> 
 				<select name="actStatus">
 					<option value="0">已停止</option>
 					<option value="1">進行中</option>
 					<option value="2">已停辦</option>
 				</select>
 				<label>活動時段: (ACT_Time):</label> 
-				<input type="text" class="form-control" id="actTime" name="actTime" size="45"/>
+				<input type="text" id="actTime" name="actTime" size="45"/>
 				<label class=" " role="">活動價格:</label>
-					<input type="text" class="form-control" id="input-Act-Namel4"
+					<input type="text"
 					name="actPrice" size="45" placeholder="請填入數字" />
 				<label>活動照片:(Pic_Load):</label>
 					<input onchange="showImg(this)" type="file" class="form-control" name="ActPic">
@@ -63,7 +60,7 @@
 						<img id="show">
 					</div>
 				<label class=" " role="">活動敘述:</label>
-					<textarea class="form-control" id="input-Act-Namel4" name="actInfo" placeholder="活動內容敘述"></textarea>
+					<textarea name="actInfo" placeholder="活動內容敘述"></textarea>
 			</div>
 			<div class="message">
 				<input type="hidden" name="action" value="insert">

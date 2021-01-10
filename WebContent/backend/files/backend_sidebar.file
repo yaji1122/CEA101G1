@@ -83,7 +83,7 @@
                                 <div class="sidebar-submenu">
                                     <ul>
                                         <li><a href="<%=request.getContextPath()%>/backend/item/itemInfo.jsp">商品管理</a></li>
-                                        <li><a href="<%=request.getContextPath()%>/backend/shop_order/listAllShop_order.jsp.jsp">商品訂單管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/shop_order/listAllShop_order.jsp">商品訂單管理</a></li>
                                         <li><a href="#">商品促銷管理</a></li>
                                     </ul>
                                 </div>
@@ -104,7 +104,6 @@
                                     <ul>
                                         <li><a href="<%=request.getContextPath()%>/backend/services/servicesInfo.jsp">服務項目管理</a></li>
                                         <li><a href="<%=request.getContextPath()%>/backend/serviceOrder/serviceOrderInfo.jsp">服務訂單管理</a></li>
-                                        <li><a href="<%=request.getContextPath()%>/backend/timeTable/TimeTableInfo.jsp">服務時刻表</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -113,7 +112,7 @@
                                 <div class="sidebar-submenu">
                                     <ul>
                                         <li><a href="<%=request.getContextPath()%>/backend/act/actInfo.jsp">活動管理</a></li>
-                                        <li><a href="<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp">活動項目管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp">活動訂單管理</a></li>
                                     </ul>
                                 </div>
                             </li>

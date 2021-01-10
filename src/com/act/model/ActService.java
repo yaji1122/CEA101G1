@@ -27,8 +27,7 @@ public class ActService {
 		return dao.insert(actVO);
 	}
 	
-	public ActVO updateAct(String actNo,String actEventNo,String actName,
-			String actStatus, LocalTime actTime, Integer actPrice, byte[] actPic, String actInfo) {
+	public ActVO updateAct(String actNo,String actEventNo,String actName, String actStatus, LocalTime actTime, Integer actPrice, byte[] actPic, String actInfo) {
 		
 		ActVO actVO = new ActVO();
 		actVO.setActNo(actNo);

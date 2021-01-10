@@ -43,10 +43,8 @@ public class ActEventDAO implements ActEventDAO_interface{
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-			
 			pstmt.setString(1,actEventVO.getActEventNo());
-			pstmt.setString(3,actEventVO.getActEventName());
-			
+			pstmt.setString(2,actEventVO.getActEventName());
 			pstmt.executeUpdate();
 		
 		}catch(SQLException se) {
@@ -81,8 +79,8 @@ public class ActEventDAO implements ActEventDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setString(2,actEventVO.getActEventName());
-			pstmt.setString(4,actEventVO.getActEventNo());
+			pstmt.setString(1,actEventVO.getActEventName());
+			pstmt.setString(2,actEventVO.getActEventNo());
 			
 			pstmt.executeUpdate();
 		

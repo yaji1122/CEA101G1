@@ -36,19 +36,23 @@
 			</c:forEach>
 		</ul>
 	</c:if>
+	<jsp:useBean id="eventSvc" scope="page" class="com.actevent.model.ActEventService" />
 	<FORM METHOD="post" id="act-form" enctype="multipart/form-data">
 		<div id="form" class="update-form">
-			<label for="inputPassword4" class=" -danger">活動項目編號:(ACT_Event_No):</label>
-			<input type="text" class="form-control" id="input-Act-Event-No"
-				name="actEventNo" size="45" placeholder="請選擇活動項目編號"
-				value="<%=(actVO == null) ? "" : actVO.getActEventNo()%>" /> <label
-				class=" " role="">活動名稱: (ACT_Name):</label> <input type="text"
-				class="form-control" id="input-Act-Namel4" name="actName" size="45"
-				placeholder="請輸入活動名稱"
-				value="<%=(actVO == null) ? "" : actVO.getActName()%>" /> <label
-				>活動狀態: (ACT_Status):</label> <input type="text"
-				name="actStatus" size="45"
-				value="<%=(actVO == null) ? "" : actVO.getActStatus()%>" /> 
+			<label>活動項目編號:(ACT_Event_No):</label>
+			<select name="actEventNo" id="actEventNo">
+					<c:forEach var="event" items="${eventSvc.all}">
+					<option value="${event.actEventNo}">${event.actEventName}</option>
+					</c:forEach>
+				</select>
+			<label>活動名稱: (ACT_Name):</label> 
+				<input type="text" name="actName" size="45" placeholder="請輸入活動名稱" value="<%=(actVO == null) ? "" : actVO.getActName()%>" /> 
+				<label>活動狀態: (ACT_Status):</label> 
+				<select name="actStatus">
+					<option value="0"  <c:if test="${actVO.actStatus == '0' }">selected</c:if> >已停止</option>
+					<option value="1"  <c:if test="${actVO.actStatus == '1' }">selected</c:if>>進行中</option>
+					<option value="2"  <c:if test="${actVO.actStatus == '2' }">selected</c:if>>已停辦</option>
+				</select>
 				<label>活動時段: (ACT_Time):</label> 
 				<input type="text" class="form-control" id="actTime" name="actTime" size="45" value="<%=actVO.getActTime()%>" />
 				<label>活動價格:</label> 
@@ -58,20 +62,15 @@
 			<div id="pic-area">
 				<img id="show" src="<%=request.getContextPath()%>/ActServlet?action=get_actpic&actno=<%=actVO.getActNo()%>">
 			</div>
-			<input onchange="showImg(this)" type="file" class="form-control"
-                 aria-label="Amount (to the nearest dollar)"
-				name="actPic" size="45"
-				value="<%=(actVO == null) ? "" : actVO.getActPic()%>"> <label
-				class=" " role="">活動敘述:</label> <input type="text"
-				class="form-control" id="input-Act-Namel4" name="actInfo" size="100"
-				placeholder="活動內容敘述"
-				value="<%=(actVO == null) ? "" : actVO.getActInfo()%>" />
+			<input onchange="showImg(this)" type="file" name="actPic"> 
+			<label>活動敘述:</label> 
+			<textarea name="actInfo" placeholder="活動內容" > <%=actVO.getActInfo()%></textarea>
 
 		</div>
 
 		<div class="message">
 			<input type="hidden" name="action" value="update"> 
-			<input type="hidden" name="empno" value="<%=actVO.getActNo()%>">
+			<input type="hidden" name="actNo" value="<%=actVO.getActNo()%>">
 			<button type="submit" class="btn btn-primary">送出修改</button>
 		</div>
 
@@ -118,7 +117,14 @@
                 xhr.send(data);
             });
 			
-			function showImg(thisimg) {
+			
+		$("#actTime").datetimepicker({
+			datepicker:false,
+			format: "h:i",
+			step: 60,
+		});
+	}) 
+	function showImg(thisimg) {
 				var file = thisimg.files[0];
 				if (window.FileReader) {
 					var fr = new FileReader();
@@ -131,12 +137,6 @@
 					showimg.style.display = 'block';
 				}
 			}
-		$("#actTime").datetimepicker({
-			datepicker:false,
-			format: "h:i",
-			step: 60,
-		});
-	}) 
 	</script>
 </body>
 </html>

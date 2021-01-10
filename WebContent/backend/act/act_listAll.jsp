@@ -44,7 +44,7 @@ pageContext.setAttribute("list", list);
 					<th>活動價格</th>
 					<th>修改活動</th>
 				</tr>
-				<jsp:useBean id="eventSvc" scope="page"
+				<jsp:useBean id="eventSvc" scope="request"
 					class="com.actevent.model.ActEventService" />
 				<c:forEach var="actVO" items="${list}">
 					<tr>

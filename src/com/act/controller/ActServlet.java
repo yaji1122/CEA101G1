@@ -194,7 +194,7 @@ public class ActServlet extends HttpServlet{
 					
 					Part actPicPart = req.getPart("actPic");
 					byte[] actpic = null;
-					if(actPicPart == null) {
+					if(actPicPart.getSize() == 0) {
 						ActService actSvc = new ActService();
 						actpic = actSvc.getOneActPic(actNo);
 					} else {
@@ -228,8 +228,6 @@ public class ActServlet extends HttpServlet{
 	  				
 	  				ActService ActSvc = new ActService();
 	  				actVO = ActSvc.updateAct(actNo, actEventNo, actName, actStatus, actTime, act_price, actpic, actInfo);
-	  				
-	  				req.setAttribute("actVO", actVO); 
 	  				out.print("success");
 	  			} catch (Exception e) {
 	  				throw new RuntimeException(e);
