@@ -78,7 +78,7 @@ pageContext.setAttribute("list", list);
 	    $(".update").click(function (e) {
 	        e.preventDefault();
 	        let actno = $(this).attr("data-actno");
-	        let url = "<%=request.getContextPath()%>/ActServlet?action=getOne_For_Update&actNo=" + actno;
+	        let url = "<%=request.getContextPath()%>/ActOrderServlet?action=getOne_For_Update&actNo=" + actno;
 			display.addClass("display-show");
 			display.children("iframe").attr("src", url);
 		});

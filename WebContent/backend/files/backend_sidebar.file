@@ -112,7 +112,7 @@
                                 <div class="sidebar-submenu">
                                     <ul>
                                         <li><a href="<%=request.getContextPath()%>/backend/act/actInfo.jsp">活動管理</a></li>
-                                        <li><a href="<%=request.getContextPath()%>/backend/actorder/backend-order_select_page.jsp">活動訂單管理</a></li>
+                                        <li><a href="<%=request.getContextPath()%>/backend/actorder/actorderInfo.jsp">活動訂單管理</a></li>
                                     </ul>
                                 </div>
                             </li>

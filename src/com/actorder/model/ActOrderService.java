@@ -2,6 +2,7 @@ package com.actorder.model;
 
 import java.sql.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.mealorder.model.MealOrderVO;
 
@@ -30,18 +31,13 @@ public class ActOrderService {
 		return actOrderVO;
 	}
 	
-	public ActOrderVO updateActOrder(String actOdno,String actNo,String bk_no
-    		,Date odTime,String odStatus,Integer ppl,Integer totalPrice){
+	public ActOrderVO updateActOrder(String actOdno, String odStatus, Integer ppl, Integer totalPrice){
 		
     	ActOrderVO actOrderVO = new ActOrderVO();
     	actOrderVO.setActOdno(actOdno);
-    	actOrderVO.setActNo(actNo);
-    	actOrderVO.setBkNo(bk_no);
-    	actOrderVO.setOdTime(odTime);
     	actOrderVO.setOdStatus(odStatus);
     	actOrderVO.setPpl(ppl);
     	actOrderVO.setTotalPrice(totalPrice);
-		
 		dao.update(actOrderVO);
 		return actOrderVO;
 	}
@@ -62,6 +58,14 @@ public class ActOrderService {
     
     public List<ActOrderVO> getAllByBkNo(String bk_no) {
 		return dao.getAllByBkNo(bk_no);
+	}	
+    
+    public List<ActOrderVO> getAllByStatus(String status) {
+    	if (status.equals("all")) {
+    		return dao.getAll();
+    	} else {
+    		return dao.getAll().stream().filter(e -> e.getOdStatus().equals(status)).collect(Collectors.toList());
+    	}
 	}	
 
 }

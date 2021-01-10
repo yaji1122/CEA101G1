@@ -37,7 +37,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			"DELETE FROM ACT_ORDER where ACT_ODNO = ?";
 	
 	private static final String UPDATE =
-			"UPDATE ACT_ORDER SET ACT_NO=?,BK_NO=?,OD_TIME=?,OD_STATUS=?,PPL=?,TOTAL_PRICE=? where ACT_ODNO = ?";
+			"UPDATE ACT_ORDER SET OD_STATUS=?, PPL=?, TOTAL_PRICE=? where ACT_ODNO = ?";
 	
 	private static final String GETALLBYBKNO = 
 			"SELECT * FROM ACT_ORDER WHERE BK_NO = ?";
@@ -90,13 +90,10 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setString(1,actOrderVO.getActNo());
-			pstmt.setString(2,actOrderVO.getBkNo());
-			pstmt.setDate(3,actOrderVO.getOdTime());
-			pstmt.setString(4,actOrderVO.getOdStatus());
-			pstmt.setInt(5,actOrderVO.getPpl());
-			pstmt.setInt(6,actOrderVO.getTotalPrice());
-			pstmt.setString(7,actOrderVO.getActOdno());
+			pstmt.setString(1,actOrderVO.getOdStatus());
+			pstmt.setInt(2,actOrderVO.getPpl());
+			pstmt.setInt(3,actOrderVO.getTotalPrice());
+			pstmt.setString(4,actOrderVO.getActOdno());
 			
 			pstmt.executeUpdate();
 			
@@ -302,6 +299,8 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			}
 		}
 		return list;
-	}	
+	}
+	
+	
 
 }

@@ -13,30 +13,14 @@
 <%@ include file="/backend/files/backend_sidebar.file" %>
 	<section class="wrapper">
 		<ul class="tabs">
-			<li class="active">活動清單</li>
-			<li>新增活動</li>
-			<li>活動類別</li>
+			<li class="active">活動訂單</li>
 		</ul>
 	
 		<ul class="tab__content">
 			<li class="active">
 				<div class="content__wrapper">
 					<div class="table-wrapper">
-						<jsp:include page="act_listAll.jsp" />
-					</div>
-				</div>
-			</li>
-			<li>
-				<div class="content__wrapper">
-					<div class="table-wrapper">
-						<jsp:include page="act_add.jsp" />
-					</div>
-				</div>
-			</li>
-			<li>
-				<div class="content__wrapper">
-					<div class="table-wrapper">
-						<jsp:include page="/backend/actevent/act_event_listAll.jsp" />
+						<jsp:include page="act_order_listAll.jsp" />
 					</div>
 				</div>
 			</li>

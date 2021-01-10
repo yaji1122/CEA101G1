@@ -166,22 +166,14 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ActReserveServlet</servlet-name>
-		<servlet-class>com.actreserve.controller.ActReserveServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ActReserveServlet</servlet-name>
-		<url-pattern>/ActReserveServlet</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
 		<servlet-name>ActOrderServlet</servlet-name>
 		<servlet-class>com.actorder.controller.ActOrderServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActOrderServlet</servlet-name>
-		<url-pattern>/actorder/ActOrderServlet</url-pattern>
+		<url-pattern>/ActOrderServlet</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>MealServlet</servlet-name>
 		<servlet-class>com.meal.controller.MealServlet</servlet-class>
