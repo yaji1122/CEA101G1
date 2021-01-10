@@ -90,7 +90,8 @@ System.out.print("user_session_id = " + sessionID);
 		session.setAttribute("sessionID", sessionID);
 	}
  	%> 
-	
+	<jsp:useBean id="item_picsSvc" scope="page" class="com.item_pics.model.Item_picsService" />
+	<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
 	<div class="back"></div>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -101,59 +102,29 @@ System.out.print("user_session_id = " + sessionID);
 
 	<!-- Offcanvas Menu Section Begin -->
 
-	<!-- 	<div class="shopping-cart"> -->
-
-	<!-- 		<div class="cart-border"> -->
-	<!-- 			<div class="cart-title">MY SHOPPING BAG</div> -->
-	<%-- 			<c:forEach var="cartList" items="${shoppingcart}"> --%>
-	<%-- 					<div class="cart-item" id="${cartList.item_no}"> --%>
-	<%-- 						<div class="cart-item-name">${cartList.item_name}</div> --%>
-	<%-- 						<div class="cart-item-qu">${cartList.item_no}</div>   --%>
-	<%-- 		 				<div id="cart-item-no">${cartList.quantity}</div> --%>
-	<%-- 		 				<div class="cart-item-price">${cartList.item_price}</div>  --%>
-	<%-- 		 				<div class="cart-points">${cartList.points}</div> --%>
-
-	<!-- 						<div> -->
-	<!-- 							<form class="far fa-trash-alt trash"></form> -->
-	<!-- 						</div> -->
-	<!-- 					</div> -->
-	<%-- 			</c:forEach> --%>
-	<!-- 		</div> -->
-
-	<!-- 		<div class="priceborder"> -->
-	<!-- 			<div class="total"> -->
-	<!-- 				<div class="totaltitle">Total:</div> -->
-	<!-- 				<div class="totalprice">$7,200.00</div> -->
-	<!-- 			</div> -->
-	<!-- 			<div class="point"> -->
-	<!-- 				<div class="pointtitle">Points:</div> -->
-	<!-- 				<div class="pointdiscount">$0.00</div> -->
-	<!-- 			</div> -->
-	<!-- 			<div class="subtotal"> -->
-	<!-- 				<div class="subtotaltitle">Subtotal:</div> -->
-	<!-- 				<div class="subtotalprice">$7,200.00</div> -->
-	<!-- 				<form class="itemCheck" name="checkoutForm" -->
-	<%-- 					action="<%=request.getContextPath()%>/shoppingCart/shoppingCart.html" --%>
-	<!-- 					method="POST"> -->
-	<!-- 					<input type="hidden" name="action" value="CHECKOUT"> <input -->
-	<!-- 						type="submit" value="CHECK"> -->
-	<!-- 				</form> -->
-	<!-- 			</div> -->
-	<!-- 			<div class="close">✖</div> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
-	<!-- 	<div class="shopping-cart"> -->
-	<%-- 	<jsp:include page="/front-end/shop/shopCart.jsp" flush="true"/> --%>
-	<!-- 	</div> -->
-		<div class="added-cart">
-            <div class="added-cart-bor">
-                <div class="added-cart-title">ADDED TO CART</div>
-                <div class="added-bor">
-                    <div class="view-cart"></div>
-                    <div class="conshopping"></div>
-                </div>
-            </div>
-        </div> 
+		<div class="shopping-cart">
+			<div class="cart-border">
+				<div class="cart-title">ADDED TO CART<div class="close" id="cart-title-close">✖</div></div>
+				<div class="cart-item" id="${cartList.item_no}">
+					<c:forEach var="item_picsVO" begin="0" end="0" items="${item_picsSvc.getAllPics(item_no)}">
+						<div class="cart-item-pic">
+							<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"/>
+						</div>
+					</c:forEach>
+					<div class="cart-item-bor">
+						<div class="cart-item-name"><%=itemSvc.getOneItem(item_no).getItem_name()%></div>
+						<div class="cart-item-no"><%=itemSvc.getOneItem(item_no).getItem_no()%></div>  
+			 			<div class="cart-item-price">$<%=itemSvc.getOneItem(item_no).getItem_price()%></div> 
+			 			<div class="cart-points">Points: <%=itemSvc.getOneItem(item_no).getPoints()%></div>
+			 			<div class="cart-but-bor">
+			 				<div class="close" id="conShop">Continue Shopping</div>
+							<a class="cart-view" href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp">View my cart</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        
 	<div class="offcanvas-menu-overlay"></div>
 	<div class="canvas-open">
 		<i class="icon_menu"></i>
@@ -220,7 +191,7 @@ System.out.print("user_session_id = " + sessionID);
 	</div>
 	<!-- Offcanvas Menu Section End -->
 	
-	<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
+	
 	
 	<!-- Header Section Begin -->
 	<header class="header-section">
@@ -271,7 +242,7 @@ System.out.print("user_session_id = " + sessionID);
 							<ul class="dropdown">
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
 								<li><a href="#">我的假期</a></li>
-								<li><a href="#">歷史訂單</a></li>
+								<li><a href="${pageContext.request.contextPath}/frontend/shop/shopAllOrder.jsp">購物訂單</a></li>
 								<li><a
 									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
 							</ul></li>
@@ -290,7 +261,7 @@ System.out.print("user_session_id = " + sessionID);
 	<div class="itemtypeheader">
 		<div id="itemtype">
 
-			<jsp:useBean id="item_picsSvc" scope="page" class="com.item_pics.model.Item_picsService" />
+			
 
 			<div id="itemsmpic">
 				<img
@@ -302,12 +273,14 @@ System.out.print("user_session_id = " + sessionID);
 		<form METHOD="post"
 			ACTION="<%=request.getContextPath()%>/shop/shoppingRedisCart.do"
 			enctype="multipart/form-data">
-			<button id="itemadd" name="action" value="ADD">Place in Cart</button>
-			<input type="hidden" name="item_no" value="<%=itemSvc.getOneItem(item_no).getItem_no()%>"> 
-			<input type="hidden" name="item_price" value="<%=itemSvc.getOneItem(item_no).getItem_price()%>"> 
-			<input type="hidden" name="item_name" value="<%=itemSvc.getOneItem(item_no).getItem_name()%>"> 
-			<input type="hidden" name="points" value="<%=itemSvc.getOneItem(item_no).getPoints()%>"> 
-			<input type="hidden" name="quantity" value="1" >
+			<button type="button" class="itemaddtocart" id="itemadd">Place in Cart</button>
+<!-- 			<button id="itemadd" name="action" value="ADD">Place in Cart</button> -->
+<%-- 			<input type="hidden" name="item_no" value="<%=itemSvc.getOneItem(item_no).getItem_no()%>">  --%>
+<%-- 			<input type="hidden" name="item_price" value="<%=itemSvc.getOneItem(item_no).getItem_price()%>">  --%>
+<%-- 			<input type="hidden" name="item_name" value="<%=itemSvc.getOneItem(item_no).getItem_name()%>">  --%>
+<%-- 			<input type="hidden" name="points" value="<%=itemSvc.getOneItem(item_no).getPoints()%>">  --%>
+<!-- 			<input type="hidden" name="quantity" value="1" > -->
+			
 		</form>
 		<div id="itemsmprice">
 			$<%=itemSvc.getOneItem(item_no).getItem_price()%>
@@ -344,15 +317,18 @@ System.out.print("user_session_id = " + sessionID);
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/shop/shoppingRedisCart.do"
 					enctype="multipart/form-data">
-					<button name="action" value="ADD" class="itemaddtocart">
-					Place in Cart
-					</button>
+						<button type="button" class="itemaddtocart">Place in Cart</button>
+					
+					
+<!-- 					<button name="action" value="ADD" class="itemaddtocart"> -->
+<!-- 					Place in Cart -->
+<!-- 					</button> -->
 
-					<input type="hidden" name="item_no" value="<%=itemSvc.getOneItem(item_no).getItem_no()%>"> 
-					<input type="hidden" name="item_price" value="<%=itemSvc.getOneItem(item_no).getItem_price()%>">
-					<input type="hidden" name="item_name" value="<%=itemSvc.getOneItem(item_no).getItem_name()%>"> 
-					<input type="hidden" name="points" value="<%=itemSvc.getOneItem(item_no).getPoints()%>"> 
-					<input type="hidden" name="quantity" value="1">
+<%-- 					<input type="hidden" name="item_no" value="<%=itemSvc.getOneItem(item_no).getItem_no()%>">  --%>
+<%-- 					<input type="hidden" name="item_price" value="<%=itemSvc.getOneItem(item_no).getItem_price()%>"> --%>
+<%-- 					<input type="hidden" name="item_name" value="<%=itemSvc.getOneItem(item_no).getItem_name()%>">  --%>
+<%-- 					<input type="hidden" name="points" value="<%=itemSvc.getOneItem(item_no).getPoints()%>">  --%>
+<!-- 					<input type="hidden" name="quantity" value="1"> -->
 				</FORM>
 			</div>
 		</div>
@@ -397,5 +373,36 @@ System.out.print("user_session_id = " + sessionID);
 	<%@ include file="/frontend/files/commonJS.file" %>
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/shopdetail.js"></script>
+	<script>
+	$(function(){
+		var itemAddInCart = {
+			"action":"ADD",
+			"item_no": <%="\"" + itemSvc.getOneItem(item_no).getItem_no() + "\""%>,
+			"item_price": <%="\"" + itemSvc.getOneItem(item_no).getItem_price() + "\""%>,
+			"item_name": <%="\"" + itemSvc.getOneItem(item_no).getItem_name() + "\""%>,
+			"points": <%="\"" + itemSvc.getOneItem(item_no).getPoints() + "\""%>,
+			"quantity":1,
+		};
+		
+		$(".itemaddtocart").click(function(event){
+			event.stopPropagation();
+			console.log(<%="\"" + itemSvc.getOneItem(item_no).getItem_no() + "\""%>);
+			$.ajax({
+				data:itemAddInCart,
+				type:"POST",
+				//dataType:"json",
+				url:"<%=request.getContextPath()%>/shop/shoppingRedisCart.do",
+				success:function(data){
+					$(".shopping-cart").addClass("shopping-cart-show");
+					$(".back").css("display", "block");
+				}
+			});
+		});
+	});
+	$(".close").click(function () {
+  		$(".shopping-cart").removeClass("shopping-cart-show");
+  		$(".back").css("display", "none");
+	});
+	</script>
 </body>
 </html>

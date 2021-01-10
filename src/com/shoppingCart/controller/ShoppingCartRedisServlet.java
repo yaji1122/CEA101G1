@@ -6,6 +6,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
+import org.json.JSONObject;
+
 import com.shoppingCart.model.CartService;
 import com.item.model.*;
 import com.members.model.MembersVO;
@@ -25,6 +27,7 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 
 		CartService cartSVC = new CartService();
 		ItemService itemSVC = new ItemService();
+		JSONObject output = new JSONObject();	
 		HttpSession session = req.getSession();
 		String action = req.getParameter("action");
 		MembersVO member = (MembersVO) session.getAttribute("member");
@@ -63,12 +66,17 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 				}
 				// 刪除單個商品
 				else if (action.equals("DELETE")) {
-					System.out.println("會員delete");
+					System.out.println("非會員delete");
 					String del = req.getParameter("del");
 					int d = Integer.parseInt(del);
 					String item_no = req.getParameter("item_no");
 					Integer quantity = new Integer(req.getParameter("quantity"));
 					cartSVC.deleteCartCo(sessionID, item_no, quantity);
+					req.setAttribute("buylist", (List<ItemVO>) cartSVC.getAllItem_noBysessionID(sessionID));
+					String url = "/frontend/shop/shopCartRedis.jsp";
+					RequestDispatcher rd = req.getRequestDispatcher(url);
+					rd.forward(req, res);
+					return;
 				}
 
 				// 新增商品至購物車中
@@ -100,57 +108,11 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 				}
 
 				req.setAttribute("buylist", (List<ItemVO>) cartSVC.getAllItem_noBysessionID(sessionID));
-				String url = "/frontend/shop/shopItemDetail.jsp";
-				RequestDispatcher rd = req.getRequestDispatcher(url);
-				rd.forward(req, res);
-				
-//				@SuppressWarnings("unchecked")
-//				List<ItemVO> buylist = (List<ItemVO>) cartSVC.getAllItem_noBysessionID(sessionID);
-//				// 刪除購物車中被選的商品
-//				if (action.equals("deleteSelected") && req.getParameterValues("checkact") != null) {
-//
-//					System.out.println("deleteSelected開始");
-//
-//					String[] delArray = req.getParameterValues("checkact");
-//					for (int i = (delArray.length - 1); i >= 0; i--) {
-//						int d = Integer.parseInt(delArray[i]);
-//						
-//						buylist.remove(d);
-//					}
-//				}
-//				// 刪除單個商品
-//				if (action.equals("DELETE")) {
-//					System.out.println("刪除單一商品");
-//					String del = req.getParameter("del");
-//					int d = Integer.parseInt(del);
-//					buylist.remove(d);
-//					
-//				}
-//
-//				// 新增商品至購物車中
-//				else if (action.equals("ADD")) {
-//					// 取得後來新增的商品
-//					ItemVO aitem = getItemVO(req);
-//					System.out.println(mb_id + "----");
-//					if (buylist == null) {
-//						buylist = new Vector<ItemVO>();
-//						buylist.add(aitem);
-//
-//					} else {
-//						if (buylist.contains(aitem)) {
-//							ItemVO reItem = buylist.get(buylist.indexOf(aitem));
-//							reItem.setQuantity(reItem.getQuantity() + aitem.getQuantity());
-//						} else {
-//							buylist.add(aitem);
-//						}
-//					}
-//				}
-//				session.setAttribute("buylist", buylist);
-//				String url = "/frontend/shop/shopPage.jsp";
+//				String url = "/frontend/shop/shopItemDetail.jsp";
 //				RequestDispatcher rd = req.getRequestDispatcher(url);
 //				rd.forward(req, res);
-
 				
+							
 				// 會員
 			} else {
 
@@ -182,6 +144,11 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 					String item_no = req.getParameter("item_no");
 					Integer quantity = new Integer(req.getParameter("quantity"));
 					cartSVC.deleteCart(mb_id, item_no, quantity);
+					req.setAttribute("buylist", (List<ItemVO>) cartSVC.getAllItem_noBysessionID(sessionID));
+					String url = "/frontend/shop/shopCartRedis.jsp";
+					RequestDispatcher rd = req.getRequestDispatcher(url);
+					rd.forward(req, res);
+					return;
 				}
 
 				// 新增商品至購物車中
@@ -213,9 +180,9 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 				}
 
 				req.setAttribute("buylist", (List<ItemVO>) cartSVC.getAllItem_noByMb_id(mb_id));
-				String url = "/frontend/shop/shopItemDetail.jsp";
-				RequestDispatcher rd = req.getRequestDispatcher(url);
-				rd.forward(req, res);
+//				String url = "/frontend/shop/shopItemDetail.jsp";
+//				RequestDispatcher rd = req.getRequestDispatcher(url);
+//				rd.forward(req, res);
 			}
 		}
 		// 結帳，計算購物車商品價錢總數

@@ -164,7 +164,7 @@
 								<ul class="dropdown">
 									<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
 									<li><a href="#">我的假期</a></li>
-									<li><a href="#">歷史訂單</a></li>
+									<li><a href="${pageContext.request.contextPath}/frontend/shop/shopAllOrder.jsp">購物訂單</a></li>
 									<li>
 										<a href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a>
 									</li>

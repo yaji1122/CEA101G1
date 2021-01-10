@@ -192,7 +192,7 @@
 							<ul class="dropdown">
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
 								<li><a href="#">我的假期</a></li>
-								<li><a href="#">歷史訂單</a></li>
+								<li><a href="${pageContext.request.contextPath}/frontend/shop/shopAllOrder.jsp">購物訂單</a></li>
 								<li><a
 									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
 							</ul></li>
@@ -281,8 +281,8 @@
 					</tr>
 					</table>
 					<br>
-					<input type="button" value="清除勾選" class="paybtn cleanbtn" 
-									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=deleteSelected')">
+<!-- 					<input type="button" value="清除勾選" class="paybtn cleanbtn"  -->
+<%-- 									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=deleteSelected')"> --%>
 					<input type="button" value="前往結帳" class="goPay">
 				</form>
 			</div>
@@ -341,8 +341,8 @@
 					</tr>
 					</table>
 					<br>
-					<input type="button" value="清除勾選" class="paybtn cleanbtn" 
-									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=deleteSelected')">
+<!-- 					<input type="button" value="清除勾選" class="paybtn cleanbtn"  -->
+<%-- 									onclick="go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=deleteSelected')"> --%>
 					<input type="button" value="前往結帳" class="goPay">
 				</form>
 			</div>
@@ -467,7 +467,7 @@ $(function(){
 						$("#checknum<%= index %>").val(data.amount);
 						
 						var shoppingTatal = 0;
-						<%  for (int a = 0; a < RedisBuylist.size(); a++){%>
+						<%  for (int a = 0; a < changinglist.size(); a++){%>
 							shoppingTatal += parseInt($("#checknum<%= a %>").val(),10);
 						<%}%>
 						$("#checkTotal").text(shoppingTatal+".0");
@@ -489,7 +489,11 @@ $(function(){
 		$(".goPay").click(function(event){
 			console.log("checkedItem= "+checkedItem);
 			if(mem=="null"){
-				alert("Please Login ");
+				Swal.fire({
+					  title: '未登入會員',
+					  text: '請登入會員,再進行結帳',
+					  icon: 'warning'
+					});
 				$(".offcanvas-menu-overlay").removeClass("active");
 				$(".login-window-overlay").addClass("active");
 				$(".login-window").addClass("show-login-window");
@@ -497,7 +501,6 @@ $(function(){
 			} else if(checkedItem==0){
 				alert("Please Check A Product To Checkout");
 			} else{
-				alert("Go To Checkout");
 				go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=CHECKOUT');
 			}
 		});

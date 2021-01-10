@@ -239,7 +239,7 @@ body {
 .pageslider a {
 	z-index: 2;
 }
-.pagepic :hover{
+.pagepic:hover{
 	cursor: pointer;
 }
 .menu-item {
@@ -352,7 +352,7 @@ body {
     color: white;
     margin: 7px auto 0px auto;
 }
-.itemPageInCart :hover{
+.itemPageInCart:hover{
 	background-color:black;
 	cursor: pointer;
 }
@@ -369,7 +369,7 @@ body {
 .hideUp .menu-item {
     top: -78px;
 }
-.shopitem :hover {
+.shopitem:hover {
     cursor: pointer;
 }
 .slick-next:before {
@@ -377,7 +377,7 @@ body {
     color: gray;
     size: 50px;
 }
-.slick-next :hover {
+.slick-next:hover {
     opacity: 0.9;
 }
 .slick-prev:before {
@@ -391,10 +391,10 @@ body {
 	cursor: pointer;
     letter-spacing:3px;
 }
-.chtype :hover{
+.chtype:hover{
 	cursor: pointer;
 }
-.itpic :hover{
+.itpic:hover{
 	cursor: pointer;
 }
 .menu-item .nav-menu .mainmenu{
@@ -534,4 +534,19 @@ margin-bottom: 10px;
 }
 #payment-info button.add-creditcard {
     background-color: lightgray;
+}
+/* 結帳頁面 */
+.paybtn{
+	float: right;
+    margin-right: 150px;
+    margin-bottom: 30px;
+    border: 1px solid;
+    width: 150px;
+    height: 40px;
+    background-color: black;
+    color: white;
+}
+.paybtn:hover{
+	background-color:lightgray;
+	color:black;
 }
