@@ -20,6 +20,8 @@
 	<%@ include file="/frontend/files/commonCSS.file"%>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/slick.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/slick-theme.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/front/creditCard.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/booking.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/front/shoppage.css" type="text/css" />
 </head>
 <%@ include file="/frontend/files/loginCSS.file"%>
@@ -236,12 +238,12 @@
 						<% }%>
 							<tr>
 								<td colspan="4">
-								<td>總積分</td>
+								<td>獲得總積分</td>
 								<td><%=poamount %></td>
 							</tr>
 							<tr>
 								<td colspan="4">
-								<td>使用積分</td>
+								<td>可使用積分</td>
 								<%MembersVO mem = membersSvc.getOneByMbId(mb_id); %>
 								<td><input type="number" id="pointUsed" max="<%=mem.getMb_point()%>" min="0" name="pointCos" value="0"></td>
 								<td><%=mem.getMb_point()%>分可使用</td>
@@ -252,14 +254,40 @@
 								<td><span>$</span><span id="priceAfPo"> <%=amount %></span></td>
 							</tr>
 						</table>
-						<br>
-						
+						<br>																								
+							
+							<button class="paybtn" type="button">確定購買</button>
+							
+							
+							<jsp:useBean id="paymentSvc" scope="page" class="com.payment.model.PaymentService" />
+							<div id="payment-info">
+							<h2>請選擇付款信用卡</h2>
+							<div class="credit-cards">
+								<c:forEach var="paymentVO" items="${paymentSvc.getAllByMbId(member.mb_id)}">
+									<div class="creditcard" type="submit">
+										<h4 class="cardnumber">${paymentVO.card_no}</h4>
+										<h6>CARDHOLDER NAME</h6>
+										<p class="cardholder">${paymentVO.card_name}</p>
+										<p class="exp">${paymentVO.exp_mon}/${paymentVO.exp_year}</p>
+										<input name="pay_no" class="pay_no" style="display: none" value="${paymentVO.pay_no}">
+										<div class="creditcard-logo">
+											<img src="<%=request.getContextPath()%>/img/creditcard/master.png" />
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+							
 							<input type="hidden" name="action" value="insertWithOrder_details"> 
 							<input type="hidden" name="mb_id" value="${member.mb_id}">
 							<input type="hidden" name="total_price" id="sendPri"value="<%=amount%>">
 							<input type="hidden" name="points_total" value="<%=poamount%>">  
-							<input type="submit" value="確定購買" class="paybtn">
-						</form>
+							<button class="add-creditcard"  type="button">新增信用卡</button>
+							<button class="leave-payment"  type="button">取消付款</button>
+							<button class="admit-payment">確認付款</button>
+							<%@ include file="/frontend/files/addCreditCard.file"%>							
+					     </div>		
+					     					
+					</form>
 					</div>
 				</div>
 			</div>
@@ -267,16 +295,133 @@
 	</div>
 	<%@ include file="/frontend/files/commonJS.file" %>
 		<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
+		<script src="<%=request.getContextPath()%>/js/front/creditCard.js"></script>		
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+		<script src="<%=request.getContextPath()%>/js/front/main.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+		<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
 	<script>
 	$("#pointUsed").change(function(){
 		var oraPri = <%=amount %>;
 		var poiUs = $("#pointUsed").val();
 		console.log(oraPri - poiUs);
 		console.log(poiUs);
-		$("#priceAfPo").html(oraPri - poiUs);
+		$("#priceAfPo").html(oraPri - poiUs +".0");
 		$("#sendPri").val(oraPri - poiUs);
 	});
+	$(document).ready(function () {
+    //顯示付款頁面
+    $(".paybtn").click(function () {
+        if ('<%=session.getAttribute("member")%>' == "null") {
+            $(".login-window-overlay").addClass("active");
+            $(".login-window").addClass("show-login-window");
+        } else {
+            $("#payment-info").addClass("show-payment-info");
+        }
+    });
+    //離開付款選單
+    $("button.leave-payment").click(function () {
+        $("#payment-info").removeClass("show-payment-info");
+    });
+
+    $(".add-creditcard").click(function () {
+        //新增信用卡畫面
+        $("#creditCard-input-view").css("opacity", "1");
+        $("#creditCard-input-view").css("z-index", "99");
+        $("#cancelinsert").click(() => {
+            $("#creditCard-input-view").css("opacity", "0");
+            $("#creditCard-input-view").css("z-index", "-1");
+        });
+    });
+    //新增信用卡
+    $("#insertnewcard").click(function () {
+        let cardname = $("#name").val();
+        let cardno = $("#cardnumber").val();
+        let expmon = $("#expirationdate").val().split("/")[0];
+        let expyear = $("#expirationdate").val().split("/")[1];
+        let csc = $("#securitycode").val();
+        let mbid = "${member.mb_id}";
+        $.ajax({
+            url: "<%=request.getContextPath()%>/PaymentServlet?action=insert_credit_card",
+            data: {
+                card_name: cardname,
+                card_no: cardno,
+                exp_mon: expmon,
+                exp_year: expyear,
+                csc: csc,
+                mb_id: mbid,
+            },
+            type: "POST",
+            success: function (msg) {
+                let obj = JSON.parse(msg);
+                if (obj.status == "success") {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "已新增付款方式",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                    let fragment = document.createElement("div");
+                    fragment.classList.add("creditcard");
+                    fragment.innerHTML =
+                        `
+                                <h4 class="cardnumber">` +
+                        cardno +
+                        `</h4>
+                                <h6>CARDHOLDER NAME</h6>
+                                <p class="cardholder">` +
+                        cardname +
+                        `</p>
+                                <p class="exp">` +
+                        expmon +
+                        `/` +
+                        expyear +
+                        `</p>
+                                <i class="fas fa-minus-circle delete-creditcard"></i>
+                                <input name="pay_no" class="pay_no" style="display:none" value=` +
+                        obj.payno +
+                        `>
+                                <div class="creditcard-logo">
+                                    <img src="<%=request.getContextPath()%>/img/creditcard/master.png">
+                                </div>
+        						`;
+                    $(".credit-cards").eq(0).prepend(fragment);
+                    setTimeout(function () {
+                        $("#creditCard-input-view").css("opacity", "0");
+                        $("#creditCard-input-view").css("z-index", "-1");
+                    }, 1000);
+                } else {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "伺服器忙線中，請稍後再試",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+            },
+        });
+    });
+//     $(document).on("click", ".creditcard", function(){  //點擊信用卡後付款
+//     	let card_no = $(this).find(".cardnumber").text();
+<%--     	window.location.href = "<%=request.getContextPath()%>/bookingServlet?action=insert_bkod&card_no=" + card_no; --%>
+//     })
+//     function totalPrice() {
+//         let prices = $("span.subtotal");
+//         let total = 0;
+//         $.each(prices, function (index, value) {
+//             total += parseInt(value.innerText.replace(",", ""));
+//         });
+
+//         $(".last-price span").eq(0).text(total.toLocaleString());
+//         $(".deposit-price span")
+//             .eq(0)
+//             .text(total * (0.3).toLocaleString());
+//     }
+});
+
 	</script>	
+	
 </body>
 </html>

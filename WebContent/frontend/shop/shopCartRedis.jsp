@@ -275,7 +275,7 @@
 					<% }%>
 					<tr>
 						<td colspan="5">
-						<td>總金額<span> $ </span></td>
+						<td class="totalPriInCart">總金額<span> $ </span></td>
 						<td id="checkTotal">0</td>
 						<td>
 					</tr>
@@ -333,7 +333,7 @@
 							</td>
 						</tr>
 					<% }%>
-					<tr>
+					<tr class="totalPriInCart">
 						<td colspan="5">
 						<td>總金額<span> $ </span></td>
 						<td id="checkTotal">0</td>
@@ -399,7 +399,7 @@ $(function(){
 						<%  for (int i = 0; i < RedisBuylist.size(); i++){%>
 							shoppingTatal += parseInt($("#checknum<%= i %>").val(),10);
 						<%}%>
-						$("#checkTotal").text(shoppingTatal);
+						$("#checkTotal").text(shoppingTatal+".0");
 					}
 				});	
 			});
@@ -434,7 +434,7 @@ $(function(){
 							<%  for (int i = 0; i < RedisBuylist.size(); i++){%>
 								shoppingTatal += parseInt($("#checknum<%= i %>").val(),10);
 							<%}%>
-							$("#checkTotal").text(shoppingTatal);
+							$("#checkTotal").text(shoppingTatal+".0");
 							
 						if(data.amount=== undefined){
 							Swal.fire({
@@ -470,7 +470,7 @@ $(function(){
 						<%  for (int a = 0; a < RedisBuylist.size(); a++){%>
 							shoppingTatal += parseInt($("#checknum<%= a %>").val(),10);
 						<%}%>
-						$("#checkTotal").text(shoppingTatal);
+						$("#checkTotal").text(shoppingTatal+".0");
 					}
 				});
 			});

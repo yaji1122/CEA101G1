@@ -33,13 +33,13 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 	private static final String INSERT_STMT = 
 		"INSERT INTO SHOP_ORDER (SP_ODNO,MB_ID,TOTAL_PRICE,POINTS_TOTAL,RM_NO) VALUES ('SPOD' || LPAD(to_char(SHOPODNO_SEQ.NEXTVAL), 11, '0'), ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-		"SELECT SP_ODNO,MB_ID,to_char(SP_TIME,'yyyy-mm-dd HH24:MI:SS') SP_TIME,SP_STATUS,to_char(SP_DLVR,'yyyy-mm-dd HH24:MI:SS') SP_DLVR,TOTAL_PRICE, POINTS_TOTAL, RM_NO FROM SHOP_ORDER ORDER BY SP_ODNO";
+		"SELECT SP_ODNO,MB_ID,to_char(SP_TIME,'yyyy-mm-dd HH24:MI:SS') SP_TIME,SP_STATUS,to_char(SP_DLVR,'yyyy-mm-dd HH24:MI:SS') SP_DLVR,TOTAL_PRICE, POINTS_TOTAL, RM_NO FROM SHOP_ORDER ORDER BY SP_ODNO DESC";
 	private static final String GET_ONE_STMT = 
 		"SELECT SP_ODNO,MB_ID,to_char(SP_TIME,'yyyy-mm-dd HH24:MI:SS') SP_TIME,SP_STATUS,to_char(SP_DLVR,'yyyy-mm-dd HH24:MI:SS') SP_DLVR,TOTAL_PRICE,POINTS_TOTAL,RM_NO FROM SHOP_ORDER WHERE SP_ODNO = ?";
 	private static final String UPDATE = 
 		"UPDATE SHOP_ORDER SET SP_STATUS=? ,SP_DLVR=? where SP_ODNO = ?";
 	private static final String GETSp_odnoByMb_id = 
-		"SELECT SP_ODNO FROM SHOP_ORDER WHERE MB_ID = ? ORDER BY SP_ODNO";
+		"SELECT * FROM SHOP_ORDER WHERE MB_ID = ? ORDER BY SP_ODNO DESC";
 	
 	@Override
 	public void insert(Shop_orderVO shop_orderVO) {
@@ -267,6 +267,13 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 				
 				shop_orderVO = new Shop_orderVO();
 				shop_orderVO.setSp_odno(rs.getString("sp_odno"));
+				shop_orderVO.setMb_id(rs.getString("mb_id"));
+				shop_orderVO.setSp_time(rs.getTimestamp("sp_time"));
+				shop_orderVO.setSp_status(rs.getString("sp_status"));
+				shop_orderVO.setSp_dlvr(rs.getTimestamp("sp_dlvr"));
+				shop_orderVO.setTotal_price(rs.getDouble("total_price"));
+				shop_orderVO.setPoints_total(rs.getInt("points_total"));
+				shop_orderVO.setRm_no(rs.getString("rm_no"));
 				list.add(shop_orderVO); // Store the row in the list
 			}
 			

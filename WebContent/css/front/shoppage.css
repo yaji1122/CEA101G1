@@ -233,8 +233,14 @@ body {
     font-size: 20px;
 }
 .pageslider {
-    z-index: -1;
     position: relative;
+    margin-bottom: 10px;
+}
+.pageslider a {
+	z-index: 2;
+}
+.pagepic :hover{
+	cursor: pointer;
 }
 .menu-item {
     z-index: 99;
@@ -338,6 +344,23 @@ body {
 .itemslider {
     height: 320px;
     width: 300px;
+}
+.itemPageInCart{
+	width: 300px;
+    background-color: #00000057;
+    text-align: center;
+    color: white;
+    margin: 7px auto 0px auto;
+}
+.itemPageInCart :hover{
+	background-color:black;
+	cursor: pointer;
+}
+.col col-12 col-sm-6 col-md-4{
+	height:500px;	
+}
+.container{
+	height:500px;
 }
 .menu-item {
     position: fixed;
@@ -448,12 +471,15 @@ body {
 	margin-left:20px;
 }
 .goPay{
-	float:right;
 	width:180px;
 	background-color: black;
 	color:white;
 	cursor: pointer;
 	border: none;
+	margin-left: 760px;
+}
+.totalPriInCart{
+	margin-left: 760px;
 }
 .goPay:hover{
 	background-color: rgb(202, 202, 202);
@@ -468,4 +494,44 @@ body {
 }
 .itTdBo{
 	text-align: center;
+}
+/* 訂單瀏覽頁面 */
+.shopOrderView{
+	margin-top:50px;
+	text-align: center;
+}
+.tablepart{
+	margin-left: auto;
+    margin-right: auto;
+	width:900px;
+}
+.tabletitle{
+	float:right;
+}
+.tablepart th,.tablepart td{
+    	width: 230px;
+    	text-align: center;
+}
+.borBeTQty{
+	border-bottom: solid 1px lightgray;
+}
+#payment-info button.add-creditcard,
+#payment-info button.leave-payment,
+#payment-info button.admit-payment {
+	width:350px; 
+	height:50px;
+	padding: 5px 0px;
+    background-color: cadetblue;
+    border-radius: 10px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: white;
+    cursor: pointer;
+margin-bottom: 10px;
+}
+#payment-info button.leave-payment {
+    background-color: crimson;
+}
+#payment-info button.add-creditcard {
+    background-color: lightgray;
 }
