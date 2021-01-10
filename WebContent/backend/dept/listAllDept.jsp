@@ -73,7 +73,8 @@
 </section>
         <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
         <script>
             $(document).ready(function () {
                 $("#add").click(function () {
@@ -87,9 +88,9 @@
             });
             document.getElementById("button").addEventListener("click",function(){
             	if($("#dept_no").val()==""){
-            		swal("Oops", "未填寫部門編號", "error");
+            		Swal.fire("Oops", "未填寫部門編號", "error");
             	}else if ($("#dept").val()==""){
-            		swal("Oops", "未填寫部門名稱", "error");
+            		Swal.fire("Oops", "未填寫部門名稱", "error");
             	} else{
                     document.form1.submit();
             	}

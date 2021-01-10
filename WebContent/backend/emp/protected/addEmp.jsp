@@ -136,10 +136,10 @@
 	</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" /></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 	<script>
 		//產生亂數密碼
 		var keylist = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
@@ -159,11 +159,10 @@
 		console.log(add);
 		add.addEventListener("click", check);
 		function check() {
-			console.log("123");
 			if (document.getElementById("checkbox1").checked) {
 				document.form1.submit();
 			} else {
-				swal("Oops", "未勾選權限", "error");
+				Swal.fire("Oops", "未勾選權限", "error");
 			}
 		};
 	</script>
