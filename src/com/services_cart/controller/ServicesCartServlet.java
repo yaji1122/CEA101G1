@@ -58,8 +58,8 @@ public class ServicesCartServlet extends HttpServlet {
 						ServicesItem servicesItem = buylist.get(i);
 
 						// 假若新增的服務和購物車的服務一樣時
-						if (servicesItem.getServicesName().equals(aServicesItem.getServicesName())) {
-							servicesItem.setServicesName(servicesItem.getServicesName());
+						if (servicesItem.getServicesNo().equals(aServicesItem.getServicesNo())) {
+							servicesItem.setServicesNo(servicesItem.getServicesNo());
 							servicesItem.setQuantity(servicesItem.getQuantity() + aServicesItem.getQuantity());
 							servicesItem.setPrice(servicesItem.getPrice() + aServicesItem.getPrice());
 							buylist.setElementAt(servicesItem, i);
@@ -100,21 +100,18 @@ public class ServicesCartServlet extends HttpServlet {
 	private ServicesItem getServicesItem(HttpServletRequest req) {
 
 		Integer quantity = (new Integer(req.getParameter("quantity")).intValue());
-		String servicesName = req.getParameter("servicesName");
+		String servicesNo = req.getParameter("servicesNo");
 		Integer price = (new Integer(req.getParameter("price")).intValue());
 		String locations = req.getParameter("locations");
 		
 		String str = req.getParameter("hiredate");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		LocalDateTime servTime = LocalDateTime.parse(str, formatter);
-		System.out.println("LocalDateTime cart:"+servTime);
-		
-//		String servTimeToString = servTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-//		System.out.println("LocalDateTime to String cart:"+servTimeToString);
+		System.out.print("cart:"+servTime);
 		
 		ServicesItem theServicesItem = new ServicesItem();
 
-		theServicesItem.setServicesName(servicesName);
+		theServicesItem.setServicesNo(servicesNo);
 		theServicesItem.setPrice(price);
 		theServicesItem.setQuantity(quantity);
 		theServicesItem.setLocations(locations);

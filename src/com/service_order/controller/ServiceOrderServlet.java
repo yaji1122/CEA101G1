@@ -118,6 +118,9 @@ public class ServiceOrderServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
+//				String serv_odno = req.getParameter("serv_odno").trim();
+//				MembersVO member = (MembersVO)req.getSession().getAttribute("member");
+//				String bk_no = member.getBk_no();
 
 				MembersVO member = (MembersVO) req.getSession().getAttribute("member");
 				String mb_id = member.getMb_id();
@@ -125,13 +128,12 @@ public class ServiceOrderServlet extends HttpServlet {
 				List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
 				List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
 						.collect(Collectors.toList());
-				
+
 				String bk_no = "";
-				for(BookingOrderVO list : newList) {
+				for (BookingOrderVO list : newList) {
 					bk_no = list.getBk_no();
 				}
 
-//				String bk_no = "BKOD000001";
 				String serv_no = req.getParameter("serv_no");
 
 				String str = req.getParameter("serv_time");
@@ -177,7 +179,7 @@ public class ServiceOrderServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/services/servicesCart.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/services/services.jsp");
 				failureView.forward(req, res);
 			}
 

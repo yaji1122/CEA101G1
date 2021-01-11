@@ -61,3 +61,43 @@
 .btn_price-spa div {
 	display: inline-block;
 }
+
+.cart-content{
+	visibility: hidden;
+}
+
+.cart-content-show{
+	z-index: 999;
+	display: flex;
+	visibility: visible;
+	position: fixed;
+	top: 30%;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	max-width: 600px;
+	max-height:500px;
+	background-color: aliceblue;
+}
+
+.black{
+	display: none;
+	width: 100%;
+	height: -webkit-fill-available;
+	position: fixed;
+	background-color: black;
+	opacity: 0.8;
+	z-index: 10;
+}
+
+.cart-table{
+	
+}
+
+.tableWithClose{
+	
+}
+
+.cart-content div{
+	display:inline-block;
+}

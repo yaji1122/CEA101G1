@@ -5,7 +5,6 @@
 <%@ page import="com.services_cart.model.*"%>
 <%@ page import="com.services_cart.controller.*"%>
 
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,6 +15,7 @@
 	<%Vector<ServicesItem> buylist = (Vector<ServicesItem>) session.getAttribute("shoppingcart");%>
 	<%if (buylist != null && (buylist.size() > 0)) {%>
 
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -24,7 +24,7 @@
 				<th>價格</th>
 				<th>人數</th>
 				<th>地點</th>
-				<th></th>
+				<th>delete</th>
 			</tr>
 		</thead>
 
@@ -34,10 +34,10 @@
 		%>
 		<tbody>
 			<tr>
-				<td><%=order.getServicesName()%></td>
-				<td><%=order.getServTime()%></td>
-<%-- <td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
- --%>				<td><%=order.getQuantity()%></td>
+				<td><%=order.getServicesNo()%></td>
+				<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
+				<td><%=order.getPrice()%></td>
+				<td><%=order.getQuantity()%></td>
 				<td><%=order.getLocations()%></td>
 				<td><div align="center">
 						<form name="deleteForm"
