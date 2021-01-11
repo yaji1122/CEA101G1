@@ -71,6 +71,18 @@ $(document).ready(function () {
                 swalfire("密碼確認錯誤，請重新確認");
                 return;
             }
+
+			let mbbd = $("#mb_bd").val()
+			console.log(mbbd)
+			if (!mbbd.match(/\d{4}[\055]+\d{2}[\055]+\d{2}/g)) {
+				swalfire("生日格式錯誤");
+				return;
+			}
+			let mbphone = $("#mb_phone").val()
+			if (!mbphone.match(/\d+/g)) {
+				swalfire("電話號碼格式錯誤，請輸入數字");
+				return;
+			}
         }
         if ($(this).hasClass("form3next")) {
         }
@@ -101,7 +113,40 @@ $(document).ready(function () {
         );
         setProgressBar(++current);
     });
-
+	
+	let regisForm = document.querySelector("#msform");
+	regisForm.addEventListener("submit", (e)=> {
+		e.preventDefault();
+		let data = new FormData(regisForm);
+		let xhr = new XMLHttpRequest();
+		xhr.open("post", "${pageContext.request.contextPath}/MembersServlet");
+		xhr.onload = function(){
+			if (xhr.readyState === xhr.DONE) {
+                if (xhr.status === 200) {
+                    if (xhr.responseText === "success") {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "歡迎申請加入戴蒙會員",
+                            text: "麻煩至電子信箱查看驗證信",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    } else {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "error",
+                            title: "註冊失敗，請洽詢客服人員",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                }
+            }
+		}
+		xhr.send(data);
+	})
+	
     $(".previous").click(function () {
         current_fs = $(this).parents("fieldset");
         previous_fs = current_fs.prev();
@@ -138,16 +183,6 @@ $(document).ready(function () {
         $(".progress-bar").css("width", percent + "%");
     }
 
-    let thisYear = new Date().getFullYear;
-    $("#mb_bd").datepicker({
-        maxDate: "0",
-        dateFormat: "yy/mm/dd",
-        language: "zh-TW",
-        numberOfMonths: 1,
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "1900:" + thisYear,
-    });
     function swalfire(msg) {
         Swal.fire({
             position: "center",
@@ -174,6 +209,12 @@ $(document).ready(function () {
             $(".confirm_laebl").removeClass("error_label");
         }
     });
+
+	$("#mb_bd").datetimepicker({
+				timepicker:false,
+				format:"Y-m-d",
+				lang:"zh-TW"
+			})
 });
 window.onload = function () {
     const name = document.getElementById("name");

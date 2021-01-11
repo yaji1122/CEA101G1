@@ -4,13 +4,18 @@
 <%@ page import="com.bookingorder.model.*"%>
 <%@ page import="com.bookingdetail.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.util.stream.Collectors"%>
 <%@ page import="java.time.LocalDate"%>
 <%@ page import="com.members.model.*"%>
 <%
 	List<BookingOrderVO> bkodList = (List<BookingOrderVO>) request.getAttribute("bkodList");
 	if (bkodList == null) {
 		BookingOrderService bkodSvc = new BookingOrderService();
-		bkodList = bkodSvc.getAllBooking();
+		bkodList = bkodSvc.getAllBooking().stream().filter(e -> e.getBk_status()
+				   .equals(BKSTATUS.CHECKED)) 
+				   .collect(Collectors.toList());
+		pageContext.setAttribute("bkstatus", "2");
+		
 	}
 	pageContext.setAttribute("bkodList", bkodList);
 %>
@@ -75,6 +80,14 @@ table.bookingOrderTable a.cancel i {
 	float: unset;
     width: fit-content;
     margin: 0 auto
+}
+th {
+	position:sticky;
+	top:45px;
+}
+table.bookingOrderTable {
+	overflow:scroll;
+	max-height:75vh;
 }
 </style>
 <body>

@@ -30,8 +30,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 			<div class="row">
 				<div>
 					<div class="card">
-						<form id="msform" enctype="multipart/form-data" method="post"
-							action="<%=request.getContextPath()%>/MembersServlet">
+						<form id="msform" enctype="multipart/form-data" method="post">
 							<input type="text" name="action" value="insert_member"
 								style="display: none;">
 							<!-- progressbar -->
@@ -82,10 +81,14 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 									<label class="fieldlabels">電子信箱(E-mail): <b>*</b></label> <input
 										type="text" id="mb_email" name="mb_email" value="${tempemail}"
 										pattern="^.+[\x40]{1}.+[.]{1}.*$" placeholder="Email"
+										oninvalid="this.setCustomValidity('請輸入正確電子郵件格式')"
+  										oninput="this.setCustomValidity('')"
 										maxlength="50" required /> <label class="fieldlabels">密碼(Password):
 										英文大小寫至少一個，最少8碼<b>*</b>
 									</label> <input type="password" id="mb_pwd" name="mb_pwd"
 										placeholder="Password" minlength="8" pattern="[a-zA-Z0-9]{8,}"
+										oninvalid="this.setCustomValidity('格式錯誤(大小寫字母至少一個，共8個字元)')"
+  										oninput="this.setCustomValidity('')"
 										value="${temppassword}" required /> <label
 										class="fieldlabels confirm_laebl">確認密碼(Confirm
 										Password): <b>*</b>
@@ -104,7 +107,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 									</label> <input type="text" id="mb_bd" name="mb_bd"
 										placeholder="Date of Birth" required /> <label
 										class="fieldlabels">聯絡電話(Contact No.): <b>*</b></label> <input
-										type="tel" id="mb_phone" name="mb_phone"
+										type="tel" id="mb_phone" name="mb_phone" 
 										placeholder="Contact No." maxlength="20" required /> <label
 										class="fieldlabels">居住地址(Address): <b>*</b></label> <input
 										type="text" name="mb_city" placeholder="Address of City"
@@ -112,7 +115,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 										placeholder="Address of Town" required /> <input type="text"
 										name="mb_address" placeholder="Address" required /> <label
 										class="fieldlabels">上傳個人照片(Upload Your Photo) optional</label>
-									<input type="file" name="mb_pic" accept="image/*"
+										<input type="file" name="mb_pic" accept="image/*"
 										style="text-align-last: center" />
 								</div>
 								<input type="button" name="next"
@@ -352,17 +355,13 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 							<fieldset>
 								<div class="form-card success-page">
 									<h2 class="steps">Step 4 - 4</h2>
+									<i class="fas fa-user-check" style="font-size:56px; color:green"></i>
 									<h2 class="success-text">
-										<strong>註冊完成!</strong>
+										<strong>歡迎加入戴蒙尊榮會員</strong>
 									</h2>
-									<br />
-									<div class="row justify-content-center">
-										<div class="col-12">
-											<img src="${pageContext.request.contextPath}/images/good.jpg" />
-										</div>
-									</div>
-									<div class="row justify-content-center">
-										<h5>請至註冊電子信箱啟用您的帳戶</h5>
+									<div class="justify-content-center">
+										<h4>Welcome Join Us !</h4>
+										<h5>帳戶啟用連結已發送至您註冊的電子郵箱</h5>
 									</div>
 								</div>
 							</fieldset>
@@ -384,39 +383,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 		src="${pageContext.request.contextPath}/js/front/registration.js"></script>
 	<script>
 	//Ajax
-	let regisForm = document.querySelector("#msform");
-	regisForm.addEventListener("submit", (e)=> {
-		console.log("fire")
-		e.preventDefault();
-		let data = new FormData(regisForm);
-		let xhr = new XMLHttpRequest();
-		xhr.open("post", "${pageContext.request.contextPath}/MembersServlet");
-		xhr.onload = function(){
-			if (xhr.readyState === xhr.DONE) {
-                if (xhr.status === 200) {
-                    if (xhr.responseText === "success") {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "歡迎申請加入戴蒙會員",
-                            text: "麻煩至電子信箱查看驗證信",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    } else if (xhr.responseText === "fail") {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "error",
-                            title: "註冊失敗，請洽詢客服人員",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    }
-                }
-            }
-		}
-		xhr.send(data);
-	})
+	
 	</script>
 </body>
 </html>

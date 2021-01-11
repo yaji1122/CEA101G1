@@ -18,7 +18,7 @@ pageContext.setAttribute("roomsList", roomsList);
 <style>
 th {
 	position: sticky;
-	top: 0;
+	top: 0px;
 }
 
 .roomtable {

@@ -15,7 +15,7 @@ public class MailAuthenticate {
 		config.setMaxWaitMillis(10000);
 		pool = new JedisPool(config, "localhost", 6379);
 	}
-
+	
 	public static String getAuthCode() {
 		StringBuffer code = new StringBuffer();
 		String elements = "01234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -36,7 +36,7 @@ public class MailAuthenticate {
 	public boolean verifyCode(String mb_id, String code) {
 		Jedis jedis = pool.getResource();
 		jedis.auth("123456");
-		if (jedis.get(mb_id).equals(code)) {
+		if (jedis.get(mb_id) != null && jedis.get(mb_id).equals(code)) {
 			jedis.close();
 			return true;
 		} else {

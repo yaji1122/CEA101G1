@@ -82,8 +82,16 @@ width:fit-content;
 }
 
 img {
-	max-height: 100%;
+	max-height:400px;
 	border-radius: 10px;
+}
+#pic-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+h5 {
+	border-bottom: 1px solid grey;
 }
 </style>
 </head>
@@ -204,14 +212,19 @@ img {
 				id="update-mbname" class="rm-input" max="9" min="1"
 				autocomplete="off" required />
 			 <label for="update-mbname">會員生日</label>
-				<input type="text" name="update-mbbd" id="update-mbbd"
-				class="rm-input" max="9" min="1" autocomplete="off" required />
+				<input type="text" name="update-mbbd" id="update-mbbd" pattern="\d{4}[-]{1}\d{2}[-]\d{2}"
+				class="rm-input" max="9" min="1" autocomplete="off" required 
+				oninvalid="this.setCustomValidity('請輸入正確日期')"
+  				oninput="this.setCustomValidity('')"/>
 			 <label for="update-mbphone">聯絡號碼</label>
-				<input type="text" name="update-mbphone"
+				<input type="text" name="update-mbphone" pattern="\d+"
 				id="update-mbphone" class="rm-input" max="9" min="1"
-				autocomplete="off" required />
+				autocomplete="off" 
+				oninvalid="this.setCustomValidity('請輸入數字')"
+  				oninput="this.setCustomValidity('')"
+				required />
 			 <label for="update-mbemail">電子信箱</label>
-				<input type="email" name="update-mbemail"
+				<input type="email" name="update-mbemail" pattern="^.+[\x40]{1}.+[.]{1}.*$"
 				id="update-mbemail" class="rm-input" max="9" min="1"
 				autocomplete="off" required />
 			 <label for="update-mbcity">居住縣市</label>
@@ -230,9 +243,12 @@ img {
 			 	<h6>
 					<i class="icon fas fa-cloud-upload-alt"></i>上傳個人照片
 				</h6>
-				<input type="file" name="update-mbpic"
+				<input type="file" name="update-mbpic" onchange="showImg(this)"
 				id="update-mbpic" class="rm-input"
 				autocomplete="off" />
+				</div>
+				<div id="pic-area">
+						<img id="show">
 				</div>
 			 <input name="action" value="update_member" style="display: none">
 		     <input id="update-mbid" name="update-mbid" type="text"
@@ -243,36 +259,54 @@ img {
 	<script src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/back/member-backend.js"></script>
 	<script>
-		$("#update-mbbd").datetimepicker({
-			timepicker:false,
-		})
-		
-		$("#update-member-form").submit(function(e){
-			e.preventDefault();
-			var myform = document.getElementById("update-member-form");
-		    var fd = new FormData(myform);
-		    $.ajax({
-		        url: "<%=request.getContextPath()%>/MembersServlet",
-		        data: fd,
-		        cache: false,
-		        processData: false,
-		        contentType: false,
-		        type: 'POST',
-		        success: function (msg) {
-		        	if (msg == "success") {
-						Swal.fire({
-							position: "center",
-							title:"修改成功",
-							icon:"success",
-							showConfirmButton: false,
-							timeout: 1000,
-						})
-						setTimeout(function(){
-							window.location.reload();
-						}, 1000)
-					}
-		        }
-		    });
+		function showImg(thisimg) {
+			var file = thisimg.files[0];
+			if (window.FileReader) {
+				var fr = new FileReader();
+	
+				var showimg = document.getElementById('show');
+				fr.onloadend = function(e) {
+					showimg.src = e.target.result;
+				};
+				fr.readAsDataURL(file);
+				showimg.style.display = 'block';
+			}
+		}
+		$(document).ready(function(){
+			
+			$("#update-mbbd").datetimepicker({
+				timepicker:false,
+				format:"Y-m-d",
+				lang:"zh-TW"
+			})
+			
+			$("#update-member-form").submit(function(e){
+				e.preventDefault();
+				var myform = document.getElementById("update-member-form");
+			    var fd = new FormData(myform);
+			    $.ajax({
+			        url: "<%=request.getContextPath()%>/MembersServlet",
+			        data: fd,
+			        cache: false,
+			        processData: false,
+			        contentType: false,
+			        type: 'POST',
+			        success: function (msg) {
+			        	if (msg == "success") {
+							Swal.fire({
+								position: "center",
+								title:"修改成功",
+								icon:"success",
+								showConfirmButton: false,
+								timeout: 1000,
+							})
+							setTimeout(function(){
+								window.location.reload();
+							}, 1000)
+						}
+			        }
+			    });
+			})
 		})
 	</script>
 </body>
