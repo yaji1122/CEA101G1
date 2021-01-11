@@ -373,18 +373,42 @@ body {
     cursor: pointer;
 }
 .slick-next:before {
-    content: "▶";
+    content: "﹥";
     color: gray;
-    size: 50px;
+    margin-left: -70px;
+    z-index: 11;
+    background-color: white;
+    opacity: 0;
+    font-size: 36px;
+    border: 1px solid;
+    padding-bottom: 6px;
 }
 .slick-next:hover {
     opacity: 0.9;
 }
 .slick-prev:before {
-    content: "◀";
+  	content: "﹤";
     color: gray;
-    size: 50px;
+    z-index: 11;
+    font-size: 36px;
+    padding-bottom: 6px;
+    background-color: white;
+    opacity: 0;
+    border: 1px solid;
+    margin-left: 25px;
 }
+.slick-prev{
+	z-index:11;
+}
+.itemslider:hover .slick-arrow:before {
+	opacity: 1;
+}
+.itempic img:hover{
+	.slick-prev:before,
+	.slick-next:before {
+	opacity: 1;
+	}
+} 
 .chtype{
 	font-size:25px;
 	font-family:verdana;
@@ -401,7 +425,7 @@ body {
 	padding-right:0px;
 }
 
-/* 購物車頁面*/
+/* 購物車頁面結帳*/
 .shopCartTitle{
 	margin-left:30px;
 }
@@ -414,6 +438,7 @@ body {
 }
 .cartList{
 	margin-left:55px;
+	width:1100px;
 }
 .cartborderFi{
 	margin:25px;

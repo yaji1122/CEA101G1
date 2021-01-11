@@ -288,9 +288,8 @@
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
 	<script type="text/javascript">
-		$(function(){
-			
-		});
+
+	
 	</script>
 </body>
 </html>

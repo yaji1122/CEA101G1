@@ -311,7 +311,7 @@ System.out.print("user_session_id = " + sessionID);
 				<div class="itemdeprice">
 					$<%=itemSvc.getOneItem(item_no).getItem_price()%>
 				</div>
-				<div class="itempoints"><%=itemSvc.getOneItem(item_no).getPoints()%>points
+				<div class="itempoints">Points: <%=itemSvc.getOneItem(item_no).getPoints()%>
 				</div>
 				<div class="itemdede"><%=itemSvc.getOneItem(item_no).getItem_detail()%></div>
 				<FORM METHOD="post"
