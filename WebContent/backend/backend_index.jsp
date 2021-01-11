@@ -284,12 +284,15 @@ div.color-info div.colors {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    width: 100%;
    
 }
 div.color-info div.colors div.rmtype {
 	height: 16px;
-	min-width:16px;
 	margin-right: 5px;
+	width:100%;
+}
+div.color-info div.colors span {
 	width:100%;
 }
 </style>
@@ -346,7 +349,7 @@ div.color-info div.colors div.rmtype {
 		</div>
 		<div class="color-info">
 			<c:forEach var="rmtype" items="${rmtypeSvc.all}">
-			<div class="colors"><div class="rmtype rmtype${rmtype.rm_type}"></div>${rmtype.type_name}</div>
+			<div class="colors"><div class="rmtype rmtype${rmtype.rm_type}"></div><span>${rmtype.type_name}</span></div>
 			</c:forEach>
 		</div>
 	</div>
