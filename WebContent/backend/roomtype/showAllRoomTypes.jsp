@@ -30,7 +30,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 					<th>房型名稱</th>
 					<th>英文名稱</th>
 					<th>房型數量</th>
-					<th>房型價格</th>
+					<th>房型價格(人/晚)</th>
 					<th>最多可入住人數</th>
 					<th>內容修改</th>
 					<th>房型圖庫</th>
@@ -45,14 +45,14 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 						<td>${rmtypevo.type_name}</td>
 						<td>${rmtypevo.type_eng_name}</td>
 						<td>${rmtypevo.rm_qty}</td>
-						<td>${rmtypevo.rm_price}</td>
+						<td>\$${rmtypevo.rm_price}</td>
 						<td>${rmtypevo.rm_capacity}</td>
 						<td style="display: none">${rmtypevo.rm_info_title}</td>
 						<td style="display: none">${rmtypevo.rm_info}</td>
-						<td><input class="update btn btn-primary" type="button" value="修改">
+						<td><input class="update btn btn-outline-danger btn-sm" type="button" value="修改">
 						</td>
 						<td>
-							<button class="showpic btn btn-info"
+							<button class="showpic btn btn-outline-info btn-sm"
 								value="<%=request.getContextPath() %>/backend/roompic/showAllRoomPic.jsp?rmtype-pic=${rmtypevo.rm_type}">查看圖片</button>
 						</td>
 					</tr>

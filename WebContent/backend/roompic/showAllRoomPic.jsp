@@ -46,11 +46,12 @@ div {
 }
 .removepic {
     background-color: #f4f4f2;
-	width:100%;
+	width:101%;
 	height:50px;
 	position:fixed;
 	bottom:0px;
-	border:2px solid black;
+	border-top: 2px solid black;
+    border-bottom: 2px solid black;
 }
 </style>
 </head>

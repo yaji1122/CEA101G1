@@ -82,7 +82,7 @@ pageContext.setAttribute("checkeds", checkeds);
 						<td colspan="7" class="list-title">今日待入住</td>
 					</tr>
 					<tr class="table-head">
-						<th>訂單編號</th>
+						<th>訂單編號<input type=text id="search"></th>
 						<th>入住會員</th>
 						<th>預約入住日</th>
 						<th>預計退房日</th>
@@ -96,8 +96,8 @@ pageContext.setAttribute("checkeds", checkeds);
 					</c:if>
 					
 					<c:forEach var="checkIn" items="${checkIns}">
-						<tr class="list-data">
-							<td><i class="fas fa-receipt"></i>${checkIn.bk_no}</td>
+						<tr class="list-data checkIn-list">
+							<td><i class="fas fa-caret-right"></i><span>${checkIn.bk_no}</span></td>
 							<td>
 								<a class="booking-detail member"
 								href="<%=request.getContextPath()%>/MembersServlet?mb_id=${checkIn.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${checkIn.mb_id}</a><br>
@@ -132,9 +132,6 @@ pageContext.setAttribute("checkeds", checkeds);
 									<h4>選擇房號</h4>
 									<c:forEach var="rm" items="${rmSvc.getAllByRmType(room.rm_type)}">
 										<span class="all-rooms <c:if test='${rm.rm_status == 0}'>empty</c:if>">${rm.rm_no}</span>
-										<%-- <a 
-										class="room-for-check <c:if test='${rm.rm_status != 0}'> not-aval  </c:if> "
-										<c:if test="${rm.rm_status==0}">href="<%=request.getContextPath()%>/RoomsServlet?action=update_check_in&rm_no=${rm.rm_no}&mb_id=${checkIn.mb_id}&bk_no=${checkIn.bk_no}"</c:if> >${rm.rm_no}</a> --%>
 									</c:forEach>
 								</div>
 							</c:forEach>
@@ -165,7 +162,7 @@ pageContext.setAttribute("checkeds", checkeds);
 					</c:if>
 					<c:forEach var="checkOut" items="${checkOuts}">
 						<tr class="list-data">
-							<td><i class="fas fa-receipt"></i>${checkOut.bk_no}</td>
+							<td><i class="fas fa-caret-right"></i>${checkOut.bk_no}</td>
 							<td>
 								<i class="far fa-user member-icon"></i>
 								<a class="booking-detail member"
@@ -175,7 +172,7 @@ pageContext.setAttribute("checkeds", checkeds);
 							<fmt:parseDate pattern="yyyy-MM-dd'T'HH:mm" type="both" value="${checkOut.checkIn}" var="parsedDateTime"/> 
 							<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${parsedDateTime}"/></td>
 							<td>${checkOut.dateOut}</td>
-							<td><button class="checkout-invoice" data-mbid="${checked.mb_id}" data-bkno="${checked.bk_no}">INVOICE</button></td>
+							<td><button class="checkout-invoice" data-mbid="${checkOut.mb_id}" data-bkno="${checkOut.bk_no}">INVOICE</button></td>
 							<td><button class="checkout-confirm" data-mbid="${checkOut.mb_id}" data-bkno="${checkOut.bk_no}">CHECK OUT</button></td>
 						</tr>
 					</c:forEach>
@@ -200,7 +197,7 @@ pageContext.setAttribute("checkeds", checkeds);
 					</c:if>
 					<c:forEach var="checked" items="${checkeds}">
 						<tr class="list-data">
-							<td><i class="fas fa-receipt"></i>${checked.bk_no}</td>
+							<td><i class="fas fa-caret-right"></i>${checked.bk_no}</td>
 							<td>
 								<a class="booking-detail member"
 								href="<%=request.getContextPath()%>/MembersServlet?mb_id=${checked.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${checked.mb_id}</a><br>
@@ -231,7 +228,7 @@ pageContext.setAttribute("checkeds", checkeds);
 		<div class="close-icon">
 			<i class="fas fa-times icon"></i>
 		</div>
-		<iframe src=""></iframe>
+		<iframe id="myIframe" style="width:100%;" src=""></iframe>
 	</div>
 	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 	<%@ include file="/backend/files/backend_footer.file"%> <!-- 加入常用 js -->
@@ -243,13 +240,31 @@ pageContext.setAttribute("checkeds", checkeds);
 	});
 
 	$(document).ready(function () {
+		//訂單搜尋
+		let allTr = $("tr.checkIn-list");
+		$("#search").keyup(function () {
+		    let bkno = $("#search").val().toUpperCase();
+		    for (let i = 1; i < allTr.length; i++) {
+		        if (allTr.eq(i).children().eq(0).find("span").text().indexOf(bkno) < 0) {
+		            allTr.eq(i).hide();
+		        } else {
+		            allTr.eq(i).show();
+		        }
+		    }
+		});
+		
+		//小時鐘
 		let clock = $("#clock");
     	clock.text(new Date().toLocaleTimeString());
     	setInterval(function(){
     		clock.text(new Date().toLocaleTimeString());
     	}, 1000)
-		
-		
+		//iframe自動根據內容調節高度
+    	let iframe = document.getElementById("myIframe");
+	    iframe.onload = function(){
+	        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+	    }
+    	//顯示帳單
 	    let bookingDetail = $("#booking-detail-info");
 	    $(".booking-detail").click(function (e) {
 	        e.preventDefault();
@@ -260,6 +275,7 @@ pageContext.setAttribute("checkeds", checkeds);
 	    $(".icon").click(function () {
 	        $(this).parents(".display-show").removeClass("display-show");
 	    });
+	    //check in 展開
 	    $(".check-in").click(function () {
 	        let rooms = $(this).closest("tr").next().find(".room-check-in");
 	        if (!rooms.hasClass("show")) {
@@ -268,6 +284,7 @@ pageContext.setAttribute("checkeds", checkeds);
 	            rooms.removeClass("show");
 	        }
 	    });
+	   
 	    $(".empty").click(function () {
 	        $(this).siblings(".empty").removeClass("selected");
 	        $(this).addClass("selected");
@@ -278,7 +295,7 @@ pageContext.setAttribute("checkeds", checkeds);
 	    	url = "<%=request.getContextPath()%>/receipt.jsp?bk_no=" + bkno;
 	    	window.open(url, '_blank');
 	    })
-	    
+	  	//送出check in
 	    $(".checkin-confirm").click(function () {
 	        let selects = $(this).siblings(".checkin-option");
 	        let mbid = $(this).attr("data-mbid");
@@ -338,6 +355,7 @@ pageContext.setAttribute("checkeds", checkeds);
 	            });
 	        }
 	    });
+	   	//送出退房確認
 	    $(".checkout-confirm").click(function () {
 	        let mbid = $(this).attr("data-mbid");
 	        let bkno = $(this).attr("data-bkno");

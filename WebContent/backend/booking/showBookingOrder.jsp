@@ -8,28 +8,37 @@
 <%@ page import="com.members.model.*"%>
 <%
 	List<BookingOrderVO> bkodList = (List<BookingOrderVO>) request.getAttribute("bkodList");
-if (bkodList == null) {
-	BookingOrderService bkodSvc = new BookingOrderService();
-	bkodList = bkodSvc.getAllByDateIn(LocalDate.now());
-}
-pageContext.setAttribute("bkodList", bkodList);
+	if (bkodList == null) {
+		BookingOrderService bkodSvc = new BookingOrderService();
+		bkodList = bkodSvc.getAllBooking();
+	}
+	pageContext.setAttribute("bkodList", bkodList);
 %>
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/nice-select.css" type="text/css" />
 <title>戴蒙度假村房務管理</title>
 </head>
 <style>
 .conditions {
 	padding: 10px 30px;
 	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;	
 }
-
+.conditions form {
+height: fit-content;
+}
 .conditions input {
 	height: 25px;
 	display: inline-block;
 }
-
+.conditions form label,
+.conditions form button.btn {
+	margin:0px;
+}
 .form-parts {
 	display: inline-block;
 	width: fit-content;
@@ -60,49 +69,32 @@ table.bookingOrderTable a.cancel i {
 	color: #ff414d;
 	font-size: 16px;
 }
+.nice-select {
+	height:20px;
+	line-height:20px;
+	float: unset;
+    width: fit-content;
+    margin: 0 auto
+}
 </style>
 <body>
 	<div class="conditions">
 		<form method="post" class="bkod_mbid_query_form"
-			action="<%=request.getContextPath()%>/bookingServlet?action=getone_bymbid">
+			action="<%=request.getContextPath()%>/bookingServlet?action=getall_bymbid">
 			<div class="form-parts">
 				<label for="bkod_mbid_query">會員編號：</label> <input type="text"
-					placeholder="輸入會員編號" name="bkod_mbid_query" id="bkod_mbid_query">
-				<button type="submit" class="btn btn-light">查詢</button>
+					placeholder="輸入會員編號" name="bkod_mbid_query" id="bkod_mbid_query" autocomplete="off" required>
+				<button type="submit" class="btn btn-outline-dark btn-sm">查詢</button>
 			</div>
 		</form>
 		<form method="post" class="bkod_bkno_query_form"
 			action="<%=request.getContextPath()%>/bookingServlet?action=getone_bybkno">
 			<div class="form-parts">
 				<label for="bkod_bkno_query">訂單編號：</label> <input type="text"
-					placeholder="輸入訂單編號" name="bkod_bkno_query" id="bkod_bkno_query">
-				<button type="submit" class="btn btn-light">查詢</button>
+					placeholder="輸入訂單編號" name="bkod_bkno_query" id="bkod_bkno_query" autocomplete="off" required>
+				<button type="submit" class="btn btn-outline-dark btn-sm">查詢</button>
 			</div>
 		</form>
-		<div class="form-parts">
-			<label for="pkup_status_query">訂單狀態：</label> <select
-				class="form-select" id="pkup_status_query" name="pkup_status_query">
-				<option value="all"
-					<c:if test="${current_query_status == 'all'}"> selected</c:if>>全部訂單</option>
-				<option value="0"
-					<c:if test="${current_query_status == '0'}"> selected</c:if>>未付款</option>
-				<option value="1"
-					<c:if test="${current_query_status == '1'}"> selected</c:if>>待入住</option>
-				<option value="2"
-					<c:if test="${current_query_status == '2'}"> selected</c:if>>入住中</option>
-				<option value="3"
-					<c:if test="${current_query_status == '3'}"> selected</c:if>>已完成</option>
-				<option value="4"
-					<c:if test="${current_query_status == '4'}"> selected</c:if>>已取消</option>
-			</select>
-		</div>
-
-		<div>
-			<a class="btn btn-light"
-				href="<%=request.getContextPath()%>/bookingServlet?action=getall_bydatein&date_in=<%=LocalDate.now().toString()%>">查看今日入住訂單</a>
-			<a class="btn btn-light"
-				href="<%=request.getContextPath()%>/bookingServlet?action=getall_bkod">查看所有訂單</a>
-		</div>
 	</div>
 	<jsp:useBean id="pkupSvc" scope="page"
 		class="com.pickup.model.PickupService" />
@@ -114,25 +106,32 @@ table.bookingOrderTable a.cancel i {
 			<th>會員</th>
 			<th>接送預約</th>
 			<th>預定日期</th>
-			<th>訂單狀態</th>
+			<th style="color:black">
+				<select
+				class="form-select" id="order_status">
+				<option value="all"
+					<c:if test="${bkstatus == 'all'}"> selected</c:if>>全部訂單</option>
+				<option value="1"
+					<c:if test="${bkstatus == '1'}"> selected</c:if>>待入住</option>
+				<option value="2"
+					<c:if test="${bkstatus == '2'}"> selected</c:if>>入住中</option>
+				<option value="3"
+					<c:if test="${bkstatus == '3'}"> selected</c:if>>已完成</option>
+				<option value="4"
+					<c:if test="${bkstatus == '4'}"> selected</c:if>>已取消</option>
+				</select>
+			</th>
 			<th>取消訂單</th>
 		</tr>
 		<c:choose>
 			<c:when test="${bkodList.size() > 0}">
-				<%
-					String[] layer = {"odd", "even"}; //表格上色
-				int number = 2;
-				%>
 				<c:forEach var="bkodvo" items="${bkodList}">
-					<tr
-						class="<%=layer[number++ % 2]%> <c:if test="${bkodvo.bk_status == '4' }">bk_cancel</c:if> ">
-						<td><a class="booking-detail bkdetail"
+					<tr <c:if test="${bkodvo.bk_status == '4' }">bk_cancel</c:if> ">
+						<td><i class="fas fa-caret-right"></i><a class="booking-detail bkdetail"
 							href="<%=request.getContextPath()%>/BookingDetailServlet?bk_no=${bkodvo.bk_no}&action=getall_bybkno">${bkodvo.bk_no}</a></td>
-
-
 						<td><a class="booking-detail member"
 							href="<%=request.getContextPath()%>/MembersServlet?mb_id=${bkodvo.mb_id}&action=getone_bymbid&location=memberDetail.jsp">${bkodvo.mb_id}</a><br>
-							${mbSvc.getOneByMbId(bkodvo.mb_id).mb_name}</td>
+							<i class="far fa-user member-icon"></i>${mbSvc.getOneByMbId(bkodvo.mb_id).mb_name}</td>
 						<td><c:choose>
 							<c:when test="${pkupSvc.getOneByBkNo(bkodvo.bk_no) == null}">
 							無預約
@@ -171,7 +170,7 @@ table.bookingOrderTable a.cancel i {
 				<tr>
 					<td colspan="6"><c:if test="${not empty msgs}">
 							<c:forEach var="message" items="${msgs}">
-								<h3 style="color: white;">${message}</h3>
+								<h5 style="color: lightgrey;padding: 5px 0px;margin: 0;">${message}</h5>
 							</c:forEach>
 						</c:if></td>
 				</tr>
@@ -182,8 +181,9 @@ table.bookingOrderTable a.cancel i {
 		<div class="close-icon">
 			<i class="fas fa-times icon"></i>
 		</div>
-		<iframe src=""></iframe>
+		<iframe id="myIframe" src=""></iframe>
 	</div>
+	<script src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
 	<script>
 	$(document).ready(function () {
 	    $(".cancel").click(function (e) {
@@ -231,11 +231,6 @@ table.bookingOrderTable a.cancel i {
 	        });
 	    });
 
-	    $("#pkup_status_query").change(function () {
-	        let form = $("#pkupstatusquery_form");
-	        form.submit();
-	    });
-
 	    let bookingDetail = $("#booking-detail-info");
 	    $(".booking-detail").click(function (e) {
 	        e.preventDefault();
@@ -247,6 +242,16 @@ table.bookingOrderTable a.cancel i {
 	    $(".icon").click(function () {
 	        $(this).parents(".display-show").removeClass("display-show");
 	    });
+	    let iframe = document.getElementById("myIframe");
+	    iframe.onload = function(){
+	        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+	        iframe.style.width = iframe.contentWindow.document.body.scrollWidth + 'px';
+	    }
+	    $("#order_status").niceSelect();
+	    $("#order_status").change(function(){
+			let status = $(this).val();
+			window.location.href = "<%=request.getContextPath()%>/bookingServlet?action=getallBybkStatus&bkstatus=" + status;
+		})
 	});
 	</script>
 </body>

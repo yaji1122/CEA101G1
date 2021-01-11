@@ -1,10 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
 * {
     background-origin: border-box;
 }
-
 html,
 body {
-    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 input:focus,
@@ -173,7 +176,7 @@ ol {
     letter-spacing: 2px;
     color: white;
     margin: 0px auto;
-    font-weight: 600;
+    font-weight: 400;
     display: inline-block;
     z-index: 12;
     padding: 20px 0px 10px 0px;

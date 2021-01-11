@@ -4,13 +4,13 @@
 <html lang="en">
 <head>
 <%@ include file="/backend/files/backend_header.file" %> <!-- 加入常用 css -->
-<title>預約訂房實況</title>
+<title>訂房情況</title>
 </head>
 <body>
 <%@ include file="/backend/files/backend_sidebar.file" %>
 	<section class="wrapper">
 		<ul class="tabs">
-			<li class="active">客房預約狀況</li>
+			<li class="active">訂房訂單</li>
 		</ul>
 
 		<ul class="tab__content">

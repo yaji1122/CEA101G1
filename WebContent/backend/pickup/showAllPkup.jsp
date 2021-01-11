@@ -55,7 +55,7 @@ float:left;
 		</div>
 	<div class="form-parts">
 			<label for="pkup_status_query">訂單狀態：</label>
-			<select class="form-select" id="pkup_status_query" name="pkup_status_query"  multiple >
+			<select class="form-select" id="pkup_status_query" name="pkup_status_query">
 				<option value="all" <c:if test="${current_query_status == 'all'}"> selected</c:if> >全部訂單</option>
 				<option value="0"  <c:if test="${current_query_status == '0'}"> selected</c:if>>未完成</option>
 				<option value="1" <c:if test="${current_query_status == '1'}"> selected</c:if>>已完成</option>
@@ -92,7 +92,7 @@ float:left;
 				<c:forEach var="pkupvo" items="${pkupList}">
 					<tr class="<%=layer[number++ % 2]%>">
 						<td class="pkupno">${pkupvo.pkup_no}</td>
-						<td><a href="<%=request.getContextPath()%>/BookingOrderServlet?bkod_bkno_query=${pkupvo.bk_no}&action=getone_bybkno">${pkupvo.bk_no}</a></td>
+						<td><a href="<%=request.getContextPath()%>/bookingServlet?bkod_bkno_query=${pkupvo.bk_no}&action=getone_bybkno">${pkupvo.bk_no}</a></td>
 						<td>${pkupvo.chop_no}：${chopSvc.getOneByChopNo(pkupvo.chop_no).chop_name}</td>
 						<td>
 							<c:choose>

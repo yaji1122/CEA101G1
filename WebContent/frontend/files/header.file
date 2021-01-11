@@ -57,10 +57,10 @@
 								src="${pageContext.request.contextPath}/img/logo.png"/>
 							</a>
 					</div>
-					<li  class="nav-list"><a href="<%=request.getContextPath()%>/frontend/roomrsv/available.jsp" class="nav-evnet">查看空房</a></li>
-					<li  class="nav-list"><a href="#" class="nav-evnet">最新消息</a></li>
+					<li  class="nav-list"><a href="<%=request.getContextPath()%>/frontend/roomrsv/available.jsp" class="nav-event">查看空房</a></li>
+					<li  class="nav-list"><a href="#" class="nav-event">最新消息</a></li>
 						
-						<li  class="nav-list"><a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" class="nav-evnet">戴蒙商城</a></li>
+						<li  class="nav-list"><a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" class="nav-event">戴蒙商城</a></li>
 						
 						<li  class="nav-list"><a class="nav-event"
 							href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房介紹</a>
@@ -73,7 +73,7 @@
 							} 
 						%>
 						<c:if test="<%=isGuest%>">
-						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event" class="nav-event"><i class="fas fa-glass-cheers"></i>住客專區</a>
+						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event"><i class="fas fa-glass-cheers"></i>住客專區</a>
 							<ul class="dropdown">
 								<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
 								<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>

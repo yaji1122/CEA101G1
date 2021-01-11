@@ -368,7 +368,7 @@ if (bookingCart != null) {
 	        $(".last-price span").eq(0).text(total.toLocaleString());
 	        $(".deposit-price span")
 	            .eq(0)
-	            .text(total * (0.3).toLocaleString());
+	            .text((total*0.3).toLocaleString());
 	    }
 	});
 

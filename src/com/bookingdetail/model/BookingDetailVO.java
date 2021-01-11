@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class BookingDetailVO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String seq_no;
+	private String seq_no; //設計目的為避免PK conflict, 但無實際作用
 	private String bk_no;
 	private String rm_type;
 	private Integer rm_subtotal;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.stream.Collectors"%>
@@ -110,7 +111,7 @@ pageContext.setAttribute("history", history);
 									</div>
 									<p class="pkuptime">
 										<i class="fas fa-helicopter"></i> 預約接送時間：
-										<c:out value="${pkupSvc.getOneByBkNo(booking.bk_no).arrive_datetime.toLocaleString()}" default="尚未預約接送"/>
+										<c:out value="${pkupSvc.getOneByBkNo(booking.bk_no).arrive_datetime.toLocalDateTime().toString().replace(\"T\", \" \")}" default="尚未預約接送"/>
 									</p>
 									<div class="rooms">
 										<c:forEach var="detail"

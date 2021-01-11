@@ -72,6 +72,7 @@ public class BookingOrderServlet extends HttpServlet {
 				HttpSession userSession = req.getSession();
 				BookingOrderService bkodSvc = new BookingOrderService();
 				Set<javax.websocket.Session> wsSessions = (Set<javax.websocket.Session>) userSession.getAttribute("wsSessions");
+				List<BookingOrderVO> bkodList = new ArrayList<>();
 				for (String date: group) { //依照日期不同建立訂單
 					Integer totalPrice = 0;
 					List<JSONObject> dateGroup = groupMap.get(date);
@@ -81,6 +82,7 @@ public class BookingOrderServlet extends HttpServlet {
 								.mapToInt(e -> Integer.parseInt(e.getString("subtotal")))
 								.sum();
 					BookingOrderVO bkodvo =  bkodSvc.addBkOd(mb_id, dateIn, dateOut, totalPrice, dateGroup, card_no);
+					bkodList.add(bkodvo);
 					if (wsSessions != null && wsSessions.size() > 0) {
 						JSONObject data = new JSONObject();
 						data.put("type", "訂房訂單");
@@ -91,6 +93,7 @@ public class BookingOrderServlet extends HttpServlet {
 				
 				userSession.removeAttribute("bookingCart");
 				userSession.setAttribute("bookingPass", "pass");
+				userSession.setAttribute("bkodList", bkodList);
 				res.sendRedirect(req.getContextPath() + "/frontend/roomrsv/bookingResult.jsp");
 			} catch (Exception e){
 				e.printStackTrace();
@@ -306,6 +309,31 @@ public class BookingOrderServlet extends HttpServlet {
 				BookingOrderService bkodSvc = new BookingOrderService();
 				List<BookingOrderVO> bkodList = bkodSvc.getAllBooking();
 				req.setAttribute("bkodList", bkodList);
+				dispatcher.forward(req, res);
+				return;
+			} catch (Exception e){
+				e.printStackTrace();
+				req.setAttribute("msgs", "查無單號訊息");
+				dispatcher.forward(req, res);
+			} 
+		}
+		
+		if("getallBybkStatus".equals(action)) {
+			dispatcher = req.getRequestDispatcher("/backend/booking/bookingInfo.jsp");
+			res.setContentType("text/html; charset=utf-8");
+			try {
+				String bkstatus = req.getParameter("bkstatus");
+				BookingOrderService bkodSvc = new BookingOrderService();
+				List<BookingOrderVO> bkodList = null;
+				if (bkstatus.equals("all")) {
+					bkodList = bkodSvc.getAllBooking();
+				} else {
+					bkodList = bkodSvc.getAllBooking().stream()
+							   .filter(e -> e.getBk_status().equals(bkstatus))
+							   .collect(Collectors.toList());
+				}
+				req.setAttribute("bkodList", bkodList);
+				req.setAttribute("bkstatus", bkstatus);
 				dispatcher.forward(req, res);
 				return;
 			} catch (Exception e){

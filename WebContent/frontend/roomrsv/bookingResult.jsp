@@ -25,28 +25,15 @@ session.removeAttribute("bookingPass");
 </head>
 <style>
 	.bk-msg {
-		margin: 0 auto;
-		display:flex;
-		flex-direction: column;
-		justify-content:space-evenly;
-		width: 300px;
-		margin-top: -200px;
-		text-align: center;
-		padding: 20px 10px;
-		backdrop-filter:blur(5px);
-		opacity:0;
-	} 
-	.bk-msg i {
-		font-size:5em;
-		margin-bottom:20px;
-		color: #81b214;
+		margin-top:-100%;
 	}
-	.bk-msg h2,
-	.bk-msg h3 {
-		margin: 10px;
-		letter-spacing:2px;
-		color:222831;
-		font-weight:400;
+	.banner-pic {
+		height: 100vh;
+	}
+	.banner-pic img {
+		top:0;
+		left:0;		
+		height:100vh;
 	}
 	.main-wrapper {
 		position: absolute;
@@ -57,30 +44,6 @@ session.removeAttribute("bookingPass");
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		
-	}
-	.main-wrapper .bk-msg a {
-		text-align: center;
-		width: 280px;
-		height:50px;
-		font-size:20px;
-		align-self:center;
-		padding: 5px 0px;
-		margin: 10px 0px;
-		display:flex;
-		flex-direction:column;
-		justify-content:center;
-		letter-spacing: 2px;
-		border-radius: 5px;
-		border: 1px solid black;
-		text-decoration:none;
-		color:black;
-	}
-	.main-wrapper a:hover {
-		color:black;
-		background-color:white;
-		box-shadow:0px 1px 1px solid grey;
-		transform:scale(1.01);
 	}
 	.main-wrapper{
 		min-width:100%;
@@ -127,13 +90,16 @@ session.removeAttribute("bookingPass");
 	<!-- 主頁面 -->
 	<div class="main-wrapper">
 
-		<div class="bk-msg">
+		<%-- <div class="bk-msg">
 			<i class="far fa-check-circle"></i>
 			<h2>付款預訂完成</h2>
 			<h3>開始規劃您的假期</h3>
 			<a id="pkup">預約接送</a>
 			<a href="<%=request.getContextPath()%>/frontend/members/memberBooking.jsp">假期管理</a>
 			<a href="<%=request.getContextPath()%>/frontend/index.jsp">返回首頁</a>
+		</div> --%>
+		<div class="bk-msg">
+			<jsp:include page="resultReceipt.jsp"/>
 		</div>
 		
 	</div>
@@ -149,10 +115,8 @@ session.removeAttribute("bookingPass");
 			$("#pkup").click(function(){
 				$("#pkupbooking").addClass("show");
 			})
-			$(".banner-pic").animate({height: "100vh"}, 2000, function(){
-				$(".bk-msg").animate({opacity: "1", marginTop: "40px"},1000, function(){
-					$(".bk-msg").animate({marginTop:"30px"}, 200)
-				});
+			$(".bk-msg").animate({opacity: "1", marginTop: "40px"},2500, function(){
+				$(".bk-msg").animate({marginTop:"30px"}, 200)
 			});
 		})
 	</script>

@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
 /* 覆蓋MAIN CSS */
 a:focus {
     color: black;
     
 }
 body {
-	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+	font-family: 'Noto Sans TC', sans-serif;
 }
 div.calendar-available {
 	padding-top:20px;

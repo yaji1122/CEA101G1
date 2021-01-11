@@ -148,7 +148,7 @@ div.curtain-show {
 }
 .booking-header .cart-list .cart-list-title {
     position: absolute;
-    top: 0;
+    top: 20px;
     left: 20%;
     font-size: 1.2em;
     letter-spacing: 3px;
@@ -290,8 +290,8 @@ div.curtain-show {
 }
 .booking-header .cart-list .total-price {
     position: absolute;
-    bottom: 50px;
-    right: 10px;
+    bottom: 55px;
+    right: 15px;
     font-size: 12px;
     color: #5c636e;
     text-align: right;
@@ -305,10 +305,12 @@ div.curtain-show {
 }
 .booking-header .cart-list #room-cart-empty {
 	position:absolute;
-	top:40%;
+	top:45%;
 	left:50%;
 	transform: translate(-50%, -50%);
-	color:grey
+	color:grey;
+	letter-spacing: 1px;
+	font-weight: 400;
 }
 .booking-header .cart-list .room-in-cart button.delete-room-card {
 	margin-right: 70px;
@@ -949,6 +951,10 @@ a.calendar-today .calendar-date {
 .show-all-booking .room-card .remove-booking i {
 	margin-right: 2px;
 }
+.show-all-booking .room-card .remove-booking:hover {
+	background-color: #a9294f;
+	color:white;
+}
 .show-all-booking .room-card .remove-button {
 	text-align: right;
 }
@@ -1027,6 +1033,7 @@ a.calendar-today .calendar-date {
 	top:0;
 	display:none;
 	transition: 0.5s ease;
+	overflow:scroll;
 	
 }
 #payment-info.show-payment-info {
@@ -1046,6 +1053,10 @@ a.calendar-today .calendar-date {
 	width:350px;
 	border: 1px solid black;
 	background-color: #ffffff50;
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
 #payment-info button.add-creditcard,
@@ -1149,18 +1160,27 @@ margin-bottom: 10px;
 	overflow:hidden;
 	z-index: -1;
 	opacity:0;
-	min-height:100vh;
 	background-color: #ffffff;
 	top:50%;
+	border-radius: 5px;
 	left:50%;
-	width:fit-content;
+	width:900px;
 	transform:translate(-50%, -50%);
 	transition:0.3s ease-in;
+	box-shadow: 0px 0px 5px grey;
+}
+#creditCard-input-view > div {
+	position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 #insertnewcard {
 	letter-spacing: 3px;
 	background-color: #111d5e;
 	color:white;
+	cursor:pointer;
 }
 #insertnewcard:hover {
 	background-color: rgb(38, 52, 94);
@@ -1168,6 +1188,7 @@ margin-bottom: 10px;
 #cancelinsert {
 	letter-spacing: 3px;
 	background-color: #e8e8e8;
+	cursor:pointer;
 }
 #cancelinsert:hover {
 	background-color: rgb(239, 239, 239);

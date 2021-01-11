@@ -43,9 +43,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 	transform: translateX(-50%);
 }
 #addRmTypePic {
-position: absolute;
-bottom: 0;
-left: 0;
+	display:none
 }
 </style>
 <body>
@@ -69,8 +67,8 @@ left: 0;
 				<p>拖曳或點擊上傳</p>
 			</div>
 			<div id="status"></div>
-			<button id="addRmTypePic" type="submit" class="send-data">確認送出</button>
 		</div>
+		<button id="addRmTypePic" type="submit" class="send-data">確認送出</button>
 	</div>
 
 
@@ -88,6 +86,7 @@ left: 0;
 		$("#rmtype-select").change(function() {
 			$(".upload-content").css("display", "block");
 			$(".upload-content").css("z-index", "10");
+			$("#addRmTypePic").css("display", "block");
 		});
 
 		window.onload = function() {

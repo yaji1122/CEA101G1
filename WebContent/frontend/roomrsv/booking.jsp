@@ -83,7 +83,7 @@ pageContext.setAttribute("infoJson", infoJson);
 			<div class="counter">${bookingCart.size()}</div>
 		</div>
 		<div class="cart-list">
-			<h3 class="cart-list-title">預訂清單</h3>
+			<h3 class="cart-list-title">購物車</h3>
 			<div class="cart-view-range">
 				<c:forEach var="roomCard" items="${bookingCart}">
 					<div class="room-in-cart">

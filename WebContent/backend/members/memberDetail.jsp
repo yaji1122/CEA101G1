@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 <!DOCTYPE html>
@@ -8,43 +8,44 @@
 <meta charset="UTF-8">
 <title>會員詳情</title>
 </head>
+<style>
+	.info-display {
+		text-align:center;
+	}
+</style>
 <body>
-<div class="info-display member-info">
-		<h5 style="text-align: center">
-			會員編號：<b>${membervo.mb_id}</b>
-		</h5>
-		<div class="memberphoto row">
-			<div class="col-6">
-				<div>
-					<img src="${pageContext.request.contextPath}/MembersServlet?action=getone_mbpic&mb_id=${membervo.mb_id}">
-				</div>
-				<h6>
-					會員姓名：<b>${membervo.mb_name}</b>
-				</h6>
-				<h6>
-					會員生日：<b>${membervo.mb_bd}</b>
-				</h6>
-				<h6>
-					聯絡電話：<b>${membervo.mb_phone}</b>
-				</h6>
-				<h6>
-					電子郵箱：<b>${membervo.mb_email}</b>
-				</h6>
-				<h6>
-					居住城市：<b>${membervo.mb_city}</b>
-				</h6>
-				<h6>
-					居住鄉鎮：<b>${membervo.mb_town}</b>
-				</h6>
-				<h6>
-					詳細地址：<b>${membervo.mb_address}</b>
-				</h6>
-				<h6>
-					帳號創建日期：<b>${membervo.create_date}</b>
-				</h6>
-			</div>
+	<div class="info-display member-info">
+		<h4 style="text-align: center">
+			會員編號 <span>${membervo.mb_id}</span>
+		</h4>
+		<div>
+			<img
+				src="${pageContext.request.contextPath}/MembersServlet?action=getone_mbpic&mb_id=${membervo.mb_id}">
 		</div>
+		<h4>
+			會員姓名：<span>${membervo.mb_name}</span>
+		</h4>
+		<h4>
+			會員生日：<span>${membervo.mb_bd}</span>
+		</h4>
+		<h4>
+			聯絡電話：<span>${membervo.mb_phone}</span>
+		</h4>
+		<h4>
+			電子郵箱：<span>${membervo.mb_email}</span>
+		</h4>
+		<h4>
+			居住城市：<span>${membervo.mb_city}</span>
+		</h4>
+		<h4>
+			居住鄉鎮：<span>${membervo.mb_town}</span>
+		</h4>
+		<h4>
+			詳細地址：<span>${membervo.mb_address}</span>
+		</h4>
+		<h4>
+			帳號創建日期：<span>${membervo.create_date}</span>
+		</h4>
 	</div>
-
 </body>
 </html>

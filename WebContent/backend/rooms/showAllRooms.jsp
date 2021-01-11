@@ -120,7 +120,7 @@ th {
 							${rmvo.mb_id}
   						</c:otherwise>
 							</c:choose></td>
-						<td><input class="update btn btn-primary" type="button"
+						<td><input class="update btn btn-outline-danger btn-sm" type="button"
 							value="修改"> <input type="hidden" name="rm_no"
 							value="${rmvo.rm_no}"> <input type="hidden" name="action"
 							value=""></td>
