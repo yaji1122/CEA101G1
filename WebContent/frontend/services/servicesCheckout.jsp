@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.time.LocalDateTime"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="com.services.model.*"%>
 <%@ page import="com.services_cart.model.*"%>
 
@@ -17,7 +18,7 @@
 		<%
 			for (int i = 0; i < buylist.size(); i++) {
 			ServicesItem order = buylist.get(i);
-			String servicesNo = order.getServicesNo();
+			String servicesName = order.getServicesName();
 			Integer price = order.getPrice();
 			Integer quantity = order.getQuantity();
 			String locations = order.getLocations();
@@ -35,9 +36,10 @@
 
 		
 		<tr>
-			<td><%=servicesNo%></td>
+			<td><%=servicesName%></td>
 			<td><%=servTime%></td>
-			<td><%=price%></td>
+<%-- 			<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
+ --%>			<td><%=price%></td>
 			<td><%=quantity%></td>
 			<td><%=locations%></td>
 		</tr>
@@ -61,7 +63,7 @@
 			確定送出
 		</button>
 		<input type="hidden" name="action" value="insert"> <input
-			type="hidden" name="serv_no" value="<%=servicesNo%>"> <input
+			type="hidden" name="serv_name" value="<%=servicesName%>"> <input
 			type="hidden" name="serv_time" value="<%=servTime%>">
 		<input type="hidden" name="serv_count" value="<%=quantity%>">
 		<input type="hidden" name="total_price" value="<%=amount%>">
