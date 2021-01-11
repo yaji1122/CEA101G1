@@ -1,27 +1,41 @@
-
 /*shopping detail*/
 .shopping-cart {
-    width: 830px;
-    height: 450px;
+    width: 470px;
+    height: 300px;
     position: fixed;
     border: 1px solid;
-    background-color: rgb(240, 232, 232);
-    left: 0px;
+    background-color: white;
     right: 0px;
-    top: 50px;
-    bottom: 0px;
-    margin: auto;
+    margin-top: -92px;
     display: flex;
     flex-direction: row;
     visibility: hidden;
 }
+.cart-view{
+	margin-top: 35px;
+    float: left;
+    background-color: black;
+    color: white;
+    height: 40px;
+    width: 180px;
+    margin-left: -95px;
+    text-align: center;
+    padding: 7px;
+    font-size: 15px;
+}
+.cart-view:hover{
+	background-color: lightgray;
+	color:black;
+}
+.cart-but-bor{
+	flex-direction: row;
+}
 .close {
-    margin-top: 5px;
-    margin-bottom: auto;
-    margin-right: 8px;
-    margin-left: auto;
     cursor: pointer;
-    font-size: 33px;
+}
+#cart-title-close{
+	margin-right: 40px;
+    margin-top: 5px;
 }
 .shopping-cart-show {
     visibility: visible;
@@ -36,6 +50,9 @@
     width: 100%;
     margin-left: 8px;
 }
+.cart-item-bor{
+	flex-direction: column;
+}
 .subtotalprice {
     margin-right: 5px;
     margin-left: auto;
@@ -49,80 +66,65 @@
     margin-left: auto;
 }
 .cart-title {
-    font-size: 28px;
+    font-size: 22px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .cart-item {
+	margin-top: 18px;
     display: flex;
     flex-direction: row;
     width: 480px;
     margin-left: 15px;
-    border: 1px solid;
+    border-top: 1px solid #eeeaea;
 }
 .cart-border{
 	display: flex;
     flex-direction: column;
 }
-.cart-item-pic {
+.cart-item-pic img{
     margin-left: 7px;
-    width: 40px;
-    height: 54px;
+    width: 120px;
+    height: 110px;
 }
 .cart-item-name {
     margin-left: 10px;
-    margin-top: 15px;
+    margin-top: 5px;
     width: 250px;
+    font-weight: 600;
+}
+.cart-item-no{
+	margin-left: 10px;
+}
+.cart-points{
+	margin-left: 10px;
 }
 .nice-select {
     margin-top: 6px;
 }
 .cart-item-price {
-    margin-top: 15px;
-    margin-left: 3px;
-}
-.trash {
-    font-size: 40px;
-    margin-top: 6px;
-    margin-left: 7px;
-}
-.trash:hover {
-    cursor: pointer;
-    opacity: 0.6;
+    margin-left: 10px;
 }
 .close :before {
     content: "���";
 }
-.subtotal {
-    display: flex;
-    flex-direction: row;
+#conShop{
+    margin-top: 35px;
+    color: black;
+    font-size: 15px;
+    border: solid 1px;
+    width: 180px;
     height: 40px;
-    font-size: 20px;
+    text-align: center;
+    margin-left: 18px;
+    padding-top: 10px;
 }
-.point {
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    font-size: 20px;
+#conShop:hover{
+	background-color:lightgray;
+	color:black;
+	border:none;
 }
-.total {
-    display: flex;
-    flex-direction: row;
-    height: 50px;
-    font-size: 25px;
-}
-/* .added-cart {
-    width: 450px;
-    height: 430px;
-    background-color: pink;
-    z-index: 99;
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: 0;
-    position: fixed;
-}
-.added-cart-bor {
-}
-.added-cart-title {
-} */
 .itemtypeheader {
     width: 100vw;
     height: 70px;
@@ -137,6 +139,10 @@
 .hideUp .itemtypeheader {
     top: 0;
 }
+.hideUp .back,
+.hideUp .shopping-cart{
+	top:91px;
+}
 #itemsmprice {
     float: right;
     margin-right: 13px;
@@ -150,7 +156,7 @@
     height: 50px;
     text-align: center;
  	border:none;
-    margin-right: 8px;
+    margin-right: 30px;
     margin-top: 9px;
     border: sandybrown;
 }
@@ -162,7 +168,7 @@
 #itemtype {
     margin-top: 5px;
     margin-left: 40px;
-    width: 320px;
+    width: 400px;
     height: 60px;
     position: absolute;
 }
@@ -221,7 +227,7 @@
 }
 
 #itemsmpic img{
-    width: 30px;
+    width: 37px;
     height: 50px;
     margin-top: 4px;
     float: left;
@@ -229,6 +235,7 @@
 }
 .itempoints{
 	margin-left:35px;
+	margin-top:10px;
 }
 .itemtypeno {
     width: 350px;
@@ -250,7 +257,7 @@
     margin-left: 35px;
     height: 20px;
     margin-top: 50px;
-    font-size: 18px;
+    font-size: 22px;
 }
 .itemaddtocart {
     width: 350px;
@@ -284,7 +291,7 @@
     color: gray;
     size: 50px;
 }
-.slick-next :hover {
+.slick-next:hover {
     opacity: 0.9;
 }
 .slick-prev:before {
@@ -371,6 +378,7 @@
     z-index: 998;
     display: none;
     position: fixed;
+  	margin-top: -92px;
 }
 .slick-dots{
 	bottom:100px !important;

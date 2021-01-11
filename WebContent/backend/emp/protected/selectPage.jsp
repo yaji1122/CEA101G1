@@ -11,8 +11,6 @@
 <body>
 <%@ include file="/backend/files/backend_sidebar.file"%>
  <div class="container">
- <button class="btn"><i class="fa fa-home">
-                           <a href="<%=request.getContextPath()%>/backend/backend_index.jsp" >Home</a></i></button>
             <div class="card">
                 <div clss="head">
                     <p><b>Diamond Resort Employee</b></p>

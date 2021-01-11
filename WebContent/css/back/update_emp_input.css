@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
 * {
-    margin: 1px;
     padding: 0;
     box-sizing: border-box;
     font-family: "Noto Sans", sans-serif;
@@ -19,7 +18,7 @@ body {
     border-radius: 20px;
     box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
     border: none;
-    margin-top: 20px;
+    margin-top: 5px;
     margin-bottom: 30px;
     width: 650px !important;
     padding-botton:20px;

@@ -90,7 +90,8 @@ img#add{
 <!--add結束 -->
         <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
         <script>
             $(document).ready(function () {
                 $("#add").click(function () {
@@ -104,11 +105,11 @@ img#add{
             });
             document.getElementById("button").addEventListener("click",function(){
             	if($("#func_no").val()==""){
-            		swal("Oops", "未填寫權限編號", "error");
+            		Swal.fire("Oops", "未填寫權限編號", "error");
             	}else if ($("#func_name").val()==""){
-            		swal("Oops", "未填寫權限名稱", "error");
+            		swal.fire("Oops", "未填寫權限名稱", "error");
             	} else{
-            		swal("Success", "新增成功", "Success");
+            		Swal.fire("Success", "新增成功", "Success");
                     document.form1.submit();
             	}
             	
