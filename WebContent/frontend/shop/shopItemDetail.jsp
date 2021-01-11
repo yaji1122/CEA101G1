@@ -80,13 +80,7 @@ if (member == null && sessionID == null) { //表示session已失效
  	if(member!=null){
 		String mb_id = member.getMb_id();
 		System.out.println("mb_id = "+mb_id);
-		Cookie[] cookieList = request.getCookies();
-		for (int i = 0; i < cookieList.length; i++) {
-			Cookie theCookie = cookieList[i];
-			if (theCookie.getName().equals("user_session_id")) {
-				sessionID = theCookie.getValue();
-			}
-		}
+		sessionID = (String) session.getAttribute("sessionID");
 		session.setAttribute("sessionID", sessionID);
 	} 
  	System.out.println("user_session_id = " + sessionID);
@@ -99,7 +93,7 @@ if (member == null && sessionID == null) { //表示session已失效
 		map.put(sessionID, new ArrayList<String>(Arrays.asList(item_no)));
 		session.setAttribute("map", map);
 	} else{
-		System.out.println("currentValue!=null");
+		System.out.println("map!=null");
 		for(String aitem :mapIn.get(sessionID)){
 			if(item_no.equals(aitem)){
 				continue;
