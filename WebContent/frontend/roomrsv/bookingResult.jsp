@@ -13,14 +13,12 @@ session.removeAttribute("bookingPass");
 <link rel="icon" type="image/png"
 	href="<%=request.getContextPath()%>/img/loading.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-	integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-	crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/front/style-for-all.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/front/booking.css" />
+<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 <title>戴蒙訂房系統</title>
 </head>
 <style>
@@ -89,15 +87,6 @@ session.removeAttribute("bookingPass");
 	</div>
 	<!-- 主頁面 -->
 	<div class="main-wrapper">
-
-		<%-- <div class="bk-msg">
-			<i class="far fa-check-circle"></i>
-			<h2>付款預訂完成</h2>
-			<h3>開始規劃您的假期</h3>
-			<a id="pkup">預約接送</a>
-			<a href="<%=request.getContextPath()%>/frontend/members/memberBooking.jsp">假期管理</a>
-			<a href="<%=request.getContextPath()%>/frontend/index.jsp">返回首頁</a>
-		</div> --%>
 		<div class="bk-msg">
 			<jsp:include page="resultReceipt.jsp"/>
 		</div>
@@ -106,7 +95,6 @@ session.removeAttribute("bookingPass");
 	<div id="pkupbooking">
 		<iframe src="<%=request.getContextPath()%>/frontend/roomrsv/pickup.jsp"></iframe>
 	</div>
-	<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="<%=request.getContextPath()%>/js/front/main.js"></script>
 	<script>

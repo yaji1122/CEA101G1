@@ -80,16 +80,15 @@ if (bookingCart != null) {
 					<ul class="dropdown">
 						<li><a
 							href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
-						<li><a href="#">我的假期</a></li>
-						<li><a href="#">歷史訂單</a></li>
+						<li><a href="${pageContext.request.contextPath}/frontend/members/memberBooking.jsp">我的假期</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
 					</ul>
 				</c:when>
 				<c:otherwise>
-					<i class="far fa-user log-in"></i>
+					<i class="far fa-user"></i>
 					<ul class="dropdown">
-						<li><a>登入會員</a></li>
+						<li><a class="log-in">登入會員</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/frontend/registration.jsp">註冊會員</a></li>
 					</ul>
@@ -115,6 +114,7 @@ if (bookingCart != null) {
 	<div class="main-wrapper">
 		<div class="content">
 			<div class="show-all-booking">
+				<h4 class="isempty">尚未選取預定房型</h4>
 				<%
 					int i = 1;
 				%>
@@ -241,7 +241,7 @@ if (bookingCart != null) {
 	<script>
 	$(document).ready(function () {
 	    totalPrice(); //進入頁面後先計算總價
-
+	    isEmpty();
 	    //從購物車移除
 	    $(document).on("click", ".remove-booking", function () {
 	        let id = $(this).attr("data-id");
@@ -257,18 +257,42 @@ if (bookingCart != null) {
 	                card.parents(".room-card").animate({ opacity: 0 }, 500, function () {
 	                    card.parents(".room-card").remove();
 	                    totalPrice();
+	                    isEmpty();
 	                });
 	            },
 	        });
 	    });
+	    
+	    function isEmpty(){
+	    	let items = $(".room-card").length;
+	    	if (items == 0){
+	    		$(".isempty").css("display", "block")
+	    	} else {
+	    		$(".isempty").css("display", "none")
+	    	}
+	    }
 	    //顯示付款頁面
 	    $(".pay-now").click(function () {
+	    	let items = $(".room-card").length;
 	        if ('<%=session.getAttribute("member")%>' == "null") {
 	            $(".login-window-overlay").addClass("active");
 	            $(".login-window").addClass("show-login-window");
+	        } else if (items == 0){
+	           	Swal.fire({
+	           		position:"center",
+	           		showConfirmButton: false,
+	           		icon:"error",
+	           		title:"購物車目前無商品",
+	           		timer: 1500
+	           	})
 	        } else {
-	            $("#payment-info").addClass("show-payment-info");
+	        	 $("#payment-info").addClass("show-payment-info");
 	        }
+	    });
+	    $(".log-in").click(function (e) {
+	    	 e.preventDefault();
+	         $(".login-window-overlay").addClass("active");
+	         $(".login-window").addClass("show-login-window");
 	    });
 	    //離開付款選單
 	    $("button.leave-payment").click(function () {

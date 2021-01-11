@@ -15,11 +15,28 @@
 <title>Your reservation is now confirmed</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto"
 	rel="stylesheet">
-
+<link href="<%=request.getContextPath()%>/css/slick-theme.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/slick.css" rel="stylesheet">
 <style>
 .buttons:hover {
-		box-shadow: 1px 0px 1px solid;
+		box-shadow: 1px 0px 1px grey;
+		transform: scale(1.01);
 	}
+.slick-prev {
+	position: absolute;
+    left: 20%;
+    top: 50%;
+    z-index: 99;
+    transform: translateX(-50%);;
+}
+.slick-next {
+	position: absolute;
+    right: 20%;
+    top: 50%;
+}
+.slick-prev:before, .slick-next:before {
+	font-size:40px;
+}
 @media screen {
 	img {
 		max-width: 100%;
@@ -44,9 +61,10 @@
 	
 </style>
 </head>
-<body
-	style="box-sizing: border-box; margin: 0; padding: 0; width: 100%; word-break: break-word; -webkit-font-smoothing: antialiased;">
+<body style="box-sizing: border-box; margin: 0; padding: 0; width: 100%; word-break: break-word; -webkit-font-smoothing: antialiased;">
+	<div class="receipts">
 	<c:forEach var="bkod" items="${bkodList}">
+	<div>
 		<table class="wrapper all-font-sans" width="100%" height="100%"
 			cellpadding="0" cellspacing="0" role="presentation">
 			<tr>
@@ -198,8 +216,8 @@
 												style="border: 1px solid black; background-color: transparent; border-radius: 2px; font-size: 14px; cursor: pointer; outline: none;width: 100%;">預約接送</button></td>
 										<td
 											style="font-weight: 600; padding-top: 32px; text-align: right; color: #68d391; font-size: 20px;text-align: center;padding:20px 10px"
-											width="50%" align="right"><button class="buttons"
-												style="border: 1px solid black; background-color: transparent; border-radius: 2px; font-size: 14px; cursor: pointer; outline: none;width: 100%;">回首頁</button></td>
+											width="50%" align="right"><button class="buttons" 
+												style="border: 1px solid black; background-color: transparent; border-radius: 2px; font-size: 14px; cursor: pointer; outline: none;width: 100%;" onclick="window.location.href = '<%=request.getContextPath()%>/frontend/index.jsp'">回首頁</button></td>
 									</tr>
 								</table>
 							</td>
@@ -208,6 +226,16 @@
 				</td>
 			</tr>
 		</table>
+	</div>
 	</c:forEach>
+	</div>
+	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$(".receipts").slick({
+				arrows:true,
+			});
+		})
+	</script>
 </body>
 </html>

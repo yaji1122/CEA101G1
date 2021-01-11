@@ -16,7 +16,7 @@
 					</p>
 					<input type="text" name="pass" value="pass" style="display: none;" />
 					<input type="text" name="action" value="member-login" style="display: none;" />
-					<input type="text" name="location" value="${pageContext.request.requestURI}" style="display: none;" />
+					<input type="text" name="location" value="${pageContext.request.requestURI}?${pageContext.request.queryString}" style="display: none;" />
 					<button type="submit" class="submit hover-shadow login-button">登入</button>
 				</div>
 			</form>

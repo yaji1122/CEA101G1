@@ -57,17 +57,15 @@ pageContext.setAttribute("infoJson", infoJson);
 					<ul class="dropdown">
 						<li><a
 							href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
-						<li><a href="#">我的假期</a></li>
-						<li><a href="#">歷史訂單</a></li>
+						<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">我的假期</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
 					</ul>
 				</c:when>
 				<c:otherwise>
-					<i class="far fa-user log-in"></i>
+					<i class="far fa-user"></i>
 					<ul class="dropdown">
-						<li><a
-							href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">登入會員</a></li>
+						<li><a class="log-in">登入會員</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/frontend/registration.jsp">註冊會員</a></li>
 					</ul>
@@ -169,7 +167,7 @@ pageContext.setAttribute("infoJson", infoJson);
 						</div>
 						<div class="room-price">
 							<p class="per-ppl">
-								一晚每人<span>USD</span><span>${rmtypeSvc.getOne(rsvvo.rm_type).rm_price}</span>
+								一晚每人<span>USD$</span><span>${rmtypeSvc.getOne(rsvvo.rm_type).rm_price}</span>
 							</p>
 							<%
                             Integer stay = Integer.parseInt(infoJson.getString("stay"));
@@ -751,6 +749,12 @@ pageContext.setAttribute("infoJson", infoJson);
         	$(".loader").delay(400).fadeOut();
         	$("#preloder").delay(600).fadeOut("slow");
         });
+        //login
+        $(".log-in").click(function (e) {
+	    	 e.preventDefault();
+	         $(".login-window-overlay").addClass("active");
+	         $(".login-window").addClass("show-login-window");
+	    });
         </script>
 </body>
 </html>

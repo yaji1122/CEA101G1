@@ -15,10 +15,11 @@
 </head>
 <style>
 	.nice-select.open .list {
-	    transform: scale(1) translateY(-100%)
+	    transform: scale(1) translateY(-101%)
 	}
 	.nice-select .list {
 		top:0;
+		transform: translateY(-50%);
 	}
 </style>
 <%@ include file="/frontend/files/loginCSS.file" %> <!-- 登入必要檔案 -->
@@ -94,25 +95,22 @@
 	<!-- About Us Section Begin -->
 	<section class="news-section">
 		<div class="container news-container">
-			<div class="row">
-				<div class="col-lg-4">
+			<div>
+				<div>
 					<div class="about-text">
 						<div class="section-title">
 							<span>最新消息</span>
 						</div>
-						<p class="f-para">戴蒙頂級奢華度假村 - 全年都是完美之選。
-							不單從度假村的全包式假期到探索在地特色景點，都給您前所未有的新發現。</p>
 						<p class="s-para">
-							從交通接送、舒適住房、三餐精緻饗宴、全日無限吧台享用飲品與輕食、豐富水陸活動與指導，還有晚間娛樂活動與表演… 戴蒙度假村
-							將假期中的吃、喝、玩、樂、住都為您貼心規劃好，您只需按照您的時間與心情，自由選擇我們為您規劃好的活動！無論是與事業夥伴、昔日同窗或是好友同行，都能在這裡留下獨一無二的美好假期回憶！
+							老闆跑路了，年前大出清，所有鍋碗瓢盆，高級傢俱，一率半價出售！！
 						</p>
-						<a href="about-us.html" class="primary-btn about-btn">了解更多..</a>
+						<a href="about-us.html" class="primary-btn about-btn"><i class="far fa-hand-point-right"></i>查看更多最新消息</a>
 					</div>
 				</div>
-				<div class="col-lg-8">
+				<div>
 					<div class="about-text">
 						<div class="section-title">
-							<span>網紅推薦</span>
+							<span>著名網紅推薦</span>
 						</div>
 						<div class="testimonial-slider">
 							<div class="ts-item">
@@ -122,6 +120,7 @@
 									早餐時我共點了3次熱拿鐵，送來的每一杯的溫度都差很多，（溫涼的，熱的，超熱的），可能要再加強。我愛他們check out
 									time 12:00,所以可以睡晚一點，吃完早餐再去游泳洗澡後再從容離開飯店。</p>
 								<div class="ti-author">
+								<i class="fab fa-tripadvisor"></i>
 									<div class="rating">
 										<i class="icon_star"></i> <i class="icon_star"></i> <i
 											class="icon_star"></i> <i class="icon_star"></i> <i
@@ -129,25 +128,18 @@
 									</div>
 									<h5>- 大衛海鮮</h5>
 								</div>
-								<img
-									src="${pageContext.request.contextPath}/img/testimonial-logo.png"
-									alt="" />
 							</div>
 							<div class="ts-item">
-								<p>首先我非常感謝迎賓櫃檯經理
-									周昭安先生，他的服務、他的安排一掃解決我剛check-in的不愉快，真心的很謝謝他，也謝謝他知道我生日，送了一個非常美味的蛋糕～誏我的旅程增加了美好的驚喜～雖然看了很多評價説他們的服務人員態度不佳，但是我必須說他們還是有很多服務人員是非常好的，像是紫艷酒吧的晚上11點的服務先生，更特別感謝周昭安先生，謝謝你的服務令人讚賞！因為之前來台北都是住寒舍艾美，但是因為他「周昭安
-									經理」我會選擇W Taipei hotel~~~</p>
+								<p>你們的旅館非常的不乾淨，我在裡面殺了好幾隻鬼了，希望貴飯店的安檢能改善。除此之外餐點和住宿都非常不錯，我妹妹彌豆子很喜歡這裡的下午茶。</p>
 								<div class="ti-author">
+								<i class="fab fa-tripadvisor"></i>
 									<div class="rating">
 										<i class="icon_star"></i> <i class="icon_star"></i> <i
 											class="icon_star"></i> <i class="icon_star"></i> <i
 											class="icon_star-half_alt"></i>
 									</div>
-									<h5>- 萬磁王</h5>
+									<h5>- 竈門 炭治郎</h5>
 								</div>
-								<img
-									src="${pageContext.request.contextPath}/img/testimonial-logo.png"
-									alt="" />
 							</div>
 						</div>
 					</div>
@@ -162,8 +154,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="section-title">
-						<span>絕美套房</span>
-						<h2>在美景裡盡情享受</h2>
+						<span>絕美海景套房</span>
+						<h2>美麗到令人屏息的億萬級海景</h2>
 					</div>
 				</div>
 			</div>
@@ -171,11 +163,11 @@
 				<div class="row">
 					<div class="col-lg-3 col-md-6">
 						<div class="hp-room-item set-bg"
-							data-setbg="${pageContext.request.contextPath}/img/resort/room/standard-room.jpg">
+							data-setbg="${pageContext.request.contextPath}/img/room/standard/standard.jpeg">
 							<div class="hr-text">
-								<h3>經典海景房</h3>
+								<h3>Standard</h3>
 								<h2>
-									20000$<span>/每晚</span>
+									USD$500<span>人/晚</span>
 								</h2>
 								<table>
 									<tbody>
@@ -185,29 +177,25 @@
 										</tr>
 										<tr>
 											<td class="r-o">人數:</td>
-											<td>最多2人</td>
+											<td>2~4人</td>
 										</tr>
 										<tr>
-											<td class="r-o">一大床:</td>
+											<td class="r-o">兩大床:</td>
 											<td>150 * 200cm</td>
-										</tr>
-										<tr>
-											<td class="r-o">房間特色:</td>
-											<td>無限美麗海景</td>
 										</tr>
 									</tbody>
 								</table>
-								<a href="rooms.html" class="primary-btn">查看詳情</a>
+								<a href="<%=request.getContextPath()%>/frontend/rooms/rooms.jsp" class="primary-btn">More..</a>
 							</div>
-						</div>
+						</div>	
 					</div>
 					<div class="col-lg-3 col-md-6">
 						<div class="hp-room-item set-bg"
-							data-setbg="${pageContext.request.contextPath}/img/resort/room/luxury-room.jpg">
+							data-setbg="${pageContext.request.contextPath}/img/room/honeymoon/honeymoon1.jpeg">
 							<div class="hr-text">
-								<h3>豪華蜜月房</h3>
+								<h3>Honey Moon</h3>
 								<h2>
-									30000$<span>/每晚</span>
+									USD$600<span>人/晚</span>
 								</h2>
 								<table>
 									<tbody>
@@ -217,29 +205,25 @@
 										</tr>
 										<tr>
 											<td class="r-o">人數:</td>
-											<td>最多2人</td>
+											<td>2人</td>
 										</tr>
 										<tr>
 											<td class="r-o">一大床:</td>
 											<td>200 * 200cm</td>
 										</tr>
-										<tr>
-											<td class="r-o">房間特色:</td>
-											<td>200公尺私人海灘</td>
-										</tr>
 									</tbody>
 								</table>
-								<a href="rooms.html" class="primary-btn">查看詳情</a>
+								<a href="<%=request.getContextPath()%>/frontend/rooms/rooms.jsp" class="primary-btn">More..</a>
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6">
 						<div class="hp-room-item set-bg"
-							data-setbg="${pageContext.request.contextPath}/img/resort/room/deluxe-room.jpeg">
+							data-setbg="${pageContext.request.contextPath}/img/room/deluxe/deluxe.jpeg">
 							<div class="hr-text">
-								<h3>奢華海景房</h3>
+								<h3>Deluxe</h3>
 								<h2>
-									50000$<span>/每晚</span>
+									USD$750<span>人/晚</span>
 								</h2>
 								<table>
 									<tbody>
@@ -249,29 +233,25 @@
 										</tr>
 										<tr>
 											<td class="r-o">人數:</td>
-											<td>最多2人</td>
+											<td>2~6人</td>
 										</tr>
 										<tr>
-											<td class="r-o">一大床:</td>
-											<td>250cm * 250cm</td>
-										</tr>
-										<tr>
-											<td class="r-o">房間特色:</td>
-											<td>提供個人遊艇</td>
+											<td class="r-o">三大床:</td>
+											<td>250 * 250cm</td>
 										</tr>
 									</tbody>
 								</table>
-								<a href="rooms.html" class="primary-btn">查看詳情</a>
+								<a href="<%=request.getContextPath()%>/frontend/rooms/rooms.jsp" class="primary-btn">More..</a>
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6">
 						<div class="hp-room-item set-bg"
-							data-setbg="${pageContext.request.contextPath}/img/resort/room/Poseidon_Index.jpg">
+							data-setbg="${pageContext.request.contextPath}/img/room/poseidon/poseidon1.jpeg">
 							<div class="hr-text">
-								<h3>波賽頓套房</h3>
+								<h3>Poseidon</h3>
 								<h2>
-									100000$<span>/每晚</span>
+									USD$900<span>人/晚</span>
 								</h2>
 								<table>
 									<tbody>
@@ -281,19 +261,15 @@
 										</tr>
 										<tr>
 											<td class="r-o">人數:</td>
-											<td>最多2人</td>
+											<td>2~4人</td>
 										</tr>
 										<tr>
 											<td class="r-o">一大床</td>
 											<td>250 * 300cm</td>
 										</tr>
-										<tr>
-											<td class="r-o">房間特色:</td>
-											<td>成為海底之王</td>
-										</tr>
 									</tbody>
 								</table>
-								<a href="rooms.html" class="primary-btn">查看詳情</a>
+								<a href="<%=request.getContextPath()%>/frontend/rooms/rooms.jsp" class="primary-btn">More..</a>
 							</div>
 						</div>
 					</div>

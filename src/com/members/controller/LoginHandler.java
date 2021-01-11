@@ -75,10 +75,18 @@ public class LoginHandler extends HttpServlet {
 					user_session_id.setMaxAge(24 * 60 * 60 * 30); // 設定cookie存活時間為一個月
 					res.addCookie(user_session_id); // 加入cookie到使用者瀏覽器
 					res.addCookie(user_email);
-					Object location = user_session.getAttribute("location"); // 查看使用者是否有偷偷嘗試登入會員專屬頁面
-					if (location == null) {
-						location = req.getParameter("location"); // 如果沒有的話，表示使用者是使用小人頭登入，找到來源網頁
+					Object locationObj =  user_session.getAttribute("location"); // breaching record
+					String location = null;
+					if (locationObj == null) {
+						location = req.getParameter("location").toString();
+						if(location.contains("booking.jsp")) {
+							location = location.replace("frontend/roomrsv/booking.jsp", "booking/Available");
+						}
+					} else {
+						location = (String) locationObj;
+						user_session.removeAttribute("location");
 					}
+					
 					req.getSession().setAttribute("member", member);
 					res.sendRedirect((String) location);
 				}
