@@ -114,38 +114,6 @@ $(document).ready(function () {
         setProgressBar(++current);
     });
 	
-	let regisForm = document.querySelector("#msform");
-	regisForm.addEventListener("submit", (e)=> {
-		e.preventDefault();
-		let data = new FormData(regisForm);
-		let xhr = new XMLHttpRequest();
-		xhr.open("post", "${pageContext.request.contextPath}/MembersServlet");
-		xhr.onload = function(){
-			if (xhr.readyState === xhr.DONE) {
-                if (xhr.status === 200) {
-                    if (xhr.responseText === "success") {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "歡迎申請加入戴蒙會員",
-                            text: "麻煩至電子信箱查看驗證信",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    } else {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "error",
-                            title: "註冊失敗，請洽詢客服人員",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    }
-                }
-            }
-		}
-		xhr.send(data);
-	})
 	
     $(".previous").click(function () {
         current_fs = $(this).parents("fieldset");
