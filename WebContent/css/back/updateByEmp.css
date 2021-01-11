@@ -65,3 +65,10 @@ input{
 .grid input{
 	width:95px;
 }
+input#show_password{
+	width:40px;
+}
+label{
+	margin-top:5px;
+	margin-bottom:0px;
+}

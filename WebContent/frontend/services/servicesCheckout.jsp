@@ -18,7 +18,7 @@
 		<%
 			for (int i = 0; i < buylist.size(); i++) {
 			ServicesItem order = buylist.get(i);
-			String servicesName = order.getServicesName();
+			String servicesNo = order.getServicesNo();
 			Integer price = order.getPrice();
 			Integer quantity = order.getQuantity();
 			String locations = order.getLocations();
@@ -36,10 +36,9 @@
 
 		
 		<tr>
-			<td><%=servicesName%></td>
-			<td><%=servTime%></td>
-<%-- 			<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
- --%>			<td><%=price%></td>
+			<td><%=servicesNo%></td>
+			<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
+			<td><%=price%></td>
 			<td><%=quantity%></td>
 			<td><%=locations%></td>
 		</tr>
@@ -63,7 +62,7 @@
 			確定送出
 		</button>
 		<input type="hidden" name="action" value="insert"> <input
-			type="hidden" name="serv_name" value="<%=servicesName%>"> <input
+			type="hidden" name="serv_no" value="<%=servicesNo%>"> <input
 			type="hidden" name="serv_time" value="<%=servTime%>">
 		<input type="hidden" name="serv_count" value="<%=quantity%>">
 		<input type="hidden" name="total_price" value="<%=amount%>">

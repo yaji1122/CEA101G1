@@ -217,7 +217,7 @@ pageContext.setAttribute("list", list);
 									</select>
 								</div>
 								<p>服務價格:${servicesVO.serv_price}</p>
-								<input type="hidden" name="servicesName"
+								<input type="hidden" name="servicesNo"
 									value="${servicesVO.serv_no}"> <input type="hidden"
 									name="price" value="${servicesVO.serv_price}">
 								<!-- <input type="hidden" name="hiredate" value="2017-03-08T12:30:54">  -->
