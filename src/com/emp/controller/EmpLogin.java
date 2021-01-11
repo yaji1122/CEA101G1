@@ -55,7 +55,13 @@ public class EmpLogin extends HttpServlet {
           errorMsgs.add("帳號或密碼錯誤!");
           RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/failure.jsp");
 		  failureView.forward(req,res);
-        }else {
+        } else {
+        	 if (empVO.getEmp_status().equals("2")) {
+                //若員工已離職
+                  errorMsgs.add("抱歉你已離職!");
+                  RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/failure.jsp");
+        		  failureView.forward(req,res);
+        		  }else {
         //若是員工
         	session.setAttribute("empVO", empVO);//存入session中的empVO, 做已經登入過的標識
         	session.setAttribute("emp_id", emp_id);
@@ -64,6 +70,7 @@ public class EmpLogin extends HttpServlet {
         	EmpCookie.setMaxAge(60*60);
         	res.addCookie(EmpCookie);
         	res.sendRedirect(req.getContextPath()+ "/backend/backend_index.jsp");
+        		  }
         }
 	}
 

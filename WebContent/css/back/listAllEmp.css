@@ -1,3 +1,11 @@
+body{
+	width:90%;
+	left:5%;
+	position:absolute;
+}
+#sidebar{
+	left:0%;
+}
 table {
     box-sizing: border-box;
     overflow: hidden;
@@ -13,7 +21,7 @@ table {
 }
 
 tbody {
-    background: white;
+    background-color: white;
     flex-direction: column;
     color: #000;
 }
@@ -33,4 +41,11 @@ img#Add{
 	position:fixed;
 	left:10%;
 	top:10%;
+}
+table tr:nth-child(2n+1) td{
+	background-color:white;
+}
+button.btn{
+	position:absolute;
+	left:47%;
 }
