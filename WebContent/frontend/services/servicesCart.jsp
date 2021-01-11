@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="com.services_cart.model.*"%>
 <%@ page import="com.services_cart.controller.*"%>
-
 
 <html>
 <head>
@@ -24,7 +24,7 @@
 				<th>價格</th>
 				<th>人數</th>
 				<th>地點</th>
-				<th></th>
+				<th>delete</th>
 			</tr>
 		</thead>
 
@@ -35,7 +35,7 @@
 		<tbody>
 			<tr>
 				<td><%=order.getServicesNo()%></td>
-				<td><%=order.getServTime()%></td>
+				<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
 				<td><%=order.getPrice()%></td>
 				<td><%=order.getQuantity()%></td>
 				<td><%=order.getLocations()%></td>

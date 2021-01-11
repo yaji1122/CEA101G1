@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.time.LocalDateTime"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="com.services.model.*"%>
 <%@ page import="com.services_cart.model.*"%>
 
@@ -36,7 +37,7 @@
 		
 		<tr>
 			<td><%=servicesNo%></td>
-			<td><%=servTime%></td>
+			<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
 			<td><%=price%></td>
 			<td><%=quantity%></td>
 			<td><%=locations%></td>
