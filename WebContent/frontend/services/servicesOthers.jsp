@@ -110,7 +110,8 @@ pageContext.setAttribute("list", list);
 								<ul>
 									<li><a href="#" class="nav-event">至尊服務</a>
 										<ul class="dropdown">
-											<li><a href="#">美容美體</a></li>
+											<li><a
+												href="<%=request.getContextPath()%>/frontend/services/services.jsp">美容美體</a></li>
 											<li><a href="#">各式服務</a></li>
 										</ul></li>
 									<li><a class="nav-event">已預約服務</a></li>
@@ -153,93 +154,143 @@ pageContext.setAttribute("list", list);
 	<div class="container">
 		<div class="row">
 			<div id="context">
-				<h2>讓你煥發身心的一切所需</h2>
-				<p></p>
+				<div class="info-title">
+					<h2>讓你煥發身心的一切所需</h2>
+					<p>擁有 360 度無死角的美麗壯觀印度洋海景，全館每時段提前預訂按摩體驗，選擇喜歡的頂級奢華方案，
+						享受按摩師嫻熟的技巧與貴婦等級的服務，度過美好的南洋之旅時光！</p>
+				</div>
 			</div>
 		</div>
 	</div>
+	<div class="container">
 
-	<div id="boxServ">
 		<c:forEach var="servicesVO" items="${list}" varStatus="vs">
-			<div class="box-serv">
-				<div class="card" style="width: 25rem;">
-					<img
-						src="<%=request.getContextPath()%>/ServicesServlet?servno=${servicesVO.serv_no}&action=getOneServicesPic"
-						class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">${servicesVO.serv_name}</h5>
-						<div class="card-p">
-							<p class="card-text">${servicesVO.serv_info}</p>
-						</div>
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#exampleModal${vs.index}"
-							id="viewDetailButton${vs.index}">立即預約</button>
-					</div>
-				</div>
-			</div>
+			<c:if test="${servicesVO.serv_type_no == '1'}">
+				<c:if test="${servicesVO.serv_status == '2'}">
+					<c:choose>
 
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal${vs.index}" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">服務預約</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<form name="shoppingForm"
-							action="${pageContext.request.contextPath}/ServicesCartServlet"
-							method="POST">
-							<div class="modal-body">
-								<p>請選擇日期:</p>
-								<input name="hiredate" class="f_date1" type="text">
-
-								<div class="form-group">
-									<label for="exampleFormControlSelect1">服務人數</label> <select
-										name="quantity" class="form-control"
-										id="exampleFormControlSelect1">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-									</select>
+						<c:when test="${vs.count%2==1}">
+							<div class="box1and2">
+								<div class="container box-1-spa">
+									<div class="row box-row">
+										<div class="col-6 pic-1-spa">
+											<img
+												src="<%=request.getContextPath()%>/ServicesServlet?servno=${servicesVO.serv_no}&action=getOneServicesPic"
+												class="card-img-top" alt="...">
+										</div>
+										<div class="col-6 content-spa">
+											<div class="spa-title">
+												<p>${servicesVO.serv_name}</p>
+											</div>
+											<div class="spa-para">
+												<p>${servicesVO.serv_info}</p>
+											</div>
+											<div class="btn_price-spa">
+												<div class="price-spa">價格:${servicesVO.serv_price}</div>
+												<div class="btn-spa">
+													<button type="button" class="btn btn-primary"
+														data-toggle="modal" data-target="#exampleModal${vs.index}"
+														id="viewDetailButton${vs.index}">立即預約</button>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-								<div class="form-group">
-									<label for="exampleFormControlSelect2">服務場所</label> <select
-										name="locations" class="form-control"
-										id="exampleFormControlSelect2">
-										<option>102客房</option>
-										<option>露天按摩A區</option>
-										<option>露天按摩B區</option>
-									</select>
+						</c:when>
+						<c:otherwise>
+							<div class="box1and2">
+								<div class="container box-2-spa">
+									<div class="row box-row">
+										<div class="col-6 content-spa">
+											<div class="spa-title">
+												<p>${servicesVO.serv_name}</p>
+											</div>
+											<div class="spa-info">
+												<p>${servicesVO.serv_info}</p>
+											</div>
+											<div class="btn_price-spa">
+												<div class="price-spa">價格:${servicesVO.serv_price}</div>
+												<div class="btn-spa">
+													<button type="button" class="btn btn-primary"
+														data-toggle="modal" data-target="#exampleModal${vs.index}"
+														id="viewDetailButton${vs.index}">立即預約</button>
+												</div>
+											</div>
+										</div>
+										<div class="col-6 pic-2-spa">
+											<img
+												src="<%=request.getContextPath()%>/ServicesServlet?servno=${servicesVO.serv_no}&action=getOneServicesPic"
+												class="card-img-top" alt="...">
+										</div>
+									</div>
 								</div>
-								<p>服務價格:${servicesVO.serv_price}</p>
-								<input type="hidden" name="servicesName"
-									value="${servicesVO.serv_no}"> <input type="hidden"
-									name="price" value="${servicesVO.serv_price}">
-								<!-- <input type="hidden" name="hiredate" value="2017-03-08T12:30:54">  -->
-								<input type="hidden" name="action" value="ADD">
-
-
-
-
 							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">取消</button>
-								<input type="submit" class="btn btn-primary" value="預約送出">
+						</c:otherwise>
+					</c:choose>
+					<div class="modal fade" id="exampleModal${vs.index}" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">服務預約</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<form name="shoppingForm"
+									action="${pageContext.request.contextPath}/ServicesCartServlet"
+									method="POST">
+									<div class="modal-body">
+										<p>請選擇日期:</p>
+										<input name="hiredate" class="f_date1" type="text">
+
+										<div class="form-group">
+											<label for="exampleFormControlSelect1">服務人數</label> <select
+												name="quantity" class="form-control"
+												id="exampleFormControlSelect1">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="exampleFormControlSelect2">服務場所</label> <select
+												name="locations" class="form-control"
+												id="exampleFormControlSelect2">
+												<option>102客房</option>
+												<option>露天按摩A區</option>
+												<option>露天按摩B區</option>
+											</select>
+										</div>
+										<p>服務價格:${servicesVO.serv_price}</p>
+										<input type="hidden" name="servicesName"
+											value="${servicesVO.serv_no}"> <input type="hidden"
+											name="price" value="${servicesVO.serv_price}">
+										<!-- <input type="hidden" name="hiredate" value="2017-03-08T12:30:54">  -->
+										<input type="hidden" name="action" value="ADD">
+
+
+
+
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">取消</button>
+										<input type="submit" class="btn btn-primary" value="預約送出">
+									</div>
+								</form>
 							</div>
-						</form>
+						</div>
 					</div>
-				</div>
-			</div>
+				</c:if>
+			</c:if>
 		</c:forEach>
 
-		<%-- <jsp:include page="servicesCart.jsp" flush="true" /> --%>
 	</div>
+
+
 
 
 
@@ -280,7 +331,7 @@ pageContext.setAttribute("list", list);
 			speed : 1500,
 			fade : true,
 			arrows : false,
-			dots : true,
+			dots : false,
 		});
 	</script>
 	<script>

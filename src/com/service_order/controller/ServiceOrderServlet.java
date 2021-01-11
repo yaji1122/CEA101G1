@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.bookingorder.model.BKSTATUS;
+import com.bookingorder.model.BookingOrderService;
+import com.bookingorder.model.BookingOrderVO;
 import com.members.model.MembersVO;
 import com.service_order.model.*;
 
@@ -78,7 +82,7 @@ public class ServiceOrderServlet extends HttpServlet {
 			serv_count = new Integer(req.getParameter("serv_count").trim());
 			Integer total_price = null;
 			total_price = new Integer(req.getParameter("total_price").trim());
-			
+
 			String locations = req.getParameter("locations");
 
 			ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
@@ -96,8 +100,8 @@ public class ServiceOrderServlet extends HttpServlet {
 			serviceOrderVO.setLocations(locations);
 
 			ServiceOrderService serviceOrderSvc = new ServiceOrderService();
-			serviceOrderVO = serviceOrderSvc.updateServiceOrder(serv_odno, bk_no, /* od_time, */ od_status,
-					serv_no, serv_time, serv_count, total_price, locations);
+			serviceOrderVO = serviceOrderSvc.updateServiceOrder(serv_odno, bk_no, /* od_time, */ od_status, serv_no,
+					serv_time, serv_count, total_price, locations);
 
 			req.setAttribute("serviceOrderVO", serviceOrderVO);
 
@@ -107,35 +111,43 @@ public class ServiceOrderServlet extends HttpServlet {
 		}
 
 		if ("insert".equals(action)) {
-			
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+
 			try {
-//				String serv_odno = req.getParameter("serv_odno").trim();
-//				MembersVO member = (MembersVO)req.getSession().getAttribute("member");
-//				String bk_no = member.getBk_no();
+
+				MembersVO member = (MembersVO) req.getSession().getAttribute("member");
+				String mb_id = member.getMb_id();
+				BookingOrderService bkodSvc = new BookingOrderService();
+				List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
+				List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
+						.collect(Collectors.toList());
 				
-				String bk_no = "BKOD000001";
-				String rm_no = "101";
+				String bk_no = "";
+				for(BookingOrderVO list : newList) {
+					bk_no = list.getBk_no();
+				}
+
+//				String bk_no = "BKOD000001";
 				String serv_no = req.getParameter("serv_no");
-				
+
 				String str = req.getParameter("serv_time");
 				LocalDateTime servTime = LocalDateTime.parse(str);
-				
-				System.out.println("order LocalDateTime:"+servTime);
-				
+
+				System.out.println("order LocalDateTime:" + servTime);
+
 				java.sql.Timestamp serv_time = null;
 				serv_time = java.sql.Timestamp.valueOf(servTime);
-				System.out.println("order Timestamp:"+serv_time);
+				System.out.println("order Timestamp:" + serv_time);
 
 				Integer serv_count = null;
 				serv_count = new Integer(req.getParameter("serv_count").trim());
 				Integer total_price = null;
 				total_price = new Integer(req.getParameter("total_price").trim());
-				
+
 				String locations = req.getParameter("locations");
 
 				ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
@@ -153,9 +165,9 @@ public class ServiceOrderServlet extends HttpServlet {
 				serviceOrderVO.setLocations(locations);
 
 				ServiceOrderService serviceOrderSvc = new ServiceOrderService();
-				serviceOrderVO = serviceOrderSvc.addServiceOrder(/*serv_odno,*/ bk_no, /* od_time, */ /*od_status,*/
+				serviceOrderVO = serviceOrderSvc.addServiceOrder(/* serv_odno, */ bk_no, /* od_time, */ /* od_status, */
 						serv_no, serv_time, serv_count, total_price, locations);
-				
+
 				HttpSession session = req.getSession();
 				session.removeAttribute("shoppingcart");
 
@@ -165,23 +177,22 @@ public class ServiceOrderServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/frontend/services/services.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/services/servicesCart.jsp");
 				failureView.forward(req, res);
 			}
 
 		}
-		
-		if("delete".equals(action)) {
-			
+
+		if ("delete".equals(action)) {
+
 			String serv_odno = req.getParameter("serv_odno");
-			
+
 			ServiceOrderService serviceOrderSvc = new ServiceOrderService();
 			serviceOrderSvc.deleteServiceOrder(serv_odno);
-			
+
 			String url = "/backend/serviceOrder/serviceOrderInfo.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req,  res);
+			successView.forward(req, res);
 		}
 
 	}
