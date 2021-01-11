@@ -14,6 +14,8 @@
 	<section class="wrapper">
 		<ul class="tabs">
 			<li class="active">活動訂單列表</li>
+			<li>新增活動</li>
+			<li>活動項目管理</li>
 		</ul>
 	
 		<ul class="tab__content">
