@@ -107,7 +107,6 @@ public class BookingOrderServlet extends HttpServlet {
 			out = res.getWriter();
 			try {
 				String bk_no = req.getParameter("bk_no");
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String dateInStr = req.getParameter("datein");
 				String dateOutStr = req.getParameter("dateout");
 				LocalDate dateIn = LocalDate.parse(dateInStr);
@@ -144,12 +143,9 @@ public class BookingOrderServlet extends HttpServlet {
 				String bk_no = req.getParameter("bk_no");
 				String dateInStr = req.getParameter("date_in");
 				String dateOutStr = req.getParameter("date_out");
-				String rm_type = req.getParameter("rm_type");
-				Integer qty = Integer.valueOf(req.getParameter("qty"));
 				LocalDate dateIn = LocalDate.parse(dateInStr);
 				LocalDate dateOut = LocalDate.parse(dateOutStr);
 				BookingOrderService bkodSvc = new BookingOrderService();
-				BookingDetailService bkdetailSvc = new BookingDetailService();
 				bkodSvc.updateDateInOut(bk_no, dateIn, dateOut);
 				out.print("success");
 			} catch (Exception e){

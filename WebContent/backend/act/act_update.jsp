@@ -24,18 +24,12 @@
 	.message {
 		text-align: center;
 	}
+	#form {
+		height:500px;
+		width:600px;
+	}
 </style>
 <body>
-
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}
-			</c:forEach>
-		</ul>
-	</c:if>
 	<jsp:useBean id="eventSvc" scope="page" class="com.actevent.model.ActEventService" />
 	<FORM METHOD="post" id="act-form" enctype="multipart/form-data">
 		<div id="form" class="update-form">
@@ -65,15 +59,10 @@
 			<input onchange="showImg(this)" type="file" name="actPic"> 
 			<label>活動敘述:</label> 
 			<textarea name="actInfo" placeholder="活動內容" > <%=actVO.getActInfo()%></textarea>
-
-		</div>
-
-		<div class="message">
 			<input type="hidden" name="action" value="update"> 
 			<input type="hidden" name="actNo" value="<%=actVO.getActNo()%>">
 			<button type="submit" class="btn btn-primary">送出修改</button>
 		</div>
-
 	</FORM>
 	<!-- 頁面內容結束 -->
 	<%@ include file="/backend/files/backend_footer.file"%>

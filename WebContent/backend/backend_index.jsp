@@ -214,10 +214,9 @@ div.calendar-rm-condition {
 	font-size: 12px;
 	text-align: center;
 	height: 20px;
-	min-width: 32px;
 	line-height: 20px;
 	display: inline-block;
-	width: fit-content;
+	width: 100%;
 }
 
 .rmtype1 {
@@ -234,7 +233,27 @@ div.calendar-rm-condition {
 	background-color: #0f3057;
 	color: white;
 }
+.rmtype4 {
+	background-color: #312c51;
+	color: white;
+}
 
+.rmtype5 {
+	background-color: #58391c;
+	color: white;
+}
+.rmtype6 {
+	background-color: #184d47;
+	color: white;
+}
+.rmtype7 {
+	background-color: #ff7b54;
+	color: white;
+}
+.rmtype8 {
+	background-color: #222831;
+	color: white;
+}
 .rmtype9 {
 	background-color: #433d3c;
 	color: white;
@@ -265,11 +284,13 @@ div.color-info div.colors {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+   
 }
 div.color-info div.colors div.rmtype {
 	height: 16px;
 	min-width:16px;
 	margin-right: 5px;
+	width:100%;
 }
 </style>
 <body>
