@@ -528,6 +528,15 @@ body {
 }
 .itTdBo{
 	text-align: center;
+	    padding: 20px;
+}
+#hitTocom{
+	width: 100px;
+    background-color: lightgrey;
+    text-align: center;
+    height: 26px;
+    padding-top: 2px;
+    border-radius: 5px;
 }
 /* 訂單瀏覽頁面 */
 .shopOrderView{

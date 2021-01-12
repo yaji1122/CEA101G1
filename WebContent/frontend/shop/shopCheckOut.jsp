@@ -246,7 +246,8 @@
 								<td>可使用積分</td>
 								<%MembersVO mem = membersSvc.getOneByMbId(mb_id); %>
 								<td><input type="number" id="pointUsed" max="<%=mem.getMb_point()%>" min="0" name="pointCos" value="0"></td>
-								<td><%=mem.getMb_point()%>分可使用</td>
+								<td><span id="poiCanUse"><%=mem.getMb_point()%></span>分可用</td>
+								<td><div type="button" id="hitTocom">使用積分</div></td>
 							</tr>
 							<tr>
 								<td colspan="4">
@@ -254,7 +255,7 @@
 								<td><span>$</span><span id="priceAfPo"> <%=amount %></span></td>
 							</tr>
 						</table>
-						<br>																								
+						<br>																									
 							
 							<button class="paybtn" type="button">確定購買</button>
 										
@@ -279,7 +280,7 @@
 							<input type="hidden" name="action" value="insertWithOrder_details"> 
 							<input type="hidden" name="mb_id" value="${member.mb_id}">
 							<input type="hidden" name="total_price" id="sendPri"value="<%=amount%>">
-							<input type="hidden" name="points_total" value="<%=poamount%>">  
+							<input type="hidden" name="points_total" id="sendPoi"value="<%=poamount%>">  
 							<button class="add-creditcard"  type="button">新增信用卡</button>
 							<button class="leave-payment"  type="button">取消付款</button>
 							<button class="admit-payment">確認付款</button>
@@ -298,14 +299,29 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
 		<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
 	<script>
-	$("#pointUsed").change(function(){
-		var oraPri = <%=amount %>;
-		var poiUs = $("#pointUsed").val();
-		console.log(oraPri - poiUs);
-		console.log(poiUs);
+//積分使用	
+$("#pointUsed").change(function(){
+	var poCaUs = $("#poiCanUse").text();
+	var oraPri = <%=amount %>;
+	var poiUs = $("#pointUsed").val();
+	console.log("oraPri - poiUs="+oraPri - poiUs);
+	console.log("poiUs="+poiUs);
+	console.log("poCaUs="+poCaUs);
+	if(poCaUs < poiUs || poiUs > oraPri){
+		$("#pointUsed").val(0);
+		$("#priceAfPo").val(<%=amount %>);
+		Swal.fire({
+			  title: '錯誤的積分',
+			  text: '請輸入正確的積分,再進行結帳',
+			  icon: 'warning'
+			});
+	}else{
 		$("#priceAfPo").html(oraPri - poiUs +".0");
 		$("#sendPri").val(oraPri - poiUs);
-	});
+		$("#sendPoi").val(poCaUs - poiUs);
+	}
+});
+	
 	$(document).ready(function () {
     //顯示付款頁面
     $(".paybtn").click(function () {
