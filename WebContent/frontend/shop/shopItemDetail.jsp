@@ -86,25 +86,20 @@ if (member == null && sessionID == null) { //表示session已失效
  	System.out.println("user_session_id = " + sessionID);
  	System.out.println("item_no = " + item_no);
 
-	Map<String,List<String>> mapIn = (Map<String,List<String>>)session.getAttribute("map");
+	Map<String,Set<String>> mapIn = (Map<String,Set<String>>)session.getAttribute("map");
 	if(mapIn==null){
 		System.out.println("map==null");
-		Map<String, List<String>> map = new HashMap<String, List<String>>();
-		map.put(sessionID, new ArrayList<String>(Arrays.asList(item_no)));
+		Map<String, Set<String>> map = new HashMap<String, Set<String>>();
+		Set<String> set = new HashSet<String>();
+		set.add(item_no);
+		map.put(sessionID, set);
 		session.setAttribute("map", map);
 	} else{
 		System.out.println("map!=null");
-		for(String aitem :mapIn.get(sessionID)){
-			if(item_no.equals(aitem)){
-				continue;
-			}else{
-				mapIn.get(sessionID).add(item_no);
-				session.setAttribute("map", mapIn);
-				break;
-			}
-		}
+		mapIn.get(sessionID).add(item_no);
+		session.setAttribute("map", mapIn);
 	}
-	Map<String,List<String>> map = (Map<String,List<String>>)session.getAttribute("map");	
+	Map<String,Set<String>> map = (Map<String,Set<String>>)session.getAttribute("map");	
 	%> 
 
 	<div class="back"></div>
