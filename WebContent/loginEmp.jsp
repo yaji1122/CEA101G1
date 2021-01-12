@@ -5,15 +5,34 @@
 <html>
     <head>
         <title>loginEmp</title>
+        <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/img/loading.png" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/loginEmp.css" />
     </head>
-
+	<style>
+		body {
+		    height: 100vh;
+		    background: #e8e8e8;
+		    font-family: "Source Sans Pro", sans-serif;
+		    overflow: hidden;
+		    background-image: url("<%=request.getContextPath()%>/img/emplogin.jpg");
+		    background-size:cover;
+		}
+		.logo {
+			height: 50px;
+		}
+		.logo img {
+			max-height:100%;
+		}
+	</style>
     <body>
         <div class="container">
             <div class="form form--login">
-                <div class="form--heading">Welcome back!</div>
+            	<div class="logo">
+        			<img src="<%=request.getContextPath()%>/img/logo.png"> 	
+        		</div>
+                <div class="form--heading">SYSTEM LOGIN</div>
                 <form autocomplete="off"  method="post" action="<%=request.getContextPath()%>/emp/login.do">
-                    <input type="text" placeholder="EMPID" name="emp_id"/>
+                    <input type="text" placeholder="Employee ID" name="emp_id"/>
                     <input type="password" placeholder="Password" name="emp_pwd">
                     <button class="button">Login</button>
                 </form>
