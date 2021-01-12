@@ -109,8 +109,7 @@ MembersVO member = (MembersVO)session.getAttribute("member");
 								<div style="display: none" class="password_reset">
 									<label for="mb_name">請輸入舊密碼</label> <input
 										class="input-disabled" type="password" name="old_mb_pwd"
-										id="old_mb_pwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-										placeholder="Please enter old password" maxlength="40"
+										id="old_mb_pwd" placeholder="Please enter old password" maxlength="40"
 										required disabled />
 								</div>
 								<div style="display: none" class="password_reset">
