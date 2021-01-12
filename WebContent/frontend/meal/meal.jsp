@@ -32,10 +32,11 @@
 </head>
 
 <body>
-	<div class="black"></div>
+	<div class="black">
 	<%@ include file="/frontend/files/loginCSS.file"%>
 	<%@ include file="/frontend/files/login.file"%>
 	<%@ include file="/frontend/files/loginbox.file"%>
+	</div>
 
 	<%
 		String mb_id = member.getMb_id();

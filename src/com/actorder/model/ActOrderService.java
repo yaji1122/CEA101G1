@@ -1,6 +1,6 @@
 package com.actorder.model;
 
-import java.sql.Date;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,7 +16,7 @@ public class ActOrderService {
 	}
 	
 	public ActOrderVO addActOrder(String actOdno,String actNo,String bk_no
-    		,Date odTime,String odStatus,Integer ppl,Integer totalPrice){
+    		,LocalTime odTime,String odStatus,Integer ppl,Integer totalPrice){
 		
     	ActOrderVO actOrderVO = new ActOrderVO();
     	actOrderVO.setActOdno(actOdno);

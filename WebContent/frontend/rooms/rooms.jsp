@@ -27,7 +27,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 <div style="display:hidden" id="tab-top"></div>
 <%@ include file="/frontend/files/login.file" %>
 <%@ include file="/frontend/files/loginbox.file" %>
-<%@ include file="/frontend/files/header.file" %>
+ 
 	<!-- Hero -->
 	<section class="et-hero-tabs">
 		<h1>DAIMOND RESORT</h1>
@@ -87,7 +87,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 	<div class="calendar-available">
 		<jsp:include page="/frontend/roomrsv/available.jsp"/>
 	</div>
-	<%@ include file="/frontend/files/commonJS.file" %>
+	  
 	<script src="${pageContext.request.contextPath}/js/front/rooms.js"></script>
 	<script>
 		$("#check-date a button").click(function(){

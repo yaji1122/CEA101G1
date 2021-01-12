@@ -1,13 +1,13 @@
 package com.actorder.model;
 
-import java.sql.Date;
+import java.time.LocalTime;
 
 public class ActOrderVO implements java.io.Serializable{
 	
 	private String actOdno;
 	private String actNo;
 	private String bk_no;
-	private Date odTime;
+	private LocalTime odTime;
 	private String odStatus;
 	private Integer ppl;
 	private Integer totalPrice;
@@ -30,10 +30,10 @@ public class ActOrderVO implements java.io.Serializable{
 	public void setBkNo(String bk_no) {
 		this.bk_no = bk_no;
 	}
-	public Date getOdTime() {
+	public LocalTime getOdTime() {
 		return odTime;
 	}
-	public void setOdTime(Date odTime) {
+	public void setOdTime(LocalTime odTime) {
 		this.odTime = odTime;
 	}
 	public String getOdStatus() {

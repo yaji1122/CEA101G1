@@ -1,15 +1,13 @@
 package com.actorder.model;
 import java.util.*;
 
-import com.actevent.model.ActEventJDBCDAO;
-import com.actevent.model.ActEventVO;
+import java.util.*;
+import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 	
@@ -47,7 +45,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 			
 			pstmt.setString(1,actOrderVO.getActNo());
 			pstmt.setString(2,actOrderVO.getBkNo());
-			pstmt.setDate(3,actOrderVO.getOdTime());
+			pstmt.setTime(3,java.sql.Time.valueOf(actOrderVO.getOdTime()));
 			pstmt.setString(4,actOrderVO.getOdStatus());
 			pstmt.setInt(5,actOrderVO.getPpl());
 			pstmt.setInt(6,actOrderVO.getTotalPrice());
@@ -92,7 +90,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 			
 			pstmt.setString(1,actOrderVO.getActNo());
 			pstmt.setString(2,actOrderVO.getBkNo());
-			pstmt.setDate(3,actOrderVO.getOdTime());
+			pstmt.setTime(3,java.sql.Time.valueOf(actOrderVO.getOdTime()));
 			pstmt.setString(4,actOrderVO.getOdStatus());
 			pstmt.setInt(5,actOrderVO.getPpl());
 			pstmt.setInt(6,actOrderVO.getTotalPrice());
@@ -183,7 +181,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
 				actOrderVO.setBkNo(rs.getString("BK_NO"));
-				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
+				actOrderVO.setOdTime(rs.getTime("OD_TIME").toLocalTime());
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));
 				actOrderVO.setTotalPrice(rs.getInt("TOTAL_PRICE"));
@@ -236,7 +234,7 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
 				actOrderVO.setBkNo(rs.getString("BK_NO"));
-				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
+				actOrderVO.setOdTime(rs.getTime("OD_TIME").toLocalTime());
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));
 				actOrderVO.setTotalPrice(rs.getInt("TOTAL_PRICE"));
