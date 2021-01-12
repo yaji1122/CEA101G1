@@ -225,11 +225,12 @@ p {
   News Section
 -----------------------*/
 .news-section {
-    padding-top: 100px;
+    padding-top: 50px;
     padding-bottom: 100px;
 }
 .about-text {
     text-align: center;
+	padding-top: 40px;
 }
 
 .testimonial-slider .ts-item {
@@ -245,6 +246,8 @@ p {
     color: #707079;
     line-height: 30px;
     margin-bottom: 50px;
+	text-align: left;
+	text-indent: 2em;
 }
 
 .testimonial-slider .ts-item img {
@@ -270,12 +273,32 @@ p {
     color: #19191a;
     display: inline-block;
 }
-
+.about-btn:hover {
+	color:crimson;
+}
+/*---------------------
+   Section
+-----------------------*/
+.section-title {
+	text-align: center;
+	padding-bottom: 10px;
+}
+.section-title span {
+	color:#dfa974;
+	font-size: 20px;
+	border-bottom: 1px solid #e8e8e8;
+	margin-bottom: 10px;
+}
+.section-title h2 {
+	color:#0d335d;
+}
 /*---------------------
   Service Section
 -----------------------*/
+
 .services-section {
-    padding-bottom: 60px;
+    padding-top: 50px;
+    padding-bottom: 50px;
     border-top: 1px solid #e5e5e5;
 }
 
@@ -337,11 +360,12 @@ p {
 -------------------------*/
 .hp-room-section {
     box-shadow: 0px 0px 2px grey;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .hp-room-items {
+	padding-top: 30px;
     margin-left: -15px;
     margin-right: -15px;
     overflow: hidden;
@@ -349,14 +373,18 @@ p {
 
 .hp-room-items .hp-room-item {
     height: 600px;
-    margin-right: -15px;
+    margin-bottom: 15px;
     position: relative;
     overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+	
 }
 
 .hp-room-items .hp-room-item:hover .hr-text {
     background-color: #22273680;
-    bottom: 100px;
+    bottom: 20px;
 }
 
 .hp-room-items .hp-room-item:hover .hr-text h2 {
@@ -367,7 +395,7 @@ p {
     padding: 5px;
     position: absolute;
     left: 40px;
-    bottom: -250px;
+    bottom: -200px;
     -webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s;
@@ -410,8 +438,12 @@ p {
 .hp-room-items .hp-room-item .hr-text .primary-btn:after {
     background: #ffffff;
 }
-
-
+.hp-room-items .hp-room-item .hr-text a {
+	 float: right;
+    color: white;
+    border-bottom: 2px solid #dfa974;
+}
+   
 /*---------------------
   Footer Section
 -----------------------*/

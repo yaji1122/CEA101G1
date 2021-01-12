@@ -46,7 +46,7 @@ public class MembersServlet extends HttpServlet {
 
 				String mb_pwd = security.getSecurePassword(req.getParameter("mb_pwd").trim(), salt);
 				String mb_bd_str = req.getParameter("mb_bd").trim();
-				DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				Date mb_bd = new Date(df.parse(mb_bd_str).getTime());
 				is = req.getPart("mb_pic").getInputStream();
 				byte[] mb_pic = new byte[is.available()];
@@ -72,7 +72,7 @@ public class MembersServlet extends HttpServlet {
 				paySvc.insertCrdt(mb_id, card_no, card_name, exp_mon, exp_year, csc); //新增付款訊息
 				MailService mail = new MailService(); //發送驗證郵件
 				MailAuthenticate auth = new MailAuthenticate();
-				String mailMsg = "點擊以下連結啟用帳號，享受更多服務。http://104.199.188.155/CEA101G1/MembersServlet?action=verify&authcode="
+				String mailMsg = "點擊以下連結啟用帳號，享受更多服務。http://104.199.188.155/CEA101G1/frontend/verify.jsp?authcode="
 						+ auth.insertCode(mb_id) + "&mb_id=" + mb_id;
 				mail.sendMail(mb_email, "戴蒙會員資格啟用驗證", mailMsg);
 				out.print("success");
@@ -279,18 +279,6 @@ public class MembersServlet extends HttpServlet {
 				req.setAttribute("error", "無符合條件之查詢結果");
 				dispatcher.forward(req, res);
 			}
-		}
-
-		if ("verify".equals(action)) {
-			String code = req.getParameter("authcode");
-			String mb_id = req.getParameter("mb_id");
-			MailAuthenticate auth = new MailAuthenticate();
-			if (auth.verifyCode(mb_id, code)) {
-				MembersService memberSvc = new MembersService();
-				memberSvc.updateStatus(mb_id, "1");
-			}
-			res.sendRedirect("http://localhost:8080/CEA101G1/frontend/index.jsp");
-			return;
 		}
 	}
 

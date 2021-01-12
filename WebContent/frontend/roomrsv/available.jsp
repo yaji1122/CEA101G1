@@ -17,15 +17,97 @@ if (guest == null) guest = "2";
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/img/loading.png" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/available.css" />
 <title>Availability 空房狀況</title>
 </head>
+<style>
+	/* Preloder */
+#preloder {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    background: #ffffff;
+}
+
+.loader {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: rgba(0, 0, 0, 0);
+    border-bottom: 4px rgb(250, 188, 19) solid;
+    margin-top: -75px;
+    margin-left: -75px;
+    border-radius: 100%;
+    animation: loader 0.8s linear infinite;
+    -webkit-animation: loader 0.8s linear infinite;
+}
+
+#preloaderpic {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+
+@keyframes loader {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        border-left-color: transparent;
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        border-left-color: transparent;
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        border-left-color: transparent;
+    }
+}
+@-webkit-keyframes loader {
+    0% {
+        -webkit-transform: rotate(0deg);
+        border: 4px solid #f44336;
+        border-left-color: transparent;
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        border: 4px solid #673ab7;
+        border-left-color: transparent;
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        border: 4px solid #f44336;
+        border-left-color: transparent;
+    }
+}
+	
+</style>
 <body>
+	 <!-- preloader -->
+	<div id="preloder">
+		<img id="preloaderpic"
+			src="${pageContext.request.contextPath}/img/loading.png" />
+		<div class="loader"></div>
+	</div>
+	 <!-- preloader -->
+	
 	<h2 class="aval-title">空房狀況</h2>
 		<div class="close-calendar">
-			<a href="#"><img src="<%=request.getContextPath()%>/img/icon/close_icon.svg"></a>
+			<a href="<%=request.getContextPath()%>/frontend/index.jsp"><img src="<%=request.getContextPath()%>/img/icon/close_icon.svg"></a>
 		</div>
         <div class="condition">
             <h3>
@@ -72,6 +154,11 @@ if (guest == null) guest = "2";
         </div>
         <script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
         <script>
+        $(window).on("load", function() {
+        	$(".loader").delay(400).fadeOut();
+        	$("#preloder").delay(600).fadeOut("slow");
+        });
+        
         $(document).ready(function () {
             let display = document.getElementById("display");
             let weeks = ["ㄧ", "二", "三", "四", "五", "六", "日"];

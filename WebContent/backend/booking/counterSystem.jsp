@@ -320,6 +320,7 @@ pageContext.setAttribute("checkeds", checkeds);
 	            url: "<%=request.getContextPath()%>/bookingServlet?action=checkin",
 	            data: {
 	                bk_no: bkno,
+	                mb_id: mbid,
 	            },
 	            type: "POST",
 	        });

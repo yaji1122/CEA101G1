@@ -29,7 +29,7 @@ public class MemberFilter implements Filter{
 		Object member = session.getAttribute("member");
 		if (member == null) {
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath() + "/frontend/index.jsp");
+			res.sendRedirect(req.getContextPath() + "/login.jsp");
 			return;
 		} else {
 			chain.doFilter(request, response);

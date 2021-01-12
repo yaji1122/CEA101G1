@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.services.model.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
+<%@ page import="com.services_cart.model.*"%>
+<%@ page import="com.services_cart.controller.*"%>
 
 <%
 ServicesService servicesSvc = new ServicesService();
@@ -109,15 +112,14 @@ pageContext.setAttribute("list", list);
 							<nav class="mainmenu">
 								<ul>
 									<li><a href="#" class="nav-event">至尊服務</a>
+
 										<ul class="dropdown">
 											<li><a
 												href="<%=request.getContextPath()%>/frontend/services/services.jsp">美容美體</a></li>
 											<li><a href="#">各式服務</a></li>
 										</ul></li>
 									<li><a class="nav-event">已預約服務</a></li>
-									<li><a
-										href="<%=request.getContextPath()%>/frontend/services/servicesCart.jsp"
-										class="nav-event">購物車</a>
+									<li><a class="nav-event cart-nav">購物車</a></li>
 								</ul>
 							</nav>
 						</div>
@@ -265,8 +267,8 @@ pageContext.setAttribute("list", list);
 											</select>
 										</div>
 										<p>服務價格:${servicesVO.serv_price}</p>
-										<input type="hidden" name="servicesName"
-											value="${servicesVO.serv_name}"> <input type="hidden"
+										<input type="hidden" name="servicesNo"
+											value="${servicesVO.serv_no}"> <input type="hidden"
 											name="price" value="${servicesVO.serv_price}">
 										<!-- <input type="hidden" name="hiredate" value="2017-03-08T12:30:54">  -->
 										<input type="hidden" name="action" value="ADD">
@@ -290,6 +292,72 @@ pageContext.setAttribute("list", list);
 
 	</div>
 
+	<div class="cart-content">
+
+		<%Vector<ServicesItem> buylist = (Vector<ServicesItem>) session.getAttribute("shoppingcart");%>
+		<%if (buylist != null && (buylist.size() > 0)) {%>
+
+		<div class="tableWithClose">
+			<table class="table table-striped cart-table">
+				<thead>
+					<tr>
+						<th>服務名稱</th>
+						<th>時間</th>
+						<th>價格</th>
+						<th>人數</th>
+						<th>地點</th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<%
+					for (int index = 0; index < buylist.size(); index++) {
+					ServicesItem order = buylist.get(index);
+				%>
+				<tbody>
+					<tr>
+						<td><%=order.getServicesNo()%></td>
+						<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
+						<td><%=order.getPrice()%></td>
+						<td><%=order.getQuantity()%></td>
+						<td><%=order.getLocations()%></td>
+						<td><div>
+								<form name="deleteForm"
+									action="${pageContext.request.contextPath}/ServicesCartServlet"
+									method="POST">
+									<input type="hidden" name="action" value="DELETE"> <input
+										type="hidden" name="del" value="<%=index%>"> <input
+										type="submit" value="刪除">
+								</form>
+							</div></td>
+					</tr>
+
+					<%}%>
+				</tbody>
+			</table>
+		</div>
+		<div class="close-icon cart-content-close">
+			<i class="fas fa-times icon" style="margin-top: 5%;"></i>
+		</div>
+
+		<div class="checkOut-submit">
+			<form name="checkoutForm"
+				action="${pageContext.request.contextPath}/ServicesCartServlet"
+				method="POST">
+				<input type="hidden" name="action" value="CHECKOUT"> <input
+					type="submit" value="預約送出">
+			</form>
+		</div>
+	</div>
+	<%
+		} else {
+	%>
+	<p>購物車尚無內容</p>
+	<%
+		}
+	%>
+
+
 
 
 
@@ -297,33 +365,10 @@ pageContext.setAttribute("list", list);
 	<%@ include file="/frontend/files/commonJS.file"%>
 	<!-- 基本JS檔案 -->
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
-	<!-- Js Plugins -->
-	<%-- <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/js/jquery.magnific-popup.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script src="${pageContext.request.contextPath}/js/main.js"></script>
-	<script src="${pageContext.request.contextPath}/js/index.js"></script> --%>
+
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.min.js"></script>
 
-
-	<%--  <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
-    <script src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/template.js"></script>
-    <script src="${pageContext.request.contextPath}/js/sweetalert.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/slick/slick.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.js"></script> --%>
 	<script>
 		$('.slider').slick({
 			autoplay : true,
@@ -339,7 +384,7 @@ pageContext.setAttribute("list", list);
 		$('.f_date1').datetimepicker({
 			theme : '', //theme: 'dark',
 			timepicker : true, //timepicker: false,
-			step : 60, //step: 60 (這是timepicker的預設間隔60分鐘)
+			step : 15, //step: 60 (這是timepicker的預設間隔60分鐘)
 			format : 'Y-m-d H:i',
 			value : new Date(),
 		//disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
@@ -348,12 +393,29 @@ pageContext.setAttribute("list", list);
 		//maxDate:           '+1970-01-01'  // 去除今日(不含)之後
 		});
 	</script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script>
-		$(".btn-primary").click(function() {
-			$(".servForm").addClass("show-servForm");
-		});
-		$(".servForm-close").click(function() {
-			$(".servForm").removeClass("show-servForm");
+		$(document).ready(function() {
+
+			$(".cart-nav").click(function() {
+				$(".cart-content").addClass("cart-content-show");
+				$(".black").css("display", "block");
+				$(".black").click(function() {
+					$(".cart-content").removeClass("cart-content-show");
+					$(".black").css("display", "none");
+				})
+			});
+			$(".cart-content-close").click(function() {
+				$(".cart-content").removeClass("cart-content-show");
+				$(".black").css("display", "none");
+			});
+			/* $(".cart-nav").click(function () {
+				Swal.fire({
+						icon: "info",
+						text: "您尚未選取服務喔！"
+						
+				});
+				}); */
 		});
 	</script>
 </body>

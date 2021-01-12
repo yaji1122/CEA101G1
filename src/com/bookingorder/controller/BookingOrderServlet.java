@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import com.bookingdetail.model.*;
 import com.bookingorder.model.*;
+import com.members.model.MembersService;
 import com.members.model.MembersVO;
 
 @MultipartConfig
@@ -107,7 +108,6 @@ public class BookingOrderServlet extends HttpServlet {
 			out = res.getWriter();
 			try {
 				String bk_no = req.getParameter("bk_no");
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String dateInStr = req.getParameter("datein");
 				String dateOutStr = req.getParameter("dateout");
 				LocalDate dateIn = LocalDate.parse(dateInStr);
@@ -144,12 +144,9 @@ public class BookingOrderServlet extends HttpServlet {
 				String bk_no = req.getParameter("bk_no");
 				String dateInStr = req.getParameter("date_in");
 				String dateOutStr = req.getParameter("date_out");
-				String rm_type = req.getParameter("rm_type");
-				Integer qty = Integer.valueOf(req.getParameter("qty"));
 				LocalDate dateIn = LocalDate.parse(dateInStr);
 				LocalDate dateOut = LocalDate.parse(dateOutStr);
 				BookingOrderService bkodSvc = new BookingOrderService();
-				BookingDetailService bkdetailSvc = new BookingDetailService();
 				bkodSvc.updateDateInOut(bk_no, dateIn, dateOut);
 				out.print("success");
 			} catch (Exception e){
@@ -164,7 +161,10 @@ public class BookingOrderServlet extends HttpServlet {
 			out = res.getWriter();
 			try {
 				String bk_no = req.getParameter("bk_no");
+				String mb_id = req.getParameter("mb_id");
 				BookingOrderService bkodSvc = new BookingOrderService();
+				MembersService mbSvc = new MembersService();
+				mbSvc.updateStatus(mb_id, "2");
 				bkodSvc.checkIn(bk_no);
 				out.print("success");
 			} catch (Exception e){
@@ -179,7 +179,10 @@ public class BookingOrderServlet extends HttpServlet {
 			out = res.getWriter();
 			try {
 				String bk_no = req.getParameter("bk_no");
+				String mb_id = req.getParameter("mb_id");
 				BookingOrderService bkodSvc = new BookingOrderService();
+				MembersService mbSvc = new MembersService();
+				mbSvc.updateStatus(mb_id, "1");
 				bkodSvc.checkOut(bk_no);
 				out.print("success");
 			} catch (Exception e){

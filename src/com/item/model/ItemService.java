@@ -1,6 +1,10 @@
 package com.item.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ItemService {
  
@@ -61,5 +65,26 @@ public class ItemService {
 	
 	public List<ItemVO> getAllByItem_type_noBySt(String item_type_no){
 		return dao.getAllByItem_type_noByStatus(item_type_no);
+	}
+	
+	public Map<String, List<String>>getItem_noBysessionID(String sessionID,String item_no){
+		
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		
+		List<String> currentValue = map.get(sessionID);
+		if(currentValue==null){
+			System.out.println("currentValue==null");
+			map.put(sessionID, new ArrayList<String>(Arrays.asList(item_no)));
+		} else {
+			System.out.println("currentValue!=null");
+			currentValue.add(item_no);
+		}
+		for (String keys : map.keySet()) {
+		   System.out.println("key=" + keys);
+		}
+//		for(int i=0;i<currentValue.size();i++){
+//		    System.out.println(currentValue.get(i));
+//		} 
+		return map;
 	}
 }

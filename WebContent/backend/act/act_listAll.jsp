@@ -69,7 +69,7 @@
 			<div class="close-icon">
 				<i class="fas fa-times icon"></i>
 			</div>
-			<iframe src="" style="border: none; height: 100%; width: 100%;"></iframe>
+			<iframe id="myIframe" src="" style="border: none;"></iframe>
 		</div>
 	</div>
 	<script>
@@ -78,7 +78,7 @@
 	    $(".update").click(function (e) {
 	        e.preventDefault();
 	        let actno = $(this).attr("data-actno");
-	        let url = "<%=request.getContextPath()%>/ActOrderServlet?action=getOne_For_Update&actNo=" + actno;
+	        let url = "<%=request.getContextPath()%>/ActServlet?action=getOne_For_Update&actNo=" + actno;
 			display.addClass("display-show");
 			display.children("iframe").attr("src", url);
 		});
@@ -86,6 +86,11 @@
 			$(".icon").click(function() {
 				$(this).parents(".display-show").removeClass("display-show");
 			});
+			 let iframe = document.getElementById("myIframe");
+			 iframe.onload = function(){
+			        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+			        iframe.style.width = iframe.contentWindow.document.body.scrollWidth + 'px';
+			    }
 	})
 	
 	</script>

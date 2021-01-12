@@ -71,6 +71,18 @@ $(document).ready(function () {
                 swalfire("密碼確認錯誤，請重新確認");
                 return;
             }
+
+			let mbbd = $("#mb_bd").val()
+			console.log(mbbd)
+			if (!mbbd.match(/\d{4}[\055]+\d{2}[\055]+\d{2}/g)) {
+				swalfire("生日格式錯誤");
+				return;
+			}
+			let mbphone = $("#mb_phone").val()
+			if (!mbphone.match(/\d+/g)) {
+				swalfire("電話號碼格式錯誤，請輸入數字");
+				return;
+			}
         }
         if ($(this).hasClass("form3next")) {
         }
@@ -101,7 +113,8 @@ $(document).ready(function () {
         );
         setProgressBar(++current);
     });
-
+	
+	
     $(".previous").click(function () {
         current_fs = $(this).parents("fieldset");
         previous_fs = current_fs.prev();
@@ -138,16 +151,6 @@ $(document).ready(function () {
         $(".progress-bar").css("width", percent + "%");
     }
 
-    let thisYear = new Date().getFullYear;
-    $("#mb_bd").datepicker({
-        maxDate: "0",
-        dateFormat: "yy/mm/dd",
-        language: "zh-TW",
-        numberOfMonths: 1,
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "1900:" + thisYear,
-    });
     function swalfire(msg) {
         Swal.fire({
             position: "center",
@@ -174,6 +177,12 @@ $(document).ready(function () {
             $(".confirm_laebl").removeClass("error_label");
         }
     });
+
+	$("#mb_bd").datetimepicker({
+				timepicker:false,
+				format:"Y-m-d",
+				lang:"zh-TW"
+			})
 });
 window.onload = function () {
     const name = document.getElementById("name");

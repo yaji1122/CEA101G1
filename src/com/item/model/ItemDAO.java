@@ -239,7 +239,7 @@ public class ItemDAO implements ItemDAO_interface {
 		}
 		return list;
 	}
-
+	
 	public List<ItemVO> getAllByStatus() {
 		List<ItemVO> list = new ArrayList<ItemVO>();
 		ItemVO itemVO = null;

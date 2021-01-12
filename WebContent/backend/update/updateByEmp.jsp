@@ -42,8 +42,9 @@
 							placeholder="Name">
 					</h5>
 					<h5 class="mt-2">
-						密碼:<input type="password" name="emp_pwd" value="${empVO.emp_pwd}"
+						密碼:<input type="password" name="emp_pwd" id="emp_pwd" value="${empVO.emp_pwd}"
 							placeholder="Password" />
+							<label><input type="checkbox" id="show_password" />顯示密碼</label>
 					</h5>
 					<h5 class="mt-2">
 						職位: &nbsp&nbsp<%=titleVO.getTitle()%></h5>
@@ -87,5 +88,28 @@
 		</div>
 	</FORM>
 	<%@ include file="/backend/files/backend_footer.file"%>
+        <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function(){
+	// 先取得 #password1 及產生一個文字輸入框
+	var $password = $('#emp_pwd'), 
+		$passwordInput = $('<input type="text" name="' + $password.attr('name') + '" class="' + $password.attr('className') + '" />');
+ 
+	// 當勾選顯示密碼框時
+	$('#show_password').click(function(){
+		// 如果是勾選則...
+		if(this.checked){
+			// 用 $passwordInput 來取代 $password
+			// 並把 $passwordInput 的值設為 $password 的值
+			$password.replaceWith($passwordInput.val($password.val()));
+		}else{
+			// 用 $password 來取代 $passwordInput
+			// 並把 $password 的值設為 $passwordInput 的值
+			$passwordInput.replaceWith($password.val($passwordInput.val()));
+		}
+	});
+});
+</script>
 </body>
 </html>

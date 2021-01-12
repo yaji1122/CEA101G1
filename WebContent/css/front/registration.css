@@ -164,11 +164,18 @@ input {
     color: #000000;
     font-weight: normal;
 }
+.success-text strong {
+	color:#f0a500;
+}
 .success-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
     height: 70vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	letter-spacing: 1px;
+}
+.success-page h4 {
+	color:#dbdbdb
 }
 .steps {
     position: absolute;

@@ -35,7 +35,11 @@
 	<filter-mapping>
 		<filter-name>MemberFilter</filter-name>
 		<url-pattern>/frontend/members/*</url-pattern>
-		<url-pattern>/shoppingCheckOut/*</url-pattern>
+		<url-pattern>/frontend/activity/*</url-pattern>
+		<url-pattern>/frontend/meal/*</url-pattern>
+		<url-pattern>/frontend/services/*</url-pattern>
+		<url-pattern>/frontend/shop/shoppingCheckOut.jsp</url-pattern>
+		<url-pattern>/frontend/roomrsv/bookingResult.jsp</url-pattern>
 		<url-pattern>/bookingCheckOut/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
@@ -52,7 +56,10 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>GuestFilter</filter-name>
-		<url-pattern>/guestService/*</url-pattern>
+		<url-pattern>/frontend/activity/*</url-pattern>
+		<url-pattern>/frontend/meal/*</url-pattern>
+		<url-pattern>/frontend/services/*</url-pattern>
+		<url-pattern>/frontend/guestSection.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

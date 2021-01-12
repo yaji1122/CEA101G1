@@ -6,13 +6,15 @@
 <%@ page import="com.item_type.model.*"%>
 <%@ page import="com.item_pics.model.*"%>
 <%@ page import="com.members.model.*"%>
-
+	<jsp:useBean id="item_picsSvc" scope="page" class="com.item_pics.model.Item_picsService" />
+	<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
+	<jsp:useBean id="itemSvc" scope="page" class="com.item.model.ItemService" />
 <%
-	ItemService itemSvc = new ItemService();
 	String item_no = request.getParameter("item_no");
 	System.err.println("item_no = " + item_no);
 	ItemVO item = itemSvc.getOneItem(item_no);
 	pageContext.setAttribute("item_no", item_no);
+	pageContext.setAttribute("item", item);
 	List<ItemVO> list = itemSvc.getAllItem();
 	pageContext.setAttribute("list", list);
 %>
@@ -39,9 +41,6 @@
 <%@ include file="/frontend/files/loginCSS.file" %>
 <body>
 <%-- 	<%@ include file="/frontend/files/login.file" %> --%>
-
-
-
 <%
 String sessionID = null;
 String mb_email = null;
@@ -65,6 +64,7 @@ if (member == null && sessionID == null) { //表示session已失效
 		MembersService memberSvc = new MembersService();
 		member = memberSvc.getOneByMbEmail(mb_email);
 		session.setAttribute("member", member);
+		session.setAttribute("sessionID", sessionID);//作為最近瀏覽使用
 	} else if (sessionID != null && mb_email == null) { //非會員，取得先前的SessionID，存入session
 		session.setAttribute("sessionID", sessionID);
 	} else { //如果都沒有，紀錄sessionID存在使用者cookie，追蹤使用
@@ -74,24 +74,34 @@ if (member == null && sessionID == null) { //表示session已失效
 		session.setAttribute("user_session_id", session.getId());
 	}
 }
-
-System.out.print("user_session_id = " + sessionID);
-
 %>
-
-
-	<%@ include file="/frontend/files/loginbox.file"%>
-	
+<%@ include file="/frontend/files/loginbox.file"%>
  	<% 
  	if(member!=null){
 		String mb_id = member.getMb_id();
-		System.out.println("mb_id = "+mb_id);		
-	} else {
+		System.out.println("mb_id = "+mb_id);
+		sessionID = (String) session.getAttribute("sessionID");
 		session.setAttribute("sessionID", sessionID);
+	} 
+ 	System.out.println("user_session_id = " + sessionID);
+ 	System.out.println("item_no = " + item_no);
+
+	Map<String,Set<String>> mapIn = (Map<String,Set<String>>)session.getAttribute("map");
+	if(mapIn==null){
+		System.out.println("map==null");
+		Map<String, Set<String>> map = new HashMap<String, Set<String>>();
+		Set<String> set = new HashSet<String>();
+		set.add(item_no);
+		map.put(sessionID, set);
+		session.setAttribute("map", map);
+	} else{
+		System.out.println("map!=null");
+		mapIn.get(sessionID).add(item_no);
+		session.setAttribute("map", mapIn);
 	}
- 	%> 
-	<jsp:useBean id="item_picsSvc" scope="page" class="com.item_pics.model.Item_picsService" />
-	<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
+	Map<String,Set<String>> map = (Map<String,Set<String>>)session.getAttribute("map");	
+	%> 
+
 	<div class="back"></div>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -190,9 +200,7 @@ System.out.print("user_session_id = " + sessionID);
 		</ul>
 	</div>
 	<!-- Offcanvas Menu Section End -->
-	
-	
-	
+		
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="menu-item">
@@ -260,9 +268,6 @@ System.out.print("user_session_id = " + sessionID);
 
 	<div class="itemtypeheader">
 		<div id="itemtype">
-
-			
-
 			<div id="itemsmpic">
 				<img
 					src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(item_no).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"
@@ -311,7 +316,7 @@ System.out.print("user_session_id = " + sessionID);
 				<div class="itemdeprice">
 					$<%=itemSvc.getOneItem(item_no).getItem_price()%>
 				</div>
-				<div class="itempoints"><%=itemSvc.getOneItem(item_no).getPoints()%>points
+				<div class="itempoints">Points: <%=itemSvc.getOneItem(item_no).getPoints()%>
 				</div>
 				<div class="itemdede"><%=itemSvc.getOneItem(item_no).getItem_detail()%></div>
 				<FORM METHOD="post"
@@ -338,9 +343,10 @@ System.out.print("user_session_id = " + sessionID);
 				<div id="recent">Recently Viewed</div>
 				<div id="recomm">Recommended</div>
 			</div>
-			<div class="otheritemborder">
+			
+			<div class="otheritemborder" id="otherRecomm">
 				<div class="row">
-					<c:forEach var="itemVO" items="${list}" begin="0" end="2">
+					<c:forEach var="itemVO" items="<%=itemSvc.getAllByItem_type_no(item.getItem_type_no())%>" begin="0" end="2">
 						<div class="col col-12 col-sm-6 col-md-4">
 							<div class="itemslider">
 								<c:forEach var="item_picsVO" begin="0" end="0"
@@ -357,12 +363,34 @@ System.out.print("user_session_id = " + sessionID);
 									class="itemprice">$ ${itemVO.item_price}</span>
 							</div>
 						</div>
-
 					</c:forEach>
-
 				</div>
-
 			</div>
+						
+ 			<div class="otheritemborder" id="otherRecently"> 
+ 				<div class="row"> 
+ 				
+ 					<c:forEach var="itemno" items="${map.get(sessionID)}" begin="0" end="2">		 
+ 						<div class="col col-12 col-sm-6 col-md-4"> 
+ 							<div class="itemslider"> 
+ 								<c:forEach var="item_picsVO" begin="0" end="0" 
+ 									items="${item_picsSvc.getAllPics(itemno)}"> 
+ 									<div class="itempic"> 
+ 										<a href="<%=request.getContextPath()%>/frontend/shop/shopItemDetail.jsp?item_no=${itemno}"> 
+ 											<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"/> 
+ 										</a> 
+ 									</div> 
+ 								</c:forEach> 
+ 							</div> 
+ 							<div class="itemdetail"> 
+ 								<span class="itemdescribe"> ${itemSvc.getOneItem(itemno).item_name}</span>  
+ 								<span class="itemprice">$ ${itemSvc.getOneItem(itemno).item_price}</span> 
+ 							</div> 
+ 						</div> 
+ 					</c:forEach> 
+ 				</div> 
+ 			</div> 
+			
 		</div>
 	</div>
 
@@ -402,6 +430,14 @@ System.out.print("user_session_id = " + sessionID);
 	$(".close").click(function () {
   		$(".shopping-cart").removeClass("shopping-cart-show");
   		$(".back").css("display", "none");
+	});
+	$("#recent").click(function(){
+		$("#otherRecently").css("display", "block");
+		$("#otherRecomm").addClass("recom-hide");
+	});
+	$("#recomm").click(function(){	
+		$("#otherRecently").css("display", "none");
+		$("#otherRecomm").removeClass("recom-hide");
 	});
 	</script>
 </body>
