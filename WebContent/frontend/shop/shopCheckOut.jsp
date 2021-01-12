@@ -403,22 +403,6 @@
             },
         });
     });
-//     $(document).on("click", ".creditcard", function(){  //點擊信用卡後付款
-//     	let card_no = $(this).find(".cardnumber").text();
-<%--     	window.location.href = "<%=request.getContextPath()%>/bookingServlet?action=insert_bkod&card_no=" + card_no; --%>
-//     })
-//     function totalPrice() {
-//         let prices = $("span.subtotal");
-//         let total = 0;
-//         $.each(prices, function (index, value) {
-//             total += parseInt(value.innerText.replace(",", ""));
-//         });
-
-//         $(".last-price span").eq(0).text(total.toLocaleString());
-//         $(".deposit-price span")
-//             .eq(0)
-//             .text(total * (0.3).toLocaleString());
-//     }
 });
 
 	</script>	

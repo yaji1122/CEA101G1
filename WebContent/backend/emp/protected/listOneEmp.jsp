@@ -60,6 +60,7 @@ String emp_date = request.getParameter("emp_date");
                         <h5 class="mt-1 clearfix"><%=empVO.getEmp_id()%></h5>
                         
                         <h4 class="mt-1 clearfix"><%=deptVO.getDept()%></h4>
+                        <h4 class="mt-1 clearfix">${titleSvc.getOneTitle(empVO.title_no).title}</h4>
                         <span class="mt-4"><%=empVO.getEmp_city()%><%=empVO.getEmp_town()%><%=empVO.getEmp_address()%></span>
                         <div class="button">
                             <button class="neo-button"><i class=" ${(empVO.emp_status==2)?"fa fa-times-circle fa-2x":"fa fa-check-circle fa-2x"}"></i></button>
