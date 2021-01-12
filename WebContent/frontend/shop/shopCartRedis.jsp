@@ -7,9 +7,11 @@
 <%@ page import="com.item_pics.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.shoppingCart.model.*"%>
-
+<jsp:useBean id="itemSvc" scope="page" class="com.item.model.ItemService" />
+<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
+<jsp:useBean id="cartSvc" scope="page" class="com.shoppingCart.model.CartService" />
+<jsp:useBean id="item_picsSvc" scope="page" class="com.item_pics.model.Item_picsService" />
 <%
-	ItemService itemSvc = new ItemService();
 	String item_type_no = request.getParameter("item_type_no");
 	List<ItemVO> list = null;
 	if (item_type_no == null) {
@@ -19,18 +21,6 @@
 	}
 	pageContext.setAttribute("list", list);
 	pageContext.setAttribute("item_type_no", item_type_no);
-%>
-<%	
-// 	String user_session_id=(String)session.getAttribute("user_session_id");
-//  	String mb_id=(String)session.getAttribute("mb_id");
-// String mb_id="MEM0000003";
-// 	MembersService membersSvc = new MembersService();
-// 	MembersVO membersVO=null;
-// 	membersVO=membersSvc.getOneByMbId(mb_id);
-// 	pageContext.setAttribute("membersVO", membersVO);	
-// 	String mb_id = member.getMb_id();
-
-	CartService cartSvc = new CartService();
 %>
 
 <!DOCTYPE html>
@@ -140,9 +130,7 @@
 		</ul>
 	</div>
 	<!-- Offcanvas Menu Section End -->
-	
-	<jsp:useBean id="item_typeSvc" scope="page" class="com.item_type.model.Item_typeService" />
-	
+		
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="menu-item">
@@ -166,7 +154,6 @@
 											</c:forEach>
 										</ul>
 						</li>
-						
 						<li class="nav-list"><a class="nav-event">GIFTS & SOUVENIR</a>
 										<ul class="dropdown">
 											<c:forEach var="item_typeVO"
@@ -185,8 +172,7 @@
 											</c:forEach>
 										</ul></li>
 						
-						<li class="nav-list"><a class="nav-event" href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp"><i class="fas fa-shopping-cart icon" ></i></a></li>
-						
+						<li class="nav-list"><a class="nav-event" href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp"><i class="fas fa-shopping-cart icon" ></i></a></li>			
 						<li class="nav-list"><a class="nav-event"> <c:choose>
 									<c:when test="${member != null}"><i class="far fa-gem"></i></i>會員中心</a>
 							<ul class="dropdown">
@@ -203,8 +189,6 @@
 						</c:otherwise>
 						</c:choose>
 						</li>
-						
-
 					</ul>
 				</nav>
 			</div>
@@ -216,8 +200,7 @@
 		<div class="pageheader">
 
 
-			<jsp:useBean id="item_picsSvc" scope="page"
-				class="com.item_pics.model.Item_picsService" />
+			
 	<div class="shopCartBorder">
 				
 					<h3 class="shopCartTitle">ショッピングカート</h3>
@@ -239,12 +222,12 @@
 						<tr class="itBorTop">
 							<td>
 								<label class="checklabel">
-									<input id="boxselect<%= index %>" type="checkbox" name="checkact" value="<%= index %>" required="required">
+									<input id="boxselect<%= index %>" type="checkbox" name="checkact" class="ceIt" value="<%= index %>">
 									<input id="checknum<%= index %>" type="hidden" name="checkedItem" value="0">
 									<input id="forPlusnum<%= index %>" type="hidden" value="<%= (cartSvc.getValueByItem_no(mb_id, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price())%>">
 								</label>
 							</td>
-							<td class="imgframe"><img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"></td>
+							<td class="imgframe"><img id="imgCheck_<%=index %>" src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"></td>
 						<td>
 								<div class="cartborderFi">
 									<div class="cartItemName"><%=itemSvc.getOneItem(order.getItem_no()).getItem_name()%></div>
@@ -299,12 +282,12 @@
 						<tr class="itBorTop">
 							<td>
 								<label class="checklabel">
-									<input id="boxselect<%= index %>" type="checkbox" name="checkact" value="<%= index %>" required="required">
+									<input id="boxselect<%= index %>" type="checkbox" name="checkact" class="ceIt" value="<%= index %>">
 									<input id="checknum<%= index %>" type="hidden" name="checkedItem" value="0">
 									<input id="forPlusnum<%= index %>" type="hidden" value="<%= (cartSvc.getValueByItem_noCo(sessionID, order.getItem_no()))*(itemSvc.getOneItem(order.getItem_no()).getItem_price())%>">
 								</label>
 							</td>
-							<td class="imgframe"><img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"></td>
+							<td class="imgframe"><img id="imgCheck_<%=index %>" src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=<%=item_picsSvc.getAllPics(order.getItem_no()).get(0).getItem_pic_no()%>&action=getOne_Pic_Display"></td>
 						<td>
 								<div class="cartborderFi">
 									<div class="cartItemName"><%=itemSvc.getOneItem(order.getItem_no()).getItem_name()%></div>
@@ -373,14 +356,15 @@ $(function(){
 			var itemAdd_<%= index %> = {
 				"action":"AddQty",
 				"index":<%= index %>,
-				"item_no":<%="\"" + order.getItem_no() + "\""%>,
-				"item_name":<%="\"" + oneItem.getItem_name() + "\""%>,
+				"item_no":"<%=order.getItem_no()%>",
+				"item_name":"<%=oneItem.getItem_name()%>",
 				"item_price":<%=oneItem.getItem_price()%>,
 				"points":<%=oneItem.getPoints()%>,
 			};
+			
 			$("#btn<%= index %>").click(function(event){
 				event.stopPropagation();
-				console.log(<%="\"" + order.getItem_no() + "\""%>);
+				console.log("<%=order.getItem_no()%>");
 				$.ajax({
 					data:itemAdd_<%= index %>,
 					type:"POST",
@@ -388,7 +372,7 @@ $(function(){
 					url:"<%=request.getContextPath()%>/shop/changingServlet.do",
 					success: function (data){
 						console.log("增加"+data.amount);
-						$("#span<%= index %>").html(data.amount);	
+						$("#span<%= index %>").html(data.amount+".0");	
 						$(".poCaSi<%= index %>").html(data.poamount);
 						if($("#checknum<%= index %>").val()!=0){
 							$("#checknum<%= index %>").val(data.amount);
@@ -406,15 +390,14 @@ $(function(){
 			var itemSub_<%= index %> = {
 				"action":"SubQty",
 				"index":<%= index %>,
-				"item_no":<%="\"" + order.getItem_no() + "\""%>,
-				"item_name":<%="\"" + oneItem.getItem_name() + "\""%>,
+				"item_no":"<%=order.getItem_no()%>",
+				"item_name":"<%=oneItem.getItem_name()%>",
 				"item_price":<%=oneItem.getItem_price()%>,
 			};
 			
-			$("#btn<%= index + "_1" %>").click(function(event){
-				
+			$("#btn<%= index + "_1" %>").click(function(event){	
 				event.stopPropagation();
-				console.log(<%="\"" + order.getItem_no() + "\""%>);
+				console.log("<%=order.getItem_no()%>");
 				$.ajax({
 					data:itemSub_<%= index %>,
 					type:"POST",
@@ -424,7 +407,7 @@ $(function(){
 						console.log("減少"+data.amount);
 						console.log("index"+data.index);
 						if(data.amount!='')
-							$("#span<%= index %>").html(data.amount);
+							$("#span<%= index %>").html(data.amount+".0");
 							if($("#checknum<%= index %>").val()!=0){
 								$("#checknum<%= index %>").val(data.amount);
 							}	
@@ -434,8 +417,7 @@ $(function(){
 							<%  for (int i = 0; i < RedisBuylist.size(); i++){%>
 								shoppingTatal += parseInt($("#checknum<%= i %>").val(),10);
 							<%}%>
-							$("#checkTotal").text(shoppingTatal+".0");
-							
+							$("#checkTotal").text(shoppingTatal+".0");			
 						if(data.amount=== undefined){
 							Swal.fire({
 							  title: '刪除商品',
@@ -474,6 +456,11 @@ $(function(){
 					}
 				});
 			});
+			
+			$("#imgCheck_<%=index %>").click(function(){
+				$("#boxselect<%= index %>").click();
+			});	
+
 		<%}%>
 		});
 		function creatCheckedJson(boxselect, amount){
@@ -481,13 +468,19 @@ $(function(){
 			var checkedJson= {"action":"BoxSelect", "boxselect":boxselect, "amount":amount};
 			return checkedJson;
 		}
-	
-	var mem = <%="\""+ mb_id + "\""%>;
-	var checkedItem = document.getElementsByName('checkedItem');
-	
-		console.log("mb_id= "+mem);
-		$(".goPay").click(function(event){
-			console.log("checkedItem= "+checkedItem);
+		
+	var mem = "<%=mb_id%>";
+	console.log("mb_id= "+mem);
+
+		$(".goPay").click(function(event){  //進入結帳
+			let checked = false;
+			let checkboxs = $(".ceIt");
+			for (let i = 0; i < checkboxs.length; i++){
+				if (checkboxs.eq(i).prop("checked") == true){
+					checked = true;
+					break;
+				}
+			}
 			if(mem=="null"){
 				Swal.fire({
 					  title: '未登入會員',
@@ -498,13 +491,16 @@ $(function(){
 				$(".login-window-overlay").addClass("active");
 				$(".login-window").addClass("show-login-window");
 				$(".offcanvas-menu-wrapper").removeClass("show-offcanvas-menu-wrapper");
-			} else if(checkedItem==0){
-				alert("Please Check A Product To Checkout");
+			} else if (!checked){
+				Swal.fire({
+					  title: '未勾選商品',
+					  text: '請勾選要結帳的商品,再進行結帳',
+					  icon: 'warning'
+					});
 			} else{
 				go('<%=request.getContextPath()%>/shop/shoppingRedisCart.do?action=CHECKOUT');
 			}
 		});
-	
 	</script>
 </body>
 </html>

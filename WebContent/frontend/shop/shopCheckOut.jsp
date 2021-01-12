@@ -257,9 +257,8 @@
 						<br>																								
 							
 							<button class="paybtn" type="button">確定購買</button>
-							
-							
-							<jsp:useBean id="paymentSvc" scope="page" class="com.payment.model.PaymentService" />
+										
+	<jsp:useBean id="paymentSvc" scope="page" class="com.payment.model.PaymentService" />
 							<div id="payment-info">
 							<h2>請選擇付款信用卡</h2>
 							<div class="credit-cards">
@@ -296,8 +295,6 @@
 	<%@ include file="/frontend/files/commonJS.file" %>
 		<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 		<script src="<%=request.getContextPath()%>/js/front/creditCard.js"></script>		
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-		<script src="<%=request.getContextPath()%>/js/front/main.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
 		<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
 	<script>
