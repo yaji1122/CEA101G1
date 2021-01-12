@@ -27,7 +27,7 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
-	
+
 	<filter>
 		<filter-name>MemberFilter</filter-name>
 		<filter-class>filters.MemberFilter</filter-class>
@@ -47,9 +47,8 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
-	
-	
-	
+
+
 	<filter>
 		<filter-name>GuestFilter</filter-name>
 		<filter-class>filters.GuestFilter</filter-class>
@@ -65,86 +64,103 @@
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
-	</filter-mapping> 
-	
-	 <filter>
-      <filter-name>EmpLoginFilter</filter-name>
-      <filter-class>filters.EmpLoginFilter</filter-class>
-  	 </filter>
-
-    <filter-mapping>
-      <filter-name>EmpLoginFilter</filter-name>
-      <url-pattern>/backend/*</url-pattern>
-      <dispatcher>REQUEST</dispatcher>
-      <dispatcher>FORWARD</dispatcher>
-      <dispatcher>INCLUDE</dispatcher>
-      <dispatcher>ERROR</dispatcher>
-      <dispatcher>ASYNC</dispatcher>
-    </filter-mapping>
+	</filter-mapping>
 
 	<filter>
-      <filter-name>EmpAuthFilter</filter-name>
-      <filter-class>filters.EmpAuthFilter</filter-class>
-  	 </filter>
-    <filter-mapping>
-      <filter-name>EmpAuthFilter</filter-name>
-      <url-pattern>/backend/*</url-pattern>
-      <dispatcher>REQUEST</dispatcher>
-      <dispatcher>FORWARD</dispatcher>
-      <dispatcher>INCLUDE</dispatcher>
-      <dispatcher>ERROR</dispatcher>
-      <dispatcher>ASYNC</dispatcher>
-    </filter-mapping>
+		<filter-name>EmpLoginFilter</filter-name>
+		<filter-class>filters.EmpLoginFilter</filter-class>
+	</filter>
 
+	<filter-mapping>
+		<filter-name>EmpLoginFilter</filter-name>
+		<url-pattern>/backend/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
 
-     <servlet>
-       <servlet-name>DeptServlet</servlet-name>
-       <servlet-class>com.dept.controller.DeptServlet</servlet-class>
-     </servlet>
-     <servlet-mapping>
-       <servlet-name>DeptServlet</servlet-name>
-       <url-pattern>/dept/dept.do</url-pattern>
-     </servlet-mapping>
-     <servlet>
-        <servlet-name>FuncServlet</servlet-name>
-        <servlet-class>com.func.controller.FuncServlet</servlet-class>
-     </servlet>
-     <servlet-mapping>
-        <servlet-name>FuncServlet</servlet-name>
-        <url-pattern>/func/func.do</url-pattern>
-        </servlet-mapping>
-     <servlet>
-        <servlet-name>AuthServlet</servlet-name>
-        <servlet-class>com.auth.controller.AuthServlet</servlet-class>
-     </servlet>
-     <servlet-mapping>
-        <servlet-name>AuthServlet</servlet-name>
-        <url-pattern>/auth/auth.do</url-pattern>
-     </servlet-mapping>
-     <servlet>
-        <servlet-name>TitleServlet</servlet-name>
-        <servlet-class>com.title.controller.TitleServlet</servlet-class>
-     </servlet>
-     <servlet-mapping>
-        <servlet-name>TitleServlet</servlet-name>
-        <url-pattern>/title/title.do</url-pattern>
-     </servlet-mapping>
-     <servlet>
-        <servlet-name>EmpServlet</servlet-name>
-        <servlet-class>com.emp.controller.EmpServlet</servlet-class>
-     </servlet>
+	<filter>
+		<filter-name>EmpAuthFilter</filter-name>
+		<filter-class>filters.EmpAuthFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>EmpAuthFilter</filter-name>
+		<url-pattern>/backend/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+
+	
+	<servlet>
+        <servlet-name>SimpleCaptchaEndpoint</servlet-name>
+        <servlet-class>com.captcha.botdetect.web.servlet.SimpleCaptchaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>EmpServlet</servlet-name>
-        <url-pattern>/emp/emp.do</url-pattern>
+        <servlet-name>SimpleCaptchaEndpoint</servlet-name>
+        <url-pattern>/simple-captcha-endpoint</url-pattern>
     </servlet-mapping>
-         <servlet>
-        <servlet-name>EmpLogin</servlet-name>
-        <servlet-class>com.emp.controller.EmpLogin</servlet-class>
-     </servlet>
-    <servlet-mapping>
-        <servlet-name>EmpLogin</servlet-name>
-        <url-pattern>/emp/login.do</url-pattern>
-    </servlet-mapping> 
+	<servlet>
+		<servlet-name>BotDetect Captcha</servlet-name>
+		<servlet-class>com.captcha.botdetect.web.servlet.CaptchaServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BotDetect Captcha</servlet-name>
+		<url-pattern>/botdetectcaptcha</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DeptServlet</servlet-name>
+		<servlet-class>com.dept.controller.DeptServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeptServlet</servlet-name>
+		<url-pattern>/dept/dept.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>FuncServlet</servlet-name>
+		<servlet-class>com.func.controller.FuncServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FuncServlet</servlet-name>
+		<url-pattern>/func/func.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AuthServlet</servlet-name>
+		<servlet-class>com.auth.controller.AuthServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthServlet</servlet-name>
+		<url-pattern>/auth/auth.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>TitleServlet</servlet-name>
+		<servlet-class>com.title.controller.TitleServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TitleServlet</servlet-name>
+		<url-pattern>/title/title.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>EmpServlet</servlet-name>
+		<servlet-class>com.emp.controller.EmpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EmpServlet</servlet-name>
+		<url-pattern>/emp/emp.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>EmpLogin</servlet-name>
+		<servlet-class>com.emp.controller.EmpLogin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EmpLogin</servlet-name>
+		<url-pattern>/emp/login.do</url-pattern>
+	</servlet-mapping>
 	<servlet>
 		<servlet-name>ActTypeServlet</servlet-name>
 		<servlet-class>com.acttype.controller.ActTypeServlet</servlet-class>
@@ -153,7 +169,7 @@
 		<servlet-name>ActTypeServlet</servlet-name>
 		<url-pattern>/acttype/ActTypeServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ActEventServlet</servlet-name>
 		<servlet-class>com.actevent.controller.ActEventServlet</servlet-class>
@@ -162,7 +178,7 @@
 		<servlet-name>ActEventServlet</servlet-name>
 		<url-pattern>/ActEventServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ActServlet</servlet-name>
 		<servlet-class>com.act.controller.ActServlet</servlet-class>
@@ -171,7 +187,7 @@
 		<servlet-name>ActServlet</servlet-name>
 		<url-pattern>/ActServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ActOrderServlet</servlet-name>
 		<servlet-class>com.actorder.controller.ActOrderServlet</servlet-class>
@@ -180,7 +196,7 @@
 		<servlet-name>ActOrderServlet</servlet-name>
 		<url-pattern>/ActOrderServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>MealServlet</servlet-name>
 		<servlet-class>com.meal.controller.MealServlet</servlet-class>
@@ -189,7 +205,7 @@
 		<servlet-name>MealServlet</servlet-name>
 		<url-pattern>/MealServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>MealTypeServlet</servlet-name>
 		<servlet-class>com.mealtype.controller.MealTypeServlet</servlet-class>
@@ -198,7 +214,7 @@
 		<servlet-name>MealTypeServlet</servlet-name>
 		<url-pattern>/MealTypeServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>MealOrderDetailServlet</servlet-name>
 		<servlet-class>com.mealorderdetail.controller.MealOrderDetailServlet</servlet-class>
@@ -207,7 +223,7 @@
 		<servlet-name>MealOrderDetailServlet</servlet-name>
 		<url-pattern>/MealOrderDetailServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>MealOrderServlet</servlet-name>
 		<servlet-class>com.mealorder.controller.MealOrderServlet</servlet-class>
@@ -216,7 +232,7 @@
 		<servlet-name>MealOrderServlet</servlet-name>
 		<url-pattern>/MealOrderServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>AddToCartServlet</servlet-name>
 		<servlet-class>com.cart.controller.AddToCartServlet</servlet-class>
@@ -281,7 +297,7 @@
 		<servlet-name>ShoppingCartRedisServlet</servlet-name>
 		<url-pattern>/shop/shoppingRedisCart.do</url-pattern>
 	</servlet-mapping>
-		<servlet>
+	<servlet>
 		<servlet-name>ChangingServlet</servlet-name>
 		<servlet-class>com.shoppingCart.controller.ChangingServlet</servlet-class>
 	</servlet>

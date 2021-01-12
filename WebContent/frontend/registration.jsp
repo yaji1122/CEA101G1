@@ -7,6 +7,7 @@ pageContext.setAttribute("tempemail", request.getParameter("temp-email"));
 pageContext.setAttribute("temppassword", request.getParameter("temp-password"));
 pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confirm-password"));
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +63,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 										For more information about privacy policy and term please <a
 											href="private policy.html" target="_blank">see more</a>
 									</p>
-
+									
 									<p class="custom-checkbox">
 										<input type="checkbox" class="custom-control-input"
 											id="customCheck1" required /> <label
@@ -118,6 +119,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 										<input type="file" name="mb_pic" accept="image/*"
 										style="text-align-last: center" />
 								</div>
+										
 								<input type="button" name="next"
 									class="next action-button form2next" value="Next" /> <input
 									type="button" name="previous"

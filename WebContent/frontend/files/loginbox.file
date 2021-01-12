@@ -12,7 +12,7 @@
 						type="password" id="mb_pwd" name="mb_pwd" />
 					</label>
 					<p class="forgot-pass">
-						<a href="">忘記密碼?</a>
+						<a href="<%=request.getContextPath()%>/frontend/forgetPwd.jsp">忘記密碼?</a>
 					</p>
 					<input type="text" name="pass" value="pass" style="display: none;" />
 					<input type="text" name="action" value="member-login" style="display: none;" />

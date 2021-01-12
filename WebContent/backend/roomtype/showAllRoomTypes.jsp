@@ -30,7 +30,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 					<th>房型名稱</th>
 					<th>英文名稱</th>
 					<th>房型數量</th>
-					<th>房型價格(人/晚)</th>
+					<th>房型價格(人/晚)USD$</th>
 					<th>最多可入住人數</th>
 					<th>內容修改</th>
 					<th>房型圖庫</th>
@@ -45,7 +45,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 						<td>${rmtypevo.type_name}</td>
 						<td>${rmtypevo.type_eng_name}</td>
 						<td>${rmtypevo.rm_qty}</td>
-						<td>\$${rmtypevo.rm_price}</td>
+						<td>${rmtypevo.rm_price}</td>
 						<td>${rmtypevo.rm_capacity}</td>
 						<td style="display: none">${rmtypevo.rm_info_title}</td>
 						<td style="display: none">${rmtypevo.rm_info}</td>
@@ -80,7 +80,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 				<input type="text" name="update-typeengname" class="rm-input"
 				id="update-typeengname" maxlength="10" autocomplete="off" required />
 				<label for="update-rmprice">房型價格</label> 
-				<input type="text" name="update-rmprice" id="update-rmprice" inputmode="numeric"
+				<input type="number" name="update-rmprice" id="update-rmprice" inputmode="numeric" pattern="\d+"
 				class="rm-input" autocomplete="off" required />
 				<label for="update-rmcap">最大入住人數</label> 
 				<select name="update-rmcap" id="update-rmcap" class="rm-select" required>
