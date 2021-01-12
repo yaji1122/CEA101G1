@@ -278,6 +278,25 @@ body {
 	text-align: center;
 }
 
+.display-button-two {
+	margin-top: 10px;
+	width: 90%;
+	height: 70%;
+	outline: none;
+	pointer-events: auto;
+	background-color: rgb(44, 49, 64);
+	border-radius: 30px;
+	box-shadow: rgb(127, 11, 25) 0px 4px 0px;
+	border: 2px solid rgb(197, 17, 39);
+	cursor: pointer;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	align-items: center;
+	text-align: center;
+}
+
 .display-button:hover {
 	color: rgb(127, 11, 25);
 	border: 2px solid rgb(127, 11, 25);
