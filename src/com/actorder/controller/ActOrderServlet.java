@@ -3,6 +3,7 @@ package com.actorder.controller;
 import java.io.*;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
@@ -11,6 +12,7 @@ import javax.servlet.http.*;
 import com.act.model.*;
 import com.actorder.model.*;
 import com.bookingorder.model.*;
+import com.members.model.*;
 
 @MultipartConfig
 public class ActOrderServlet extends HttpServlet {
@@ -105,17 +107,27 @@ public class ActOrderServlet extends HttpServlet {
 			System.out.println(action);
 
 			try {
-				String actOdno = new String(req.getParameter("actOdno").trim());
-				if (actOdno == null || actOdno.trim().length() == 0) {
-					errorMsgs.add("活動單號不可為空");
-				} else if (actOdno.equals("actOdno")) {
-					errorMsgs.add("單號重複");
+				
+				MembersVO member = (MembersVO) req.getSession().getAttribute("member");
+				String mb_id = member.getMb_id();
+				BookingOrderService bkodSvc = new BookingOrderService();
+				List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
+				List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
+						.collect(Collectors.toList());
+				String bk_no = "";
+				for (BookingOrderVO list : newList) {
+					bk_no = list.getBk_no();
 				}
+				
+//				String actOdno = new String(req.getParameter("actOdno"));
+//			    if (actOdno.equals("actOdno")) {
+//					errorMsgs.add("單號重複");
+//				}
 
-				String odStatus = req.getParameter("odStatus");
-				if (odStatus == null || odStatus.trim().length() == 0) {
-					errorMsgs.add("請選擇活動狀態");
-				}
+//				String odStatus = req.getParameter("odStatus");
+//				if (odStatus == null || odStatus.trim().length() == 0) {
+//					errorMsgs.add("請選擇活動狀態");
+//				}
 
 				String actNo = req.getParameter("actNo");
 				if (actNo == null || actNo.trim().length() == 0) {
@@ -141,8 +153,8 @@ public class ActOrderServlet extends HttpServlet {
 				}
 				
 				
-				String actOrderTime = req.getParameter("odTime");
-				LocalTime odTime = LocalTime.parse(actOrderTime);
+//				String actOrderTime = req.getParameter("odTime");
+//				LocalTime odTime = LocalTime.parse(actOrderTime);
 
 
 				String totalPrice = req.getParameter("totalPrice");
@@ -158,11 +170,11 @@ public class ActOrderServlet extends HttpServlet {
 
 				ActOrderVO actOrderVO = new ActOrderVO();
 				
-				actOrderVO.setActOdno(actOdno);
+//				actOrderVO.setActOdno(actOdno); //SQL LPAD語法
 				actOrderVO.setActNo(actNo);
 				actOrderVO.setBkNo(bkNo);
-				actOrderVO.setOdTime(odTime);
-				actOrderVO.setOdStatus(odStatus);
+//				actOrderVO.setOdTime(odTime);
+//				actOrderVO.setOdStatus(odStatus);
 				actOrderVO.setPpl(Numppl);
 				actOrderVO.setTotalPrice(total_price);
 
@@ -176,7 +188,7 @@ public class ActOrderServlet extends HttpServlet {
 				}
 
 				ActOrderService ActOrderSvc = new ActOrderService();
-				ActOrderSvc.addActOrder(actOdno, actNo, bkNo, odTime, odStatus, Numppl, total_price);
+				ActOrderSvc.addActOrder(/*actOdno, */actNo, bkNo, /*odTime, odStatus,*/ Numppl, total_price);
 				out.print("success");
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -15,15 +15,15 @@ public class ActOrderService {
 		dao = new ActOrderDAO(); 
 	}
 	
-	public ActOrderVO addActOrder(String actOdno,String actNo,String bk_no
-    		,LocalTime odTime,String odStatus,Integer ppl,Integer totalPrice){
+	public ActOrderVO addActOrder(/*String actOdno,*/String actNo,String bk_no
+    		,/*LocalTime odTime,String odStatus,*/Integer ppl,Integer totalPrice){
 		
     	ActOrderVO actOrderVO = new ActOrderVO();
-    	actOrderVO.setActOdno(actOdno);
+//    	actOrderVO.setActOdno(actOdno);
     	actOrderVO.setActNo(actNo);
     	actOrderVO.setBkNo(bk_no);
-    	actOrderVO.setOdTime(odTime);
-    	actOrderVO.setOdStatus(odStatus);
+//    	actOrderVO.setOdTime(odTime);
+//    	actOrderVO.setOdStatus(odStatus);
     	actOrderVO.setPpl(ppl);
     	actOrderVO.setTotalPrice(totalPrice);
 		

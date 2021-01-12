@@ -4,13 +4,16 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.act.model.*"%>
 <%@ page import="com.actorder.model.*"%>
+<%@ page import="com.bookingorder.model.*"%>
 
 <%
+    BookingOrderService bookingOrSvc = new BookingOrderService();
+    List<BookingOrderVO> bookinglist = bookingOrSvc.getAllBooking();
+    pageContext.setAttribute("bookinglist",bookinglist);
+    
     ActService actSvc = new ActService();
 	List<ActVO> actlist = actSvc.getAll();
 	pageContext.setAttribute("actlist", actlist);
-	
-	
 %>
 
 
@@ -28,7 +31,12 @@
 <title>Diamond Resort</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/front/land-new.css">
-
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/slick-theme.css">
+	<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/slick.css">
+		<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/slicknav.min.css">
 </head>
 
 
@@ -43,7 +51,7 @@
 
 
 	<!-- 互動視窗 -->
-	<FORM METHOD="post" id="act_order_form">
+	<FORM METHOD="post" id="act_order_form" enctype="multipart/form-data">
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1"
 			role="dialog" aria-labelledby="exampleModalCenterTitle"
 			aria-hidden="true">
@@ -74,7 +82,7 @@
 									<label class="input-group-text" for="inputGroupSelect02">參加人數</label>
 								</div>
 								<select class="custom-select" id="inputGroupSelect02"
-									style="text-align: center" name="ppl" value="${actOrderVO.ppl }">
+									style="text-align: center" name="ppl" value="${actOrderVO.ppl}">
 									<option value="" selected>-Choose-</option>
 									<option value="1">1人</option>
 									<option value="2">2人</option>
@@ -86,9 +94,9 @@
 						</div>
 						<div class="input-group-prepend" id="date-title"></div>
 						<div class="reserve-info" style="width: 190px; margin: auto;">
-							<label class="act_reserve"> 活動價格:</label> <input type="text"
-								name="totalPrice" id="total_price" readonly value="0"> <input
-								type="hidden" name="act_price" id="act_price" readonly value="${actOrderVO.totalPrice}">
+							<label class="act_reserve"> 活動價格:</label> 
+							<input type="text" name="act_price" id="total_price" readonly value="0"> 
+							<input type="hidden" name="totalPrice" id="act_price" readonly value="${actOrderVO.totalPrice}">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -96,10 +104,8 @@
 							data-dismiss="modal">取消</button>
 						<button type="submit" class="btn btn-primary">確認</button>
 						<input type="hidden" name="action" value="insert"> 
-						<input type="hidden" name="actOdno" value="${actOrderVO.actOdno}"> 
-						<input type="hidden" name="actNo" value="${actVO.actNo}"> 
-						<input type="hidden" name="bkNo" value="${actOrderVO.bkNo}">
-						<input type="hidden" name="odStatus" value="${actOrderVO.odStatus}">
+						<input type="hidden" name="actNo" value="${actVO.actNo}" id="act_no">
+						<input type="hidden" name="bkNo" value="${bookingOrderVO.bkNo}">
 					</div>
 				</div>
 			</div>
@@ -131,7 +137,11 @@
 							style="color: rgb(0, 0, 0)"><i class="fas fa-share-square"></i></a>
 						</span>
 						<div class="back-face-one">
-							<p></p>
+							<p>
+							  <c:if test="${actVO.actNo == 'ACT0000001'}">
+							    ${actVO.actInfo}
+							  </c:if>
+							</p>
 						</div>
 					</div>
 				</c:forEach>
@@ -153,7 +163,11 @@
 							style="color: rgb(0, 0, 0)"><i class="fas fa-share-square"></i></a>
 						</span>
 						<div class="back-face-one">
-							<p></p>
+							<p>
+							  <c:if test="${actVO.actNo == 'ACT0000002'}">
+							    ${actVO.actInfo}
+							  </c:if>
+                            </p>
 						</div>
 					</div>
 				</c:forEach>
@@ -167,7 +181,6 @@
 						<img
 							src="<%=request.getContextPath()%>/ActServlet?actno=ACT0000003&action=get_actpic">
 					</div>
-				</c:forEach>
 				<div class="back face">
 					<h1>行燈夜宴</h1>
 					<p class="artist">陸上活動</p>
@@ -176,9 +189,14 @@
 						style="color: rgb(0, 0, 0)"><i class="fas fa-share-square"></i></a>
 					</span>
 					<div class="back-face-one">
-						<p></p>
+						<p>
+						   <c:if test="${actVO.actNo == 'ACT0000003'}">
+							    ${actVO.actInfo}
+						   </c:if>
+						</p>
 					</div>
 				</div>
+				</c:forEach>
 			</div>
 		</div>
 		<!--下方活動list-->
@@ -203,12 +221,12 @@
 
 								<div class="label">
 									<label class="act_name">活動名稱:<span>${actVO.actName}
+									<input type="hidden" class="act_no" value="${actVO.actNo}">
 									</span></label>
 								</div>
 								<div class="label">
 									<label class="act_time">活動時段:<span>${actVO.actTime}</span>,
-									</label> <label class="act_price">活動價格:<span>${actVO.actPrice}</span>
-										$
+									</label> <label class="act_price">活動價格:<span>${actVO.actPrice}</span>$
 									</label>
 								</div>
 
@@ -222,7 +240,6 @@
 							<button type="submit" class="btn btn-outline-dark make-res"
 								data-toggle="modal" data-target="#exampleModalCenter">
 								我要預約</button>
-
 						</div>
 					</div>
 				</c:if>
@@ -237,40 +254,73 @@
 
 	<!-- Footer Section End -->
 	<!-- Js Plugins -->
-	<script src="<%=request.getContextPath()%>/js/front/land.js"></script>
-	<%@ include file="/frontend/files/commonJS.file"%>
+ 	<%@ include file="/frontend/files/commonJS.file"%>
+ 	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
+ 	<script src="<%=request.getContextPath()%>/js/slicknav.js"></script>
 	<script>
-		let resname = $("#act_name");
-		let restime = $("#act_time");
-		let resprice = $("#act_price");
-		 
-		$(".make-res").click(function(){
-			let father = $(this).parents(".card");
-			let actname = father.find(".act_name span").text();
-			let acttime = father.find(".act_time span").text();
-			let actprice = father.find(".act_price span").text();
-			resname.val(actname);
-			restime.val(acttime);
-			resprice.val(actprice);
-			
-		});
-		
-		$("#inputGroupSelect02").change(function(){
-			let num = $("#inputGroupSelect02").val();
-			if(num !== "") {
-				let total = parseInt(num) * parseInt($("#act_price").val());
-				$("#total_price").val(total);
-			}else{
-				$("#total_price").val(0);
-			}
-		});
-		
 		$(document).ready(function(){
-			let order_elem = document.querySelector("act_order_form");
-			order_elem.addEventListener("submit",(e) => {
+				
+			let resname = $("#act_name");
+			let restime = $("#act_time");
+			let resprice = $("#act_price");
+			let resactno = $("#act_no");
+			 
+			$(".make-res").click(function(){
+				
+				let father = $(this).parents(".card");
+				let actname = father.find(".act_name span").text();
+				let acttime = father.find(".act_time span").text();
+				let actprice = father.find(".act_price span").text();
+				let actno = father.find(".act_no ").text();
+				resname.val(actname);
+				restime.val(acttime);
+				resprice.val(actprice);
+				resactno.val(actno);
+				
+			});
+			
+			$("#inputGroupSelect02").change(function(){
+				let num = $("#inputGroupSelect02").val();
+				if(num !== "") {
+					let total = parseInt(num) * parseInt($("#act_price").val());
+					$("#total_price").val(total);
+				}else{
+					$("#total_price").val(0);
+				}
+			});
+			
+			
+			$('#slick').slick({
+			    autoplay: true,
+			    arrows: false,
+			    slidesToShow: 1,
+			    infinite: true,
+			    autoplaySpeed: 1000,
+			  });
+
+			$('.pictrue-wall').slick({
+			    slidesToShow: 1,
+			    slidesToScroll: 1,
+			    arrows: false,
+			    fade: true,
+			    autoplaySpeed: 3000,
+			    autoplay: true
+			  });
+			$(".input-date").datepicker({
+			    showOn : "button",
+			    dateFormat:'yy/mm/dd',
+			    buttonImage:'https://ps9103.s3.us-east-2.amazonaws.com/public/field_date+(1).png',
+			    buttonImageOnly : false,
+			    buttonText:'Date',
+			 });
+			
+			
+				let order_elem = document.querySelector("#act_order_form");
+				order_elem.addEventListener("submit", function(e){	
+					
 				e.preventDefault();
 				
-				let od_time = new FormDate(order_elem);
+				let data = new FormData(order_elem);
 				let xhr = new XMLHttpRequest();
 				xhr.open("post","${pageContext.request.contextPath}/ActOrderServlet");
 				xhr.onload = function(){
@@ -283,9 +333,9 @@
                                 showConfirmButton: false,
                                 timer: 1500,
                             });
-                            setTimeout(function () {
-                                location.reload();
-                            }, 1400);
+//                             setTimeout(function () {
+//                                 location.reload();
+//                             }, 1400);
                         }else {
                             Swal.fire({
                                 position: "top-end",
@@ -296,17 +346,15 @@
                                 timer: 1500,
                             });
 					    }
-				    }
+				    } 
 			    }
-					
+				xhr.send(data);
 			});
-			xhr.send(data);
+			
 		});
 		
 		
 	</script>
-
-
 </body>
 
 </html>

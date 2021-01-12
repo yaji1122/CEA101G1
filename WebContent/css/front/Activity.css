@@ -6,10 +6,11 @@
             background-size: cover;
             background-attachment: fixed;
         }
+      
         #wrapper {
             width: 95%;
             height: 50%;    
-            margin: 150px auto;
+            margin: 0px auto;
             position: relative;
             text-align: center;
         }
