@@ -1,7 +1,7 @@
         body {
             width: 100%;
             height: 100%;
-            background-image: url("../img/activity/bg1.png");
+            background-image: url("<%=request.getContextPath()%>/img/activity/bg1.png");
             background-position: center;
             background-size: cover;
             background-attachment: fixed;

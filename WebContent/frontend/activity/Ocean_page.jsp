@@ -151,7 +151,7 @@
 		<div id="card-container">
 
 			<div id="card2">
-				<c:forEach var="actPicVO" items="${actlist}">
+				<c:forEach var="actVO" items="${actlist}">
 					<div class="front face">
 						<img
 							src="<%=request.getContextPath()%>/ActServlet?actno=ACT0000005&action=get_actpic">
@@ -177,7 +177,7 @@
 		</div>
 		<div id="card-container">
 			<div id="card3">
-				<c:forEach var="actPicVO" items="${actlist}">
+				<c:forEach var="actVO" items="${actlist}">
 					<div class="front face">
 						<img
 							src="<%=request.getContextPath()%>/ActServlet?actno=ACT0000006&action=get_actpic">
@@ -235,7 +235,7 @@
 									<label>活動介紹:</label> <label style="width: 300px;">${actVO.actInfo}</label>
 								</div>
 							</div>
-							<button type="button" class="btn btn-outline-dark make-res"
+							<button type="button" class="btn btn-outline-dark make-res" id="${actVO.actNo}_btn"
 								data-toggle="modal" data-target="#exampleModalCenter">
 								我要預約</button>
 						</div>
@@ -257,6 +257,23 @@
  	<script src="<%=request.getContextPath()%>/js/slicknav.js"></script>
 	<script>
 		$(document).ready(function(){
+			
+			<c:forEach var="actVO" items="${actlist}">
+			<c:if test="${actVO.actEventNo == 20 || actVO.actStatus == 0}">
+				var myactNo = "${actVO.actNo}_btn";
+				var myTime = "${actVO.actTime}";
+				var hour = parseInt(myTime.split(":")[0]);
+				var minute = parseInt(myTime.split(":")[1]);
+				var now = new Date(); // now
+				var eachTime = new Date(); // eachTime
+				eachTime.setHours(hour);
+				eachTime.setMinutes(minute);
+				if(now.getTime() > eachTime.getTime()) {
+					$("#"+myactNo).attr("disabled", true);
+				}
+
+			</c:if>
+		</c:forEach>
 				
 			let resname = $("#act_name");
 			let restime = $("#act_time");

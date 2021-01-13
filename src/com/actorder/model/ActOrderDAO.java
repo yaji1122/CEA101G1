@@ -51,7 +51,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			pstmt.setString(1,actOrderVO.getActNo());
 			pstmt.setString(2,actOrderVO.getBkNo());
 //			pstmt.setTime(3,java.sql.Time.valueOf(actOrderVO.getOdTime()));
-			pstmt.setString(3,"1");
+			pstmt.setString(3,"0");
 			pstmt.setInt(4,actOrderVO.getPpl());
 			pstmt.setInt(5,actOrderVO.getTotalPrice());
 			pstmt.executeUpdate();

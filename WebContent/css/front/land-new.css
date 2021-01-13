@@ -181,7 +181,7 @@ p {
 .list-img img{
   width:200px;
   height:150px;
-  border:2px outset;
+  border:3px outset;
   border-color:  rgb(253, 21, 21);
   border-radius: 20px;
   paddding:5px;
@@ -275,11 +275,31 @@ p {
   font-size:18px;
   height:48px;
 }
-
-
-#date-choose{
-  width:260px;
-  height:40px;
-  margin-top: -10px;
-  margin-left:0px; 
+/*已預約*/
+#multiCollapseExample2 .card-body{
+  margin:auto;
+  width:900px;
+  height:200px;
+  margin-buttom:20px;
+  text-align: center;
+  opacity: 0.9;
+  background-color: rgb(209, 253, 255);
+  border-radius: 35% 50% 50% 35%;
 }
+.list-reserve{
+  width:200px;
+  height:150px;
+  border-radius: 20px;
+  paddding:5px;
+  margin-left:100px;
+}
+.list-reserve img{
+  width:200px;
+  height:150px;
+  border:3px outset;
+  border-color: rgb(226, 178, 21);
+  border-radius: 20px;
+  paddding:5px;
+  
+}
+
