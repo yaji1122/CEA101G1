@@ -18,6 +18,8 @@ import com.services_cart.model.ServicesItem;
 @WebServlet("/ServicesCartServlet")
 public class ServicesCartServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public ServicesCartServlet() {
 		super();
 	}
@@ -88,7 +90,6 @@ public class ServicesCartServlet extends HttpServlet {
 				int quantity = order.getQuantity();
 				total += (price * quantity);
 			}
-
 			String amount = String.valueOf(total);
 			req.setAttribute("amount", amount);
 			String url = "/frontend/services/servicesCheckout.jsp";
@@ -99,23 +100,27 @@ public class ServicesCartServlet extends HttpServlet {
 
 	private ServicesItem getServicesItem(HttpServletRequest req) {
 
+		String servicesName = req.getParameter("servicesName");
 		Integer quantity = (new Integer(req.getParameter("quantity")).intValue());
 		String servicesNo = req.getParameter("servicesNo");
 		Integer price = (new Integer(req.getParameter("price")).intValue());
 		String locations = req.getParameter("locations");
-		
+		Integer unitPrice = new Integer(quantity * price);
+
 		String str = req.getParameter("hiredate");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		LocalDateTime servTime = LocalDateTime.parse(str, formatter);
-		System.out.print("cart:"+servTime);
-		
+		System.out.print("cart:" + servTime);
+
 		ServicesItem theServicesItem = new ServicesItem();
 
+		theServicesItem.setServicesName(servicesName);
 		theServicesItem.setServicesNo(servicesNo);
 		theServicesItem.setPrice(price);
 		theServicesItem.setQuantity(quantity);
 		theServicesItem.setLocations(locations);
 		theServicesItem.setServTime(servTime);
+		theServicesItem.setUnitPrice(unitPrice);
 		return theServicesItem;
 	}
 }

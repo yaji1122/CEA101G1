@@ -190,9 +190,13 @@ pageContext.setAttribute("list", list);
 											<div class="btn_price-spa">
 												<div class="price-spa">價格:${servicesVO.serv_price}</div>
 												<div class="btn-spa">
-													<button type="button" class="btn btn-primary"
-														data-toggle="modal" data-target="#exampleModal${vs.index}"
-														id="viewDetailButton${vs.index}">立即預約</button>
+													<button type="button"
+														class="btn btn-primary btn-serv-submit"
+														data-serv_no="${servicesVO.serv_no}"
+														data-serv_price="${servicesVO.serv_price}"
+														data-serv_name="${servicesVO.serv_name}"
+														data-toggle="modal" data-target="#exampleModal"
+														id="viewDetailButton">立即預約</button>
 												</div>
 											</div>
 										</div>
@@ -213,9 +217,13 @@ pageContext.setAttribute("list", list);
 											<div class="btn_price-spa">
 												<div class="price-spa">價格:${servicesVO.serv_price}</div>
 												<div class="btn-spa">
-													<button type="button" class="btn btn-primary"
-														data-toggle="modal" data-target="#exampleModal${vs.index}"
-														id="viewDetailButton${vs.index}">立即預約</button>
+													<button type="button"
+														class="btn btn-primary btn-serv-submit"
+														data-serv_no="${servicesVO.serv_no}"
+														data-serv_price="${servicesVO.serv_price}"
+														data-serv_name="${servicesVO.serv_name}"
+														data-toggle="modal" data-target="#exampleModal"
+														id="viewDetailButton">立即預約</button>
 												</div>
 											</div>
 										</div>
@@ -229,66 +237,77 @@ pageContext.setAttribute("list", list);
 							</div>
 						</c:otherwise>
 					</c:choose>
-					<div class="modal fade" id="exampleModal${vs.index}" tabindex="-1"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">服務預約</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<form name="shoppingForm"
-									action="${pageContext.request.contextPath}/ServicesCartServlet"
-									method="POST">
-									<div class="modal-body">
-										<p>請選擇日期:</p>
-										<input name="hiredate" class="f_date1" type="text">
 
-										<div class="form-group">
-											<label for="exampleFormControlSelect1">服務人數</label> <select
-												name="quantity" class="form-control"
-												id="exampleFormControlSelect1">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-											</select>
-										</div>
-										<div class="form-group">
-											<label for="exampleFormControlSelect2">服務場所</label> <select
-												name="locations" class="form-control"
-												id="exampleFormControlSelect2">
-												<option>102客房</option>
-												<option>露天按摩A區</option>
-												<option>露天按摩B區</option>
-											</select>
-										</div>
-										<p>服務價格:${servicesVO.serv_price}</p>
-										<input type="hidden" name="servicesNo"
-											value="${servicesVO.serv_no}"> <input type="hidden"
-											name="price" value="${servicesVO.serv_price}">
-										<!-- <input type="hidden" name="hiredate" value="2017-03-08T12:30:54">  -->
-										<input type="hidden" name="action" value="ADD">
-
-
-
-
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">取消</button>
-										<input type="submit" class="btn btn-primary" value="預約送出">
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
 				</c:if>
 			</c:if>
 		</c:forEach>
+
+		<div class="modal fade modal-btn" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">服務預約</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form name="shoppingForm"
+						action="${pageContext.request.contextPath}/ServicesCartServlet"
+						method="POST">
+						<div class="modal-body">
+							<p>請選擇日期時間:</p>
+							<input name="hiredate" class="f_date1" type="text">
+							<div class="form-group">
+								<label for="exampleFormControlSelect">服務場所</label> <select
+									name="locations" class="form-control"
+									id="exampleFormControlSelect">
+									<option>您的入住客房</option>
+									<option>露天按摩A區</option>
+									<option>露天按摩B區</option>
+								</select>
+							</div>
+							<div class="count-block">
+								<div class="count-div">
+									<p>人數</p>
+								</div>
+								<div class="qty-div">
+									<input type="button" class="btn-cart-qty" value="-"
+										onclick="sub();" style="width: 30px; height: 28px;" /> <input
+										id="quantity" name="quantity" value="1" readonly="readonly"
+										style="width: 64px; height: 25px; text-align: center;" /> <input
+										type="button" class="btn-cart-qty" value="+" onclick="add();"
+										style="width: 30px; height: 28px;" />
+								</div>
+							</div>
+
+							<div class="serv-price-unit">
+								<p>單價:</p>
+								<p class="serv-price"></p>
+							</div>
+							<div class="price-total-modal">
+								<p>總價:</p>
+								<p id="total-price"></p>
+							</div>
+							<input type="hidden" id="name-hidden" name="servicesNo" value="k">
+							<input type="hidden" class="serv-price" name="price" value="500">
+							<input type="hidden" id="name-serv" name="servicesName" value="k" />
+							<input type="hidden" name="action" value="ADD">
+
+
+
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">取消</button>
+							<input type="submit" class="btn btn-primary" value="預約送出">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
 	</div>
 
@@ -303,8 +322,9 @@ pageContext.setAttribute("list", list);
 					<tr>
 						<th>服務名稱</th>
 						<th>時間</th>
-						<th>價格</th>
+						<th>單價</th>
 						<th>人數</th>
+						<th>總價格</th>
 						<th>地點</th>
 						<th></th>
 					</tr>
@@ -316,10 +336,11 @@ pageContext.setAttribute("list", list);
 				%>
 				<tbody>
 					<tr>
-						<td><%=order.getServicesNo()%></td>
+						<td><%=order.getServicesName()%></td>
 						<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
 						<td><%=order.getPrice()%></td>
 						<td><%=order.getQuantity()%></td>
+						<td><%=order.getPrice() * order.getQuantity()%></td>
 						<td><%=order.getLocations()%></td>
 						<td><div>
 								<form name="deleteForm"
@@ -384,7 +405,7 @@ pageContext.setAttribute("list", list);
 		$('.f_date1').datetimepicker({
 			theme : '', //theme: 'dark',
 			timepicker : true, //timepicker: false,
-			step : 15, //step: 60 (這是timepicker的預設間隔60分鐘)
+			step : 60, //step: 60 (這是timepicker的預設間隔60分鐘)
 			format : 'Y-m-d H:i',
 			value : new Date(),
 		//disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
@@ -417,6 +438,68 @@ pageContext.setAttribute("list", list);
 				});
 				}); */
 		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$(".btn-serv-submit").click(function() {
+				$("#quantity").val(1);
+				console.log($(this).attr("data-serv_no"));
+				$(".modal-title").text($(this).attr("data-serv_name"));
+				$("#name-serv").val($(this).attr("data-serv_name"));
+				$("#name-hidden").val($(this).attr("data-serv_no"));
+				$(".serv-price").text($(this).attr("data-serv_price"));
+				$(".serv-price").val($(this).attr("data-serv_price"));
+				$("#total-price").text($(this).attr("data-serv_price"));
+				let price = $(this).attr("data-serv_price");
+				$(".btn-cart-qty").click(function() {
+
+					console.log('price:' + price);
+					let quantity = document.getElementById("quantity").value;
+					console.log('quantity:' + quantity);
+					let total = quantity * price;
+					$("#total-price").text(total);
+				});
+			})
+
+		})
+
+		function add() {
+			var text = $("#quantity").val();
+			var config = {
+				"url" : "${pageContext.request.contextPath}/AddCartServlet",
+				"async" : false,
+				"type" : "post",
+				"dataType" : "text",
+				"data" : {
+					"text" : text,
+				},
+				"success" : function(result) {
+					$("#quantity").val(result);
+				},
+				"error" : function(xhr, status, error) {
+
+				}
+			};
+			$.ajax(config);
+		}
+		function sub() {
+			var config = {
+				"url" : "${pageContext.request.contextPath}/SubCartServlet",
+				"async" : false,
+				"type" : "post",
+				"dataType" : "text",
+				"data" : {
+					"text" : $("#quantity").val(),
+				},
+				"success" : function(result) {
+					$("#quantity").val(result);
+				},
+				"error" : function(xhr, status, error) {
+
+				}
+			};
+			$.ajax(config);
+		}
 	</script>
 </body>
 

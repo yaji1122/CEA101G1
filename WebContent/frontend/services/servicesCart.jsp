@@ -34,7 +34,7 @@
 		%>
 		<tbody>
 			<tr>
-				<td><%=order.getServicesNo()%></td>
+				<td><%=order.getServicesName()%></td>
 				<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
 				<td><%=order.getPrice()%></td>
 				<td><%=order.getQuantity()%></td>
