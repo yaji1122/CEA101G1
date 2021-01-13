@@ -13,8 +13,11 @@
 %>
 <%
    ActOrderService actOrderSvc = new ActOrderService();
-   List<ActOrderVO> actorderlist = actOrderSvc.getAll();
-   pageContext.setAttribute("actorderlist", actorderlist);
+   MembersVO memVO = (MembersVO)session.getAttribute("member");
+   if(memVO != null){
+	   List<ActOrderVO> actorderlist = actOrderSvc.getOrderListByMemId(memVO.getMb_id());
+	   pageContext.setAttribute("actorderlist", actorderlist);
+   }
 %>
 
 
@@ -213,7 +216,7 @@
 				data-target="#collapseExample" aria-expanded="false"
 				aria-controls="collapseExample">活動詳情</button>
 				
-				<button class="btn btn-outline-info" type="button" data-toggle="collapse"
+				<button class="btn btn-outline-info" type="submit" data-toggle="collapse"
 				style="margin-left: 620px; margin-top: -37px;"
 				data-target="#multiCollapseExample2" aria-expanded="false"
 				aria-controls="multiCollapseExample2">已預約活動</button>
@@ -261,6 +264,7 @@
 		<div class="row">
 			<div class="col">
 			<c:forEach var="actOrderVO" items="${actorderlist}">
+			
 			
 				<div class="collapse multi-collapse" id="multiCollapseExample2">
 				  

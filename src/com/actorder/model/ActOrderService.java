@@ -56,6 +56,10 @@ public class ActOrderService {
 		return dao.getAll();
 	}
     
+    public List<ActOrderVO> getOrderListByMemId(String mb_id) {
+		return dao.getOrderListByMemId(mb_id);
+	}
+    
     public List<ActOrderVO> getAllByBkNo(String bk_no) {
 		return dao.getAllByBkNo(bk_no);
 	}	

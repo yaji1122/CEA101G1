@@ -8,6 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+
 public class ActOrderDAO implements ActOrderDAO_interface{
 	
 	private static DataSource ds = null;
@@ -38,6 +39,8 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 	
 	private static final String GETALLBYBKNO = 
 			"SELECT * FROM ACT_ORDER WHERE BK_NO = ?";
+	
+	private static final String GETACT_OdnoByMb_id = "SELECT * from act_order where bk_no IN (SELECT bk_no FROM booking_order WHERE MB_ID = ?) order by act_odno desc";
 	
 	@Override
 	public void insert(ActOrderVO actOrderVO) {
@@ -246,6 +249,56 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 		
 		return list;
 	}
+	
+	@Override
+	public List<ActOrderVO> getOrderListByMemId(String memId) {
+		List<ActOrderVO> list = new ArrayList<ActOrderVO>();
+		ActOrderVO actOrderVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GETACT_OdnoByMb_id);
+			pstmt.setString(1, memId);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+                actOrderVO = new ActOrderVO();
+				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
+				actOrderVO.setActNo(rs.getString("ACT_NO"));
+				actOrderVO.setBkNo(rs.getString("BK_NO"));
+				actOrderVO.setOdTime(rs.getTime("OD_TIME").toLocalTime());
+				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
+				actOrderVO.setPpl(rs.getInt("PPL"));
+				actOrderVO.setTotalPrice(rs.getInt("TOTAL_PRICE"));
+				list.add(actOrderVO);
+		       		
+			}
+		
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. "
+		            +se.getMessage());
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				}catch(SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				}catch(Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return list;
+	}
 	@Override
 	public List<ActOrderVO> getAllByBkNo(String bk_no) {
 		List<ActOrderVO> list = new ArrayList<ActOrderVO>();
@@ -297,7 +350,6 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 		}
 		return list;
 	}
-	
 	
 
 }
