@@ -15,6 +15,8 @@ import javax.servlet.http.Part;
 
 import com.roompic.model.*;
 
+import imgcompressor.ImgUtil;
+
 @MultipartConfig
 @WebServlet("/RoomPicServlet")
 public class RoomPicServlet extends HttpServlet {
@@ -33,7 +35,7 @@ public class RoomPicServlet extends HttpServlet {
 			res.setContentType("img/jpg");
 			String rmpicno = req.getParameter("rmpicno").trim();
 			RoomPicService rmpicSvc = new RoomPicService();
-			byte[] rmpic = rmpicSvc.getOneByPicNo(rmpicno);
+			byte[] rmpic = ImgUtil.shrink(rmpicSvc.getOneByPicNo(rmpicno), 1400) ;
 			res.getOutputStream().write(rmpic);
 			res.getOutputStream().flush();
 			return;
@@ -44,7 +46,7 @@ public class RoomPicServlet extends HttpServlet {
 			String rmtype = req.getParameter("rmtype");
 			RoomPicService rmpicSvc = new RoomPicService();
 			List<RoomPicVO> picList = rmpicSvc.getAllByRoomType(rmtype);
-			byte[] rmpic = rmpicSvc.getOneByPicNo(picList.get(0).getRm_pic_no());
+			byte[] rmpic = ImgUtil.shrink(rmpicSvc.getOneByPicNo(picList.get(0).getRm_pic_no()), 300) ;
 			res.getOutputStream().write(rmpic);
 			res.getOutputStream().flush();
 			return;

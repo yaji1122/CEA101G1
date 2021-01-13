@@ -46,6 +46,11 @@
                                     <i class="fa fa-users"></i> <span>會員管理</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="<%=request.getContextPath()%>/backend/members/messenger.jsp">
+                                     <i class="fas fa-sms"></i> <span>客服即時通</span>
+                                </a>
+                            </li>
                             <li class="sidebar-dropdown">
                                 <a href="#"> <i class="fa fa-file-alt"></i> <span>基本資料管理</span> </a>
                                 <div class="sidebar-submenu">

@@ -2,19 +2,10 @@ package mail;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-
+import jedispool.JedisPoolUtil;
 public class MailAuthenticate {
 
-	private static JedisPool pool = null;
-
-	static {
-		JedisPoolConfig config = new JedisPoolConfig();
-		config.setMaxTotal(8);
-		config.setMaxIdle(8);
-		config.setMaxWaitMillis(10000);
-		pool = new JedisPool(config, "localhost", 6379);
-	}
+	private static JedisPool pool = JedisPoolUtil.getJedisPool();
 	
 	public static String getAuthCode() {
 		StringBuffer code = new StringBuffer();

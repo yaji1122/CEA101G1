@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/slick-theme.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/slicknav.min.css" type="text/css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/front/index.css" type="text/css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/front/chatbox.css" type="text/css" />
 <title>Diamond Resort 戴蒙度假村</title>
 
 </head>
@@ -23,10 +24,35 @@
 	}
 </style>
 <%@ include file="/frontend/files/loginCSS.file" %> <!-- 登入必要檔案 -->
-<body>
+<body <c:if test="${member != null }">onunload="disconnect();"</c:if> >
 <%@ include file="/frontend/files/login.file" %>   <!-- 登入必要檔案 -->
 <%@ include file="/frontend/files/loginbox.file" %>  <!-- 登入必要檔案 -->
 <%@ include file="/frontend/files/header.file" %> <!-- 上方導覽 -->
+<c:if test="${member != null}">
+<!-- chatbox -->
+<div id="chat-circle" class="btn btn-raised">
+        <div id="chat-overlay"></div>
+        <i class="fas fa-sms"></i>
+</div>
+<div class="chat-box">
+    <div class="chat-box-header">
+      <i class="far fa-gem" style="margin-right:5px"></i>專屬線上客服
+      <span class="chat-box-toggle"><i class="fas fa-minus"></i></span>
+    </div>
+    <div class="chat-box-body">
+      <div class="chat-box-overlay">   
+      </div>
+      <div class="chat-logs">
+       
+      </div><!--chat-log -->
+    </div>
+    <div class="chat-input">      
+      <input type="text" id="chat-input" placeholder="Send a message..." onkeydown="if (event.keyCode == 13) sendMessage();"/>
+      <button class="chat-submit" id="chat-submit"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+<!-- chatbox -->
+</c:if>
 	<section class="hero-section">
 		<div class="container">
 			<div class="row">
@@ -341,5 +367,134 @@
 	<%@ include file="/frontend/files/commonJS.file" %> <!-- 基本JS檔案 -->
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/index.js"></script>
+	
+	<script>
+	<c:if test="${member != null}">
+		  var INDEX = 0; 
+		  var memberImg = "<%=request.getContextPath()%>/MembersServlet?action=getone_mbpic&mb_id=${member.mb_id}";
+		  var empImg;
+		  $("#chat-submit").click(sendMessage);
+		  
+		  function sendMsg() {
+		    var msg = $("#chat-input").val(); 
+		    if(msg.trim() == ''){
+		      return false;
+		    }
+		    generate_message(msg, 'member');
+		  }
+		  function generate_message(msg, type) {
+		    INDEX++;
+		    let img;
+		    type === "member" ? img = memberImg : img = empImg
+		    var str="";
+		    str += "<div id='cm-msg-"+INDEX+"' class=\"chat-msg "+type+"\">";
+		    str += "          <span class=\"msg-avatar\">";
+		    str += "            <img src=\"" + img + "\">";
+		    str += "          <\/span>";
+		    str += "          <div class=\"cm-msg-text\">";
+		    str += msg;
+		    str += "          <\/div>";
+		    str += "        <\/div>";
+		    $(".chat-logs").append(str);
+		    $("#cm-msg-"+INDEX).hide().fadeIn(300);
+		    $("#chat-input").val(''); 
+		    $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight}, 1000);    
+		  }  
+		  
+		  $("#chat-circle").click(function() {  
+			connect();
+		    $("#chat-circle").toggle(500);
+		    $(".chat-box").toggle(500);
+		  })
+		  
+		  $(".chat-box-toggle").click(function() {
+		    $("#chat-circle").toggle(500);
+		    $(".chat-box").toggle(500);
+		    disconnect();
+		  })
+		 //WebSocket
+        var MyPoint = "/customerWS/${member.mb_id}";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+		var empID;
+		var empName;
+		var webSocket;
+	
+		function connect() {
+			// create a websocket
+			webSocket = new WebSocket(endPointURL);
+	
+			webSocket.onopen = function(event) {
+				console.log("Connect Success!");
+				document.getElementById('chat-input').disabled = false;
+			}
+	
+			webSocket.onmessage = function(event) {
+				var jsonObj = JSON.parse(event.data);
+				if ("open" === jsonObj.type) {
+					empID = jsonObj.empID;
+					empImg = "<%=request.getContextPath()%>/emp/emp.do?action=getEmpPic&emp_id=" + empID;
+					empName = jsonObj.empName;
+				} else if ("history" === jsonObj.type) {
+					let memberID;
+					if (jsonObj.sender.indexOf("MEM") >= 0){
+						memberID = jsonObj.sender;
+					} else {
+						memberID = jsonObj.receiver;
+					}
+					// 這行的jsonObj.message是從redis撈出與客戶的歷史訊息，再parse成JSON格式處理
+					var messages = JSON.parse(jsonObj.message);
+					for (var i = 0; i < messages.length; i++) {
+						var historyData = JSON.parse(messages[i]);
+						var msg = historyData.message;
+						var time = historyData.time;
+						// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
+						let type = "";
+						historyData.sender.indexOf("MEM") >= 0 ? type = 'member' : type = 'emp';
+						generate_message(msg, type)
+					}
+				} else if ("chat" === jsonObj.type) {
+					let msg = jsonObj.message;
+					let type;
+					jsonObj.sender.indexOf("MEM") >= 0 ? type = 'member' : type = 'emp';
+					generate_message(msg, type)
+				}
+			};
+	
+			webSocket.onclose = function(event) {
+				console.log("Disconnected!");
+			};
+		}
+		
+		function sendMessage() {
+			var inputMessage = document.getElementById("chat-input");
+			var memberID = "${member.mb_id}";
+			var memberName = "${member.mb_name}";
+			var message = inputMessage.value.trim();
+	
+			if (message === "") {
+				inputMessage.focus();
+				return;
+			} else {
+				var jsonObj = {
+					"type" : "chat",
+					"sender" : memberID + "-" + memberName,
+					"receiver" : empID + "-" + empName,
+					"message" : message
+				};
+				webSocket.send(JSON.stringify(jsonObj));
+				inputMessage.value = "";
+				inputMessage.focus();
+			}
+		}
+		
+		function disconnect() {
+			webSocket.close();
+		}
+	</c:if>
+	</script>
+	
 </body>
 </html>

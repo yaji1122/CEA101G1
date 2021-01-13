@@ -13,6 +13,9 @@ import javax.servlet.http.*;
 import com.members.model.MembersService;
 import com.members.model.MembersVO;
 import com.payment.model.PaymentService;
+
+import imgcompressor.ImgUtil;
+
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -233,6 +236,18 @@ public class MembersServlet extends HttpServlet {
 				dispatcher.forward(req, res);
 			}
 		}
+		
+		if("ajaxGetMemberName".equals(action)) {
+			res.setCharacterEncoding("UTF-8");
+			res.setContentType("text; charset=utf-8");
+			PrintWriter out = res.getWriter();
+			String mb_id = req.getParameter("mb_id");
+			MembersService mbSvc = new MembersService();
+			String mb_name = mbSvc.getOneByMbId(mb_id).getMb_name();
+			out.print(mb_name);
+			System.out.print(mb_name);
+			return;
+		}
 
 		if ("getone_mbpic".equals(action)) {
 			res.setContentType("img/jpg");
@@ -240,12 +255,12 @@ public class MembersServlet extends HttpServlet {
 			MembersService memberSvc = new MembersService();
 			byte[] mbpic = memberSvc.getOneByMbId(mb_id).getMb_pic();
 			if (mbpic != null) {
-				res.getOutputStream().write(mbpic);
+				res.getOutputStream().write(ImgUtil.shrink(mbpic, 300));
 			} else {
 				is = req.getServletContext().getResourceAsStream("/img/nodata.png");
 				byte[] pic = new byte[is.available()];
 				is.read(pic);
-				res.getOutputStream().write(pic);
+				res.getOutputStream().write(ImgUtil.shrink(pic, 300));
 				is.close();
 			}
 			return;
