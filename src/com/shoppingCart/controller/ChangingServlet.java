@@ -44,6 +44,7 @@ public class ChangingServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		JSONObject output = new JSONObject();
+		JSONObject jsonPoi = new JSONObject();
 		List<ItemVO> RedisBuylist = (List<ItemVO>) cartSvcMb.getAllItem_noByMb_id(mb_id);
 		List<ItemVO> buylist = (List<ItemVO>) cartSvcMb.getAllItem_noBysessionID(sessionID);
 
@@ -237,6 +238,14 @@ public class ChangingServlet extends HttpServlet {
 				out.flush();
 				out.close();
 			}
+		}
+		//改變結帳積分
+		else if (action.equals("changePointAct")) {
+			System.out.println("結帳積分開始");
+			Integer poCaUs = Integer.parseInt(req.getParameter("poCaUs"));
+			Integer oraPri = Integer.parseInt(req.getParameter("oraPri"));
+			Integer poiUs = Integer.parseInt(req.getParameter("poiUs"));
+			
 		}
 	}
 }

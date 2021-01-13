@@ -1,15 +1,18 @@
 package com.actorder.controller;
 
 import java.io.*;
+import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
-import com.act.model.ActService;
-import com.act.model.ActVO;
+import com.act.model.*;
 import com.actorder.model.*;
+import com.bookingorder.model.*;
+import com.members.model.*;
 
 @MultipartConfig
 public class ActOrderServlet extends HttpServlet {
@@ -67,6 +70,7 @@ public class ActOrderServlet extends HttpServlet {
 					out.print("請輸入數字");
 					return;
 				}
+				
 				String actNo = req.getParameter("actNo");
 				ActService actSvc = new ActService();
 				ActVO act = actSvc.getOneAct(actNo);
@@ -97,117 +101,100 @@ public class ActOrderServlet extends HttpServlet {
 		if ("insert".equals(action)) { // �Ӧ�addAct.jsp���ШD
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			res.setContentType("utf-8");
+			PrintWriter out = res.getWriter();
+			System.out.println(action);
 
 			try {
-				/***********************
-				 * 1.�����ШD�Ѽ� - ��J�榡�����~�B�z
-				 *************************/
-				String actOdno = new String(req.getParameter("actOdno").trim());
-				if (actOdno == null || actOdno.trim().length() == 0) {
-					errorMsgs.add("�q��s��");
-				} else if (actOdno.equals("actOdno")) {
-					errorMsgs.add("�w���ۦP�q��s��");
+				
+				MembersVO member = (MembersVO) req.getSession().getAttribute("member");
+				String mb_id = member.getMb_id();
+				BookingOrderService bkodSvc = new BookingOrderService();
+				List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
+				List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
+						.collect(Collectors.toList());
+				String bkNo = "";
+				for (BookingOrderVO list : newList) {
+					bkNo = list.getBk_no();
 				}
+				
+//				String actOdno = new String(req.getParameter("actOdno"));
+//			    if (actOdno.equals("actOdno")) {
+//					errorMsgs.add("單號重複");
+//				}
 
-				String odStatus = req.getParameter("odStatus");
-				if (odStatus == null || odStatus.trim().length() == 0) {
-					errorMsgs.add("�q�檬�A");
-				}
+//				String odStatus = req.getParameter("odStatus");
+//				if (odStatus == null || odStatus.trim().length() == 0) {
+//					errorMsgs.add("請選擇活動狀態");
+//				}
 
 				String actNo = req.getParameter("actNo");
 				if (actNo == null || actNo.trim().length() == 0) {
-					errorMsgs.add("���ʽs��: �ФŪť�");
+					errorMsgs.add("找不到該活動");
 				}
 
 				String ppl = req.getParameter("ppl");
 				if (ppl == null || ppl.trim().length() == 0) {
-					errorMsgs.add("�ѥ[�H��: �ФŪť�");
+					errorMsgs.add("請選擇參加人數");
 				}
 				Integer Numppl = null;
 				try {
 					Numppl = new Integer(ppl);
 				} catch (Exception e) {
-					errorMsgs.add("�s���榡�����T");
+					errorMsgs.add("請選擇參加人數");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/actorder/backend-order_add.jsp");
-					failureView.forward(req, res);
-					return;// �{�����_
-				}
+	
+//				String bkNo = req.getParameter("bkNo").trim();
+//				BookingOrderService bookOrderSvc = new BookingOrderService();
+//				BookingOrderVO bookingOrderVO = bookOrderSvc.getOneByBkNo(bkNo);
+//				if (bkNo == null || bkNo.trim().length() == 0) {
+//					errorMsgs.add("無此訂房單號");
+//				}
+				
+				
+//				String actOrderTime = req.getParameter("odTime");
+//				LocalTime odTime = LocalTime.parse(actOrderTime);
 
-				String bkNo = req.getParameter("bkNo").trim();
-				if (bkNo == null || bkNo.trim().length() == 0) {
-					errorMsgs.add("�нT�{���ʽs���榡�O�_���T");
-				}
-
-				java.sql.Date odtime = null;
-				try {
-					odtime = java.sql.Date.valueOf(req.getParameter("odTime").trim());
-				} catch (IllegalArgumentException e) {
-					odtime = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("�п�J���!");
-				}
 
 				String totalPrice = req.getParameter("totalPrice");
 				if (totalPrice == null || totalPrice.trim().length() == 0) {
-					errorMsgs.add("�ѥ[�H��: �ФŪť�");
+					errorMsgs.add("總價格不可為零");
 				}
 				Integer total_price = null;
 				try {
 					total_price = new Integer(totalPrice);
 				} catch (Exception e) {
-					errorMsgs.add("�s���榡�����T");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/actorder/backend-order_add.jsp");
-					failureView.forward(req, res);
-					return;// �{�����_
+					errorMsgs.add("總價格錯誤");
 				}
 
 				ActOrderVO actOrderVO = new ActOrderVO();
-				actOrderVO.setActOdno(actOdno);
+				
+//				actOrderVO.setActOdno(actOdno); //SQL LPAD語法
 				actOrderVO.setActNo(actNo);
 				actOrderVO.setBkNo(bkNo);
-				actOrderVO.setOdTime(odtime);
-				actOrderVO.setOdStatus(odStatus);
+//				actOrderVO.setOdTime(odTime);
+//				actOrderVO.setOdStatus(odStatus);
 				actOrderVO.setPpl(Numppl);
 				actOrderVO.setTotalPrice(total_price);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("actOrderVO", actOrderVO); // �t����J�榡���~��actEventVO����,�]�s�Jreq
-					RequestDispatcher failureView = req.getRequestDispatcher("/backend/actorder/backend-order_add.jsp");
-					failureView.forward(req, res);
+					StringBuilder str = new StringBuilder();
+					errorMsgs.stream().forEach(e -> str.append(e + ", "));
+					out.print(str.toString());
+					System.out.print(str);
 					return;
 				}
 
-				/***************************
-				 * 2.�}�l�s�W���
-				 ***************************************/
 				ActOrderService ActOrderSvc = new ActOrderService();
-				actOrderVO = ActOrderSvc.addActOrder(actOdno, actNo, bkNo, odtime, odStatus, Numppl, total_price);
-
-				/***************************
-				 * 3.�s�W����,�ǳ����(Send the Success view)
-				 ***********/
-				String url = "/backend/actorder/backend-order_listAll.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // �s�W���\�����listAll.jsp
-				successView.forward(req, res);
-
-				/*************************** ��L�i�઺���~�B�z **********************************/
+				ActOrderSvc.addActOrder(/*actOdno, */actNo, bkNo, /*odTime, odStatus,*/ Numppl, total_price);
+				out.print("success");
 			} catch (Exception e) {
-				errorMsgs.add("��J����Ƭ��ŭ�");
 				e.printStackTrace();
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/actorder/backend-order_add.jsp");
-				failureView.forward(req, res);
+				out.print("fail");
 			}
-		}
-
+		} 
+	
 	}
-
 }

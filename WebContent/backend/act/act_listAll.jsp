@@ -6,8 +6,8 @@
 
 <%
 	ActService actSvc = new ActService();
-List<ActVO> list = actSvc.getAll();
-pageContext.setAttribute("list", list);
+    List<ActVO> list = actSvc.getAll();
+    pageContext.setAttribute("list", list);
 %>
 
 

@@ -101,3 +101,31 @@
 .cart-content div{
 	display:inline-block;
 }
+
+.window-checkout {
+	
+}
+
+.table-checkout {
+	text-align: center;
+	border: solid 2px gray;
+	border-collapse: inherit;
+	border-radius: 9px;
+	width:800px;
+	margin-bottom: 30px;
+	
+}
+
+.order-checkout {
+	position: absolute;
+	margin-top: 20%;
+	margin-left: 20%;
+	width: 900px;
+}
+
+.submit-checkout {
+	
+}
+.checkout-button{
+margin-left:69%;
+}

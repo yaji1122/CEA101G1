@@ -27,13 +27,14 @@ public class AddToCartServlet extends HttpServlet {
 		Vector<CartItem> buylist = (Vector<CartItem>) session.getAttribute("cart");
 		String action = req.getParameter("action");
 
-		if (!"CHECKOUT".equals(action)) {
 			if ("DELETE".equals(action)) {
 				String del = req.getParameter("del");
 				int d = Integer.parseInt(del);
 				buylist.removeElementAt(d);
-			} 
-			else if ("addToCart".equals(action)) {
+				session.setAttribute("cart", buylist);
+			}
+			
+			if ("addToCart".equals(action)) {
 				boolean match = false;
 				CartItem acartItem = getCartItem(req);
 
@@ -56,16 +57,27 @@ public class AddToCartServlet extends HttpServlet {
 						buylist.add(acartItem);
 					}
 				}
+				session.setAttribute("cart", buylist);
 			}
-			else if("RESET".equals(action)) {
+			
+			if("RESET".equals(action)) {
 				buylist.removeAllElements();
+				session.setAttribute("cart", buylist);
 			}
-			session.setAttribute("cart", buylist);
-			String url = "/frontend/meal/meal.jsp";
-			RequestDispatcher dispatcher = req.getRequestDispatcher(url);
-			dispatcher.forward(req, res);
-		}
-		
+			
+			if("changeQuantity".equals(action)){
+				String itemNo = req.getParameter("itemNo");
+				Integer newVal = new Integer(req.getParameter("newVal"));
+				Integer itemPrice = new Integer(req.getParameter("itemPrice"));
+				for(int i = 0; i < buylist.size(); i++) {
+					CartItem order = buylist.get(i);
+					if(order.getItem_no().equals(itemNo)) {
+						order.setQuantity(newVal);
+						order.setPrice(itemPrice);
+					}
+				}
+				session.setAttribute("cart", buylist);
+			}
 	}
 	
 	

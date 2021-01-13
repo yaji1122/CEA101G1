@@ -39,7 +39,7 @@
 
 	<%
 		String mb_id = member.getMb_id();
-// 	System.out.println(mb_id);
+		// 	System.out.println(mb_id);
 		BookingOrderService bkodSvc = new BookingOrderService();
 		List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
 		List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
@@ -48,7 +48,7 @@
 		for (BookingOrderVO list : newList) {
 			bk_no = list.getBk_no();
 		}
-// 				System.out.println(bk_no);
+		// 				System.out.println(bk_no);
 
 		RoomsService roomsSvc = new RoomsService();
 		List<RoomsVO> roomList = roomsSvc.getAllByMbId(mb_id);
@@ -56,7 +56,7 @@
 		for (RoomsVO list : roomList) {
 			roomnoList.add(list.getRm_no());
 		}
-// 				roomnoList.forEach(System.out::println);
+		// 				roomnoList.forEach(System.out::println);
 
 		session.setAttribute("roomnoList", roomnoList);
 	%>
@@ -151,8 +151,7 @@
 									href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
 							</ul></li>
 
-						<li>
-						<c:choose>
+						<li><c:choose>
 								<c:when test="${buylist.isEmpty()}">
 									<a class="nav-event"> <i
 										class="fas fa-shopping-cart shopping-cart shopping-cart-icon"
@@ -178,8 +177,7 @@
 										style="font-size: 20px"> </i>
 									</a>
 								</c:otherwise>
-							</c:choose>
-							</li>
+							</c:choose></li>
 
 						<li class="nav-list"><a class="nav-event"> <i
 								class="far fa-gem"></i>
@@ -251,7 +249,7 @@
 			</div>
 		</div>
 
-		<div class="wrapper" style="background-color: rgb(34, 39, 54);">
+		<div class="wrapper" style="background-color: rgb(44, 49, 64);">
 			<div class="container ">
 				<div class="row ">
 					<div class="col-lg-3 type-wrapper nav-fixed-type">
@@ -261,7 +259,7 @@
 							<c:forEach var="mealTypeVO" items="${mealTypeSvc.all}"
 								varStatus="i">
 								<a class="list-group-item list-group-item-action"
-									style="background-color: rgb(44, 49, 64);"
+									style="background-color: rgb(51, 56, 71);"
 									href="#list-item-${i.index}">
 									<div class="type-box">
 										<h5 class="type-title">
@@ -299,68 +297,73 @@
 											test="${(mealVO.meal_type_no == mealTypeVO.meal_type_no)}">
 
 											<div class="col-lg-4 card-box">
-												<form id="form${k.index}" method="post"
-													action="${pageContext.request.contextPath}/AddToCartServlet">
-													<figure class="snip1268" id="card">
-														<div class="image">
-															<img
-																src="${pageContext.request.contextPath}/MealServlet?action=view_mealpic&meal_no=${mealVO.meal_no}"
-																alt="sq-sample4" /> <a href="#" class="add-to-cart"
-																onclick="document.getElementById('form' + ${k.index} + '').submit();">加入購物車</a>
-														</div>
-														<figcaption>
-															<div class="container">
-																<div class="row">
-																	<div class="col-lg-12">
-																		<h4 id="meal_name${k.index}"
-																			style="color: white; user-select: none; float: left;">
-																			<b>${mealVO.meal_name}</b>
-																		</h4>
-																	</div>
-																</div>
-																<div class="row">
-																	<div class="col-lg-12">
-																		<p style="color: white; user-select: none;">${mealVO.meal_info}</p>
-																	</div>
-																</div>
-																<div class="row" style="display: none;">
-																	<div class="col-lg-12">
-																		<i class="fas fa-minus-square display-icon-minus"
-																			field="quantity${k.index}"
-																			id="display-icon-minus${k.index}"></i> <input
-																			type="text" value=1 class="display-qty"
-																			id="display-qty${k.index}" name="quantity${k.index}"
-																			style="border-radius: 5px;" disabled="disabled"><i
-																			class="fas fa-plus-square display-icon-plus"
-																			field="quantity${k.index}"
-																			id="display-icon-plus${k.index}"></i>
-																	</div>
-																</div>
-																<div class="row">
-																	<div class="col-lg-4 price">
-																		<h5 style="color: white; display: inline-block"><b>USD$</b></h5>
-																	</div>
-																	<div class="col-lg-8 price" id="showprice${k.index}">
-																		<h5
-																			style="color: white; user-select: none; display: inline-block;"><b>${mealVO.price}</b></h5>
-																	</div>
-																	<input type="hidden" id="price${k.index}"
-																		value="${mealVO.price}">
+												<%-- 												<form id="form${k.index}" method="post" --%>
+												<%-- 													action="${pageContext.request.contextPath}/AddToCartServlet"> --%>
+												<figure class="snip1268" id="card">
+													<div class="image">
+														<img
+															src="${pageContext.request.contextPath}/MealServlet?action=view_mealpic&meal_no=${mealVO.meal_no}"
+															alt="sq-sample4" /> <a class="add-to-cart"<%-- 																onclick="document.getElementById('form' + ${k.index} + '').submit();" --%>
+																>加入購物車</a>
+													</div>
+													<figcaption>
+														<div class="container">
+															<div class="row">
+																<div class="col-lg-12">
+																	<h4 id="meal_name${k.index}"
+																		style="color: white; user-select: none; float: left;">
+																		<b>${mealVO.meal_name}</b>
+																	</h4>
 																</div>
 															</div>
-														</figcaption>
+															<div class="row">
+																<div class="col-lg-12">
+																	<p style="color: white; user-select: none;">${mealVO.meal_info}</p>
+																</div>
+															</div>
+															<div class="row" style="display: none;">
+																<div class="col-lg-12">
+																	<i class="fas fa-minus-square display-icon-minus"
+																		field="quantity${k.index}"
+																		id="display-icon-minus${k.index}"></i> <input
+																		type="text" value=1 class="display-qty"
+																		id="display-qty${k.index}" name="quantity${k.index}"
+																		style="border-radius: 5px;" disabled="disabled"><i
+																		class="fas fa-plus-square display-icon-plus"
+																		field="quantity${k.index}"
+																		id="display-icon-plus${k.index}"></i>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-lg-4 price">
+																	<h5 style="color: white; display: inline-block">
+																		<b>USD$</b>
+																	</h5>
+																</div>
+																<div class="col-lg-8 price" id="showprice${k.index}">
+																	<h5
+																		style="color: white; user-select: none; display: inline-block;">
+																		<b>${mealVO.price}</b>
+																	</h5>
+																</div>
+																<input type="hidden" id="price${k.index}"
+																	value="${mealVO.price}">
+															</div>
+														</div>
+													</figcaption>
 
-														<input type="hidden" id="item_no${k.index}" name="item_no"
-															value="${mealVO.meal_no}">
-														<input type="hidden" id="item_name${k.index}"
-															name="item_name" value="${mealVO.meal_name}">
-														<input type="hidden" id="item_quantity${k.index}"
-															field="hiddenQty${k.index}" name="quantity" value="1">
-														<input type="hidden" id="item_price${k.index}"
-															name="price" value="${mealVO.price}">
-														<input type="hidden" name="action" value="addToCart">
-													</figure>
-												</form>
+													<input type="hidden" id="item_no${k.index}" class="item_no"
+														value="${mealVO.meal_no}">
+													<input type="hidden" id="item_name${k.index}"
+														class="item_name" value="${mealVO.meal_name}">
+													<input type="hidden" id="item_quantity${k.index}"
+														class="item_quantity" field="hiddenQty${k.index}"
+														value="1">
+													<input type="hidden" id="item_price${k.index}"
+														class="item_price" value="${mealVO.price}">
+													<input type="hidden" class="addToCart" value="addToCart">
+												</figure>
+												<!-- 												</form> -->
 											</div>
 
 										</c:if>
@@ -441,15 +444,11 @@
 				style="text-align: center; color: white; margin-top: 20px; display: inline-block; margin-left: 45%;">
 				<b>購物車</b>
 			</h2>
-			<form method="post"
-				action="${pageContext.request.contextPath}/AddToCartServlet"
-				style="display: inline; margin-left: 16%;">
-				<button class="remove-button" style="margin: 10px auto;"
+				<button class="remove-button" style="margin: 10px auto; margin-left: 17%;"
 					type="submit">
 					<h6 class="display-button-word">清空購物車</h6>
 				</button>
-				<input type="hidden" name="action" value="RESET">
-			</form>
+				<input type="hidden" class="resetCart" value="RESET">
 			<hr style="background-color: white;">
 			<div class="shopping-cart-detail">
 				<div class="container">
@@ -469,39 +468,38 @@
 								</div>
 								<div class="col-lg-3" style="margin-top: 20px;">
 									<h5 class="cart-name" style="text-align: center; color: white;"><%=order.getItem_name()%></h5>
-									<input type="hidden" name="itemno"
+									<input type="hidden" name="itemno" 
 										value="<%=order.getItem_no()%>">
 								</div>
 								<div class="col-lg-3" style="margin-top: 20px;">
 									<i class="fas fa-minus-square cart-icon-minus"
-										field="cart-quantity<%=index%>"
-										id="cart-icon-minus<%=index%>"></i> <input type="text"
-										value=<%=order.getQuantity()%> class="cart-qty"
-										id="cart-qty<%=index%>" name="cart-quantity<%=index%>"
+										field="cart-quantity<%=index%>" id="cart-icon-minus<%=index%>"></i>
+									<input type="text" value=<%=order.getQuantity()%>
+										class="cart-qty" id="cart-qty<%=index%>"
+										name="cart-quantity<%=index%>"
 										style="margin-left: 7.5%; border-radius: 5px; background-color: white;"
 										disabled="disabled"> <i
 										class="fas fa-plus-square cart-icon-plus"
-										field="cart-quantity<%=index%>"
-										id="cart-icon-plus<%=index%>"></i>
+										field="cart-quantity<%=index%>" id="cart-icon-plus<%=index%>"></i>
 
 								</div>
 								<div class="col-lg-2" style="margin-top: 20px;">
 									<b><h5 id="show-cartprice<%=index%>"
-										style="text-align: center; color: white;"><%=order.getPrice()%></h5></b>
-									<input type="hidden" name="price" value="<%=order.getPrice()%>">
+											style="text-align: center; color: white;"><%=order.getPrice()%></h5></b>
+<%-- 									<input type="text" name="price" value="<%=order.getPrice()%>"> --%>
 									<input type="hidden" id="cart-price<%=index%>"
 										value="<%=order.getPrice()%>">
 								</div>
 								<div class="col-lg-2" style="margin-top: 20px;">
-									<form method="post"
-										action="${pageContext.request.contextPath}/AddToCartServlet">
-										<input type="hidden" name="action" value="DELETE"> <input
-											type="hidden" name="del" value="<%=index%>">
-										<button type="submit">
-											<i class="fas fa-trash-alt"
-												style="margin-left: 10px; font-size: 21px; color: rgb(238, 53, 76);"></i>
-										</button>
-									</form>
+									<!-- 									<form method="post" -->
+									<%-- 										action="${pageContext.request.contextPath}/AddToCartServlet"> --%>
+									<input type="hidden" value="DELETE" class="delToCart">
+									<input class="delIndex" type="hidden" value="<%=index%>">
+									<button type="submit" class="del-to-cart">
+										<i class="fas fa-trash-alt"
+											style="margin-left: 10px; font-size: 21px; color: rgb(238, 53, 76);"></i>
+									</button>
+									<!-- 									</form> -->
 								</div>
 							</div>
 						</div>
@@ -510,8 +508,6 @@
 						%>
 					</div>
 
-					<form method="post"
-						action="${pageContext.request.contextPath}/MealOrderServlet">
 						<div class="row" style="height: 70px;">
 							<div class="col-lg-3">
 								<h5
@@ -524,7 +520,7 @@
 									style="font-size: 20px; margin-top: -8px; margin-left: 30%;">
 										<c:forEach var="roomsVO" items="${roomnoList}"
 											varStatus="rmno">
-											<option value="${roomsVO}">${roomsVO}</option>
+											<option class="rmno" value="${roomsVO}">${roomsVO}</option>
 										</c:forEach>
 								</select>
 								</label>
@@ -533,24 +529,25 @@
 							<div class="col-lg-9">
 								<button class="display-button" style="margin: 10px auto;"
 									type="submit">
-									<h5 class="display-button-word">確定送出 $</h5>
+									<h5 class="display-button-word">確認送出$</h5>
 									<h5 id="totalprice" style="margin-top: 10px; color: white;"></h5>
 								</button>
-								<input type="hidden" name="action" value="insert_meal_order">
-								<input type="hidden" name="amount" id="cart-to-servlet" value=1>
+								<input type="hidden" class="insertMealOrder" value="insert_meal_order">
+								<input type="hidden" class="amount" id="cart-to-servlet" value=1>
 								<%
 									for (int index = 0; index < buylist.size(); index++) {
 											CartItem order = buylist.get(index);
 								%>
 								<input type="hidden" id="hidden-cartqty<%=index%>"
-									field="hidden-cartqty<%=index%>" name="qty"
-									value="<%=order.getQuantity()%>" style="background-color: white;">
+									field="hidden-cartqty<%=index%>" name="qty" class="qty"
+									value="<%=order.getQuantity()%>"
+									style="background-color: white;">
+								<input type="hidden" id="itemNo<%=index %>" value="<%= order.getItem_no()%>">
 								<%
 									}
 								%>
 							</div>
 						</div>
-					</form>
 
 				</div>
 
@@ -563,6 +560,280 @@
 
 
 	<%@ include file="/frontend/files/commonJS.file"%>
+	<script>
+	$(document).ready(function(){	
+		let no, name, quantity, price, addToCart, src, delIndex, delToCart, resetCart, rmno, amount, qty, insertMealOrder;
+		
+		$(".add-to-cart").click(function(){			
+			no = $(this).parent('.image').siblings('.item_no').val();
+			name = $(this).parent('.image').siblings('.item_name').val();
+			quantity = $(this).parent('.image').siblings('.item_quantity').val();
+			price = $(this).parent('.image').siblings('.item_price').val();		
+			addToCart = $(this).parent('.image').siblings('.addToCart').val();	
+			src = $(this).siblings('img').attr('src');
+			console.log(no+name+quantity+price+addToCart+src);
+			$.ajax({
+				type: "POST",
+				url: "<%=request.getContextPath()%>/AddToCartServlet",	
+				data: {					
+					item_no: no,
+					item_name: name,
+					quantity: quantity,
+					price: price,
+					action: addToCart,
+				},
+				success: function(){
+					Swal.fire({
+	                    position: "center",
+	                    icon: "success",
+	                    title: "已新增至購物車",
+	                    html: "Redirecting...",
+	                    showConfirmButton: false,
+	                    timer: 1500
+					}).then(function(){
+						location.reload();
+					});                 
+				}
+			})
+		})
+		
+		$('.del-to-cart').click(function(){
+			delIndex = $(this).siblings('.delIndex').val();
+			delToCart = $(this).siblings('.delToCart').val();
+			
+			Swal.fire({
+	            position: "center",
+	            icon: "warning",
+	            title: "確定刪除？",
+	            showCancelButton: true,
+	            confirmButtonText: "確定",
+	            cancelButtonText: "取消"
+			}).then(function(result){
+				 if (result.value) {
+					$.ajax({
+						type: "POST",
+						url: "<%=request.getContextPath()%>/AddToCartServlet",	
+						data: {					
+							del: delIndex,
+							action: delToCart,
+						},
+						success: function(){
+	                        Swal.fire({
+	                        	position: "center",
+	    	                    icon: "success",
+	    	                    title: "已從購物車移除",
+	    	                    html: "Redirecting...",
+	    	                    showConfirmButton: false,
+	    	                    timer: 1500
+	                        }).then(function(){
+	                        	location.reload();
+	    					});  
+	                     }				 
+					});  
+				}
+				else if (result.dismiss === "cancel"){}	
+			})
+		})
+		
+		$('.remove-button').click(function(){
+			resetCart = $(this).siblings('.resetCart').val();
+			console.log(resetCart);
+			Swal.fire({
+	            position: "center",
+	            icon: "warning",
+	            title: "確定清空？",
+	            showCancelButton: true,
+	            confirmButtonText: "確定",
+	            cancelButtonText: "取消"
+			}).then(function(result){
+				 if (result.value) {
+					$.ajax({
+						type: "POST",
+						url: "<%=request.getContextPath()%>/AddToCartServlet",	
+						data: {					
+							action: resetCart,
+						},
+						success: function(){
+	                        Swal.fire({
+	                        	position: "center",
+	    	                    icon: "success",
+	    	                    title: "已清空購物車",
+	    	                    html: "Redirecting...",
+	    	                    showConfirmButton: false,
+	    	                    timer: 1500
+	                        }).then(function(){
+	    						location.reload();
+	    					});  
+	                     }				 
+					});  
+				}
+				else if (result.dismiss === "cancel"){}	
+			})
+		})
+		
+		$('.display-button').click(function(){
+			rmno = $('.rmno').val();
+			amount = $('.amount').val();
+			insertMealOrder = $('.insertMealOrder').val();
+			console.log(rmno);
+			console.log(amount);
+			console.log(insertMealOrder);
+			
+			Swal.fire({
+	            position: "center",
+	            icon: "question",
+	            title: "確定送出？",
+	            showCancelButton: true,
+	            confirmButtonText: "確定",
+	            cancelButtonText: "取消"
+			}).then(function(result){
+				 if (result.value) {
+					$.ajax({
+						type: "POST",
+						url: "<%=request.getContextPath()%>/MealOrderServlet",	
+						data: {					
+							rm_no: rmno,
+							amount: amount,
+							action: insertMealOrder,
+						},
+						success: function(){
+	                        Swal.fire({
+	                        	position: "center",
+	    	                    icon: "success",
+	    	                    title: "訂單已送出",
+	    	                    html: "Redirecting...",
+	    	                    showConfirmButton: false,
+	    	                    timer: 1500
+	                        }).then(function(){
+	    						location.reload();
+	    					});  
+	                     }				 
+					});  
+				}
+				else if (result.dismiss === "cancel"){}	
+			})
+			
+			
+			
+		})
+		
+		
+		
+		$(".cart-qty").each(function(index) {
+			$("#cart-icon-plus" + index + "").click(function(e) {
+				e.preventDefault();
+				fieldName = $(this).attr('field');
+				hiddenQty = $("#hidden-cartqty" + index + "").attr('field');
+				var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+				var hiddenVal = parseInt($('input[field=' + hiddenQty + ']').val());
+				price = parseInt($("#cart-price" + index + "").val());
+				showprice = parseInt($("#show-cartprice" + index + "").html());
+				if (!isNaN(currentVal)) {
+					$('input[name=' + fieldName + ']').val(currentVal + 1);
+					$('input[field=' + hiddenQty + ']').val(hiddenVal + 1);
+				} else {
+					$('input[name=' + fieldName + ']').val(1);
+					$('input[field=' + hiddenQty + ']').val(1);
+				}
+				singleprice = price / currentVal;
+				$("#show-cartprice" + index + "").html(showprice + singleprice);
+				$("#cart-price" + index + "").val(showprice + singleprice);
+											
+
+				var totalprice = 0;
+				$('.cart-name').each(function(index){
+					var listprice = parseInt($("#cart-price" + index + "").val());
+					totalprice = totalprice + listprice;
+					$("#totalprice").html(totalprice);
+					$("#cart-to-servlet").val(totalprice);
+				})
+				
+				let itemNo = $('#itemNo' + index + "").val();
+				let newVal = $('input[name=' + fieldName + ']').val();
+				let itemPrice = $("#cart-price" + index + "").val();
+				let amount = $("#cart-to-servlet").val();
+
+				$.ajax({
+					type: "POST",
+					url: "<%=request.getContextPath()%>/AddToCartServlet",	
+					data: {					
+						action: "changeQuantity",
+						newVal: newVal,
+						itemNo: itemNo,
+						itemPrice: itemPrice,
+					},
+					success: function(){
+						console.log('...');
+					}
+				})
+			});
+		})
+
+		
+		$(".cart-qty").each(function(index) {
+	$("#cart-icon-minus" + index + "").click(function(e) {
+		e.preventDefault();
+		fieldName = $(this).attr('field');
+		hiddenQty = $("#hidden-cartqty" + index + "").attr('field');
+		var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+		var hiddenVal = parseInt($('input[field=' + hiddenQty + ']').val());
+		price = parseInt($("#cart-price" + index + "").val());
+		showprice = parseInt($("#show-cartprice" + index + "").html());
+		if (!isNaN(currentVal) && currentVal > 1) {
+			$('input[name=' + fieldName + ']').val(currentVal - 1);
+			$('input[field=' + hiddenQty + ']').val(hiddenVal - 1);
+		} else {
+			$('input[name=' + fieldName + ']').val(1);
+			$('input[field=' + hiddenQty + ']').val(1);
+		}
+		singleprice = price / currentVal;
+		if ($("#cart-qty" + index + "").val() > 1) {
+			$("#show-cartprice" + index + "").html(showprice - singleprice);
+			$("#cart-price" + index + "").val(showprice - singleprice);
+		} else if ($("#cart-qty" + index + "").val() == 1) {
+			$("#show-cartprice" + index + "").html(singleprice);
+			$("#cart-price" + index + "").val(singleprice);
+		}
+		
+
+		var totalprice = 0;
+		$('.cart-name').each(function(index){
+			var listprice = parseInt($("#cart-price" + index + "").val());
+			totalprice = totalprice + listprice;
+			$("#totalprice").html(totalprice);
+			$("#cart-to-servlet").val(totalprice);
+		})
+		
+		
+		let itemNo = $('#itemNo' + index + "").val();
+		let newVal = $('input[name=' + fieldName + ']').val();
+		let itemPrice = $("#cart-price" + index + "").val();
+		
+		$.ajax({
+			type: "POST",
+			url: "<%=request.getContextPath()%>/AddToCartServlet",	
+			data: {					
+				action: "changeQuantity",
+				newVal: newVal,
+				itemNo: itemNo,
+				itemPrice: itemPrice,
+			},
+			success: function(){
+				console.log('...');
+			}
+		})
+		});
+
+		})
+		var totalprice = 0;
+		$('.cart-name').each(function(index){
+			var listprice = parseInt($("#cart-price" + index + "").val());
+			totalprice = totalprice + listprice;
+			$("#totalprice").html(totalprice);
+			$("#cart-to-servlet").val(totalprice);
+		})
+	})
+	</script>
 	<script src="${pageContext.request.contextPath}/js/front/meal.js "></script>
 </body>
 

@@ -425,7 +425,7 @@ body {
 	padding-right:0px;
 }
 
-/* 購物車頁面結帳*/
+/* 購物車和頁面結帳*/
 .shopCartTitle{
 	margin-left:30px;
 }
@@ -435,6 +435,10 @@ body {
 .imgframe img{
 	width:200px;
 	height:150px;
+}
+.imgframe img:hover{
+	opacity:0.8;
+	border: 2px solid lightgray;
 }
 .cartList{
 	margin-left:55px;
@@ -502,6 +506,11 @@ body {
 	cursor: pointer;
 	border: none;
 	margin-left: 760px;
+	float: right;
+    margin-right: 15px;
+}
+#checkTotal{
+	width: 100px;
 }
 .totalPriInCart{
 	margin-left: 760px;
@@ -519,6 +528,15 @@ body {
 }
 .itTdBo{
 	text-align: center;
+	    padding: 20px;
+}
+#hitTocom{
+	width: 100px;
+    background-color: lightgrey;
+    text-align: center;
+    height: 26px;
+    padding-top: 2px;
+    border-radius: 5px;
 }
 /* 訂單瀏覽頁面 */
 .shopOrderView{
@@ -575,3 +593,4 @@ margin-bottom: 10px;
 	background-color:lightgray;
 	color:black;
 }
+/* 信用卡 */

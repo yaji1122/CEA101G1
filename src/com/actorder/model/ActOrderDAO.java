@@ -1,15 +1,12 @@
 package com.actorder.model;
 
 import java.util.*;
+import java.sql.*;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import com.mealorder.model.MealOrderVO;
-
-import java.sql.*;
 
 public class ActOrderDAO implements ActOrderDAO_interface{
 	
@@ -24,8 +21,8 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 	}
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO ACT_ORDER(ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE)"
-			+ "VALUES('ACTOD' || LPAD(to_char(ACTODNO_SEQ.NEXTVAL), 10, '0') ,? ,? ,? ,? ,? ,?)";
+			"INSERT INTO ACT_ORDER(ACT_ODNO,ACT_NO,BK_NO,OD_STATUS,PPL,TOTAL_PRICE)"
+			+ "VALUES('ACTOD' || LPAD(to_char(ACTODNO_SEQ.NEXTVAL), 10, '0') ,? ,? ,? ,? ,?)";
 	
 	private static final String GET_ALL_STMT =
 			"SELECT ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER order By ACT_ODNO";
@@ -53,10 +50,10 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			
 			pstmt.setString(1,actOrderVO.getActNo());
 			pstmt.setString(2,actOrderVO.getBkNo());
-			pstmt.setDate(3,actOrderVO.getOdTime());
-			pstmt.setString(4,actOrderVO.getOdStatus());
-			pstmt.setInt(5,actOrderVO.getPpl());
-			pstmt.setInt(6,actOrderVO.getTotalPrice());
+//			pstmt.setTime(3,java.sql.Time.valueOf(actOrderVO.getOdTime()));
+			pstmt.setString(3,"0");
+			pstmt.setInt(4,actOrderVO.getPpl());
+			pstmt.setInt(5,actOrderVO.getTotalPrice());
 			pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
@@ -172,7 +169,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
 				actOrderVO.setBkNo(rs.getString("BK_NO"));
-				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
+				actOrderVO.setOdTime(rs.getTime("OD_TIME").toLocalTime());
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));
 				actOrderVO.setTotalPrice(rs.getInt("TOTAL_PRICE"));
@@ -219,7 +216,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
 				actOrderVO.setBkNo(rs.getString("BK_NO"));
-				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
+				actOrderVO.setOdTime(rs.getTime("OD_TIME").toLocalTime());
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));
 				actOrderVO.setTotalPrice(rs.getInt("TOTAL_PRICE"));
@@ -266,7 +263,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 				actOrderVO.setActOdno(rs.getString("ACT_ODNO"));
 				actOrderVO.setActNo(rs.getString("ACT_NO"));
 				actOrderVO.setBkNo(rs.getString("BK_NO"));
-				actOrderVO.setOdTime(rs.getDate("OD_TIME"));
+				actOrderVO.setOdTime(rs.getTime("OD_TIME").toLocalTime());
 				actOrderVO.setOdStatus(rs.getString("OD_STATUS"));
 				actOrderVO.setPpl(rs.getInt("PPL"));
 				actOrderVO.setTotalPrice(rs.getInt("TOTAL_PRICE"));

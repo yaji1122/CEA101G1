@@ -16,7 +16,7 @@ public class CartItem implements java.io.Serializable{
 	private String item_name;
 	private Integer quantity;
 	private Integer price;	
-	
+
 	public String getItem_no() {
 		return item_no;
 	}

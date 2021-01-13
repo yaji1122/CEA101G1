@@ -247,8 +247,8 @@ input:focus {
 .wrapper_meal,
 .wrapper_order {
     min-width: 600px;
-    max-width: 1800px;
-    margin: 0px auto;
+    max-width: 1200px;
+    margin-left: 13%;
 }
 
 .tabs {
