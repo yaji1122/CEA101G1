@@ -6,14 +6,10 @@
 <%@ page import="com.actorder.model.*"%>
 <%@ page import="com.bookingorder.model.*"%>
 
-<%
-    BookingOrderService bookingOrSvc = new BookingOrderService();
-    List<BookingOrderVO> bookinglist = bookingOrSvc.getAllBooking();
-    pageContext.setAttribute("bookinglist",bookinglist);
-    
+<% 
     ActService actSvc = new ActService();
-	List<ActVO> actlist = actSvc.getAll();
-	pageContext.setAttribute("actlist", actlist);
+    List<ActVO> actlist = actSvc.getAll();
+    pageContext.setAttribute("actlist", actlist);
 %>
 
 
@@ -94,18 +90,23 @@
 						</div>
 						<div class="input-group-prepend" id="date-title"></div>
 						<div class="reserve-info" style="width: 190px; margin: auto;">
-							<label class="act_reserve"> 活動價格:</label> 
+							<label class="act_reserve"> 活動價格: </label> 
 							<input type="text" name="act_price" id="total_price" readonly value="0"> 
 							<input type="hidden" name="totalPrice" id="act_price" readonly value="${actOrderVO.totalPrice}">
 						</div>
 					</div>
+					<jsp:useBean id="bookingorderSvc" scope="page" class="com.bookingorder.model.BookingOrderService" />
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">取消</button>
 						<button type="submit" class="btn btn-primary">確認</button>
-						<input type="hidden" name="action" value="insert"> 
+						<input type="hidden" name="action" value="insert">
+						
 						<input type="hidden" name="actNo" value="${actVO.actNo}" id="act_no">
-						<input type="hidden" name="bkNo" value="${bookingOrderVO.bkNo}">
+						
+						<c:forEach var="bookingOrderVO" items="${bookingorderSv.all}">
+						   <input type="hidden" name="bkNo" value="${bookingOrderVO.bkNo}" id="bk_no">
+						</c:forEach>
 					</div>
 				</div>
 			</div>
@@ -207,7 +208,6 @@
 				aria-controls="collapseExample">活動詳情</button>
 		</p>
 		<div class="collapse" id="collapseExample">
-
 			<c:forEach var="actVO" items="${actlist}">
 				<c:if test="${actVO.actEventNo == 10 || actVO.actStatus == 0}">
 					<div class="card card-body">
@@ -221,7 +221,7 @@
 
 								<div class="label">
 									<label class="act_name">活動名稱:<span>${actVO.actName}
-									<input type="hidden" class="act_no" value="${actVO.actNo}">
+									<input type="hidden" class="act_no" value="${actVO.actNo}" id="actno">
 									</span></label>
 								</div>
 								<div class="label">
@@ -234,10 +234,8 @@
 								<div class="label">
 									<label>活動介紹:</label> <label style="width: 300px;">${actVO.actInfo}</label>
 								</div>
-
 							</div>
-
-							<button type="submit" class="btn btn-outline-dark make-res"
+							<button type="button" class="btn btn-outline-dark make-res"
 								data-toggle="modal" data-target="#exampleModalCenter">
 								我要預約</button>
 						</div>
@@ -263,18 +261,19 @@
 			let resname = $("#act_name");
 			let restime = $("#act_time");
 			let resprice = $("#act_price");
-			let resactno = $("#act_no");
+			let resactno =$("#act_no");
 			 
 			$(".make-res").click(function(){
-				
 				let father = $(this).parents(".card");
 				let actname = father.find(".act_name span").text();
 				let acttime = father.find(".act_time span").text();
 				let actprice = father.find(".act_price span").text();
-				let actno = father.find(".act_no ").text();
+				
 				resname.val(actname);
 				restime.val(acttime);
 				resprice.val(actprice);
+				
+				let actno = $("#actno").val();
 				resactno.val(actno);
 				
 			});

@@ -114,9 +114,9 @@ public class ActOrderServlet extends HttpServlet {
 				List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
 				List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
 						.collect(Collectors.toList());
-				String bk_no = "";
+				String bkNo = "";
 				for (BookingOrderVO list : newList) {
-					bk_no = list.getBk_no();
+					bkNo = list.getBk_no();
 				}
 				
 //				String actOdno = new String(req.getParameter("actOdno"));
@@ -145,12 +145,12 @@ public class ActOrderServlet extends HttpServlet {
 					errorMsgs.add("請選擇參加人數");
 				}
 	
-				String bkNo = req.getParameter("bkNo").trim();
-				BookingOrderService bookOrderSvc = new BookingOrderService();
-				BookingOrderVO bookingOrderVO = bookOrderSvc.getOneByBkNo(bkNo);
-				if (bkNo == null || bkNo.trim().length() == 0) {
-					errorMsgs.add("無此訂房單號");
-				}
+//				String bkNo = req.getParameter("bkNo").trim();
+//				BookingOrderService bookOrderSvc = new BookingOrderService();
+//				BookingOrderVO bookingOrderVO = bookOrderSvc.getOneByBkNo(bkNo);
+//				if (bkNo == null || bkNo.trim().length() == 0) {
+//					errorMsgs.add("無此訂房單號");
+//				}
 				
 				
 //				String actOrderTime = req.getParameter("odTime");

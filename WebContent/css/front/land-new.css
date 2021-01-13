@@ -187,6 +187,9 @@ p {
   paddding:5px;
   
 }
+.list-img img:hover{
+	transform: scale(1.05, 1.05);
+}
 .list-context{
   width:350px;
   height:150px;

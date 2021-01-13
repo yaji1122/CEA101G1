@@ -21,8 +21,8 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 	}
 	
 	private static final String INSERT_STMT =
-			"INSERT INTO ACT_ORDER(ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE)"
-			+ "VALUES('ACTOD' || LPAD(to_char(ACTODNO_SEQ.NEXTVAL), 10, '0') ,? ,? ,? ,? ,? ,?)";
+			"INSERT INTO ACT_ORDER(ACT_ODNO,ACT_NO,BK_NO,OD_STATUS,PPL,TOTAL_PRICE)"
+			+ "VALUES('ACTOD' || LPAD(to_char(ACTODNO_SEQ.NEXTVAL), 10, '0') ,? ,? ,? ,? ,?)";
 	
 	private static final String GET_ALL_STMT =
 			"SELECT ACT_ODNO,ACT_NO,BK_NO,OD_TIME,OD_STATUS,PPL,TOTAL_PRICE FROM ACT_ORDER order By ACT_ODNO";
@@ -50,10 +50,10 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			
 			pstmt.setString(1,actOrderVO.getActNo());
 			pstmt.setString(2,actOrderVO.getBkNo());
-			pstmt.setTime(3,java.sql.Time.valueOf(actOrderVO.getOdTime()));
-			pstmt.setString(4,"1");
-			pstmt.setInt(5,actOrderVO.getPpl());
-			pstmt.setInt(6,actOrderVO.getTotalPrice());
+//			pstmt.setTime(3,java.sql.Time.valueOf(actOrderVO.getOdTime()));
+			pstmt.setString(3,"1");
+			pstmt.setInt(4,actOrderVO.getPpl());
+			pstmt.setInt(5,actOrderVO.getTotalPrice());
 			pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
