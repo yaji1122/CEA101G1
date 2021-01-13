@@ -58,10 +58,12 @@
 				</thead>
 				<tbody>
 					<%-- 		<%@ include file="page1.file" %> --%>
+					<jsp:useBean id="mealSvc" scope="page"
+								class="com.meal.model.MealService" />
 					<c:forEach var="mealOrderDetailVO" items="${meallist}">
 						<tr>
 							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.meal_odno}</td>
-							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.meal_no}</td>
+							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealSvc.getOneMeal(mealOrderDetailVO.meal_no).meal_name}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.price}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 3%;">${mealOrderDetailVO.qty}</td>
 <!-- 							<td><input type="hidden" name="meal_odno" -->

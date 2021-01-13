@@ -75,7 +75,7 @@ public class MealOrderServlet extends HttpServlet {
 				Integer price = order.getPrice() / order.getQuantity();
 				System.out.println("編號: " + meal_no + "數量: " + qty + "單價: " + price);
 				mealOrderDetailVO.setMeal_no(meal_no);
-				mealOrderDetailVO.setQty(new Integer(req.getParameter("qty")));
+				mealOrderDetailVO.setQty(order.getQuantity());
 				mealOrderDetailVO.setPrice(price);
 				meallist.add(mealOrderDetailVO);
 				System.out.println("更新: " + meallist.size());
@@ -85,9 +85,7 @@ public class MealOrderServlet extends HttpServlet {
 			mealOrderSvc.insertWithDetails(mealOrderVO, meallist);
 						
 			session.removeAttribute("cart");
-			String url = "/frontend/meal/meal.jsp";
-			RequestDispatcher dispatcher = req.getRequestDispatcher(url);
-			dispatcher.forward(req, res);
+
 			}catch (Exception e){
 				e.printStackTrace();
 			}

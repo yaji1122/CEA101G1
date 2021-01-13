@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -109,8 +110,87 @@ public class ServiceOrderServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-
 		if ("insert".equals(action)) {
+
+			MembersVO member = (MembersVO) req.getSession().getAttribute("member");
+			String mb_id = member.getMb_id();
+			BookingOrderService bkodSvc = new BookingOrderService();
+			List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
+			List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
+					.collect(Collectors.toList());
+
+			String bk_no = "";
+			for (BookingOrderVO list : newList) {
+				bk_no = list.getBk_no();
+			}
+
+			String[] serv_noArr = req.getParameterValues("serv_no");
+
+			String[] serv_timeStr = req.getParameterValues("serv_time");
+
+			String[] serv_countStr = req.getParameterValues("serv_count");
+
+			String[] total_priceStr = req.getParameterValues("total_price");
+
+			String[] locationsArr = req.getParameterValues("locations");
+
+//				List<LocalDateTime> date = new ArrayList<LocalDateTime>();
+//				for(int i =0;i<str.length;i++) {
+//					date.add(LocalDateTime.parse(str[i]));
+//				}
+//				
+//				List<java.sql.Timestamp> serv_time = new ArrayList<java.sql.Timestamp>();
+//                for(int i =0;i<str.length;i++) {
+//                	serv_time.add(java.sql.Timestamp.valueOf(date.get(i)));
+//                }
+
+//				java.sql.Timestamp serv_time = null;
+//				serv_time = java.sql.Timestamp.valueOf(servTime);
+
+//				for(int i =0;i<serv_no.length;i++) {
+//					Integer [] serv_count = new Integer[i];
+//				}
+
+			ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
+			for (int i = 0; i < serv_noArr.length; i++) {
+
+				String serv_no = serv_noArr[i];
+				String locations = locationsArr[i];
+
+				LocalDateTime servTime = LocalDateTime.parse(serv_timeStr[i]);
+
+				java.sql.Timestamp serv_time = null;
+				serv_time = java.sql.Timestamp.valueOf(servTime);
+
+				Integer serv_count = null;
+				serv_count = new Integer(serv_countStr[i]);
+
+				Integer total_price = null;
+				total_price = new Integer(total_priceStr[i]);
+
+				serviceOrderVO.setBk_no(bk_no);
+				serviceOrderVO.setServ_no(serv_no);
+				serviceOrderVO.setServ_time(serv_time);
+				serviceOrderVO.setServ_count(serv_count);
+				serviceOrderVO.setTotal_price(total_price);
+				serviceOrderVO.setLocations(locations);
+
+				ServiceOrderService serviceOrderSvc = new ServiceOrderService();
+				serviceOrderVO = serviceOrderSvc.addServiceOrder(/* serv_odno, */ bk_no, /* od_time, */ /* od_status, */
+						serv_no, serv_time, serv_count, total_price, locations);
+
+			}
+			
+			HttpSession session = req.getSession();
+			session.removeAttribute("shoppingcart");
+
+			String url = "/frontend/services/services.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+
+		}
+
+		if ("insert2".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
