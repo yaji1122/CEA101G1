@@ -249,7 +249,7 @@
 			</div>
 		</div>
 
-		<div class="wrapper" style="background-color: rgb(34, 39, 54);">
+		<div class="wrapper" style="background-color: rgb(44, 49, 64);">
 			<div class="container ">
 				<div class="row ">
 					<div class="col-lg-3 type-wrapper nav-fixed-type">
@@ -259,7 +259,7 @@
 							<c:forEach var="mealTypeVO" items="${mealTypeSvc.all}"
 								varStatus="i">
 								<a class="list-group-item list-group-item-action"
-									style="background-color: rgb(44, 49, 64);"
+									style="background-color: rgb(51, 56, 71);"
 									href="#list-item-${i.index}">
 									<div class="type-box">
 										<h5 class="type-title">
