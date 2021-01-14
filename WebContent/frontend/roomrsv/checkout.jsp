@@ -308,13 +308,41 @@ if (bookingCart != null) {
 	            $("#creditCard-input-view").css("z-index", "-1");
 	        });
 	    });
+	    
+	    function errorfire(title){
+	    	Swal.fire({
+                position: "center",
+                icon: "error",
+                title: title,
+                showConfirmButton: false,
+                timer: 1000,
+            });
+	    }
 	    //新增信用卡
 	    $("#insertnewcard").click(function () {
+	    	let inputs = $(".form-container input");
+	    	
 	        let cardname = $("#name").val();
+	        if (cardname == "") {
+	        	errorfire("姓名未填寫");
+	        	return;
+	        }
 	        let cardno = $("#cardnumber").val();
+	        if (cardno == ""){
+	        	errorfire("卡號未填寫");
+	        	return;
+	        }
 	        let expmon = $("#expirationdate").val().split("/")[0];
 	        let expyear = $("#expirationdate").val().split("/")[1];
+	        if(expmon.match("^[0-9]{2}$") == null || expyear.match("^[0-9]{2}$") == null ) {
+	        	errorfire("有效日期未填寫");
+	        	return;
+	        }
 	        let csc = $("#securitycode").val();
+	        if (csc == ""){
+	        	errorfire("CSC未填寫");
+	        	return;
+	        }
 	        let mbid = "${member.mb_id}";
 	        $.ajax({
 	            url: "<%=request.getContextPath()%>/PaymentServlet?action=insert_credit_card",

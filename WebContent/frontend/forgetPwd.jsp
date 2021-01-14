@@ -83,7 +83,6 @@ $(function () {
     var captcha = $('#botdetect-captcha').captcha({
         captchaEndpoint: "<%=request.getContextPath()%>/simple-captcha-endpoint"
 		});
-
 			// process the form on submit event
 			$('#resetpwd').submit(
 					function(event) {
@@ -153,7 +152,6 @@ $(function () {
 						});
 						event.preventDefault();
 					});
-
 		});
 	</script>
 </body>

@@ -22,6 +22,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/nice-select.css" type="text/css" />
 <title>戴蒙度假村房務管理</title>
 </head>
@@ -81,14 +82,6 @@ table.bookingOrderTable a.cancel i {
     width: fit-content;
     margin: 0 auto
 }
-th {
-	position:sticky;
-	top:45px;
-}
-table.bookingOrderTable {
-	overflow:scroll;
-	max-height:75vh;
-}
 </style>
 <body>
 	<div class="conditions">
@@ -113,7 +106,8 @@ table.bookingOrderTable {
 		class="com.pickup.model.PickupService" />
 	<jsp:useBean id="mbSvc" scope="page"
 		class="com.members.model.MembersService" />
-	<table class="bookingOrderTable">
+	<table class="bookingOrderTable" id="bookingOrderTable">
+		<thead>
 		<tr>
 			<th>訂房單號</th>
 			<th>會員</th>
@@ -136,6 +130,8 @@ table.bookingOrderTable {
 			</th>
 			<th>取消訂單</th>
 		</tr>
+		</thead>
+		<tbody>
 		<c:choose>
 			<c:when test="${bkodList.size() > 0}">
 				<c:forEach var="bkodvo" items="${bkodList}">
@@ -189,6 +185,7 @@ table.bookingOrderTable {
 				</tr>
 			</c:otherwise>
 		</c:choose>
+		</tbody>
 	</table>
 	<div class="info-display" id="booking-detail-info">
 		<div class="close-icon">
@@ -197,6 +194,7 @@ table.bookingOrderTable {
 		<iframe id="myIframe" src=""></iframe>
 	</div>
 	<script src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/datatables.min.js"></script>
 	<script>
 	$(document).ready(function () {
 	    $(".cancel").click(function (e) {
@@ -265,6 +263,23 @@ table.bookingOrderTable {
 			let status = $(this).val();
 			window.location.href = "<%=request.getContextPath()%>/bookingServlet?action=getallBybkStatus&bkstatus=" + status;
 		})
+		
+		$('#bookingOrderTable').DataTable({
+			language: { 
+            "sProcessing": "處理中...",
+            "sLengthMenu": "顯示 _MENU_ 項結果", 
+			"sZeroRecords": "沒有匹配結果", 
+			"sInfo": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項", 
+			"sInfoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+			"sInfoFiltered": "(由 _MAX_ 項結果過濾)",
+			"sInfoPostFix": "", "sSearch": "搜尋:", 
+			"sUrl": "", "sEmptyTable": "表中資料為空", 
+			"sLoadingRecords": "載入中...", 
+			"sInfoThousands": ",", 
+			"oPaginate": { "sFirst": "首頁", "sPrevious": "上頁", "sNext": "下頁", "sLast": "末頁" }, 
+			"oAria": { "sSortAscending": ": 以升序排列此列", "sSortDescending": ": 以降序排列此列" }
+			}
+		});
 	});
 	</script>
 </body>

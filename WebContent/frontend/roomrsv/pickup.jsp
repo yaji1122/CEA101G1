@@ -36,6 +36,9 @@
             font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
             outline:none;
         }
+        body {
+        	backdrop-filter: blur(10px);
+        }
         #pickuptime {
             display: block;
             text-align-last: center;
@@ -57,6 +60,7 @@
             text-align: center;
             padding: 10px;
             background-color:white;
+            box-shadow: 0px 0px 10px grey
         }
         .main h4 {
         	width:100%;

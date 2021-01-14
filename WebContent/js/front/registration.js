@@ -1,4 +1,3 @@
-$(document).ready(function () {
     var current_fs, next_fs, previous_fs; //fieldsets
     var opacity;
     var current = 1;
@@ -7,6 +6,7 @@ $(document).ready(function () {
     setProgressBar(current);
 
     $("#mb_email").blur(function (event) {
+		let input = $(this);
         let email = $(this).val();
         let data = new FormData();
         data.append("email", email);
@@ -26,6 +26,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                         });
+						input.val("");
                     }
                 }
             }
@@ -33,86 +34,7 @@ $(document).ready(function () {
         xhr.send(data);
     });
 
-    $(".next").click(function () {
-        if (!$("#customCheck1").prop("checked")) {
-            Swal.fire({
-                position: "top-end",
-                icon: "error",
-                title: "請勾選同意後繼續",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-            return;
-        }
-        if ($(this).hasClass("form2next")) {
-            if (
-                $("#mb_email")
-                    .val()
-                    .match(/.+[\x40]{1}.+[.]{1}.*/g) === null
-            ) {
-                swalfire("請輸入正確電子郵件地址");
-                $("#mb_email").focus();
-                return;
-            }
-            let allinput = $(".form2 input");
-            for (let i = 0; i < allinput.length - 3; i++) {
-                if (allinput.eq(i).val() === "" || allinput.eq(i).val() === null) {
-                    allinput.eq(i).focus();
-                    swalfire("請完成未填寫資料");
-                    return;
-                }
-            }
-            let password = $("#mb_pwd").val();
-            let confirmPwd = $("#mb_cpwd").val();
-            if (password.match("^(?=\\w*\\d+)(?=\\w*[a-z]+)(?=\\w*[A-Z]+)\\w{8,}$") === null) {
-                swalfire("密碼格式不符");
-                return;
-            } else if (password !== confirmPwd) {
-                swalfire("密碼確認錯誤，請重新確認");
-                return;
-            }
-
-			let mbbd = $("#mb_bd").val()
-			console.log(mbbd)
-			if (!mbbd.match(/\d{4}[\055]+\d{2}[\055]+\d{2}/g)) {
-				swalfire("生日格式錯誤");
-				return;
-			}
-			let mbphone = $("#mb_phone").val()
-			if (!mbphone.match(/\d+/g)) {
-				swalfire("電話號碼格式錯誤，請輸入數字");
-				return;
-			}
-        }
-        if ($(this).hasClass("form3next")) {
-        }
-        current_fs = $(this).parents("fieldset");
-        next_fs = current_fs.next();
-
-        //Add Class Active
-        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-        //show the next fieldset
-        next_fs.show();
-        //hide the current fieldset with style
-        current_fs.animate(
-            { opacity: 0 },
-            {
-                step: function (now) {
-                    // for making fielset appear animation
-                    opacity = 1 - now;
-
-                    current_fs.css({
-                        display: "none",
-                        position: "relative",
-                    });
-                    next_fs.css({ opacity: opacity });
-                },
-                duration: 500,
-            }
-        );
-        setProgressBar(++current);
-    });
+    
 	
 	
     $(".previous").click(function () {
@@ -160,6 +82,19 @@ $(document).ready(function () {
             timer: 1500,
         });
     }
+	function showImg(thisimg) {
+			var file = thisimg.files[0];
+			if (window.FileReader) {
+				var fr = new FileReader();
+	
+				var showimg = document.getElementById('show');
+				fr.onloadend = function(e) {
+					showimg.src = e.target.result;
+				};
+				fr.readAsDataURL(file);
+				showimg.style.display = 'block';
+			}
+		}
     //國際電話碼
     $("#mb_phone").intlTelInput({
         autoHideDialCode: true,
@@ -177,13 +112,15 @@ $(document).ready(function () {
             $(".confirm_laebl").removeClass("error_label");
         }
     });
-
+	let today = new Date();
+	todayStr = today.getFullYear + "/" + today.getMonth + "" + today.getDate
 	$("#mb_bd").datetimepicker({
 				timepicker:false,
 				format:"Y-m-d",
-				lang:"zh-TW"
+				lang:"zh-TW",
+				minDate: '1900/01/01',
+				maxDate: todayStr
 			})
-});
 window.onload = function () {
     const name = document.getElementById("name");
     const cardnumber = document.getElementById("cardnumber");
@@ -406,8 +343,8 @@ window.onload = function () {
     //On Input Change Events
     name.addEventListener("input", function () {
         if (name.value.length == 0) {
-            document.getElementById("svgname").innerHTML = "John Doe";
-            document.getElementById("svgnameback").innerHTML = "John Doe";
+            document.getElementById("svgname").innerHTML = "David Seafood";
+            document.getElementById("svgnameback").innerHTML = "David Seafood";
         } else {
             document.getElementById("svgname").innerHTML = this.value;
             document.getElementById("svgnameback").innerHTML = this.value;

@@ -24,9 +24,28 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/front/registration.css" />
 </head>
-
+<style>
+#captchaCode {
+	display: inline-block;
+}
+#botdetect-captcha {
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+#show {
+margin: 0 auto;
+max-height: 100%;
+}
+</style>
 <body>
 	<div class="wrapper">
+		<div class=logo style="height:50px;text-align:center;padding:10px 0px 0px 0px">
+			<a href="${pageContext.request.contextPath}/frontend/index.jsp">
+				<img style="max-height:100%" src="${pageContext.request.contextPath}/img/logo.png"/>
+			</a>
+		</div>
 		<div class="container-fluid">
 			<div class="row">
 				<div>
@@ -72,7 +91,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 											read the Privacy Policy</label>
 									</p>
 								</div>
-								<input type="button" name="next" class="next action-button"
+								<input type="button" name="next" class="next action-button form1next"
 									value="Next" />
 							</fieldset>
 							<fieldset class="form2">
@@ -105,7 +124,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 										value="${tempfname}" placeholder="Last Name" maxlength="50"
 										required /> <label class="fieldlabels">出生日期(Birthday):
 										<b>*</b>
-									</label> <input type="text" id="mb_bd" name="mb_bd"
+									</label> <input type="text" id="mb_bd" name="mb_bd" autocomplete="off"
 										placeholder="Date of Birth" required /> <label
 										class="fieldlabels">聯絡電話(Contact No.): <b>*</b></label> <input
 										type="tel" id="mb_phone" name="mb_phone" 
@@ -116,13 +135,22 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 										placeholder="Address of Town" required /> <input type="text"
 										name="mb_address" placeholder="Address" required /> <label
 										class="fieldlabels">上傳個人照片(Upload Your Photo) optional</label>
-										<input type="file" name="mb_pic" accept="image/*"
+										<input type="file" name="mb_pic" accept="image/*" onchange="showImg(this)" id="mb_pic"
 										style="text-align-last: center" />
+									<div id="pic-area">
+										<img id="show">
+									</div>
+									
+									<label for="botdetect-captcha"> <span>請輸入下方圖片中的文字:</span> <!-- captcha code: user-input textbox -->
+									<input type="text" id="userCaptchaInput" required>
+									</label>
+									<div id="botdetect-captcha" data-captchastylename="jqueryBasicCaptcha"></div>
 								</div>
 										
 								<input type="button" name="next"
-									class="next action-button form2next" value="Next" /> <input
-									type="button" name="previous"
+									class="g-recaptcha  next action-button form2next" value="Next" /> <input
+									type="button" name="previous" data-sitekey="reCAPTCHA_site_key"
+										data-callback='onSubmit' data-action='submit'
 									class="previous action-button-previous" value="Previous" />
 							</fieldset>
 							<fieldset>
@@ -347,9 +375,9 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 
 									<!-- </div> -->
 									<div class="form3button">
-										<input type="submit" name="next" class="next action-button"
+										<input type="submit" name="next" class="next action-button form3next"
 											value="Submit" /> <input type="button" name="previous"
-											class="previous action-button-previous form3next"
+											class="previous action-button-previous"
 											value="Previous" />
 									</div>
 								</div>
@@ -361,6 +389,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 									<h2 class="success-text">
 										<strong>歡迎加入戴蒙尊榮會員</strong>
 									</h2>
+									<a href="<%=request.getContextPath()%>/frontend/index.jsp" class="btn btn-warning" style="width: 50%;margin: 0 auto;">回首頁</a>
 									<div class="justify-content-center">
 										<h4>Welcome Join Us !</h4>
 										<h5>帳戶啟用連結已發送至您註冊的電子郵箱</h5>
@@ -377,6 +406,7 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 
 	<!-- Js Plugins -->
 	<%@ include file="/frontend/files/commonJS.file"%>
+	<script src="<%=request.getContextPath()%>/js/jquery-captcha.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/intlTelInput-jquery.min.js"></script>
 	<script
@@ -384,40 +414,205 @@ pageContext.setAttribute("tempconfirmpassword", request.getParameter("temp-confi
 	<script
 		src="${pageContext.request.contextPath}/js/front/registration.js"></script>
 	<script>
-	//Ajax
-	let regisForm = document.querySelector("#msform");
-	regisForm.addEventListener("submit", (e)=> {
-		e.preventDefault();
-		let data = new FormData(regisForm);
-		let xhr = new XMLHttpRequest();
-		xhr.open("post", "${pageContext.request.contextPath}/MembersServlet");
-		xhr.onload = function(){
-			if (xhr.readyState === xhr.DONE) {
-                if (xhr.status === 200) {
-                    if (xhr.responseText === "success") {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "歡迎申請加入戴蒙會員",
-                            text: "麻煩至電子信箱查看驗證信",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    } else {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "error",
-                            title: "註冊失敗，請洽詢客服人員",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                    }
-                }
-            }
-		}
-		xhr.send(data);
+	$(document).ready(function(){
+		var captcha = $("#botdetect-captcha").captcha({
+		    captchaEndpoint: "<%=request.getContextPath()%>/simple-captcha-endpoint",
+		});
+		//Ajax
+		let regisForm = document.querySelector("#msform");
+		regisForm.addEventListener("submit", (e) => {
+		    e.preventDefault();
+		    let data = new FormData(regisForm);
+		    let xhr = new XMLHttpRequest();
+		    xhr.open("post", "${pageContext.request.contextPath}/MembersServlet");
+		    xhr.onload = function () {
+		        if (xhr.readyState === xhr.DONE) {
+		            if (xhr.status === 200) {
+		                if (xhr.responseText === "success") {
+		                    Swal.fire({
+		                        position: "top-end",
+		                        icon: "success",
+		                        title: "歡迎申請加入戴蒙會員",
+		                        text: "麻煩至電子信箱查看驗證信",
+		                        showConfirmButton: false,
+		                        timer: 1500,
+		                    });
+		                } else {
+		                    Swal.fire({
+		                        position: "top-end",
+		                        icon: "error",
+		                        title: "註冊失敗，請洽詢客服人員",
+		                        showConfirmButton: false,
+		                        timer: 1500,
+		                    });
+		                }
+		            }
+		        }
+		    };
+		    xhr.send(data);
+		});
+
+		$(".next").click(function () {
+			if ($(this).hasClass("form1next")){
+				if (!$("#customCheck1").prop("checked")) {
+			        Swal.fire({
+			            position: "top-end",
+			            icon: "error",
+			            title: "請勾選同意後繼續",
+			            showConfirmButton: false,
+			            timer: 1500,
+			        });
+			        return;
+			    } else {
+			    	goNext($(this));
+			    }
+			}
+		    
+		    if ($(this).hasClass("form2next")) {
+		    	let child = $(this);
+		        if (
+		            $("#mb_email")
+		                .val()
+		                .match(/.+[\x40]{1}.+[.]{1}.*/g) === null
+		        ) {
+		            swalfire("請輸入正確電子郵件地址");
+		            $("#mb_email").focus();
+		            return;
+		        }
+		        let allinput = $(".form2 input");
+		        for (let i = 0; i < allinput.length - 3; i++) {
+		            if (allinput.eq(i).val() === "" || allinput.eq(i).val() === null) {
+		            	if (allinput.eq(i).attr("id") == "mb_pic") continue;
+		                allinput.eq(i).focus();
+		                swalfire("請完成未填寫資料");
+		                return;
+		            }
+		        }
+		        let password = $("#mb_pwd").val();
+		        let confirmPwd = $("#mb_cpwd").val();
+		        if (password.match("^(?=\\w*\\d+)(?=\\w*[a-z]+)(?=\\w*[A-Z]+)\\w{8,}$") === null) {
+		            swalfire("密碼格式不符");
+		            $("#mb_pwd").focus();
+		            return;
+		        } else if (password !== confirmPwd) {
+		            swalfire("密碼確認錯誤，請重新確認");
+		            $("#mb_cpwd").focus();
+		            return;
+		        }
+
+		        let mbbd = $("#mb_bd").val();
+		        console.log(mbbd);
+		        if (!mbbd.match(/\d{4}[\055]+\d{2}[\055]+\d{2}/g)) {
+		            swalfire("生日格式錯誤");
+		            $("#mb_bd").focus();
+		            return;
+		        }
+		        let mbphone = $("#mb_phone").val();
+		        if (!mbphone.match(/\d+/g)) {
+		            swalfire("電話號碼格式錯誤，請輸入數字");
+		            $("#mb_phone").focus();
+		            return;
+		        }
+		        //Captcha驗證
+		        var userEnteredCaptchaCode = captcha.getUserEnteredCaptchaCode();
+
+		        // get the id of a captcha instance that the user tried to solve
+		        var captchaId = captcha.getCaptchaId();
+		        var postData = {
+		            // add the user-entered captcha code value to the post data
+		            userEnteredCaptchaCode: userEnteredCaptchaCode,
+		            // add the id of a captcha instance to the post data
+		            captchaId: captchaId,
+		        };
+		        // post the captcha data to the backend
+		        $.ajax({
+		            method: "POST",
+		            url: "<%=request.getContextPath()%>/CaptchaCheck",
+		            dataType: "json",
+		            contentType: "application/json",
+		            data: JSON.stringify(postData),
+		            success: function (response) {
+		                if (response.success == false) {
+		                    // captcha validation failed; show the error message
+		                    Swal.fire({
+		                        position: "center",
+		                        title: "驗證碼錯誤",
+		                        icon: "error",
+		                        showConfirmButton: false,
+		                        timer: 2000,
+		                    });
+		                    // call the captcha.reloadImage()
+		                    // in order to generate a new captcha challenge
+		                    captcha.reloadImage();
+		                    $("#userCaptchaInput").focus();
+		                    return;
+		                } else {
+		                	goNext(child);
+		                } 
+		            },
+		            error: function (error) {
+		                throw new Error(error);
+		            },
+		        });
+		    }
+
+		    if ($(this).hasClass("form3next")) {
+		        //信用卡欄位驗證
+		        let inputs =  $(".form-container input");
+		        for (let i = 0; i < inputs.length; i++){
+		        	if (inputs.eq(i).val() == ""){
+		        		input.eq(i).focus();
+		        		switch (i) {
+		        		case 0:
+	        				swalfire("姓名未填寫");
+	        				return;
+	        			case 1:
+	        				swalfire("卡號未填寫");
+	        				return;
+	        			case 2:
+	        				swalfire("有效日期未填寫");
+	        				return;
+	        			case 3:
+	        				swalfire("CSC未填寫");
+	        				return;
+		        		default: 
+		        			break;
+		        		}
+		        	} else {
+		        		goNext($(this));
+		        	}
+		        }
+		    }
+		});
 	})
-	
+	function goNext(thisButton){
+		 current_fs = thisButton.parents("fieldset");
+		    next_fs = current_fs.next();
+
+		    //Add Class Active
+		    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+		    //show the next fieldset
+		    next_fs.show();
+		    //hide the current fieldset with style
+		    current_fs.animate(
+		        { opacity: 0 },
+		        {
+		            step: function (now) {
+		                // for making fielset appear animation
+		                opacity = 1 - now;
+
+		                current_fs.css({
+		                    display: "none",
+		                    position: "relative",
+		                });
+		                next_fs.css({ opacity: opacity });
+		            },
+		            duration: 500,
+		        }
+		    );
+		    setProgressBar(++current);
+	}
 	</script>
 </body>
 </html>

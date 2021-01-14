@@ -371,7 +371,7 @@
 	<script>
 	<c:if test="${member != null}">
 		  var INDEX = 0; 
-		  var memberImg = "<%=request.getContextPath()%>/MembersServlet?action=getone_mbpic&mb_id=${member.mb_id}";
+		  var memberImg = "<%=request.getContextPath()%>/MembersServlet?action=getMbPicForChat&mb_id=${member.mb_id}";
 		  var empImg;
 		  $("#chat-submit").click(sendMessage);
 		  
@@ -420,7 +420,7 @@
 		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
 		var empID;
 		var empName;
-		var webSocket;
+		var webSocket = null;
 	
 		function connect() {
 			// create a websocket
@@ -491,7 +491,7 @@
 		}
 		
 		function disconnect() {
-			webSocket.close();
+			if (webSocket != null) webSocket.close();
 		}
 	</c:if>
 	</script>

@@ -31,6 +31,7 @@ public class MembersServlet extends HttpServlet {
 		super();
 	}
 
+	@SuppressWarnings("resource")
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String action = req.getParameter("action").trim();
 		RequestDispatcher dispatcher = null;
@@ -255,16 +256,32 @@ public class MembersServlet extends HttpServlet {
 			MembersService memberSvc = new MembersService();
 			byte[] mbpic = memberSvc.getOneByMbId(mb_id).getMb_pic();
 			if (mbpic != null) {
-				res.getOutputStream().write(ImgUtil.shrink(mbpic, 300));
+				res.getOutputStream().write(mbpic);
 			} else {
 				is = req.getServletContext().getResourceAsStream("/img/nodata.png");
 				byte[] pic = new byte[is.available()];
 				is.read(pic);
 				res.getOutputStream().write(ImgUtil.shrink(pic, 300));
-				is.close();
 			}
 			return;
 		}
+		
+		if ("getMbPicForChat".equals(action)) {
+			res.setContentType("img/jpg");
+			String mb_id = req.getParameter("mb_id").trim();
+			MembersService memberSvc = new MembersService();
+			byte[] mbpic = memberSvc.getOneByMbId(mb_id).getMb_pic();
+			if (mbpic != null) {
+				res.getOutputStream().write(ImgUtil.shrink(mbpic, 50));
+			} else {
+				is = req.getServletContext().getResourceAsStream("/img/nodata.png");
+				byte[] pic = new byte[is.available()];
+				is.read(pic);
+				res.getOutputStream().write(ImgUtil.shrink(pic, 300));
+			}
+			return;
+		}
+		
 		if ("getall".equals(action)) {
 			dispatcher = req.getRequestDispatcher(req.getContextPath() + "/.jsp");
 			List<MembersVO> members = new ArrayList<>();
@@ -294,6 +311,10 @@ public class MembersServlet extends HttpServlet {
 				req.setAttribute("error", "無符合條件之查詢結果");
 				dispatcher.forward(req, res);
 			}
+		}
+		
+		if (is != null) {
+			is.close();
 		}
 	}
 

@@ -196,7 +196,7 @@
 						memberList.innerHTML += 
 							`
 							<li class="person" id="\${memberID}" data-mbid="\${memberID}" data-mbname="\${memberName}">
-		                            <img src="<%=request.getContextPath()%>/MembersServlet?action=getone_mbpic&mb_id=\${memberID}" alt="" />
+		                            <img src="<%=request.getContextPath()%>/MembersServlet?action=getMbPicForChat&mb_id=\${memberID}" alt="" />
 		                            <span class="name">\${memberName}</span>
 		                            <span class="time"></span>
 		                            <span class="preview"></span>

@@ -12,27 +12,13 @@ pageContext.setAttribute("members", members);
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
 <title>會員一覽 Show All Members</title>
 <style>
-th {
-	position: sticky;
-	top: 0;
-}
-
 .membertable table {
 	margin: 0 auto;
 	min-width: 95%;
 }
-
-.membertable thead th {
-	position: sticky;
-}
-
-.membertable {
-	height: 80vh;
-	overflow: scroll;
-}
-
 .showmsg {
 	width: 100%;
 	height: 40px;
@@ -40,7 +26,6 @@ th {
 	padding: 5px;
 	position: relative;
 }
-
 .showmsg p {
 	position: absolute;
 	right: 5vw;
@@ -111,29 +96,22 @@ h5 {
 			</p>
 		</div>
 		<div class="membertable">
-			<table>
+			<table id="memberstable">
 				<thead class="firstTr">
 					<tr>
-						<th><input type="text" id="mb_id" maxlength="10"
-							placeholder="會員編號" style="text-transform: uppercase" autocomplete="off"></th>
-						<th><input type="text" id="mb_name" maxlength="50"
-							placeholder="會員姓名" style="text-transform: uppercase" autocomplete="off"></th>
-						<th><input type="text" id="mb_email" maxlength="50"
-							placeholder="E-MAIL" style="text-transform: uppercase" autocomplete="off"></th>
+						<th>會員編號</th>
+						<th>會員姓名</th>
+						<th>E-MAIL</th>
 						<th>擁有積分</th>
 						<th>帳號狀態</th>
 						<th>會員詳情</th>
 						<th>資料修改</th>
 					</tr>
 				</thead>
-				<%
-					String[] layer = { "odd", "even" };
-				int number = 2;
-				%>
 				<tbody>
 					<%-- <%@ include file="/backend/page.file"%> --%>
 					<c:forEach var="member" items="${members}">
-						<tr class="<%=layer[number++ % 2]%> ">
+						<tr>
 							<td class="mb_id" id="${member.mb_id}">${member.mb_id}</td>
 							<td class="mb_name">${member.mb_name}</td>
 							<td class="mb_email">${member.mb_email}</td>
@@ -258,6 +236,7 @@ h5 {
 	</div>
 	<script src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/back/member-backend.js"></script>
+	<script src="${pageContext.request.contextPath}/js/datatables.min.js"></script>
 	<script>
 		function showImg(thisimg) {
 			var file = thisimg.files[0];
@@ -307,7 +286,25 @@ h5 {
 			        }
 			    });
 			})
+			
+			$('#memberstable').DataTable({
+				language: { 
+	            "sProcessing": "處理中...",
+	            "sLengthMenu": "顯示 _MENU_ 項結果", 
+				"sZeroRecords": "沒有匹配結果", 
+				"sInfo": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項", 
+				"sInfoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+				"sInfoFiltered": "(由 _MAX_ 項結果過濾)",
+				"sInfoPostFix": "", "sSearch": "搜尋:", 
+				"sUrl": "", "sEmptyTable": "表中資料為空", 
+				"sLoadingRecords": "載入中...", 
+				"sInfoThousands": ",", 
+				"oPaginate": { "sFirst": "首頁", "sPrevious": "上頁", "sNext": "下頁", "sLast": "末頁" }, 
+				"oAria": { "sSortAscending": ": 以升序排列此列", "sSortDescending": ": 以降序排列此列" }
+				}
+			});
 		})
+		
 	</script>
 </body>
 </html>

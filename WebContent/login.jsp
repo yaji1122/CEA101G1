@@ -294,14 +294,13 @@ button::after {
         background-color: white;
     }
 }
-    	
     </style>
     <body>
         <div class="bg"><img src="<%=request.getContextPath()%>/img/bgimg.png" alt="" /></div>
 
         <div class="wrapper">
             <div class="login-window">
-                <form method="POST" id="login-form">
+                <form method="POST" id="login-form" action="<%=request.getContextPath()%>/LoginHandler">
                     <div class="login-box">
                         <div>
                             <img src="<%=request.getContextPath()%>/img/logo.png" alt="" />
@@ -316,7 +315,10 @@ button::after {
                             <span class="bar"></span>
                             <label>PASSWORD</label>
                         </div>
-                        <div class="">
+                        <input type="text" name="pass" value="pass" style="display: none;" />
+						<input type="text" name="action" value="member-login" style="display: none;" />
+						<input type="text" name="location" value="loginPage" style="display: none;" />
+                        <div>
                             <button type="submit" class="draw" id="login">LOGIN</button>
                         </div>
                     </div>
@@ -338,7 +340,7 @@ button::after {
 		data.append("mb_pwd", mb_pwd);
 		data.append("action", "member-login");
 		let xhr = new XMLHttpRequest();
-		xhr.open("post", "/CEA101G1/LoginHandler");
+		xhr.open("post", "<%=request.getContextPath()%>/LoginHandler");
 		xhr.onload = function() {
 			if (xhr.readyState === xhr.DONE) {
 				if (xhr.status === 200) {

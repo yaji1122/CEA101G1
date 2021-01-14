@@ -75,15 +75,16 @@ public class LoginHandler extends HttpServlet {
 					Object locationObj =  user_session.getAttribute("location"); // breaching record
 					String location = null;
 					if (locationObj == null) {
-						location = req.getParameter("location").toString();
+						location = req.getParameter("location");
 						if(location.contains("booking.jsp")) {
 							location = location.replace("frontend/roomrsv/booking.jsp", "booking/Available");
+						} else if (location.contains("loginPage")) {
+							location = req.getContextPath()+"/frontend/index.jsp";
 						}
 					} else {
 						location = (String) locationObj;
 						user_session.removeAttribute("location");
 					}
-					
 					req.getSession().setAttribute("member", member);
 					res.sendRedirect((String) location);
 				}
