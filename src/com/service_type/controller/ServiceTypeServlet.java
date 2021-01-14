@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.service_type.model.*;
+import com.services.model.ServicesService;
+import com.services.model.ServicesVO;
 
 @WebServlet("/ServiceTypeServlet")
 public class ServiceTypeServlet extends HttpServlet {
@@ -70,7 +72,7 @@ public class ServiceTypeServlet extends HttpServlet {
 			serviceTypeVO = serviceTypeSvc.updateServiceType(serv_type_no, serv_type_name);
 
 			req.setAttribute("serviceTypeVO", serviceTypeVO);
-			String url = "/backend/serviceType/listOneServiceType.jsp";
+			String url = "/backend/services/servicesInfo.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			
@@ -86,6 +88,21 @@ public class ServiceTypeServlet extends HttpServlet {
 			
 			try {
 			String serv_type_no = req.getParameter("serv_type_no").trim();
+			
+			ServiceTypeService serviceTypeService = new ServiceTypeService();
+			List<ServiceTypeVO> serviceType = serviceTypeService.getAll();
+			for (ServiceTypeVO serv : serviceType) {
+				if (serv.getServ_type_no().equals(serv_type_no)) {
+					req.setAttribute("msg", "Opps!服務類型編號重複");
+					String url = "/backend/services/servicesInfo.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+			}
+			
+			
+			
 			String serv_type_name = req.getParameter("serv_type_name");
 
 			ServiceTypeVO serviceTypeVO = new ServiceTypeVO();
@@ -95,13 +112,13 @@ public class ServiceTypeServlet extends HttpServlet {
 			ServiceTypeService serviceTypeSvc = new ServiceTypeService();
 			serviceTypeVO = serviceTypeSvc.addServiceType(serv_type_no, serv_type_name);
 
-			String url = "/backend/serviceType/listAllServiceType.jsp";
+			String url = "/backend/services/servicesInfo.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/serviceType/listAllServiceType.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/services/servicesInfo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -112,7 +129,7 @@ public class ServiceTypeServlet extends HttpServlet {
 			ServiceTypeService serviceTypeSvc = new ServiceTypeService();
 			serviceTypeSvc.deleteServiceType(serv_type_no);
 			
-			String url = "/backend/serviceType/listAllServiceType.jsp";
+			String url = "/backend/services/servicesInfo.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			

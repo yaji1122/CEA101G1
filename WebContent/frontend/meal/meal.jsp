@@ -478,14 +478,15 @@
 										class="cart-qty" id="cart-qty<%=index%>"
 										name="cart-quantity<%=index%>"
 										style="margin-left: 7.5%; border-radius: 5px; background-color: white;"
-										disabled="disabled"> <i
+										disabled="disabled" maxlength="2"> <i
 										class="fas fa-plus-square cart-icon-plus"
 										field="cart-quantity<%=index%>" id="cart-icon-plus<%=index%>"></i>
 
 								</div>
 								<div class="col-lg-2" style="margin-top: 20px;">
-									<b><h5 id="show-cartprice<%=index%>"
-											style="text-align: center; color: white;"><%=order.getPrice()%></h5></b>
+									
+									<b><h5 style="color: white; display:inline-block;">$</h5><h5 id="show-cartprice<%=index%>"
+											style="text-align: center; color: white; display: inline-block;"><%=order.getPrice()%></h5></b>
 <%-- 									<input type="text" name="price" value="<%=order.getPrice()%>"> --%>
 									<input type="hidden" id="cart-price<%=index%>"
 										value="<%=order.getPrice()%>">
@@ -520,7 +521,7 @@
 									style="font-size: 20px; margin-top: -8px; margin-left: 30%;">
 										<c:forEach var="roomsVO" items="${roomnoList}"
 											varStatus="rmno">
-											<option class="rmno" value="${roomsVO}">${roomsVO}</option>
+											<option value="${roomsVO}">${roomsVO}</option>
 										</c:forEach>
 								</select>
 								</label>
@@ -589,7 +590,7 @@
 	                    title: "已新增至購物車",
 	                    html: "Redirecting...",
 	                    showConfirmButton: false,
-	                    timer: 1500
+	                    timer: 1000
 					}).then(function(){
 						location.reload();
 					});                 
@@ -624,7 +625,7 @@
 	    	                    title: "已從購物車移除",
 	    	                    html: "Redirecting...",
 	    	                    showConfirmButton: false,
-	    	                    timer: 1500
+	    	                    timer: 1000
 	                        }).then(function(){
 	                        	location.reload();
 	    					});  
@@ -660,7 +661,7 @@
 	    	                    title: "已清空購物車",
 	    	                    html: "Redirecting...",
 	    	                    showConfirmButton: false,
-	    	                    timer: 1500
+	    	                    timer: 1000
 	                        }).then(function(){
 	    						location.reload();
 	    					});  
@@ -672,7 +673,7 @@
 		})
 		
 		$('.display-button').click(function(){
-			rmno = $('.rmno').val();
+			rmno = $('#rm_no').val();
 			amount = $('.amount').val();
 			insertMealOrder = $('.insertMealOrder').val();
 			console.log(rmno);
@@ -703,7 +704,7 @@
 	    	                    title: "訂單已送出",
 	    	                    html: "Redirecting...",
 	    	                    showConfirmButton: false,
-	    	                    timer: 1500
+	    	                    timer: 1000
 	                        }).then(function(){
 	    						location.reload();
 	    					});  
@@ -712,9 +713,6 @@
 				}
 				else if (result.dismiss === "cancel"){}	
 			})
-			
-			
-			
 		})
 		
 		
@@ -728,25 +726,23 @@
 				var hiddenVal = parseInt($('input[field=' + hiddenQty + ']').val());
 				price = parseInt($("#cart-price" + index + "").val());
 				showprice = parseInt($("#show-cartprice" + index + "").html());
-				if (!isNaN(currentVal)) {
-					$('input[name=' + fieldName + ']').val(currentVal + 1);
-					$('input[field=' + hiddenQty + ']').val(hiddenVal + 1);
-				} else {
-					$('input[name=' + fieldName + ']').val(1);
-					$('input[field=' + hiddenQty + ']').val(1);
+				if (!isNaN(currentVal) && currentVal < 99) {
+					if(currentVal != 99){
+						$('input[name=' + fieldName + ']').val(currentVal + 1);
+						$('input[field=' + hiddenQty + ']').val(hiddenVal + 1);
+						singleprice = price / currentVal;
+						$("#show-cartprice" + index + "").html(showprice + singleprice);
+						$("#cart-price" + index + "").val(showprice + singleprice);
+					}
 				}
-				singleprice = price / currentVal;
-				$("#show-cartprice" + index + "").html(showprice + singleprice);
-				$("#cart-price" + index + "").val(showprice + singleprice);
-											
-
+				
 				var totalprice = 0;
 				$('.cart-name').each(function(index){
 					var listprice = parseInt($("#cart-price" + index + "").val());
 					totalprice = totalprice + listprice;
 					$("#totalprice").html(totalprice);
 					$("#cart-to-servlet").val(totalprice);
-				})
+				})					
 				
 				let itemNo = $('#itemNo' + index + "").val();
 				let newVal = $('input[name=' + fieldName + ']').val();
@@ -761,9 +757,6 @@
 						newVal: newVal,
 						itemNo: itemNo,
 						itemPrice: itemPrice,
-					},
-					success: function(){
-						console.log('...');
 					}
 				})
 			});
@@ -818,9 +811,6 @@
 				itemNo: itemNo,
 				itemPrice: itemPrice,
 			},
-			success: function(){
-				console.log('...');
-			}
 		})
 		});
 

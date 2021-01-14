@@ -258,7 +258,7 @@
 							<div class="itemdetail" id="itemPageInCartNo${count.index}" data-action="ADD" data-item_no="${itemVO.item_no}" data-item_name="${itemVO.item_name}" data-item_price="${itemVO.item_price}" data-points="${itemVO.points}">
 								<span class="itemdescribe">${itemVO.item_name}</span> 
 								<span class="itemprice">$ ${itemVO.item_price}</span>
-								<button id="itemPageInCart${count.index}" class="itemPageInCart">Place In Cart</button>
+<%-- 								<button id="itemPageInCart${count.index}" class="itemPageInCart">Place In Cart</button> --%>
 							</div>
 						</div>
 					</c:forEach>

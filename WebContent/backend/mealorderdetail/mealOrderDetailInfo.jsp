@@ -30,7 +30,7 @@
 <div class="black"></div>
 	<section class="wrapper">
 		<ul class="tabs">
-			<li class="active">所有餐點訂單細項</li>
+			<li class="active">餐點訂單細項</li>
 		</ul>
 
 		<ul class="tab__content">

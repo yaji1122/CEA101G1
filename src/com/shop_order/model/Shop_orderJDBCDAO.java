@@ -389,5 +389,11 @@ public class Shop_orderJDBCDAO implements Shop_orderDAO_interface{
 
 
 	}
+
+	@Override
+	public void updateStatus(Shop_orderVO shop_orderVO) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

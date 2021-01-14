@@ -20,7 +20,6 @@ form {
 
 </head>
 <body>
-<h5> <a href="<%=request.getContextPath()%>/backend/serviceType/listAllServiceType.jsp">回所有列表</a> </h5>
 	<h3>服務類型新增</h3>
 	<form METHOD="post"
 		ACTION="${pageContext.request.contextPath}/ServiceTypeServlet"
@@ -28,13 +27,13 @@ form {
 		<div class="form-group">
 			<label for="serv_type_no">服務類型編號:</label> <input type="text"
 				class="form-control" id="serv_type_no" name="serv_type_no"
-				value="<%=(serviceTypeVO == null) ? "1" : serviceTypeVO.getServ_type_no()%>">
+				value="<%=(serviceTypeVO == null) ? "1" : serviceTypeVO.getServ_type_no()%>" required maxlength="1" pattern="\d+">
 		</div>
 		
 		<div class="form-group">
 			<label for="serv_type_name">服務類型名稱:</label> <input type="text"
 				class="form-control" id="serv_type_name" name="serv_type_name"
-				value="<%=(serviceTypeVO == null) ? "美體美容" : serviceTypeVO.getServ_type_name()%>">
+				value="<%=(serviceTypeVO == null) ? "美體美容" : serviceTypeVO.getServ_type_name()%>" required >
 		</div>
 		
 		<input type="hidden" name="action" value="insert"> <input

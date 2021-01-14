@@ -25,7 +25,7 @@
 		action="${pageContext.request.contextPath}/MealTypeServlet">
 		<div class="insert-meal-type">
 			<label for="meal_type_no">
-				<p>種類編號</p> <input type="text" name="meal_type_no" maxlength="5"
+				<p>種類編號</p> <input type="text" value="TYP" name="meal_type_no" maxlength="5"
 				placeholder="請依照格式輸入(TYPXX)" required/>
 			</label> <label for="type_name">
 				<p>種類名稱</p> <input type="text" name="type_name"

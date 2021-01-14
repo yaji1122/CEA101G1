@@ -33,7 +33,7 @@ public class Item_picsDAO implements Item_picsDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO ITEM_PICS (ITEM_PIC_NO, ITEM_NO, ITEM_PIC) VALUES ('P'||LPAD(to_char(PIC_SEQ.NEXTVAL), 4, '0'),?,?)";
+	private static final String INSERT_STMT = "INSERT INTO ITEM_PICS (ITEM_PIC_NO, ITEM_NO, ITEM_PIC) VALUES ('P'||LPAD(to_char(ITEMPIC_SEQ.NEXTVAL), 4, '0'),?,?)";
 	private static final String GET_ALL_STMT = "SELECT ITEM_PIC_NO, ITEM_NO, ITEM_PIC FROM ITEM_PICS WHERE ITEM_NO=? ORDER BY ITEM_NO";
 	private static final String GET_ONE_STMT = "SELECT ITEM_PIC_NO, ITEM_NO, ITEM_PIC FROM ITEM_PICS where ITEM_PIC_NO = ?";
 	private static final String UPDATE = "UPDATE ITEM_PICS set ITEM_NO=?, ITEM_PIC=? where ITEM_PIC_NO = ?";

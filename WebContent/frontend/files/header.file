@@ -24,9 +24,18 @@
 		</div>
 		<nav class="mainmenu mobile-menu">
 			<ul>
+<<<<<<< HEAD
 				<c:if test="${member != null}">
 					<li><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-evnet" class="nav-evnet">住客專區</a></li>
 				</c:if>
+=======
+				<li><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event">住客專區</a>
+					<ul class="dropdown">
+						<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
+						<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=1">預約服務</a></li>
+						<li><a href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
+					</ul></li>
+>>>>>>> branch 'main' of https://github.com/yaji1122/CEA101G1
 				<li><a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" class="nav-evnet" class="nav-evnet">戴蒙商城</a></li>
 				<li><a class="nav-event" href="${pageContext.request.contextPath}/frontend/rooms/rooms.jsp">客房介紹</a></li>
 				<li><a href="${pageContext.request.contextPath}/login.jsp" class="nav-event log-in">會員登入</a></li>
@@ -72,7 +81,7 @@
 						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event"><i class="fas fa-glass-cheers"></i>住客專區</a>
 							<ul class="dropdown">
 								<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
-								<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
+								<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=1">預約服務</a></li>
 								<li><a href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
 							</ul>
 						</li>

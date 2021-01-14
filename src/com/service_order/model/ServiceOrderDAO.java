@@ -1,7 +1,6 @@
 package com.service_order.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,8 +34,12 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 			"DELETE FROM SERVICE_ORDER where SERV_ODNO = ?";
 	private static final String UPDATE = 
 			"UPDATE SERVICE_ORDER set BK_NO=?, OD_STATUS=?, SERV_NO=?, SERV_TIME=?, SERV_COUNT=?, TOTAL_PRICE=?, LOCATIONS=? where SERV_ODNO=?";
+	private static final String CANCEL_OD_STATUS =
+	        "UPDATE SERVICE_ORDER SET OD_STATUS = '2' WHERE SERV_ODNO = ?";
 	private static final String GET_ALL_BY_BKNO_STMT = 
 			"SELECT * FROM SERVICE_ORDER WHERE BK_NO = ?";
+	private static final String GET_SERV_ODNO_BYMBID =
+			"SELECT * FROM SERVICE_ORDER WHERE BK_NO IN (SELECT BK_NO FROM BOOKING_ORDER WHERE MB_ID = ?) ORDER BY SERV_ODNO DESC";
 
 	@Override
 	public void insert(ServiceOrderVO serviceOrderVO) {
@@ -49,7 +52,7 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, serviceOrderVO.getBk_no());
-			pstmt.setString(2, "1");
+			pstmt.setString(2, "0");
 			pstmt.setString(3, serviceOrderVO.getServ_no());
 			pstmt.setTimestamp(4, serviceOrderVO.getServ_time());
 			pstmt.setInt(5, serviceOrderVO.getServ_count());
@@ -93,7 +96,7 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(9, serviceOrderVO.getServ_odno());
+			pstmt.setString(8, serviceOrderVO.getServ_odno());
 			pstmt.setString(1, serviceOrderVO.getBk_no());
 //			pstmt.setTimestamp(2, serviceOrderVO.getOd_time());
 			pstmt.setString(2, serviceOrderVO.getOd_status());
@@ -102,6 +105,45 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 			pstmt.setInt(5, serviceOrderVO.getServ_count());
 			pstmt.setInt(6, serviceOrderVO.getTotal_price());
 			pstmt.setString(7, serviceOrderVO.getLocations());
+
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	@Override
+	public void cancelOd_status(ServiceOrderVO serviceOrderVO) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(CANCEL_OD_STATUS);
+
+			pstmt.setString(1, serviceOrderVO.getServ_odno());
 
 			pstmt.executeUpdate();
 
@@ -290,6 +332,68 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 	}
 	
 	@Override
+	public List<ServiceOrderVO> getAllByMbId(String mb_id) {
+		List<ServiceOrderVO> list = new ArrayList<ServiceOrderVO>();
+		ServiceOrderVO serviceOrderVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_SERV_ODNO_BYMBID);
+			pstmt.setString(1, mb_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// serviceOrderVO 也稱為 Domain objects
+				serviceOrderVO = new ServiceOrderVO();
+				serviceOrderVO.setServ_odno(rs.getString("serv_odno"));
+				serviceOrderVO.setBk_no(rs.getString("bk_no"));
+				serviceOrderVO.setOd_time(rs.getTimestamp("od_time"));
+				serviceOrderVO.setOd_status(rs.getString("od_status"));
+				serviceOrderVO.setServ_no(rs.getString("serv_no"));
+				serviceOrderVO.setServ_time(rs.getTimestamp("serv_time"));
+				serviceOrderVO.setServ_count(rs.getInt("serv_count"));
+				serviceOrderVO.setTotal_price(rs.getInt("total_price"));
+				serviceOrderVO.setLocations(rs.getString("locations"));
+				list.add(serviceOrderVO); // Store the row in the list
+			}
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
 	public List<ServiceOrderVO> getAllByBkNo(String bk_no) {
 		List<ServiceOrderVO> list = new ArrayList<ServiceOrderVO>();
 		ServiceOrderVO serviceOrderVO = null;
@@ -353,8 +457,8 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 		return list;
 	}
 	
-	public static void main(String[] args) {
-		ServiceOrderDAO_interface dao = new ServiceOrderJDBCDAO();
+//	public static void main(String[] args) {
+//		ServiceOrderDAO_interface dao = new ServiceOrderJDBCDAO();
 
 		// 新增
 //		ServiceOrderVO serv1 = new ServiceOrderVO();
@@ -423,6 +527,6 @@ public class ServiceOrderDAO implements ServiceOrderDAO_interface{
 //			System.out.print(serv.getTotal_price());
 //			System.out.println();
 //		}
-	}
+//	}
 
 }

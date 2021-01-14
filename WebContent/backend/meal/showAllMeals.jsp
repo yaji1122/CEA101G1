@@ -24,15 +24,12 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.metro-dark.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/back/backend-meal.css" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/datatables.min.js"></script>
 <title>showAllMeals</title>
 </head>
 
 <body>
-	<h2>所有餐點 - All Meals</h2>
-	<hr>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -72,17 +69,17 @@
 					<c:forEach var="mealVO" items="${mealList}">
 						<tr>
 							<td
-								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.meal_type_no}</td>
+								style="font-size: 16px; text-align: center; padding-top: 2%;">${mealVO.meal_type_no}</td>
 							<td
-								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.meal_no}</td>
+								style="font-size: 16px; text-align: center; padding-top: 2%;">${mealVO.meal_no}</td>
 							<td
-								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.meal_name}</td>
+								style="font-size: 16px; text-align: center; padding-top: 2%;">${mealVO.meal_name}</td>
 							<td
-								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.price}</td>
+								style="font-size: 16px; text-align: center; padding-top: 2%;">${mealVO.price}</td>
 							<td
-								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.meal_info}</td>
+								style="font-size: 16px; text-align: center; padding-top: 2%;">${mealVO.meal_info}</td>
 							<td
-								style="font-size: 16px; text-align: center; padding-top: 1.5%;">${mealVO.making_time}</td>
+								style="font-size: 16px; text-align: center; padding-top: 2%;">${mealVO.making_time}</td>
 							<td><c:choose>
 									<c:when test="${mealVO.meal_status.equals('0')}">
 										<form method="post"
@@ -143,11 +140,19 @@
 		<h3 style="margin-top: 20px;">
 			餐點編號：<b id="update-meal-no"></b>
 		</h3>
-
+		
+<jsp:useBean id="mealTypeSvc" scope="page"
+								class="com.mealtype.model.MealTypeService" />
 		<label for="update-mealtype-no"><p>
-				<b>種類編號</b>
-			</p> <input type="text" id="update-mealtype-no" name="update-mealtype-no"
-			placeholder="請輸入種類編號" maxlength="5" required /> </label> <label
+				<b>種類編號</b>			
+			</p> <select class="custom-select custom-select-sm"
+			name="update-mealtype-no" id="update-mealtype-no" required>
+			<c:forEach var="mealTypeVO" items="${mealTypeSvc.all}">
+				<option value="${mealTypeVO.meal_type_no}">${mealTypeVO.meal_type_no}</option>			
+			</c:forEach>	
+				</select>
+				</label>
+			 <label
 			for="update-mealname"><p>
 				<b>餐點名稱</b>
 			</p> <input type="text" id="update-mealname" name="update-mealname"
@@ -157,16 +162,13 @@
 			placeholder="請輸入單價" required /> </label> <label for="update-mealinfo"><p>
 				<b>餐點介紹</b>
 			</p> <textarea name="update-mealinfo" id="update-mealinfo"
-				maxlength="500" placeholder="最多500字"></textarea> </label> <label
+				maxlength="500" placeholder="最多500字"></textarea> </label> 
+				<label
 			for="update-makingtime"><p>
 				<b>預計製作時間</b>
-			</p> <select class="custom-select custom-select-sm"
-			name="update-makingtime" id="update-makingtime" required>
-				<option value="0">0</option>
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15" selected>15</option>
-		</select> </label> <label for="update-mealstatus"><p>
+			</p> 
+			<input type="text" name="update-makingtime" id="update-makingtime" required>
+					</label> <label for="update-mealstatus"><p>
 				<b>餐點狀態</b>
 			</p> <select class="custom-select custom-select-sm"
 			name="update-mealstatus" id="update-mealstatus" required>
@@ -210,14 +212,12 @@
 			let tr = $(this).parents("tr");
 			let children = tr.children();
 			$("#update-meal-no").text(children.eq(1).text());
-			$("#update-meal-to-servlet").val(children.eq(1).text());
-			$("#update-mealtype-no").val(children.eq(0).text());
+			$("#update-meal-to-servlet").val(children.eq(1).text());			
 			$("#update-mealname").val(children.eq(2).text());
 			$("#update-price").val(children.eq(3).text());
-			$("#update-mealinfo").val(children.eq(4).text());
-			$("#update-makingtime").val(children.eq(5).text().change());
-			$("#update-mealstatus").val(children.eq(6).text()).change();
-
+			$("#update-mealinfo").val(children.eq(4).text());			
+			$("#update-makingtime").val(children.eq(5).text());
+			$("#update-mealtype-no").val(children.eq(0).text()).change();
 		})
 
 		$(".showpic").click(function() {

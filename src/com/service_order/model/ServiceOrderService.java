@@ -55,6 +55,18 @@ public class ServiceOrderService {
 		
 	}
 	
+public ServiceOrderVO cancelServiceOrderOdStatus(String serv_odno) {
+		
+		ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
+		
+		serviceOrderVO.setServ_odno(serv_odno);
+		
+		dao.cancelOd_status(serviceOrderVO);
+		
+		return serviceOrderVO;
+		
+	}
+	
 	public void deleteServiceOrder(String serv_odno) {
 		dao.delete(serv_odno);
 	}
@@ -65,6 +77,10 @@ public class ServiceOrderService {
 
 	public List<ServiceOrderVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<ServiceOrderVO> getAllByMbId(String mb_id) {
+		return dao.getAllByMbId(mb_id);
 	}
 	
 	public List<ServiceOrderVO> getAllByBkNo(String bk_no) {

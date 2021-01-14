@@ -31,15 +31,12 @@
 	rel='stylesheet' />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/back/backend-meal.css" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>
 <script src='${pageContext.request.contextPath}/js/datatables.min.js'></script>
 <title>showAllMealOrder</title>
 </head>
 
 <body>
-	<h2>所有餐點訂單 - All Meal Order</h2>
-	<hr>
 	<%-- 	<c:if test="${not empty errorMsgs}"> --%>
 	<!-- 		<font style="color: red">請修正以下錯誤:</font> -->
 	<!-- 		<ul> -->
@@ -70,7 +67,7 @@
 					<c:forEach var="mealOrderVO" items="${mealOrderList}" varStatus="i">
 						<tr>
 
-							<td style="font-size: 16px; text-align: center; padding-top: 2%;">
+							<td style="font-size: 16px; text-align: center; padding-top: 2.5%;">
 								<form id="form${i.index}" method="post"
 									action="${pageContext.request.contextPath}/MealOrderDetailServlet">
 									<input type="hidden" name="meal_odno"
@@ -83,14 +80,14 @@
 								</form>
 							</td>
 
-							<td style="font-size: 16px; text-align: center; padding-top: 2%;">${mealOrderVO.bk_no}</td>
-							<td style="font-size: 16px; text-align: center; padding-top: 2%;">${mealOrderVO.rm_no}</td>
-							<td style="font-size: 16px; text-align: center; padding-top: 2%;">
+							<td style="font-size: 16px; text-align: center; padding-top: 2.5%;">${mealOrderVO.bk_no}</td>
+							<td style="font-size: 16px; text-align: center; padding-top: 2.5%;">${mealOrderVO.rm_no}</td>
+							<td style="font-size: 16px; text-align: center; padding-top: 2.5%;">
 								<fmt:formatDate value="${mealOrderVO.od_time}"
 									pattern="yyyy-MM-dd HH:mm:ss" />
 							</td>
-							<td style="font-size: 16px; text-align: center; padding-top: 2%;">${mealOrderVO.total_price}</td>
-							<td style="font-size: 16px; text-align: center; padding-top: 2%;">
+							<td style="font-size: 16px; text-align: center; padding-top: 2.5%;">${mealOrderVO.total_price}</td>
+							<td style="font-size: 16px; text-align: center; padding-top: 2.5%;">
 								<c:choose>
 									<c:when test="${mealOrderVO.od_status.equals('0')}">準備中</c:when>
 									<c:when test="${mealOrderVO.od_status.equals('1')}">製作中</c:when>
@@ -136,7 +133,7 @@
 			maxlength="10" placeholder="請依照格式輸入(MEMXXXXXXX)" required disabled="disabled"/>
 		</label> <label for="update-rmno">
 			<p>客房編號</p> <input type="text" id="update-rmno" name="update-rmno"
-			maxlength="3" placeholder="請依照格式輸入(XXX)" required />
+			maxlength="3" placeholder="請依照格式輸入(XXX)" readonly="readonly" />
 		</label> <label for="update-totalprice">
 			<p>訂單總額</p> <input type="text" id="update-totalprice"
 			name="update-totalprice" readonly="readonly"/>

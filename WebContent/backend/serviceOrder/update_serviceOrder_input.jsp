@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.service_order.model.*"%>
 
 <%
@@ -21,6 +22,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
 	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
 	crossorigin="anonymous">
+	<%@ include file="/frontend/files/commonCSS.file"%>
 <style>
 body {
 	margin-left: 30px;
@@ -42,9 +44,7 @@ max-width:300px;
 			服務訂單編號:<%=serviceOrderVO.getServ_odno()%>
 		</div>
 		<div class="form-group">
-			<label for="bk_no">會員編號:</label> <input type="text"
-				class="form-control" id="bk_no" name="bk_no"
-				value="<%=serviceOrderVO.getBk_no()%>" required>
+			訂房單號:<%=serviceOrderVO.getBk_no()%>
 		</div>
 		<div class="form-group">
 			<label for="od_status">訂單狀態:</label>
@@ -72,13 +72,20 @@ max-width:300px;
 				class="form-control" id="serv_no" name="serv_no"
 				value="<%=serviceOrderVO.getServ_no()%>"> --%>
 		</div>
-		<div class="form-group">
+		<%-- <div class="form-group">
+			<label for="serv_time">預約時間:</label> <input type="text"
+				class="form-control f_date1" id="serv_time" name="serv_time"
+				value="<%=serviceOrderVO.getServ_time()%>" required>
+		</div> --%>
+		
+		<%-- <div class="form-group">
 			<label for="serv_time">預約時間:</label> <input type="text"
 				class="form-control" id="serv_time" name="serv_time"
 				value="<%=serviceOrderVO.getServ_time()%>" required>
-		</div>
+		</div> --%>
+		
 		<div class="form-group">
-			<label for="serv_count">服務人數:</label> <input type="text"
+			<label for="serv_count">服務人數:</label> <input type="number"
 				class="form-control" id="serv_count" name="serv_count"
 				value="<%=serviceOrderVO.getServ_count()%>" required>
 		</div>
@@ -88,14 +95,17 @@ max-width:300px;
 				value="<%=serviceOrderVO.getLocations()%>" required>
 		</div>
 		<div class="form-group">
-			<label for="total_price">訂單總額:</label> <input type="text"
+			<label for="total_price">訂單總額:</label> <input type="number"
 				class="form-control" id="total_price" name="total_price"
 				value="<%=serviceOrderVO.getTotal_price()%>" required>
 		</div>
-		<input type="hidden" name="action" value="update"> <input
-			type="hidden" name="serv_odno" value="<%=serviceOrderVO.getServ_odno()%>">
+		<input type="hidden" name="action" value="update"> 
+		<input type="hidden" name="serv_odno" value="<%=serviceOrderVO.getServ_odno()%>">
+		<input type="hidden" name="bk_no" value="<%=serviceOrderVO.getBk_no()%>">
+		<input type="hidden" name="serv_time" value="<%=serviceOrderVO.getServ_time()%>">
 		<input class="btn btn-primary" type="submit" value="送出修改">
 	</form>
+	<%@ include file="/frontend/files/commonJS.file"%>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
@@ -107,7 +117,22 @@ max-width:300px;
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
 		integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
 		crossorigin="anonymous"></script>
-
+    <script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.min.js"></script>
+    <script>
+		$.datetimepicker.setLocale('zh'); // kr ko ja en
+		$('.f_date1').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : true, //timepicker: false,
+			step : 60, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d H:i',
+			value : new Date(),
+		//disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	        '2017/07/10',  // 起始日
+		//minDate:           '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+		});
+	</script>
 	
 </body>
 </html>
