@@ -83,6 +83,22 @@ public class ActOrderServlet extends HttpServlet {
 				out.print("fail");
 			}
 		}
+		
+		if ("cancel".equals(action)) {
+			res.setContentType("utf-8");
+			PrintWriter out = res.getWriter();
+			try {
+				String actOdno = req.getParameter("actOdno");
+				String odStatus = req.getParameter("order_status");
+				
+				ActOrderService actOrderSvc = new ActOrderService();
+				actOrderSvc.cancelActOrder(actOdno, odStatus);
+				out.print("success");
+			} catch (Exception e) {
+				e.printStackTrace();
+				out.print("fail");
+			}
+		}
 
 		if ("getAllByOdStatus".equals(action)) {
 			try {

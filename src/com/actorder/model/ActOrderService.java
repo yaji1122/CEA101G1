@@ -42,10 +42,10 @@ public class ActOrderService {
 		return actOrderVO;
 	}
 	
-    public void deleteActOrder(String actOdno){
-		
-		dao.delete(actOdno);
-	}
+//    public void deleteActOrder(String actOdno){
+//		
+//		dao.delete(actOdno);
+//	}
     
     public ActOrderVO getOneActOrder(String actOdno) {
     	return dao.findByPrimaryKey(actOdno);
@@ -70,6 +70,13 @@ public class ActOrderService {
     	} else {
     		return dao.getAll().stream().filter(e -> e.getOdStatus().equals(status)).collect(Collectors.toList());
     	}
-	}	
+	}
+    public ActOrderVO cancelActOrder(String actOdno,String odStatus) {
+    	ActOrderService actOrdSvc=new ActOrderService();
+    	ActOrderVO actOrderVO = actOrdSvc.getOneActOrder(actOdno);
+    	actOrderVO.setOdStatus("2");
+    	dao.update(actOrderVO);
+		return actOrderVO;
+    }
 
 }
