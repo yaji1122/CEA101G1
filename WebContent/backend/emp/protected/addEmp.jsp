@@ -44,7 +44,7 @@
 										value="<%=(empVO == null) ? "Sam" : empVO.getEmp_name()%>"
 										placeholder="Name" required /> <span class="d-block head">電子信箱</span>
 									<input type="email" name="emp_email"
-										value="<%=(empVO == null) ? "123@gmail.com" : empVO.getEmp_email()%>"
+										value="<%=(empVO == null) ? "cea10120@gmail.com" : empVO.getEmp_email()%>"
 										placeholder="Email" required /> <input type="hidden"
 										name="emp_pwd"
 										value="<%=(empVO == null) ? "12345" : empVO.getEmp_pwd()%>" />
@@ -106,7 +106,7 @@
 										class="com.func.model.FuncService" />
 									<c:forEach var="funcVO" items="${funcSvc.all}">
 										<div>
-											<input type="checkbox" id="checkbox1"
+											<input type="checkbox" class="checkbox1"
 												value="${funcVO.func_no}" name="function">
 											${funcVO.func_no} ${funcVO.func_name}
 										</div>
@@ -159,12 +159,17 @@
 		console.log(add);
 		add.addEventListener("click", check);
 		function check() {
-			if (document.getElementById("checkbox1").checked) {
-				document.form1.submit();
-			} else {
-				Swal.fire("Oops", "未勾選權限", "error");
-			}
+		var	checkbox1 = document.getElementsByClassName("checkbox1")
+		let isChecked = false;
+			for (let i = 0; i<checkbox1.length; i++){
+				if (checkbox1[i].checked){
+					isChecked = true;
+					document.form1.submit();
+				}
+			  }
+			if (!isChecked) Swal.fire("Oops", "未勾選權限", "error");
 		};
+
 	</script>
  <%@ include file="/backend/files/backend_footer.file"%>
 </body>
