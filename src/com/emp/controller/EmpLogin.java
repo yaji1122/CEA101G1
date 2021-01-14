@@ -38,7 +38,6 @@ public class EmpLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         req.setCharacterEncoding("UTF8");
         res.setContentType("text/html; charset=UTF8");
-        PrintWriter out = res.getWriter();
     	HttpSession session = req.getSession();
         //錯誤驗證
         List<String> errorMsgs = new LinkedList<String>();
@@ -53,13 +52,13 @@ public class EmpLogin extends HttpServlet {
         //檢查員工帳號密碼(若非員工)
         if (allowEmp(emp_id, emp_pwd) == null) {
           errorMsgs.add("帳號或密碼錯誤!");
-          RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/failure.jsp");
+          RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/loginEmp.jsp");
 		  failureView.forward(req,res);
         } else {
         	 if (empVO.getEmp_status().equals("2")) {
                 //若員工已離職
                   errorMsgs.add("抱歉你已離職!");
-                  RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/failure.jsp");
+                  RequestDispatcher failureView =req.getRequestDispatcher("/backend/emp/loginEmp.jsp");
         		  failureView.forward(req,res);
         		  }else {
         //若是員工

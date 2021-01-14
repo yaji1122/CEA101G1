@@ -148,6 +148,20 @@ ul li {
     text-overflow: ellipsis;
     color: var(--grey);
 }
+.container .right .people .person .unread {
+	font-size: 12px;
+	position: absolute;
+	color:white;
+	border-radius: 100%;
+	background-color:crimson;
+	width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-weight: 600;
+    left: 20px;
+    top: 5px;
+}
 .container .right .people .person.active,
 .container .right .people .person:hover {
     margin-top: -1px;
@@ -236,10 +250,48 @@ ul li {
     color: #00b0ff;
     cursor: pointer;
 }
-.container .left .bubble.you .member-pic {
+.container .left .bubble.you .memberpic {
 	position: absolute;
+	height: 40px;
+	width: 40px;
+	border-radius: 100%;
 	left: -50px;
-	top: 0px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.container .left .bubble.you span {
+	position: absolute;
+	font-size:10px;
+	border-radius: 100%;
+	width: 80px;
+    height: fit-content;
+    color: grey;
+    right: -85px;
+    bottom: 0px;
+	opacity: 0;
+	transition: 0.2s ease
+}
+.container .left .bubble.me .emppic {
+	position: absolute;
+	height: 40px;
+	width: 40px;
+	border-radius: 100%;
+	right: -50px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.container .left .bubble.me span {
+	position: absolute;
+	font-size:10px;
+	border-radius: 100%;
+	width: 80px;
+    height: fit-content;
+    color: grey;
+    left: -85px;
+    bottom: 0px;
+	text-align: right;
+	opacity: 0;
+	transition: 0.2s ease
 }
 .container .left .bubble {
     font-size: 16px;
@@ -250,6 +302,9 @@ ul li {
     padding: 13px 14px;
     vertical-align: top;
     border-radius: 5px;
+}
+.container .left .bubble:hover span{
+	opacity:1;
 }
 .container .left .bubble:before {
     position: absolute;

@@ -375,12 +375,16 @@ div.color-info div.colors span {
             let monthOfDay = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
             let wrapper = document.createElement("div"); //包住個別日曆
             wrapper.classList.add("calendar-wrapper");
+            let title = document.createElement("div"); //產生日曆標頭
+            title.classList.add("title");
+            title.innerHTML = "<b>" + (month + 1) + "月</b><p>" + "," + year + "年</p>";
             let table = document.createElement("table"); //產生日曆表格
             table.classList.add("calendar");
             let firstTr = document.createElement("tr"); //產生標頭列
             firstTr.classList.add("week-title");
 
             table.append(firstTr);
+            wrapper.append(title);
             wrapper.append(table);
             //建立抬頭
             for (let i = 0; i < 7; i++) {

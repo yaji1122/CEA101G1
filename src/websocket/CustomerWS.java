@@ -133,21 +133,21 @@ public class CustomerWS {
 					return;
 				}
 			}
-		}
-		
-		if (receiver.contains("EMP")) { //會員發送給客服人員
-			Session empSession = sessionsMapForEmp.get(receiver.split("-")[0]);
-			if (empSession != null && empSession.isOpen()) {
-				empSession.getAsyncRemote().sendText(message);
-				userSession.getAsyncRemote().sendText(message);
-				JedisHandleMessage.saveChatMessage(sender, receiver, message);
-			}
-		} else { //客服人員發送給會員
-			Session memberSession = sessionsMapForMember.get(receiver.split("-")[0]);
-			if (memberSession != null && memberSession.isOpen()) {
-				memberSession.getAsyncRemote().sendText(message);
-				userSession.getAsyncRemote().sendText(message);
-				JedisHandleMessage.saveChatMessage(sender, receiver, message);
+		} else {
+			if (receiver.contains("EMP")) { //會員發送給客服人員
+				Session empSession = sessionsMapForEmp.get(receiver.split("-")[0]);
+				if (empSession != null && empSession.isOpen()) {
+					empSession.getAsyncRemote().sendText(message);
+					userSession.getAsyncRemote().sendText(message);
+					JedisHandleMessage.saveChatMessage(sender, receiver, message);
+				}
+			} else { //客服人員發送給會員
+				Session memberSession = sessionsMapForMember.get(receiver.split("-")[0]);
+				if (memberSession != null && memberSession.isOpen()) {
+					memberSession.getAsyncRemote().sendText(message);
+					userSession.getAsyncRemote().sendText(message);
+					JedisHandleMessage.saveChatMessage(sender, receiver, message);
+				}
 			}
 		}
 		System.out.println("Message received: " + message);

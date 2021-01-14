@@ -12,7 +12,7 @@
 			<label for="chop_name">機型名稱</label> <input type="text"
 				name="chop_name" id="rm_type" maxlength="20"
 				autocomplete="off" required /> <label for="chop_price">接送價格</label>
-			<input type="text" name="chop_price" id="chop_price" maxlength="10"
+			<input type="number" name="chop_price" id="chop_price" maxlength="10"
 				pattern="\d*" autocomplete="off" inputmode="numeric" required /> <label
 				for="chop_info">機型介紹</label>
 			<textarea name="chop_info" id="chop_info" maxlength="500"

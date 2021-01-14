@@ -479,8 +479,8 @@
 			var memberName = "${member.mb_name}";
 			var message = inputMessage.value.trim();
 			let time = new Date();
-			let timeStr = time.getFullYear() + "-" + (time.getMonth()+1) + "-" 
-						+ time.getDate() + " " + time.getHours() + ":" + time.getMinutes();
+			let timeStr = time.getFullYear() + "-" + (time.getMonth()+1).toString().padStart(2, "0") + "-" 
+						+ time.getDate() + " " + time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0");
 			if (message === "") {
 				inputMessage.focus();
 				return;
