@@ -30,8 +30,6 @@
 </head>
 
 <body>
-	<h2>所有餐點種類 - All Meal Types</h2>
-	<hr>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -55,8 +53,8 @@
 				<tbody>
 					<c:forEach var="mealTypeVO" items="${mealTypeList}">
 						<tr>
-							<td style="font-size: 16px; text-align: center; padding-top: 4%;">${mealTypeVO.meal_type_no}</td>
-							<td style="font-size: 16px; text-align: center; padding-top: 4%;">${mealTypeVO.type_name}</td>
+							<td style="font-size: 16px; text-align: center; padding-top: 5%;">${mealTypeVO.meal_type_no}</td>
+							<td style="font-size: 16px; text-align: center; padding-top: 5%;">${mealTypeVO.type_name}</td>
 <!-- 							<td><input type="hidden" name="meal_type_no" -->
 <%-- 								value="${mealTypeVO.meal_type_no}"> --%>
 <!-- 								<button type="submit" class="update btn btn-info">修改</button>
@@ -128,6 +126,9 @@
 		$(function() {
 			$('#myTable').DataTable({
 				"bSort": false,
+				"bJQueryUI":false,
+				"bLengthChange":false,
+				"paging": false,
 				language: { 
                 "sProcessing": "處理中...",
                 "sLengthMenu": "顯示 _MENU_ 項結果", 

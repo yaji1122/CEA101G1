@@ -280,7 +280,6 @@ input:focus {
     height: 120%;
     top: 0;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.3);
     -webkit-transform: translateY(100%);
     transform: translateY(100%);
     transition-duration: 0.25s;
@@ -295,7 +294,6 @@ input:focus {
 }
 .tabs > li.active:before {
     transition-duration: 0.5s;
-    background-color: #e8e8e8;
     -webkit-transform: translateY(0);
     transform: translateY(0);
 }

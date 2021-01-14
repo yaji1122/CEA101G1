@@ -32,11 +32,17 @@ img {
 }
 </style>	
 <body>
+<jsp:useBean id="mealTypeSvc" scope="page"
+								class="com.mealtype.model.MealTypeService" />
 		<form method="post" action="${pageContext.request.contextPath}/MealServlet" enctype="multipart/form-data">
 			<div class="insert-meal-type">
 			<label for="meal_type_no">
-				<p>種類編號</p> <input type="text" name="meal_type_no" id="meal_type_no" maxlength="5"
-				placeholder="請依照格式輸入(TYPXX)" required/>
+				<p>種類編號</p> <select class="custom-select custom-select-sm"
+			name="meal_type_no" id="meal_type_no" required>
+			<c:forEach var="mealTypeVO" items="${mealTypeSvc.all}">
+				<option value="${mealTypeVO.meal_type_no}">${mealTypeVO.meal_type_no}</option>			
+			</c:forEach>	
+				</select>
 			</label> <label for="meal_name">
 				<p>餐點名稱</p> <input type="text" name="meal_name"
 				placeholder="請輸入餐點名稱" required/>
@@ -47,12 +53,8 @@ img {
 			<label for="meal_info"><p>餐點介紹</p> <textarea name="meal_info"
 			 maxlength="500" placeholder="最多500字"></textarea>
 			 </label>
-			 <label for="making_time"><p>預計製作時間</p> <select name="making_time" required>
-					<option value="0" selected>0</option>
-					<option value="5">5</option>
-					<option value="10">10</option>
-					<option value="15">15</option>
-			</select>
+			 <label for="making_time"><p>預計製作時間</p> 
+			<input type="text" name="making_time" required>
 			</label>
 			<label for="meal_pic"><p>上傳餐點照片</p>
 				<div class="pic-upload" name="pic-upload" for="meal_pic" style="background-color: #BEBEBE;">

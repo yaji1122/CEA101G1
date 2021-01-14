@@ -31,8 +31,6 @@
 </head>
 
 <body>
-	<h2>餐點訂單細項 - Meal Order Detail</h2>
-	<hr>
 	<%-- 	<c:if test="${not empty errorMsgs}"> --%>
 	<!-- 		<font style="color: red">請修正以下錯誤:</font> -->
 	<!-- 		<ul> -->
@@ -50,7 +48,7 @@
 				<thead>
 					<tr>
 						<th scope="col">訂單編號</th>
-						<th scope="col">餐點編號</th>
+						<th scope="col">餐點名稱</th>
 						<th scope="col">單價</th>
 						<th scope="col">數量</th>
 <!-- 						<th scope="col">修改</th> -->
@@ -133,6 +131,9 @@
 		$(function() {
 			$('#myTable').DataTable({
 				"bSort": false,
+				"bJQueryUI":false,
+				"bLengthChange":false,
+				"paging": false,
 				language: { 
                 "sProcessing": "處理中...",
                 "sLengthMenu": "顯示 _MENU_ 項結果", 
