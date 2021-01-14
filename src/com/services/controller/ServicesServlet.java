@@ -135,6 +135,7 @@ public class ServicesServlet extends HttpServlet {
 //			try {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			String serv_no = req.getParameter("serv_no").trim();
+			ServicesService servicesService = new ServicesService();
 
 			String serv_name = req.getParameter("serv_name");
 
@@ -227,7 +228,7 @@ public class ServicesServlet extends HttpServlet {
 //			}
 		}
 
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
+		if ("insert".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -236,6 +237,19 @@ public class ServicesServlet extends HttpServlet {
 
 			try {
 				String serv_no = req.getParameter("serv_no").trim();
+
+				ServicesService servicesService = new ServicesService();
+				List<ServicesVO> services = servicesService.getAll();
+				for (ServicesVO serv : services) {
+					if (serv.getServ_no().equals(serv_no)) {
+						req.setAttribute("msg", "Opps!服務編號重複");
+						String url = "/backend/services/servicesInfo.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url);
+						successView.forward(req, res);
+						return;
+					}
+				}
+
 				String serv_name = req.getParameter("serv_name");
 
 				String serv_type_no = req.getParameter("serv_type_no").trim();
@@ -251,7 +265,6 @@ public class ServicesServlet extends HttpServlet {
 				in.close();
 
 				String serv_info = req.getParameter("serv_info").trim();
-
 				Integer serv_dura = null;
 				serv_dura = new Integer(req.getParameter("serv_dura").trim());
 
@@ -319,10 +332,10 @@ public class ServicesServlet extends HttpServlet {
 			String servno = req.getParameter("servno").trim();
 			ServicesService servicesSvc = new ServicesService();
 			byte[] servpic = servicesSvc.getOneByPicNo(servno);
-			if(servpic != null) {
-			res.getOutputStream().write(servpic);
-			res.getOutputStream().flush();
-			return;
+			if (servpic != null) {
+				res.getOutputStream().write(servpic);
+				res.getOutputStream().flush();
+				return;
 			} else {
 				InputStream ispu = null;
 				ispu = req.getServletContext().getResourceAsStream("/img/nodata.png");

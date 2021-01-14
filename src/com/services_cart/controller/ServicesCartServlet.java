@@ -76,7 +76,7 @@ public class ServicesCartServlet extends HttpServlet {
 			}
 
 			session.setAttribute("shoppingcart", buylist);
-			String url = "/frontend/services/services.jsp";
+			String url = "/frontend/services/services.jsp?serv_type_no=1";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 		}

@@ -27,7 +27,7 @@
 				<li><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event">住客專區</a>
 					<ul class="dropdown">
 						<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
-						<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
+						<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=1">預約服務</a></li>
 						<li><a href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
 					</ul></li>
 				<li><a href="<%=request.getContextPath()%>/frontend/shop/shopPage.jsp" class="nav-evnet" class="nav-evnet">戴蒙商城</a></li>
@@ -76,7 +76,7 @@
 						<li class="nav-list"><a href="<%=request.getContextPath()%>/frontend/guestSection.jsp" class="nav-event"><i class="fas fa-glass-cheers"></i>住客專區</a>
 							<ul class="dropdown">
 								<li><a href="<%=request.getContextPath()%>/frontend/activity/activity.jsp">活動報名</a></li>
-								<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp">預約服務</a></li>
+								<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=1">預約服務</a></li>
 								<li><a href="<%=request.getContextPath()%>/frontend/meal/meal.jsp">訂購餐點</a></li>
 							</ul>
 						</li>

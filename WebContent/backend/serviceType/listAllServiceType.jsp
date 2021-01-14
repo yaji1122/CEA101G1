@@ -14,11 +14,15 @@ pageContext.setAttribute("list", list);
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<style>
+.add-button{
+    margin-left: 90%;
+}
+</style>
 <title>服務類型</title>
 </head>
 <body>
-<a href="<%=request.getContextPath()%>/backend/serviceType/addServiceType.jsp">新增服務類型</a><br>
+<a class="btn btn-primary add-button" href="<%=request.getContextPath()%>/backend/serviceType/addServiceType.jsp">新增</a><br>
 	<table>
 		<thead>
 			<tr>
@@ -31,9 +35,7 @@ pageContext.setAttribute("list", list);
 		</thead>
 		<tbody>
 
-			<%@ include file="/backend/files/page1.file"%>
-			<c:forEach var="serviceTypeVO" items="${list}" begin="<%=pageIndex%>"
-				end="<%=pageIndex+rowsPerPage-1%>">
+			<c:forEach var="serviceTypeVO" items="${list}" >
 
 				<tr>
 					<td scope="row">${serviceTypeVO.serv_type_no}</td>
@@ -44,7 +46,7 @@ pageContext.setAttribute("list", list);
 						<FORM METHOD="post"
 							ACTION="${pageContext.request.contextPath}/ServiceTypeServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input type="submit" class="btn btn-primary" value="修改"> <input type="hidden"
 								name="serv_type_no" value="${serviceTypeVO.serv_type_no}"> <input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
@@ -53,7 +55,7 @@ pageContext.setAttribute("list", list);
 						<FORM METHOD="post"
 							ACTION="${pageContext.request.contextPath}/ServiceTypeServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
+							<input type="submit" class="btn btn-danger" value="刪除"> <input type="hidden"
 								name="serv_type_no" value="${serviceTypeVO.serv_type_no}"> <input
 								type="hidden" name="action" value="delete">
 						</FORM>
@@ -62,7 +64,6 @@ pageContext.setAttribute("list", list);
 			</c:forEach>
 		</tbody>
 	</table>
-	<%@ include file="/backend/files/page2.file"%>
 
 </body>
 </html>

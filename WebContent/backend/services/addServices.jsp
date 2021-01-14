@@ -30,7 +30,7 @@ max-width:300px;
 		<div class="form-group">
 			<label for="serv_no">服務編號:</label> <input type="text"
 				class="form-control" id="serv_no" name="serv_no"
-				value="<%=(servicesVO == null) ? "001" : servicesVO.getServ_no()%>">
+				value="<%=(servicesVO == null) ? "001" : servicesVO.getServ_no()%>" required maxlength="3" minlength="3" pattern="\d*">
 		</div>
 		<div class="form-group">
 			<label for="serv_type_no">服務類型:</label>
@@ -53,7 +53,7 @@ max-width:300px;
 		<div class="form-group">
 			<label for="serv_price">服務價格:</label> <input type="text"
 				class="form-control" id="serv_price" name="serv_price"
-				value="<%=(servicesVO == null) ? "2000" : servicesVO.getServ_price()%>">
+				value="<%=(servicesVO == null) ? "2000" : servicesVO.getServ_price()%>" required maxlength="5" pattern="\d+">
 		</div>
 		<div class="form-group">
 			<label for="serv_pic">服務圖片:</label> <input type="file"
@@ -64,7 +64,7 @@ max-width:300px;
 		<div class="form-group">
 			<label for="serv_info">服務介紹:</label> 
 			<textarea class="form-control" name="serv_info" id="serv_info" maxlength="500"
-				placeholder="最多500字" required></textarea>
+				placeholder="最多500字" required maxlength="500"></textarea>
 			
 			<%-- <input type="text"
 				class="form-control" id="serv_info" name="serv_info"
@@ -73,17 +73,17 @@ max-width:300px;
 		<div class="form-group">
 			<label for="serv_name">服務名稱:</label> <input type="text"
 				class="form-control" id="serv_name" name="serv_name"
-				value="<%=(servicesVO == null) ? "按摩" : servicesVO.getServ_name()%>">
+				value="<%=(servicesVO == null) ? "按摩" : servicesVO.getServ_name()%>" required>
 		</div>
 		<div class="form-group">
 			<label for="serv_dura">服務時長:</label> <input type="text"
 				class="form-control" id="serv_dura" name="serv_dura"
-				value="<%=(servicesVO == null) ? 1 : servicesVO.getServ_dura()%>">
+				value="<%=(servicesVO == null) ? 1 : servicesVO.getServ_dura()%>" required maxlength="1" pattern="\d+">
 		</div>
 		<div class="form-group">
 			<label for="serv_ppl">服務人員人數:</label> <input type="text"
 				class="form-control" id="serv_ppl" name="serv_ppl"
-				value="<%=(servicesVO == null) ? 1 : servicesVO.getServ_ppl()%>">
+				value="<%=(servicesVO == null) ? 1 : servicesVO.getServ_ppl()%>" required maxlength="2" pattern="\d+">
 		</div>
 		<input type="hidden" name="action" value="insert"> <input
 			class="btn btn-primary" type="submit" value="送出新增">

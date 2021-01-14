@@ -65,5 +65,8 @@ public class ServicesService {
 		return dao.getOneServicesPic(serv_no);
 	}
 	
+	public List<ServicesVO> getAllByServTypeNo(String serv_type_no) {
+		return dao.getAllByServTypeNo(serv_type_no);
+	}
 
 }

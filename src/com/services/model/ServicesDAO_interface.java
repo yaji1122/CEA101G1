@@ -14,6 +14,8 @@ public interface ServicesDAO_interface {
 	public List<ServicesVO> getAll();
 	
 	public byte[] getOneServicesPic(String serv_no);
+
+	List<ServicesVO> getAllByServTypeNo(String serv_type_no);
 	
 	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
     // public List<EmpVO> getAll(Map<String, String[]> map); 

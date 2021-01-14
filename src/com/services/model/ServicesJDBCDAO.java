@@ -422,4 +422,10 @@ public class ServicesJDBCDAO implements ServicesDAO_interface{
 //		}
 	}
 
+	@Override
+	public List<ServicesVO> getAllByServTypeNo(String serv_type_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

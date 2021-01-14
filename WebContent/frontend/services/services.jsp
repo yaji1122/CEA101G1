@@ -3,13 +3,21 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.services.model.*"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
+<%@ page import="com.rooms.model.*"%>
+<%@ page import="com.bookingorder.model.*"%>
 <%@ page import="com.services_cart.model.*"%>
 <%@ page import="com.services_cart.controller.*"%>
+<%@ page import="java.util.stream.Collectors"%>
 
 <%
-ServicesService servicesSvc = new ServicesService();
-List<ServicesVO> list = servicesSvc.getAll();
-pageContext.setAttribute("list", list);
+	ServicesService servicesSvc = new ServicesService();
+String servTypeNo = request.getParameter("serv_type_no");
+pageContext.setAttribute("servTypeNo", servTypeNo);
+
+RoomsVO roomsVO = (RoomsVO) request.getAttribute("rooms");
+
+List<ServicesVO> servList = servicesSvc.getAllByServTypeNo(servTypeNo);
+pageContext.setAttribute("servList", servList);
 %>
 
 <!DOCTYPE html>
@@ -35,6 +43,42 @@ pageContext.setAttribute("list", list);
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/front/services.css"
 	type="text/css" />
+<style>
+.fa-shopping-cart {
+	font-size: 20px;
+}
+
+.nav-menu {
+	position: absolute;
+	right: 0;
+}
+
+.cart-window {
+	margin: auto;
+	height: 200px;
+}
+
+.modal-margin {
+	margin-bottom: 5%;
+}
+
+.modal-price-window {
+	display: inline-flex;
+	width: 100%;
+}
+
+.count-block {
+	width: inherit;
+}
+
+.serv-price-unit {
+	width: 50%;
+}
+
+.price-total-modal {
+	width: 50%;
+}
+</style>
 
 </head>
 
@@ -43,6 +87,27 @@ pageContext.setAttribute("list", list);
 	<%@ include file="/frontend/files/loginCSS.file"%>
 	<%@ include file="/frontend/files/login.file"%>
 	<%@ include file="/frontend/files/loginbox.file"%>
+
+	<%
+		String mb_id = member.getMb_id();
+	BookingOrderService bkodSvc = new BookingOrderService();
+	List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
+	List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
+			.collect(Collectors.toList());
+	String bk_no = "";
+	for (BookingOrderVO list : newList) {
+		bk_no = list.getBk_no();
+	}
+
+	RoomsService roomsSvc = new RoomsService();
+	List<RoomsVO> roomList = roomsSvc.getAllByMbId(mb_id);
+	List<String> roomnoList = new ArrayList<>();
+	for (RoomsVO list : roomList) {
+		roomnoList.add(list.getRm_no());
+	}
+
+	session.setAttribute("roomnoList", roomnoList);
+	%>
 
 	<!-- preloader -->
 	<div id="preloder">
@@ -115,11 +180,15 @@ pageContext.setAttribute("list", list);
 
 										<ul class="dropdown">
 											<li><a
-												href="<%=request.getContextPath()%>/frontend/services/services.jsp">美容美體</a></li>
-											<li><a href="#">各式服務</a></li>
+												href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=1">美容美體</a></li>
+											<li><a
+												href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=2">各式服務</a></li>
 										</ul></li>
-									<li><a class="nav-event">已預約服務</a></li>
-									<li><a class="nav-event cart-nav">購物車</a></li>
+									<li><a
+										href="<%=request.getContextPath()%>/frontend/services/servicesOrderList.jsp"
+										class="nav-event">已預約服務</a></li>
+									<li><a class="nav-event cart-nav"><i
+											class="fas fa-shopping-cart icon"></i></a></li>
 								</ul>
 							</nav>
 						</div>
@@ -166,8 +235,9 @@ pageContext.setAttribute("list", list);
 	</div>
 	<div class="container">
 
-		<c:forEach var="servicesVO" items="${list}" varStatus="vs">
-			<c:if test="${servicesVO.serv_type_no == '1'}">
+		<c:forEach var="servicesVO" items="${servList}" varStatus="vs">
+
+			<c:if test="${servicesVO.serv_type_no == servTypeNo}">
 				<c:if test="${servicesVO.serv_status == '1'}">
 					<c:choose>
 
@@ -258,37 +328,45 @@ pageContext.setAttribute("list", list);
 						method="POST">
 						<div class="modal-body">
 							<p>請選擇日期時間:</p>
-							<input name="hiredate" class="f_date1" type="text">
-							<div class="form-group">
+							<input name="hiredate" class="f_date1 modal-margin" type="text">
+							<div class="form-group modal-margin">
 								<label for="exampleFormControlSelect">服務場所</label> <select
 									name="locations" class="form-control"
 									id="exampleFormControlSelect">
-									<option>您的入住客房</option>
-									<option>露天按摩A區</option>
-									<option>露天按摩B區</option>
+									<c:forEach var="roomsVO" items="${roomnoList}"
+										varStatus="rm_no">
+										<option class="rm_no" value="${roomsVO}">${roomsVO}號房</option>
+									</c:forEach>
+
+									<c:if test="${servTypeNo == '1'}">
+										<option>露天按摩A區</option>
+										<option>露天按摩B區</option>
+									</c:if>
 								</select>
 							</div>
-							<div class="count-block">
-								<div class="count-div">
-									<p>人數</p>
+							<div class="modal-price-window">
+								<div class="count-block modal-margin">
+									<div class="count-div">
+										<p>人數</p>
+									</div>
+									<div class="qty-div">
+										<input type="button" class="btn-cart-qty" value="-"
+											onclick="sub();" style="width: 30px; height: 28px;" /> <input
+											id="quantity" name="quantity" value="1" readonly="readonly"
+											style="width: 64px; height: 25px; text-align: center;" /> <input
+											type="button" class="btn-cart-qty" value="+" onclick="add();"
+											style="width: 30px; height: 28px;" />
+									</div>
 								</div>
-								<div class="qty-div">
-									<input type="button" class="btn-cart-qty" value="-"
-										onclick="sub();" style="width: 30px; height: 28px;" /> <input
-										id="quantity" name="quantity" value="1" readonly="readonly"
-										style="width: 64px; height: 25px; text-align: center;" /> <input
-										type="button" class="btn-cart-qty" value="+" onclick="add();"
-										style="width: 30px; height: 28px;" />
-								</div>
-							</div>
 
-							<div class="serv-price-unit">
-								<p>單價:</p>
-								<p class="serv-price"></p>
-							</div>
-							<div class="price-total-modal">
-								<p>總價:</p>
-								<p id="total-price"></p>
+								<div class="serv-price-unit">
+									<p>單價:</p>
+									<p class="serv-price"></p>
+								</div>
+								<div class="price-total-modal">
+									<p>總價:</p>
+									<p id="total-price"></p>
+								</div>
 							</div>
 							<input type="hidden" id="name-hidden" name="servicesNo" value="k">
 							<input type="hidden" class="serv-price" name="price" value="500">
@@ -373,7 +451,9 @@ pageContext.setAttribute("list", list);
 	<%
 		} else {
 	%>
-	<p>購物車尚無內容</p>
+	<div class="cart-window">
+		<p>您尚未選取服務喔！</p>
+	</div>
 	<%
 		}
 	%>
@@ -408,10 +488,11 @@ pageContext.setAttribute("list", list);
 			step : 60, //step: 60 (這是timepicker的預設間隔60分鐘)
 			format : 'Y-m-d H:i',
 			value : new Date(),
-		//disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-		//startDate:	        '2017/07/10',  // 起始日
-		//minDate:           '-1970-01-01', // 去除今日(不含)之前
-		//maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+			//disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+			//startDate:	        'SYSDATE',  // 起始日
+			//endDate:            'SYSDATE+3',
+			minDate : 'SYSDATE',// 去除今日(不含)之前
+			maxDate : '2021-01-18' // 去除今日(不含)之後
 		});
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

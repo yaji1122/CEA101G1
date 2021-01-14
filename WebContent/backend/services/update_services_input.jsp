@@ -65,7 +65,7 @@ body {
 		<div class="form-group">
 			<label for="serv_price">服務價格:</label> <input type="text"
 				class="form-control" id="serv_price" name="serv_price"
-				value="<%=servicesVO.getServ_price()%>" required>
+				value="<%=servicesVO.getServ_price()%>" required maxlength="5" pattern="\d+">
 		</div>
 		<div class="form-group">
 			<label for="serv_pic">服務圖片:</label> <img
@@ -97,12 +97,12 @@ body {
 		<div class="form-group">
 			<label for="serv_dura">服務時長:</label> <input type="text"
 				class="form-control" id="serv_dura" name="serv_dura"
-				value="<%=servicesVO.getServ_dura()%>" required>
+				value="<%=servicesVO.getServ_dura()%>" required maxlength="1" pattern="\d+">
 		</div>
 		<div class="form-group">
 			<label for="serv_ppl">服務人員人數:</label> <input type="text"
 				class="form-control" id="serv_ppl" name="serv_ppl"
-				value="<%=servicesVO.getServ_ppl()%>" required>
+				value="<%=servicesVO.getServ_ppl()%>" required maxlength="2" pattern="\d+">
 		</div>
 		<input type="hidden" name="action" value="update"> <input
 			type="hidden" name="serv_no" value="<%=servicesVO.getServ_no()%>">

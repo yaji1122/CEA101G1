@@ -1,9 +1,26 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="java.time.LocalDateTime"%>
-<%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="com.services.model.*"%>
-<%@ page import="com.services_cart.model.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
+<%@ page import="java.util.stream.Collectors"%>
+<%@ page import="com.service_order.model.*"%>
+<%@ page import="com.bookingorder.model.*"%>
+
+<%
+	ServiceOrderService serviceOrderSvc = new ServiceOrderService();
+/* List<ServiceOrderVO> serviceOrderList = serviceOrderSvc.getAll(); */
+/* pageContext.setAttribute("serviceOrderList", serviceOrderList); */
+MembersVO membersVO = (MembersVO) session.getAttribute("member");
+if (membersVO != null) {
+	List<ServiceOrderVO> serviceOrderList = serviceOrderSvc.getAllByMbId(membersVO.getMb_id());
+	pageContext.setAttribute("serviceOrderList", serviceOrderList);
+}
+%>
+
+<jsp:useBean id="servicesSvc" scope="page"
+	class="com.services.model.ServicesService" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,9 +32,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>Diamond Resort</title>
-<style>
-
-</style>
 
 
 <%@ include file="/frontend/files/commonCSS.file"%>
@@ -31,6 +45,38 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/front/services.css"
 	type="text/css" />
+<style>
+.table-orderList {
+	padding: 10%;
+}
+
+.orderListTable {
+	width: 80%;
+	position: absolute;
+	text-align: center;
+}
+
+input:disabled {
+	cursor: no-drop;
+}
+
+.mainmenu {
+	position: absolute;
+	right: 0;
+}
+
+.td-table {
+	border-bottom: dotted 2px lightgray;
+}
+
+tbody tr {
+	
+}
+
+td {
+	padding: 20px 0px;
+}
+</style>
 
 </head>
 
@@ -48,7 +94,6 @@
 	</div>
 	<!-- preloader -->
 
-
 	<!-- offcanvas menu start -->
 
 	<div class="offcanvas-menu-overlay"></div>
@@ -63,7 +108,7 @@
 		<div class="header-configure-area">
 			<a href="#" class="bk-btn">立刻訂房</a>
 		</div>
-		<nav class="mainmenu mobile-menu">
+		<nav class="mainmenu mobile-menu menu-bar">
 			<ul>
 				<li><a class="nav-event">住客專區</a>
 					<ul class="dropdown">
@@ -111,10 +156,10 @@
 
 										<ul class="dropdown">
 											<li><a
-												href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=1">美容美體</a></li>
+												href="<%=request.getContextPath()%>/frontend/services?serv_type_no=1">美容美體</a></li>
 											<li><a href="<%=request.getContextPath()%>/frontend/services?serv_type_no=2">各式服務</a></li>
 										</ul></li>
-									<li><a href="<%=request.getContextPath()%>/frontend/services/servicesOrderList.jsp" class="nav-event">已預約服務</a></li>
+									<li><a class="nav-event">已預約服務</a></li>
 									<!-- <li><a class="nav-event cart-nav">購物車</a></li> -->
 								</ul>
 							</nav>
@@ -124,73 +169,66 @@
 			</div>
 		</div>
 	</header>
-
-	<div class="order-checkout">
-	<%-- <div id="banner">
-<img src="<%=request.getContextPath()%>/img/services/banner_serv_checkout.jpg" alt="" />
-</div> --%>
-		<%
-			Vector<ServicesItem> buylist = (Vector<ServicesItem>) session.getAttribute("shoppingcart");
-		String amount = (String) request.getAttribute("amount");
-		%>
-		<%
-			for (int i = 0; i < buylist.size(); i++) {
-			ServicesItem order = buylist.get(i);
-			String servicesName = order.getServicesName();
-			String servicesNo = order.getServicesNo();
-			Integer price = order.getPrice();
-			Integer quantity = order.getQuantity();
-			String locations = order.getLocations();
-			LocalDateTime servTime = order.getServTime();
-			Integer unitPrice = (price * quantity);
-		%>
-		<div class="window-checkout">
-			<table class="table-checkout">
+	<!-- Header Section End -->
+	<div class="table-orderList">
+		<table class="orderListTable">
+			<thead>
 				<tr>
-					<th>服務名稱</th>
-					<th>時間</th>
-					<th>單價</th>
-					<th>人數</th>
-					<th>總計</th>
-					<th>地點</th>
+					<th scope="col">訂單編號</th>
+					<th scope="col">訂房單號</th>
+					<th scope="col">訂單成立時間</th>
+					<th scope="col">服務名稱</th>
+					<th scope="col">預約時間</th>
+					<th scope="col">服務人數</th>
+					<th scope="col">服務場所</th>
+					<th scope="col">訂單總額</th>
+					<th scope="col">訂單狀態</th>
+					<th scope="col"></th>
 				</tr>
+			</thead>
+			<tbody>
 
-				<tr>
-					<td><%=servicesName%></td>
-					<td><%=order.getServTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))%></td>
-					<td><%=price%></td>
-					<td><%=quantity%></td>
-					<td><%=unitPrice%></td>
-					<td><%=locations%></td>
-								
-				</tr>
+				<c:forEach var="serviceOrderVO" items="${serviceOrderList}">
+					<tr class="td-table">
+						<td scope="row">${serviceOrderVO.serv_odno}</td>
+						<td>${serviceOrderVO.bk_no}</td>
+						<td><fmt:formatDate value="${serviceOrderVO.od_time}"
+								pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
 
-			</table>
-			<div class="submit-checkout">
-				<form method="post"
-					action="${pageContext.request.contextPath}/ServiceOrderServlet">
-
-					<input type="hidden" name="action" value="insert"> <input
-						type="hidden" name="serv_no" value="<%=servicesNo%>"> <input
-						type="hidden" name="serv_time" value="<%=servTime%>"> <input
-						type="hidden" name="serv_count" value="<%=quantity%>"> <input
-						type="hidden" name="total_price" value="<%=unitPrice%>"> <input
-						type="hidden" name="locations" value="<%=locations%>">
-					<%
-						}
-					%>
-					<br> <br>
-					<div class="checkout-button">
-						<font color="red"><b>總金額：</b></font> <font color="red"><b><%=amount%></b></font>
-
-						<button type="submit">確定預約</button>
-					</div>
-
-				</form>
-			</div>
-		</div>
+						<td>
+							${servicesSvc.getOneServices(serviceOrderVO.serv_no).serv_name}</td>
+						<td><fmt:formatDate value="${serviceOrderVO.serv_time}"
+								pattern="yyyy-MM-dd HH:mm:ss" /></td>
+						<td>${serviceOrderVO.serv_count}</td>
+						<td>${serviceOrderVO.locations}</td>
+						<td>${serviceOrderVO.total_price}</td>
+						<td><c:choose>
+								<c:when test="${serviceOrderVO.od_status.equals('0')}">未完成</c:when>
+								<c:when test="${serviceOrderVO.od_status.equals('1')}">已完成</c:when>
+								<c:when test="${serviceOrderVO.od_status.equals('2')}">已取消</c:when>
+							</c:choose></td>
+						<td>
+							<FORM METHOD="post"
+								ACTION="${pageContext.request.contextPath}/ServiceOrderServlet"
+								style="margin-bottom: 0px;">
+								<input type="submit" value="取消訂單" class="cancel"
+									<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>>
+								<input type="hidden" name="serv_odno"
+									value="${serviceOrderVO.serv_odno}"> <input
+									type="hidden" name="action" value="cancelOdStatus">
+							</FORM>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
+
+
+
+
+
 	<%@ include file="/frontend/files/commonJS.file"%>
 	<!-- 基本JS檔案 -->
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
@@ -310,4 +348,5 @@
 		}
 	</script>
 </body>
+
 </html>

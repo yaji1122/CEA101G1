@@ -38,6 +38,8 @@ public class ServicesDAO implements ServicesDAO_interface{
 			"UPDATE SERVICES set SERV_TYPE_NO=?, SERV_STATUS=?, SERV_PRICE=?, SERV_PIC=?, SERV_INFO=?, SERV_NAME=?, SERV_DURA=?, SERV_PPL=? where SERV_NO=?";
 	private static final String GETONE =
 	"SELECT * FROM SERVICES WHERE SERV_NO =?";
+	private static final String GET_ALL_BYSERVTYPE = 
+			"SELECT SERV_NO, SERV_TYPE_NO, SERV_STATUS, SERV_PRICE, SERV_PIC, SERV_INFO, SERV_NAME, SERV_DURA, SERV_PPL FROM SERVICES where serv_type_no=? order by SERV_NO";
 
 	@Override
 	public void insert(ServicesVO servicesVO) {
@@ -292,6 +294,67 @@ public class ServicesDAO implements ServicesDAO_interface{
 		return list;
 	}
 	
+	@Override
+	public List<ServicesVO> getAllByServTypeNo(String serv_type_no) {
+		List<ServicesVO> list = new ArrayList<ServicesVO>();
+		ServicesVO servicesVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_BYSERVTYPE);
+			pstmt.setNString(1, serv_type_no); 
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// servicesVO 也稱為 Domain objects
+				servicesVO = new ServicesVO();
+				servicesVO.setServ_no(rs.getString("serv_no"));
+				servicesVO.setServ_type_no(rs.getString("serv_type_no"));
+				servicesVO.setServ_status(rs.getString("serv_status"));
+				servicesVO.setServ_price(rs.getInt("serv_price"));
+				servicesVO.setServ_pic(rs.getBytes("serv_pic"));
+				servicesVO.setServ_info(rs.getString("serv_info"));
+				servicesVO.setServ_name(rs.getString("serv_name"));
+				servicesVO.setServ_dura(rs.getInt("serv_dura"));
+				servicesVO.setServ_ppl(rs.getInt("serv_ppl"));
+				list.add(servicesVO); // Store the row in the list
+			}
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 //	public static byte[] getPictureByteArray(String path) throws IOException {
 //		File file = new File(path);
 //		FileInputStream fis = new FileInputStream(file);
