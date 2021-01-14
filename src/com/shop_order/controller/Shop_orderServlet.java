@@ -343,20 +343,34 @@ public class Shop_orderServlet extends HttpServlet {
 								
 				List<Shop_order_detailVO> list = new ArrayList<Shop_order_detailVO>(); // 準備置入訂單明細
 				
-				for(int i = 0; i < buylist.size(); i++) {
-					Shop_order_detailVO order_detail = new Shop_order_detailVO();   // 訂單明細
-					ItemVO order = buylist.get(i);
-					String item_no = order.getItem_no();
-					Double od_pr = order.getItem_price();
-					Integer od_qty = order.getQuantity();
-					Integer od_points = order.getPoints();
-					System.out.println("商品名稱=" + item_no + " ,金額=" + od_pr + " ,數量=" + od_qty + " ,積分=" + od_points);
-					order_detail.setItem_no(item_no);
-					order_detail.setQty(od_qty);
-					order_detail.setItem_price((double)Math.round(od_pr*od_qty));
-					order_detail.setPoints((int)Math.round(od_points*od_qty));
-					list.add(order_detail);
-				}
+				for (ItemVO order : buylist) {
+					 Shop_order_detailVO order_detail = new Shop_order_detailVO();
+					 String item_no = order.getItem_no();
+					 Double od_pr = order.getItem_price();
+					 Integer od_qty = order.getQuantity();
+					 Integer od_points = order.getPoints();
+					 
+					 order_detail.setItem_no(item_no);
+					 order_detail.setQty(od_qty);
+					 order_detail.setItem_price((double)Math.round(od_pr*od_qty));
+					 order_detail.setPoints((int)Math.round(od_points*od_qty));
+					 list.add(order_detail);
+					}
+				
+//				for(int i = 0; i < buylist.size(); i++) {
+//					Shop_order_detailVO order_detail = new Shop_order_detailVO();   // 訂單明細
+//					ItemVO order = buylist.get(i);
+//					String item_no = order.getItem_no();
+//					Double od_pr = order.getItem_price();
+//					Integer od_qty = order.getQuantity();
+//					Integer od_points = order.getPoints();
+//					System.out.println("商品名稱=" + item_no + " ,金額=" + od_pr + " ,數量=" + od_qty + " ,積分=" + od_points);
+//					order_detail.setItem_no(item_no);
+//					order_detail.setQty(od_qty);
+//					order_detail.setItem_price((double)Math.round(od_pr*od_qty));
+//					order_detail.setPoints((int)Math.round(od_points*od_qty));
+//					list.add(order_detail);
+//				}
 				
 				Shop_orderVO shop_orderVO = new Shop_orderVO();
 				shop_orderVO.setMb_id(mb_id);
@@ -389,13 +403,21 @@ public class Shop_orderServlet extends HttpServlet {
 				String url = "/frontend/members/memberHistory.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
+				
 				CartService cartSVC = new CartService();
-				for(int i = 0; i < buylist.size(); i++) {
-					ItemVO order = buylist.get(i);
-					String item_no = order.getItem_no();
-					Integer quantity = order.getQuantity();
-					cartSVC.deleteCart(mb_id, item_no, quantity);
-				}
+				buylist.stream().forEach(order -> {
+					 String item_no = order.getItem_no();
+					 Integer quantity = order.getQuantity();
+					 cartSVC.deleteCart(mb_id, item_no, quantity);
+					});
+								
+//				for(int i = 0; i < buylist.size(); i++) {
+//					ItemVO order = buylist.get(i);
+//					String item_no = order.getItem_no();
+//					Integer quantity = order.getQuantity();
+//					cartSVC.deleteCart(mb_id, item_no, quantity);
+//				}
+				
 				session.removeAttribute("buylist");
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {

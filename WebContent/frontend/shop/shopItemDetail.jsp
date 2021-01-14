@@ -48,8 +48,10 @@ MembersVO member = null;
 member = (MembersVO) session.getAttribute("member");
 sessionID = (String) session.getAttribute("user_session_id");
 if (member == null && sessionID == null) { //表示session已失效
+	System.out.println("第一次進網頁,沒登入會員");
 	Cookie[] cookieList = request.getCookies();
 	if (cookieList != null) {
+		System.out.println("cookieList != null");
 		for (int i = 0; i < cookieList.length; i++) {
 			Cookie theCookie = cookieList[i];
 			if (theCookie.getName().equals("user_session_id")) {
@@ -61,13 +63,16 @@ if (member == null && sessionID == null) { //表示session已失效
 		}
 	}
 	if (mb_email != null) {
+		System.out.println("mb_email != null");
 		MembersService memberSvc = new MembersService();
 		member = memberSvc.getOneByMbEmail(mb_email);
 		session.setAttribute("member", member);
-		session.setAttribute("sessionID", sessionID);//作為最近瀏覽使用
+//		session.setAttribute("sessionID", sessionID);//作為最近瀏覽使用
 	} else if (sessionID != null && mb_email == null) { //非會員，取得先前的SessionID，存入session
+		System.out.println("sessionID != null && mb_email == null");
 		session.setAttribute("sessionID", sessionID);
 	} else { //如果都沒有，紀錄sessionID存在使用者cookie，追蹤使用
+		System.out.println("session.setAttribute user_session_id");
 		Cookie user_session_id = new Cookie("user_session_id", session.getId());
 		user_session_id.setMaxAge(24 * 60 * 60 * 30); //有效期30天
 		response.addCookie(user_session_id);
@@ -81,7 +86,7 @@ if (member == null && sessionID == null) { //表示session已失效
 		String mb_id = member.getMb_id();
 		System.out.println("mb_id = "+mb_id);
 		sessionID = (String) session.getAttribute("sessionID");
-		session.setAttribute("sessionID", sessionID);
+ //		session.setAttribute("sessionID", sessionID);
 	} 
  	System.out.println("user_session_id = " + sessionID);
  	System.out.println("item_no = " + item_no);
@@ -99,6 +104,12 @@ if (member == null && sessionID == null) { //表示session已失效
 		mapIn.get(sessionID).add(item_no);
 		session.setAttribute("map", mapIn);
 	}
+// 	Set<String> listStr = mapIn.keySet();
+// 	for(int i=0; i<mapIn.size();i++){
+// 		for(int j=0; j<listStr.size(); j++){
+// 			System.out.println(mapIn.get(listStr));
+// 		}
+// 	}
 	Map<String,Set<String>> map = (Map<String,Set<String>>)session.getAttribute("map");	
 	%> 
 
@@ -249,7 +260,7 @@ if (member == null && sessionID == null) { //表示session已失效
 									<c:when test="${member != null}"><i class="far fa-gem"></i></i>會員中心</a>
 							<ul class="dropdown">
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
-								<li><a href="#">我的假期</a></li>
+								<li><a href="${pageContext.request.contextPath}/frontend/members/memberBooking.jsp">我的假期</a></li>
 								<li><a href="${pageContext.request.contextPath}/frontend/shop/shopAllOrder.jsp">購物訂單</a></li>
 								<li><a
 									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>

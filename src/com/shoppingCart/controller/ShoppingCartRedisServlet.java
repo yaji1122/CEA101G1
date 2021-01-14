@@ -191,11 +191,6 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 			// 非會員
 			if (member == null) {
 
-//				String loginLocation = req.getParameter("loginLocation");
-//				String URL = req.getContextPath() + "/frontend/members/Login.jsp?requestURI=" + loginLocation;
-//				res.sendRedirect(URL);
-//				return;
-
 				// 會員
 			} else if (req.getParameterValues("checkact") != null) {
 				System.out.println("會員進結帳");
@@ -222,8 +217,6 @@ public class ShoppingCartRedisServlet extends HttpServlet {
 					Integer points = Integer.parseInt(pointArray[d]);
 					aitem.setPoints(points);
 					buylist.add(aitem);
-
-				
 
 //					Double item_price = itemSVC.getOneItem(order.getItem_no()).getItem_price();
 //					Integer quantity = cartSVC.getValueByItem_no(mb_id, order.getItem_no());

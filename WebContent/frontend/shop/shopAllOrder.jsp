@@ -187,7 +187,7 @@
 									<c:when test="${member != null}"><i class="far fa-gem"></i></i>會員中心</a>
 							<ul class="dropdown">
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
-								<li><a href="#">我的假期</a></li>
+								<li><a href="${pageContext.request.contextPath}/frontend/members/memberBooking.jsp">我的假期</a></li>
 								<li><a href="${pageContext.request.contextPath}/frontend/shop/shopAllOrder.jsp">購物訂單</a></li>
 								<li><a
 									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
@@ -228,7 +228,7 @@
 					    </tr>	
 					    <tr class="borBeTQty">
 					    	<th class="tableLeftDa">出貨時間：</th>
-					    	<th><fmt:formatDate value='${order_masterVO.sp_dlvr}' pattern='yyyy-MM-dd HH:mm'/></th>
+					    	<th><fmt:formatDate value='${shop_orderVO.sp_dlvr}' pattern='yyyy-MM-dd HH:mm'/></th>
 					    	<th>訂單狀態:</th>
 					    	<th>
 					    		<c:forEach var="status" items="${sp_status}">
@@ -287,5 +287,10 @@
 	<%@ include file="/frontend/files/commonJS.file" %>
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var delOrderNo = $("#")
+	});
+	</script>
 </body>
 </html>

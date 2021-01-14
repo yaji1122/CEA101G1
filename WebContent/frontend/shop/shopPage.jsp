@@ -1,4 +1,4 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
@@ -45,6 +45,30 @@
     <%@ include file="/frontend/files/login.file" %>
 	<%@ include file="/frontend/files/loginbox.file" %>
 	<div class="back"></div>
+	
+<!-- 	<div class="shopping-cart"> -->
+<!-- 			<div class="cart-border"> -->
+<!-- 				<div class="cart-title">ADDED TO CART<div class="close" id="cart-title-close">✖</div></div> -->
+<%-- 				<div class="cart-item" id="${cartList.item_no}"> --%>
+<%-- 					<c:forEach var="item_picsVO" begin="0" end="0" items="${item_picsSvc.getAllPics(item_no)}"> --%>
+<!-- 						<div class="cart-item-pic"> -->
+<%-- 							<img src="<%=request.getContextPath()%>/item_pics/item_pics.do?item_pic_no=${item_picsVO.item_pic_no}&action=getOne_Pic_Display"/> --%>
+<!-- 						</div> -->
+<%-- 					</c:forEach> --%>
+<!-- 					<div class="cart-item-bor"> -->
+<%-- 						<div class="cart-item-name"><%=itemSvc.getOneItem(item_no).getItem_name()%></div> --%>
+<%-- 						<div class="cart-item-no"><%=itemSvc.getOneItem(item_no).getItem_no()%></div>   --%>
+<%-- 			 			<div class="cart-item-price">$<%=itemSvc.getOneItem(item_no).getItem_price()%></div>  --%>
+<%-- 			 			<div class="cart-points">Points: <%=itemSvc.getOneItem(item_no).getPoints()%></div> --%>
+<!-- 			 			<div class="cart-but-bor"> -->
+<!-- 			 				<div class="close" id="conShop">Continue Shopping</div> -->
+<%-- 							<a class="cart-view" href="<%=request.getContextPath()%>/frontend/shop/shopCartRedis.jsp">View my cart</a> --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+	
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<img id="preloaderpic"
@@ -52,45 +76,7 @@
 		<div class="loader"></div>
 	</div>
 	<!-- Offcanvas Menu Section Begin -->
-<!-- 	<div class="shopping-cart"> -->
-<!-- 		<div class="cart-border"> -->
-<!-- 			<div class="cart-title">MY SHOPPING BAG</div> -->
-<!-- 			<div class="cart-item"> -->
-<!-- 				<div class="cart-item-pic"> -->
-<!-- 					<img src="img/watch1.jpg" alt="" class="item-pic-size"> -->
-<!-- 				</div> -->
-<!-- 				<div class="cart-item-name">TRUNK CLUTCH</div> -->
-<!-- 				<select name="" id="cart-item-no"> -->
-<!-- 					<option value="">1</option> -->
-<!-- 					<option value="">2</option> -->
-<!-- 					<option value="">3</option> -->
-<!-- 					<option value="">4</option> -->
-<!-- 					<option value="">5</option> -->
-<!-- 					<option value="">6</option> -->
-<!-- 				</select> -->
-<!-- 				<div class="cart-item-price">$790.00</div> -->
-<!-- 				<div> -->
-<!-- 					<i class="far fa-trash-alt trash"></i> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
 
-<!-- 		</div> -->
-<!-- 		<div class="priceborder"> -->
-<!-- 			<div class="total"> -->
-<!-- 				<div class="totaltitle">Total:</div> -->
-<!-- 				<div class="totalprice">$7,200.00</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="point"> -->
-<!-- 				<div class="pointtitle">Points:</div> -->
-<!-- 				<div class="pointdiscount">$0.00</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="subtotal"> -->
-<!-- 				<div class="subtotaltitle">Subtotal:</div> -->
-<!-- 				<div class="subtotalprice">$7,200.00</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="close">✖</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
 	<div class="offcanvas-menu-overlay"></div>
 	<div class="canvas-open">
 		<i class="icon_menu"></i>
@@ -208,7 +194,7 @@
 									<c:when test="${member != null}"><i class="far fa-gem"></i></i>會員中心</a>
 							<ul class="dropdown">
 								<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
-								<li><a href="#">我的假期</a></li>
+								<li><a href="${pageContext.request.contextPath}/frontend/members/memberBooking.jsp">我的假期</a></li>
 								<li><a href="${pageContext.request.contextPath}/frontend/shop/shopAllOrder.jsp">購物訂單</a></li>
 								<li><a
 									href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a></li>
@@ -258,7 +244,7 @@
 
 			<div class="container">
 				<div class="row">
-					<c:forEach var="itemVO" items="${list}">
+					<c:forEach var="itemVO" items="${list}"  varStatus="count">
 						<div class="col col-12 col-sm-6 col-md-4">
 							<div class="itemslider">
 								<c:forEach var="item_picsVO" items="${item_picsSvc.getAllPics(itemVO.item_no)}">
@@ -269,10 +255,10 @@
 									</div>
 								</c:forEach>
 							</div>						
-							<div class="itemdetail">
+							<div class="itemdetail" id="itemPageInCartNo${count.index}" data-action="ADD" data-item_no="${itemVO.item_no}" data-item_name="${itemVO.item_name}" data-item_price="${itemVO.item_price}" data-points="${itemVO.points}">
 								<span class="itemdescribe">${itemVO.item_name}</span> 
 								<span class="itemprice">$ ${itemVO.item_price}</span>
-								<button class="itemPageInCart">Place In Cart</button>
+								<button id="itemPageInCart${count.index}" class="itemPageInCart">Place In Cart</button>
 							</div>
 						</div>
 					</c:forEach>
@@ -288,7 +274,29 @@
 	<script src="${pageContext.request.contextPath}/js/slick.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
 	<script type="text/javascript">
-
+// 	$(function(){
+<%-- 		var itemList = '<%= pageContext.getAttribute("list")%>'; --%>
+// 		for (i = 0; i < itemList.length; i++){
+// 			var itemAdd = document.querySelector('div .itemdetail');
+			
+// 			var itemAddInCart = $("#itemPageInCartNo"+i).data();
+// 				console.log("itemAddInCart="+$("#itemPageInCartNo"+i).data("action"));
+// 				$("#itemPageInCart"+i).click(function(event){
+// 					event.stopPropagation();
+// 					$.ajax({
+// 						data:itemAddInCart,
+// 						type:"POST",
+// 						//dataType:"json",
+<%-- 						url:"<%=request.getContextPath()%>/shop/shoppingRedisCart.do", --%>
+// 						success:function(data){
+// 							alert("seccess");
+// // 							$(".shopping-cart").addClass("shopping-cart-show");
+// // 							$(".back").css("display", "block");
+// 						}
+// 					});
+// 				});
+// 		}
+// 	});
 	
 	</script>
 </body>
