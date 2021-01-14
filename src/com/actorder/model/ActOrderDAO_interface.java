@@ -10,5 +10,5 @@ public interface ActOrderDAO_interface {
 	public ActOrderVO findByPrimaryKey(String actOdno);
 	public List<ActOrderVO> getAll();
 	List<ActOrderVO> getAllByBkNo(String bk_no);
-
+	public List<ActOrderVO> getOrderListByMemId(String mb_id);
 }
