@@ -1,6 +1,7 @@
 package com.shop_order.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.item.model.ItemService;
 import com.item.model.ItemVO;
@@ -37,6 +41,7 @@ public class Shop_orderServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
+		JSONObject output = new JSONObject();
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -126,6 +131,31 @@ public class Shop_orderServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/backend/shop_order/listAllShop_order.jsp");
 				failureView.forward(req, res);
 			}
+		}
+		
+		if(action.equals("cancelOrder")) {
+			System.out.println("cancelOrder開始");
+			String sp_odno = req.getParameter("sp_odno");
+			String sp_status = "4";
+			Shop_orderService shop_orderSvc = new Shop_orderService();
+			Shop_orderVO shop_orderVO = shop_orderSvc.getOneShop_order(sp_odno);
+			shop_orderVO.setSp_status(sp_status);
+			
+			shop_orderVO = shop_orderSvc.updateStatus(sp_status, sp_odno);
+			
+			try {
+				output.put("status", "4");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			req.setAttribute("shop_orderVO", shop_orderVO);
+			
+			res.setContentType("text/plain");
+			PrintWriter out = res.getWriter();
+			System.out.println(output);
+			out.write(output.toString());
+			out.flush();
+			out.close();
 		}
 		
 		if ("getSp_odnoByMb_id_For_Display".equals(action)) { // 來自select_page.jsp的請求

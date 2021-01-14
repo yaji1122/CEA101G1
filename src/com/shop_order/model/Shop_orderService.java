@@ -38,6 +38,17 @@ public class Shop_orderService {
 		
 	}
 	
+	public Shop_orderVO updateStatus(
+			String sp_status, String sp_odno) {
+		Shop_orderVO shop_orderVO = new Shop_orderVO();
+		shop_orderVO.setSp_status(sp_status);
+		shop_orderVO.setSp_odno(sp_odno);
+		dao.updateStatus(shop_orderVO);
+		
+		return shop_orderVO;
+		
+	}
+	
 	public Shop_orderVO getOneShop_order(String sp_odno) {
 		return dao.findByPrimaryKey(sp_odno);
 	}

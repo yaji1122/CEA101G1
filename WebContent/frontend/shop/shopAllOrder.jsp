@@ -214,7 +214,7 @@
 					<h1>訂單明細 OrderDetail</h1>
 				</div>
 				 <div class="shopOrderBor">
-				<c:forEach var="shop_orderVO" items="${list}">
+				<c:forEach var="shop_orderVO" items="${list}" varStatus="count">
 				<div>
 					<table class="tablepart">
 					    <tr style="background-color:#fbc15752;">
@@ -224,15 +224,15 @@
 					    	<th class="tableLeftDa">下單時間：</th>
 					    	<th><fmt:formatDate value='${shop_orderVO.sp_time}' pattern='yyyy-MM-dd HH:mm:ss'/></th>
 					    	<th></th>
-					    	<th><button id="${shop_orderVO.sp_odno}">取消訂單</button></th>	
+					    	<th><div type="button" class="canBtn" id="cancelOrder${count.index}" data-id="${shop_orderVO.sp_odno}">取消訂單</div></th>	
 					    </tr>	
 					    <tr class="borBeTQty">
 					    	<th class="tableLeftDa">出貨時間：</th>
 					    	<th><fmt:formatDate value='${shop_orderVO.sp_dlvr}' pattern='yyyy-MM-dd HH:mm'/></th>
 					    	<th>訂單狀態:</th>
-					    	<th>
-					    		<c:forEach var="status" items="${sp_status}">
-									${shop_orderVO.sp_status==status.key? status.value : ''}
+					    	<th id="cancelOrder2${count.index}">
+					    		<c:forEach var="status" items="${sp_status}" varStatus="count">
+									<div class="spStatus${count.index}">${shop_orderVO.sp_status==status.key? status.value : ''}</div>
 								</c:forEach>
 							</th>
 					    </tr>
@@ -289,7 +289,41 @@
 	<script src="${pageContext.request.contextPath}/js/front/frontShopPage.js"></script>
 	<script type="text/javascript">
 	$(function(){
-		var delOrderNo = $("#")
+		var orderList = '<%= pageContext.getAttribute("list")%>';
+		var statusList = '<%= pageContext.getAttribute("sp_status")%>';
+		for(let i = 0; i < orderList.length; i++){
+			$("#cancelOrder"+i).click(function(event){
+				event.stopPropagation();
+				if($("#cancelOrder2"+i+ " .spStatus0").html()!="待出貨"){
+					Swal.fire({
+						  title: '已出貨或取消訂單',
+						  text: '不能修改訂單',
+						  icon: 'warning'
+						});
+				}else{
+				console.log($(event.target).data("id"));
+				console.log(i);
+				$.ajax({
+					data:{
+						"action":"cancelOrder",
+						"sp_odno":$(event.target).data("id")
+					},
+					dataType:"json",
+					url:"<%=request.getContextPath()%>/shop_order/shop_order.do",
+					success: function(data){
+						Swal.fire({
+							  title: '取消訂單',
+							  text: '已取消訂單',
+							  icon: 'warning'
+							});
+							console.log(data.status);
+							console.log(i);
+							$("#cancelOrder2"+i+ " .spStatus0").html("已取消");
+					}
+				});
+				}
+			});
+		}
 	});
 	</script>
 </body>

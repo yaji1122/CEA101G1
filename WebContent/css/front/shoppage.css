@@ -551,6 +551,15 @@ body {
 .tabletitle{
 	float:right;
 }
+.canBtn{
+	width: 150px;
+    background-color: #ff4d00;
+    margin-left: 39px;
+    border-radius: 8px;
+}
+.canBtn:hover{
+	background-color:lightgrey;
+}
 .tablepart th,.tablepart td{
     	width: 230px;
     	text-align: center;

@@ -38,6 +38,8 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 		"SELECT SP_ODNO,MB_ID,to_char(SP_TIME,'yyyy-mm-dd HH24:MI:SS') SP_TIME,SP_STATUS,to_char(SP_DLVR,'yyyy-mm-dd HH24:MI:SS') SP_DLVR,TOTAL_PRICE,POINTS_TOTAL,RM_NO FROM SHOP_ORDER WHERE SP_ODNO = ?";
 	private static final String UPDATE = 
 		"UPDATE SHOP_ORDER SET SP_STATUS=? ,SP_DLVR=? where SP_ODNO = ?";
+	private static final String UPDATE_ST = 
+			"UPDATE SHOP_ORDER SET SP_STATUS=?  where SP_ODNO = ?";
 	private static final String GETSp_odnoByMb_id = 
 		"SELECT * FROM SHOP_ORDER WHERE MB_ID = ? ORDER BY SP_ODNO DESC";
 	
@@ -125,6 +127,46 @@ public class Shop_orderDAO implements Shop_orderDAO_interface{
 
 	}
 
+	@Override
+	public void updateStatus(Shop_orderVO shop_orderVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_ST);
+			
+			pstmt.setString(1, shop_orderVO.getSp_status());
+			pstmt.setString(2, shop_orderVO.getSp_odno());
+
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
 	@Override
 	public Shop_orderVO findByPrimaryKey(String sp_odno) {
 
