@@ -13,11 +13,10 @@
 	pageContext.setAttribute("list", list);
 %>
 
-
 <html>
 <head>
 <title>商品照片資料 - listAllByItem_no.jsp</title>
-
+<%@ include file="/backend/files/backend_header.file" %>
 <style>
 #titlePic {
 	width: 100%;
@@ -33,7 +32,7 @@
 }
 
 .titleAllPic {
-	margin-left: 528px;
+	margin-left: 450px;
 	margin-right: auto;
 	margin-top:-4px;
 }
@@ -139,6 +138,7 @@ position: fixed;
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 </head>
 <body bgcolor='white'>
+<%@ include file="/backend/files/backend_sidebar.file" %>
 <div class="black"></div>
 	<jsp:useBean id="itemVO" scope="page" class="com.item.model.ItemVO" />
 	<jsp:useBean id="itemSvc" scope="page" class="com.item.model.ItemService" />
@@ -214,7 +214,7 @@ position: fixed;
 
 	</FORM>
 	</div>
-
+	<%@ include file="/backend/files/backend_footer.file" %>
 	<script>
 		$(".addPic").click(function() {
 			$(".picpage").addClass("picpage-show");

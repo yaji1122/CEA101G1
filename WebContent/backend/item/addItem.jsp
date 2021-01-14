@@ -42,7 +42,7 @@
 }
 
 table {
-	width: 800px;
+	width: 800px !important;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -69,11 +69,11 @@ th, td {
 }
 
 .inputItem {
-	margin-left: 500px !important;
+	margin-left: 920px !important;
 	
 }
 .inputData{
-float:left;
+	float:left;
 }
 </style>
 <%@ include file="/backend/files/backend_header.file" %>
@@ -118,11 +118,11 @@ float:left;
 			<tr>
 				<td>商品價格:</td>
 				<td class="inputData"><input type="TEXT" name="item_price" size="45"
-					value="<%=(itemVO == null) ? "100.00" : itemVO.getItem_price()%>" /></td>
+					value="<%=(itemVO == null) ? "100.0" : itemVO.getItem_price()%>" /></td>
 			</tr>
 			<tr>
 				<td>商品詳情:</td>
-				<td class="inputData"><input type="TEXT" name="item_detail" size="45"
+				<td class="inputData"><input type="textarea" name="item_detail" size="45"
 					value="<%=(itemVO == null) ? "商品詳情" : itemVO.getItem_detail()%>" /></td>
 			</tr>
 			<tr>

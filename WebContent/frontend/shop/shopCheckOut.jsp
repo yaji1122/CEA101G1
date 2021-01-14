@@ -163,7 +163,7 @@
 											</i>會員中心</a>
 								<ul class="dropdown">
 									<li><a href="${pageContext.request.contextPath}/frontend/members/memberInfo.jsp">個人檔案</a></li>
-									<li><a href="#">我的假期</a></li>
+									<li><a href="${pageContext.request.contextPath}/frontend/members/memberBooking.jsp">我的假期</a></li>
 									<li><a href="${pageContext.request.contextPath}/frontend/shop/shopAllOrder.jsp">購物訂單</a></li>
 									<li>
 										<a href="${pageContext.request.contextPath}/LoginHandler?mb_email=${member.mb_email}&action=member-logout&location=${pageContext.request.requestURL}">登出</a>
@@ -203,8 +203,7 @@
 						<div>
 							<h1>結帳前確認 Check</h1>
 						</div>	
-						<form method="POST"
-							action="<%=request.getContextPath()%>/shop_order/shop_order.do">
+						<form method="POST" action="<%=request.getContextPath()%>/shop_order/shop_order.do">
 						<table class="cartlist">
 							<thead>
 								<tr>
@@ -279,8 +278,8 @@
 							
 							<input type="hidden" name="action" value="insertWithOrder_details"> 
 							<input type="hidden" name="mb_id" value="${member.mb_id}">
-							<input type="hidden" name="total_price" id="sendPri"value="<%=amount%>">
-							<input type="hidden" name="points_total" id="sendPoi"value="<%=poamount%>">  
+							<input type="hidden" name="total_price" id="sendPri" value="<%=amount%>">
+							<input type="hidden" name="points_total" id="sendPoi" value="<%=poamount%>">  
 							<button class="add-creditcard"  type="button">新增信用卡</button>
 							<button class="leave-payment"  type="button">取消付款</button>
 							<button class="admit-payment">確認付款</button>
@@ -325,6 +324,9 @@ $("#pointUsed").change(function(){
 	$(document).ready(function () {
     //顯示付款頁面
     $(".paybtn").click(function () {
+    	if($("#pointUsed").val()==""){
+    		$("#pointUsed").val(0);
+    	}
         if ('<%=session.getAttribute("member")%>' == "null") {
             $(".login-window-overlay").addClass("active");
             $(".login-window").addClass("show-login-window");
