@@ -32,7 +32,7 @@
         		</div>
                 <div class="form--heading">SYSTEM LOGIN</div>
                 <form autocomplete="off"  method="post" action="<%=request.getContextPath()%>/emp/login.do">
-                    <input type="text" placeholder="Employee ID" name="emp_id"/>
+                    <input type="text" placeholder="Employee ID" name="emp_id" style="text-transform:uppercase"/>
                     <input type="password" placeholder="Password" name="emp_pwd">
                     <button class="button">Login</button>
                 </form>

@@ -372,7 +372,7 @@
 	<c:if test="${member != null}">
 		  var INDEX = 0; 
 		  var memberImg = "<%=request.getContextPath()%>/MembersServlet?action=getMbPicForChat&mb_id=${member.mb_id}";
-		  var empImg;
+		  var empImg = "<%=request.getContextPath()%>/img/avatar/csAvatar.jpg";
 		  $("#chat-submit").click(sendMessage);
 		  
 		  function sendMsg() {
@@ -402,15 +402,16 @@
 		  }  
 		  
 		  $("#chat-circle").click(function() {  
-			connect();
+			if (webSocket == null){
+				connect();
+			}
 		    $("#chat-circle").toggle(500);
-		    $(".chat-box").toggle(500);
+		    $(".chat-box").toggle(500);	
 		  })
 		  
 		  $(".chat-box-toggle").click(function() {
 		    $("#chat-circle").toggle(500);
 		    $(".chat-box").toggle(500);
-		    disconnect();
 		  })
 		 //WebSocket
         var MyPoint = "/customerWS/${member.mb_id}";
@@ -437,6 +438,8 @@
 					empID = jsonObj.empID;
 					empImg = "<%=request.getContextPath()%>/emp/emp.do?action=getEmpPic&emp_id=" + empID;
 					empName = jsonObj.empName;
+					let msg = jsonObj.message;
+					generate_message(msg, "emp")
 				} else if ("history" === jsonObj.type) {
 					let memberID;
 					if (jsonObj.sender.indexOf("MEM") >= 0){
@@ -460,6 +463,8 @@
 					let type;
 					jsonObj.sender.indexOf("MEM") >= 0 ? type = 'member' : type = 'emp';
 					generate_message(msg, type)
+				} else if ("empNotAvailable" === jsonObj.type){
+					generate_message("目前客服人員均忙線中，請稍候。", "emp")
 				}
 			};
 	
@@ -473,7 +478,9 @@
 			var memberID = "${member.mb_id}";
 			var memberName = "${member.mb_name}";
 			var message = inputMessage.value.trim();
-	
+			let time = new Date();
+			let timeStr = time.getFullYear() + "-" + (time.getMonth()+1) + "-" 
+						+ time.getDate() + " " + time.getHours() + ":" + time.getMinutes();
 			if (message === "") {
 				inputMessage.focus();
 				return;
@@ -482,7 +489,8 @@
 					"type" : "chat",
 					"sender" : memberID + "-" + memberName,
 					"receiver" : empID + "-" + empName,
-					"message" : message
+					"message" : message,
+					"time": timeStr,
 				};
 				webSocket.send(JSON.stringify(jsonObj));
 				inputMessage.value = "";

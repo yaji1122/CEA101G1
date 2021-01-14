@@ -39,7 +39,6 @@ session.removeAttribute("bookingPass");
 		top:0px;
 		height:100vh;
 		width:100vw;
-		padding-top:80px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -66,6 +65,9 @@ session.removeAttribute("bookingPass");
 		z-index: 999;
 		top:50%;
 		opacity:1;
+	}
+	.receipts {
+		margin-top: 50px;
 	}
 </style>
 <body>

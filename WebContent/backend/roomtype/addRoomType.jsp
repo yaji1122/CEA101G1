@@ -14,7 +14,7 @@
 			<label for="rm_type">房型編號</label> 
 			<% RoomTypeService rmtypeSvc = new RoomTypeService(); %>
 			<select style="width:100%; height:30px" name="rm_type" required>
-					<option disabled selected>選擇房型編號</option>
+					<option disabled>選擇房型編號</option>
 					<option value="1"  <c:if test="<%= rmtypeSvc.getAll().stream().anyMatch(e -> e.getRm_type().equals(\"1\")) %>">disabled</c:if> >1</option>
 					<option value="2"  <c:if test="<%= rmtypeSvc.getAll().stream().anyMatch(e -> e.getRm_type().equals(\"2\")) %>">disabled</c:if> >2</option>						
 					<option value="3"  <c:if test="<%= rmtypeSvc.getAll().stream().anyMatch(e -> e.getRm_type().equals(\"3\")) %>">disabled</c:if> >3</option>
