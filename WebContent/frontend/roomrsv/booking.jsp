@@ -40,7 +40,7 @@ pageContext.setAttribute("infoJson", infoJson);
 </head>
 <%@ include file="/frontend/files/loginCSS.file"%>
 <body>
-	<%@ include file="/frontend/files/loginbox.file"%>
+<%@ include file="/frontend/files/loginbox.file"%>
 	<!-- preloader -->
 	<div id="preloder">
 		<img id="preloaderpic"

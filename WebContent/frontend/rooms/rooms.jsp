@@ -27,7 +27,7 @@ pageContext.setAttribute("rmtypeList", rmtypeList);
 <div style="display:hidden" id="tab-top"></div>
 <%@ include file="/frontend/files/login.file" %>
 <%@ include file="/frontend/files/loginbox.file" %>
- 
+<%@ include file="/frontend/files/header.file" %>
 	<!-- Hero -->
 	<section class="et-hero-tabs">
 		<h1>DAIMOND RESORT</h1>
