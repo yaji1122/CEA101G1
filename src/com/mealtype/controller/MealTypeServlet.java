@@ -30,21 +30,12 @@ public class MealTypeServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {				
-				String meal_type_no = req.getParameter("meal_type_no").trim();
-				String meal_type_noReg = "TYP" + "[0-9]{2}$";
-				if(meal_type_no == null || meal_type_no.trim().isEmpty()) {
-					errorMsgs.add("種類編號不得留空");
-				}
-				else if(!meal_type_no.trim().matches(meal_type_noReg)) {
-					errorMsgs.add("種類編號格式錯誤");
-				}
 				String type_name = req.getParameter("type_name").trim();
 				if(type_name == null || type_name.trim().isEmpty()) {
 					errorMsgs.add("種類名稱不得留空");
 				}
 						
 				MealTypeVO mealTypeVO = new MealTypeVO();
-				mealTypeVO.setMeal_type_no(meal_type_no);
 				mealTypeVO.setType_name(type_name);
 				
 				if (!errorMsgs.isEmpty()) {
@@ -55,7 +46,7 @@ public class MealTypeServlet extends HttpServlet {
 				}
 
 				MealTypeService mealTypeSvc = new MealTypeService();
-				mealTypeVO = mealTypeSvc.addMealType(meal_type_no, type_name);
+				mealTypeVO = mealTypeSvc.addMealType(type_name);
 				
 				String url = "/backend/mealtype/mealTypeInfo.jsp";
 				RequestDispatcher dispatcher= req.getRequestDispatcher(url);

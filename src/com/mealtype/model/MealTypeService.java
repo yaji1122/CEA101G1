@@ -11,8 +11,7 @@ public class MealTypeService {
 	}
 
 	public MealTypeVO addMealType(String type_name) {
-		MealTypeVO mealTypeVO = new MealTypeVO();
-
+		MealTypeVO mealTypeVO = new MealTypeVO();	
 		mealTypeVO.setType_name(type_name);
 		dao.insert(mealTypeVO);
 
