@@ -326,4 +326,16 @@ public class ActOrderJDBCDAO implements ActOrderDAO_interface {
 		return null;
 	}
 
+	@Override
+	public void cancelActOrder(ActOrderVO actOrderVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ActOrderVO> getOrderListByMemId(String mb_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
