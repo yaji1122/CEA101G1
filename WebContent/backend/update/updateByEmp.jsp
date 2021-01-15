@@ -21,6 +21,34 @@
 </c:if>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back/updateByEmp.css" />
 </head>
+<style>
+#twzipcode_ADV{
+width:200px;
+position:relative;
+display:flex;
+left:45px;
+top:-40px;
+}
+select.city.form-control{
+font-size:18px;
+margin-top:5px;
+height:35px;
+border:1px solid black;
+padding:0px;
+}
+select.town.form-control{
+font-size:18px;
+width:250px;
+margin-top:5px;
+margin-left:5px;
+height:35px;
+border:1px solid black;
+padding:0px;
+}
+.grid{
+height:40px;
+}
+</style>
 <body>
 	<%@ include file="/backend/files/backend_sidebar.file"%>
 	<%
@@ -63,8 +91,9 @@
 					<input type="hidden" name="emp_status" id="emp" value="1" />
 					<div class="grid">
 					<h5 class="mt-2">地址: </h5>
-						<input type="text" name="emp_city" placeholder="City" value="${empVO.emp_city}">
-						<input type="text" name="emp_town" placeholder="Town" value="${empVO.emp_town}">
+					<div id="twzipcode_ADV"></div>
+<!--  					<input type="text" name="emp_city" placeholder="City" value="${empVO.emp_city}">
+						<input type="text" name="emp_town" placeholder="Town" value="${empVO.emp_town}"> -->
 					</div>
 					
 					<span class="mt-4">&emsp;&emsp;&nbsp;&nbsp;<input type="text" name="emp_address"
@@ -90,6 +119,8 @@
 	<%@ include file="/backend/files/backend_footer.file"%>
         <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	// 先取得 #password1 及產生一個文字輸入框
@@ -110,6 +141,16 @@ $(function(){
 		}
 	});
 });
+$("#twzipcode_ADV").twzipcode({
+	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+	countyName: "emp_city", // 自訂城市 select 標籤的 name 值
+	districtName: "emp_town", // 自訂地區 select 標籤的 name 值
+	countySel: "${empVO.emp_city}",
+	districtSel: "${empVO.emp_town}",
+	
+	
+	});
 </script>
 </body>
 </html>

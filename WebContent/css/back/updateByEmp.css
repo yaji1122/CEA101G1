@@ -54,14 +54,14 @@ input{
 .btn{
 	margin-top:10px;
 }
-.grid{
+/*.grid{
 	width:100px;
 	display: grid;
 	grid-template-columns: 50px 90px 90px;
 	grid-template-rows:30px;
 	column-gap: 5px;
 	margin-bottom:10px;
-}
+}*/
 .grid input{
 	width:95px;
 }

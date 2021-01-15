@@ -35,6 +35,32 @@
 	</ul>
 </c:if>
 </head>
+<style>
+#twzipcode_ADV{
+width:200px;
+position:relative;
+display:flex;
+}
+select.city.form-control{
+font-size:14px;
+margin-top:5px;
+height:25px;
+border:1px solid black;
+padding:0px;
+}
+select.town.form-control{
+font-size:14px;
+width:250px;
+margin-top:5px;
+margin-left:5px;
+height:25px;
+border:1px solid black;
+padding:0px;
+}
+input{
+margin-top:5px;
+}
+</style>
 <body>
 	<%@ include file="/backend/files/backend_sidebar.file"%>
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1" enctype="multipart/form-data">
@@ -67,9 +93,8 @@
 		               </select></p>
                        <span class="mt-4"><input type="text" name="emp_phone" placeholder="Phone" value="${empVO.emp_phone}"></span>
                        <span class="mt-4"><input type="email" name="emp_email" placeholder="Email" value="${empVO.emp_email}"></span>
-	                   <span class="mt-4"><input type="text" name="emp_city" size= "10" placeholder="City" value="${empVO.emp_city}"></span>
-	                   <span class="mt-4"><input type="text" name="emp_town" size= "10" placeholder="Town" value="${empVO.emp_town}"></span>
-	                   <span class="mt-4"><input type="text" name="emp_address" size= "24" placeholder="Address" value="${empVO.emp_address}"></span>
+                       <div id="twzipcode_ADV"></div>
+	                   <span class="mt-4"><input type="text" name="emp_address" size= "24" placeholder="Address" value="${empVO.emp_address}"></span>  
                        <div id="status"><span class="mt-4">員工狀態:</span>
 		                 <input type="radio" name="emp_status" id="emp" size="45" value="1" checked/>已啟用
 		                 <input type="radio" name="emp_status" id="emp" size="45" value="2"/>已離職
@@ -105,5 +130,19 @@
           </div>
           </FORM>
     <%@ include file="/backend/files/backend_footer.file"%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+    <script>
+    $("#twzipcode_ADV").twzipcode({
+    	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+    	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+    	countyName: "emp_city", // 自訂城市 select 標籤的 name 值
+    	districtName: "emp_town", // 自訂地區 select 標籤的 name 值
+    	countySel: "${empVO.emp_city}",
+		districtSel: "${empVO.emp_town}",
+		
+		
+    	});
+    </script>
 </body>
 </html>
