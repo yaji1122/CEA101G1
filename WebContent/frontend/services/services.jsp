@@ -258,7 +258,7 @@ pageContext.setAttribute("servList", servList);
 												<p>${servicesVO.serv_info}</p>
 											</div>
 											<div class="btn_price-spa">
-												<div class="price-spa">價格:${servicesVO.serv_price}</div>
+												<div class="price-spa">USD${servicesVO.serv_price}</div>
 												<div class="btn-spa">
 													<button type="button"
 														class="btn btn-primary btn-serv-submit"
@@ -435,9 +435,9 @@ pageContext.setAttribute("servList", servList);
 				</tbody>
 			</table>
 		</div>
-		<div class="close-icon cart-content-close">
+		<!-- <div class="close-icon cart-content-close">
 			<i class="fas fa-times icon" style="margin-top: 5%;"></i>
-		</div>
+		</div> -->
 
 		<div class="checkOut-submit">
 			<form name="checkoutForm"
