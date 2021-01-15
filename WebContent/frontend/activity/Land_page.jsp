@@ -12,12 +12,16 @@
 	pageContext.setAttribute("actlist", actlist);
 %>
 <%
-   ActOrderService actOrderSvc = new ActOrderService();
-   MembersVO memVO = (MembersVO)session.getAttribute("member");
-   if(memVO != null){
-	   List<ActOrderVO> actorderlist = actOrderSvc.getOrderListByMemId(memVO.getMb_id());
-	   pageContext.setAttribute("actorderlist", actorderlist);
+    ActOrderService actOrderSvc = new ActOrderService();
+    MembersVO memVO = (MembersVO)session.getAttribute("member");
+    if(memVO != null){
+	List<ActOrderVO> actorderlist = actOrderSvc.getOrderListByMemId(memVO.getMb_id());
+	pageContext.setAttribute("actorderlist", actorderlist);
+
    }
+%>
+<%
+   
 %>
 
 
@@ -34,17 +38,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>Diamond Resort</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/front/land-new.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/slick-theme.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/slick.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/slicknav.min.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/hover.css">
-</head><body>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/front/land-new.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick-theme.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.css">
+    
+
+</head>
+
+<body style="background-image:url('<%=request.getContextPath()%>/img/activity/bg1.png');">
 	<div class="black">
 		<%@ include file="/frontend/files/loginCSS.file"%>
 		<%@ include file="/frontend/files/login.file"%>
@@ -109,8 +110,8 @@
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">取消</button>
 						<button type="submit" class="btn btn-primary">確認</button>
-						<input type="hidden" name="action" value="insert"> <input
-							type="hidden" name="actNo" value="${actVO.actNo}" id="act_no">
+						<input type="hidden" name="action" value="insert"> 
+						<input type="hidden" name="actNo" value="${actVO.actNo}" id="act_no">
 
 						<c:forEach var="bookingOrderVO" items="${bookingorderSv.all}">
 							<input type="hidden" name="bkNo" value="${bookingOrderVO.bkNo}"
@@ -216,14 +217,14 @@
 				data-target="#collapseExample" aria-expanded="false"
 				aria-controls="collapseExample">活動詳情</button>
 				
-				<button class="btn btn-outline-info" type="submit" data-toggle="collapse"
+			<button class="btn btn-outline-warning" type="submit" data-toggle="collapse"
 				style="margin-left: 620px; margin-top: -37px;"
 				data-target="#multiCollapseExample2" aria-expanded="false"
 				aria-controls="multiCollapseExample2">已預約活動</button>
 		</p>
 
 		<div class="collapse" id="collapseExample">
-			<c:forEach var="actVO" items="${actlist}">
+			<c:forEach var="actVO" items="${actlist}" >
 			
 				<c:if test="${actVO.actEventNo == 10 || actVO.actStatus == 0}">
 					<div class="card card-body">
@@ -253,7 +254,7 @@
 								</div>
 							</div>
 							<button type="button" class="btn btn-outline-dark make-res" id="${actVO.actNo}_btn"
-								data-toggle="modal" data-target="#exampleModalCenter">
+								data-toggle="modal" data-actno="${actVO.actNo}" data-target="#exampleModalCenter">
 								我要預約</button>
 						</div>
 					</div>
@@ -263,23 +264,24 @@
 		</div>
 		<div class="row">
 			<div class="col">
+			<jsp:useBean id="actService" scope="page" class="com.act.model.ActService" />
 			<c:forEach var="actOrderVO" items="${actorderlist}">
-			
-			
-				<div class="collapse multi-collapse" id="multiCollapseExample2">
-				  
+			 
+				<div class="collapse multi-collapse" id="multiCollapseExample2">			 
 					<div class="card card-body">
 					    <div class="list-reserve">
-							<img
-								src="<%=request.getContextPath()%>/ActServlet?actno=${actVO.actNo}&action=get_actpic">
-
+							<img src="<%=request.getContextPath()%>/ActServlet?actno=${actService.getOneAct(actOrderVO.actNo).actNo}&action=get_actpic">
 							<div class="list-context">
-
 								<div class="label">
-									<label class="act_name">活動名稱:<span>${actVO.actName}</span></label>
+									<label class="act_name">活動名稱:<span>${actService.getOneAct(actOrderVO.actNo).actName}</span></label>
 								</div>
 								<div class="label">
-									<label class="act_time">活動時段:<span>${actVO.actTime}</span></label>
+									<label class="act_time">活動時段:<span>${actService.getOneAct(actOrderVO.actNo).actTime}</span></label>
+								</div>
+
+								<div class="line" style="margin-top:-5px;"></div>
+								<div class="label">
+									<label class="act_time">活動訂單時間:<span>${actOrderVO.odTime}</span></label>
 								</div>
 								<div class="label">
 									<label class="act_Status">活動狀態:
@@ -292,16 +294,26 @@
 									</span>
 									</label>
 								</div>
-								<div class="line" style="margin-top:-5px;"></div>
-								 <button type="button" class="btn btn-outline-danger make-res" style="margin-top:5px;"
-								data-toggle="modal" data-target="#exampleModalCenter">
-								取消活動</button>
-							</div>
-							  
+							</div> 
 						</div>
+						
+						<div class="reserve-btn" style="width:150px;height:30px; margin-left:650px;margin-top:-90px;">
+						
+		<FORM METHOD="post" id="act_order_cancel_form" >
+						    <input type="hidden" name="action" value="cancel">
+						    <input type="hidden" name="actOdno" value="${actOrderVO.actOdno}">
+						    <button type="submit" class="btn btn-outline-danger"data-toggle="modal"
+						    <c:if test="${actOrderVO.odStatus != 0}">disabled</c:if>>
+								取消活動
+							</button>
+							
+	 </FORM>
+						</div>
+					   
 				 </div>
+				 
 			 </div>
-		
+		    
 			</c:forEach>
 		</div>
 	</div>
@@ -313,60 +325,57 @@
 	<!-- Footer Section End -->
 	<!-- Js Plugins -->
 	<%@ include file="/frontend/files/commonJS.file"%>
-	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/slicknav.js"></script>
+ 	<script src="<%=request.getContextPath()%>/js/slick.min.js"></script>
+
+	
 	<script>
 		$(document).ready(function() {
 
 			<c:forEach var="actVO" items="${actlist}">
-				<c:if test="${actVO.actEventNo == 10 || actVO.actStatus == 0}">
-					var myactNo = "${actVO.actNo}_btn";
-					var myTime = "${actVO.actTime}";
-					var hour = parseInt(myTime.split(":")[0]);
-					var minute = parseInt(myTime.split(":")[1]);
-					var now = new Date(); // now
-					var eachTime = new Date(); // eachTime
-					eachTime.setHours(hour);
-					eachTime.setMinutes(minute);
-					if(now.getTime() > eachTime.getTime()) {
-						$("#"+myactNo).attr("disabled", true);
-					}
+			<c:if test="${actVO.actEventNo == 10 || actVO.actStatus == 0}">
+				var myactNo = "${actVO.actNo}_btn";
+				var myTime = "${actVO.actTime}";
+				var hour = parseInt(myTime.split(":")[0]);
+				var minute = parseInt(myTime.split(":")[1]);
+				var now = new Date(); // now
+				var eachTime = new Date(); // eachTime
+				eachTime.setHours(hour);
+				eachTime.setMinutes(minute);
+				if(now.getTime() > eachTime.getTime()) {
+					$("#"+myactNo).attr("disabled", true);
+				}
 
-				</c:if>
-			</c:forEach>
+			</c:if>
+		</c:forEach>
 			
 			let resname = $("#act_name");
 			let restime = $("#act_time");
 			let resprice = $("#act_price");
 			let resactno = $("#act_no");
+
 		
 			$(".make-res").click(
 					function() {
 						let father = $(this).parents(".card");
-						let actname = father.find(
-								".act_name span").text();
-						let acttime = father.find(
-								".act_time span").text();
-						let actprice = father.find(
-								".act_price span").text();
-		
+						let actname = father.find(".act_name span").text();
+						let acttime = father.find(".act_time span").text();
+						let actprice = father.find(".act_price span").text();
+						
 						resname.val(actname);
 						restime.val(acttime);
 						resprice.val(actprice);
 		
-						let actno = $("#actno").val();
+						let actno = $(this).attr("data-actno");
+						let act_order_no = $(this).atttr("cancel-order");
 						resactno.val(actno);
 		
 					});
 		
 			$("#inputGroupSelect02").change(
 					function() {
-						let num = $("#inputGroupSelect02")
-								.val();
+						let num = $("#inputGroupSelect02").val();
 						if (num !== "") {
-							let total = parseInt(num)
-									* parseInt($("#act_price")
-											.val());
+							let total = parseInt(num)* parseInt($("#act_price").val());
 							$("#total_price").val(total);
 						} else {
 							$("#total_price").val(0);
@@ -381,40 +390,55 @@
 				autoplaySpeed : 1000,
 			});
 		
-			$('.pictrue-wall').slick({
-				slidesToShow : 1,
-				slidesToScroll : 1,
-				arrows : false,
-				fade : true,
-				autoplaySpeed : 3000,
-				autoplay : true
-			});
-			$(".input-date")
-					.datepicker(
-							{
-								showOn : "button",
-								dateFormat : 'yy/mm/dd',
-								buttonImage : 'https://ps9103.s3.us-east-2.amazonaws.com/public/field_date+(1).png',
-								buttonImageOnly : false,
-								buttonText : 'Date',
-							});
-		
 			let order_elem = document.querySelector("#act_order_form");
 			order_elem.addEventListener("submit",function(e) {
 		
 					e.preventDefault();
 
-					let data = new FormData(
-							order_elem);
+					let data = new FormData(order_elem);
 					let xhr = new XMLHttpRequest();
-					xhr
-							.open("post",
-									"${pageContext.request.contextPath}/ActOrderServlet");
+					xhr.open("post","${pageContext.request.contextPath}/ActOrderServlet");
 					xhr.onload = function() {
 						if (xhr.status === 200) {
 							if (xhr.responseText === "success") {
-								Swal
-										.fire({
+								Swal.fire({
+											position : "top-end",
+											icon : "success",
+											title : xhr.responseText,
+											showConfirmButton : false,
+											timer : 1500,
+										});
+								setTimeout(function () {
+								location.reload();
+								}, 1400);
+							} else {
+								Swal.fire({
+											position : "top-end",
+											icon : "error",
+											title : "發生錯誤",
+											text : xhr.responseText,
+											showConfirmButton : false,
+											timer : 1500,
+										});
+							}
+						}
+					}
+					xhr.send(data);
+				});
+			
+			
+			let order_cancel_elem = document.querySelector("act_order_cancel_form");
+			order_cancel_elem.addEventListener("submit",function(e) {
+		
+					e.preventDefault();
+
+					let data = new FormData(order_cancel_elem);
+					let xhr = new XMLHttpRequest();
+					xhr.open("post","${pageContext.request.contextPath}/ActOrderServlet");
+					xhr.onload = function() {
+						if (xhr.status === 200) {
+							if (xhr.responseText === "success") {
+								Swal.fire({
 											position : "top-end",
 											icon : "success",
 											title : xhr.responseText,
@@ -425,8 +449,7 @@
 								//                                 location.reload();
 								//                             }, 1400);
 							} else {
-								Swal
-										.fire({
+								Swal.fire({
 											position : "top-end",
 											icon : "error",
 											title : "發生錯誤",
@@ -442,6 +465,7 @@
 
 			});
 	</script>
+	
 </body>
 
 </html>

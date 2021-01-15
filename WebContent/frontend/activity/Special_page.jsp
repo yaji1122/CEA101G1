@@ -11,6 +11,14 @@
     List<ActVO> actlist = actSvc.getAll();
     pageContext.setAttribute("actlist", actlist);
 %>
+<%
+       ActOrderService actOrderSvc = new ActOrderService();
+       MembersVO memVO = (MembersVO)session.getAttribute("member");
+       if(memVO != null){
+	   List<ActOrderVO> actorderlist = actOrderSvc.getOrderListByMemId(memVO.getMb_id());
+	   pageContext.setAttribute("actorderlist", actorderlist);
+       }
+%>
 
 
 <html>
@@ -37,7 +45,7 @@
 
 
 
-<body>
+<body style="background-image:url('<%=request.getContextPath()%>/img/activity/bg1.png');">
 	<div class="black">
 		<%@ include file="/frontend/files/loginCSS.file"%>
 		<%@ include file="/frontend/files/login.file"%>
@@ -203,9 +211,13 @@
 		<!--下方活動list-->
 		<p>
 			<button class="btn btn-primary" type="button" data-toggle="collapse"
-				style="margin-left: 565px; margin-top: 250px;"
+				style="margin-left: 500px; margin-top: 250px;"
 				data-target="#collapseExample" aria-expanded="false"
 				aria-controls="collapseExample">活動詳情</button>
+			<button class="btn btn-outline-warning" type="submit" data-toggle="collapse"
+				style="margin-left: 620px; margin-top: -37px;"
+				data-target="#multiCollapseExample2" aria-expanded="false"
+				aria-controls="multiCollapseExample2">已預約活動</button>
 		</p>
 		<div class="collapse" id="collapseExample">
 			<c:forEach var="actVO" items="${actlist}">
@@ -242,9 +254,60 @@
 					</div>
 				</c:if>
 			</c:forEach>
+		</div>
+		<div class="row">
+			<div class="col">
+			<jsp:useBean id="actService" scope="page" class="com.act.model.ActService" />
+			<c:forEach var="actOrderVO" items="${actorderlist}">
+			
+				<div class="collapse multi-collapse" id="multiCollapseExample2">			 
+					<div class="card card-body">
+					    <div class="list-reserve">
+							<img src="<%=request.getContextPath()%>/ActServlet?actno=${actService.getOneAct(actOrderVO.actNo).actNo}&action=get_actpic">
+							<div class="list-context">
+								<div class="label">
+									<label class="act_name">活動名稱:<span>${actService.getOneAct(actOrderVO.actNo).actName}</span></label>
+								</div>
+								<div class="label">
+									<label class="act_time">活動時段:<span>${actService.getOneAct(actOrderVO.actNo).actTime}</span></label>
+								</div>
 
+								<div class="line" style="margin-top:-5px;"></div>
+								<div class="label">
+									<label class="act_time">活動訂單時間:<span>${actOrderVO.odTime}</span></label>
+								</div>
+								<div class="label">
+									<label class="act_Status">活動狀態:
+									<span>
+									   <c:choose>
+								          <c:when test="${actOrderVO.odStatus == 0}">進行中</c:when>
+								          <c:when test="${actOrderVO.odStatus == 1}">已完成</c:when>
+								          <c:otherwise>取消</c:otherwise>
+							           </c:choose>
+									</span>
+									</label>
+								</div>
+							</div> 
+						</div>
+						<div class="reserve-btn" style="width:150px;height:30px; margin-left:650px;margin-top:-90px;">
+						    <FORM METHOD="post" id="act_order_cancel_form">
+						    <input type="hidden" name="action" value="cancel">
+						    <c:if test="${actOrderVO.odStatus != 0}">disabled</c:if> 
+						    <input type="hidden" name="actOdno" value="${actOrderVO.actOdno}">
+						    <button type="submit" class="btn btn-outline-danger"data-toggle="modal"
+						    <c:if test="${actOrderVO.odStatus != 0}">disabled</c:if>>
+								取消活動
+							</button>
+	                     </FORM>
+						</div>
+				 </div>
+				 
+			 </div>
+		
+			</c:forEach>
 		</div>
 	</div>
+</div>
 	<!--container-->
 
 
@@ -290,7 +353,7 @@
 				restime.val(acttime);
 				resprice.val(actprice);
 				
-				let actno = $("#actno").val();
+				let actno = $(this).attr("data-actno");
 				resactno.val(actno);
 				
 			});
@@ -313,23 +376,6 @@
 			    infinite: true,
 			    autoplaySpeed: 1000,
 			  });
-
-			$('.pictrue-wall').slick({
-			    slidesToShow: 1,
-			    slidesToScroll: 1,
-			    arrows: false,
-			    fade: true,
-			    autoplaySpeed: 3000,
-			    autoplay: true
-			  });
-			$(".input-date").datepicker({
-			    showOn : "button",
-			    dateFormat:'yy/mm/dd',
-			    buttonImage:'https://ps9103.s3.us-east-2.amazonaws.com/public/field_date+(1).png',
-			    buttonImageOnly : false,
-			    buttonText:'Date',
-			 });
-			
 			
 				let order_elem = document.querySelector("#act_order_form");
 				order_elem.addEventListener("submit", function(e){	
@@ -366,6 +412,42 @@
 			    }
 				xhr.send(data);
 			});
+				
+				let order_cancel_elem = document.querySelector("#act_order_cancel_form");
+				order_cancel_elem.addEventListener("submit",function(e) {
+			
+						e.preventDefault();
+
+						let data = new FormData(order_cancel_elem);
+						let xhr = new XMLHttpRequest();
+						xhr.open("post","${pageContext.request.contextPath}/ActOrderServlet");
+						xhr.onload = function() {
+							if (xhr.status === 200) {
+								if (xhr.responseText === "success") {
+									Swal.fire({
+												position : "top-end",
+												icon : "success",
+												title : xhr.responseText,
+												showConfirmButton : false,
+												timer : 1500,
+											});
+									//                             setTimeout(function () {
+									//                                 location.reload();
+									//                             }, 1400);
+								} else {
+									Swal.fire({
+												position : "top-end",
+												icon : "error",
+												title : "發生錯誤",
+												text : xhr.responseText,
+												showConfirmButton : false,
+												timer : 1500,
+											});
+								}
+							}
+						}
+						xhr.send(data);
+					});
 			
 		});
 		
