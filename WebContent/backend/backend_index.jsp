@@ -7,6 +7,7 @@
 <%@ page import="com.bookingorder.model.*"%>
 <%@ page import="com.rooms.model.*"%>
 <%@ page import="java.time.LocalDate"%>
+<%@ page import="java.util.stream.Collectors" %>
 <jsp:useBean id="rmtypeSvc" scope="page"
 	class="com.roomtype.model.RoomTypeService" />
 <%
@@ -22,7 +23,7 @@ pageContext.setAttribute("rsvList", rsvList);
 BookingOrderService bkodSvc = new BookingOrderService();
 LocalDate today = LocalDate.now();
 List<BookingOrderVO> checkIns = bkodSvc.getAllBeforeToday(today);
-List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today); //取得當天尚未CheckOut的訂單
+List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today).stream().filter(e -> e.getBk_status().equals("2")).collect(Collectors.toList()); //取得當天尚未CheckOut的訂單
 List<BookingOrderVO> checkeds = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
 %>
 <!DOCTYPE html>
@@ -303,20 +304,16 @@ div.color-info div.colors span {
 	<div class="main-wrapper">
 		<div class="header">
 			<div>
-				<h4>現在時間</h4>
+				<h4><i class="far fa-clock"></i>現在時間</h4>
 				<h3><%=LocalDate.now()%> <span id="clock"></span></h3>
 			</div>
 			<div>
-				<h4>今日待入住訂單</h4>
-				<h3><%=checkIns.size()%>
-					筆
-				</h3>
+				<h4><i class="fas fa-sign-in-alt"></i>今日待入住訂單</h4>
+				<h3 style="color:crimson"><%=checkIns.size()%></h3>
 			</div>
 			<div>
-				<h4>今日待退房訂單</h4>
-				<h3><%=checkOuts.size()%>
-					筆
-				</h3>
+				<h4>今日待退房訂單<i class="fas fa-sign-out-alt"></i></h4>
+				<h3 style="color:green"><%=checkOuts.size()%></h3>
 			</div>
 
 			<%
@@ -328,10 +325,8 @@ div.color-info div.colors span {
 			}
 			%>
 			<div>
-				<h4>當前度假村人數</h4>
-				<h3><%=totalGuest%>
-					人
-				</h3>
+				<h4><i class="fas fa-users"></i>當前度假村人數</h4>
+				<h3 style="color:#f8dc81"><%=totalGuest%></h3>
 			</div>
 		</div>
 		<div class="arrows">
@@ -380,12 +375,16 @@ div.color-info div.colors span {
             let monthOfDay = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
             let wrapper = document.createElement("div"); //包住個別日曆
             wrapper.classList.add("calendar-wrapper");
+            let title = document.createElement("div"); //產生日曆標頭
+            title.classList.add("title");
+            title.innerHTML = "<b>" + (month + 1) + "月</b><p>" + "," + year + "年</p>";
             let table = document.createElement("table"); //產生日曆表格
             table.classList.add("calendar");
             let firstTr = document.createElement("tr"); //產生標頭列
             firstTr.classList.add("week-title");
 
             table.append(firstTr);
+            wrapper.append(title);
             wrapper.append(table);
             //建立抬頭
             for (let i = 0; i < 7; i++) {

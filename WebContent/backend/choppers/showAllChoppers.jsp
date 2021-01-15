@@ -102,17 +102,20 @@ background-color:white;
 				機型編號：<b id="update-chop-no"></b>
 			</h3>
 			<label for="update-chopname">機型名稱</label> 
-			<input type="text" name="update-chopname" id="update-chopname"  maxlength="40" autocomplete="off" required />
+			<input type="text" name="update-chopname" id="update-chopname"  maxlength="20" autocomplete="off" required />
 			<label for="update-chopprice">機型價格</label> 
-			<input type="text" name="update-chopprice" id="update-chopprice" inputmode="numeric" autocomplete="off" required />
+			<input type="number" pattern="\d*" name="update-chopprice" id="update-chopprice" inputmode="numeric" autocomplete="off" required />
 			<label for="update-chopinfo">介紹內容</label>
 			<textarea name="update-chopinfo" id="update-chopinfo" maxlength="200" required></textarea>
-			<label for="update-choppic">介紹內容</label>
+			<label for="update-choppic">機型照片</label>
 			<div class="pic-upload">
 				<h6>
-					<i class="icon fas fa-cloud-upload-alt"></i>重新上傳照片
+					<i class="icon fas fa-cloud-upload-alt" ></i>重新上傳照片
 				</h6>
-				<input type="file" accept="image/*" name="update-choppic"/>
+				<input type="file" accept="image/*" name="update-choppic" onchange="showImg(this)"/>
+			</div>
+			<div id="pic-area">
+				<img id="show">
 			</div>
 			<input name="action" value="update_chopper" style="display: none">
 			<input id="update-chopno" name="update-chopno" type="text" style="display: none">
@@ -130,6 +133,21 @@ background-color:white;
 	</div>
 	<!-- Photo display end -->
 	<script>
+		
+	function showImg(thisimg) {
+		var file = thisimg.files[0];
+		if (window.FileReader) {
+			var fr = new FileReader();
+
+			var showimg = document.getElementById('show');
+			fr.onloadend = function(e) {
+				showimg.src = e.target.result;
+			};
+			fr.readAsDataURL(file);
+			showimg.style.display = 'block';
+		}
+	}
+		
 		$(".showpic").click(function() {
 			$(".album-display").addClass("display-show")
 			let src = $(this).val();

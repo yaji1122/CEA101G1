@@ -12,13 +12,27 @@ pageContext.setAttribute("members", members);
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
 <title>會員一覽 Show All Members</title>
 <style>
+th {
+	position: sticky;
+	top: 0;
+}
+
 .membertable table {
 	margin: 0 auto;
 	min-width: 95%;
 }
+
+.membertable thead th {
+	position: sticky;
+}
+
+.membertable {
+	height: 80vh;
+	overflow: scroll;
+}
+
 .showmsg {
 	width: 100%;
 	height: 40px;
@@ -26,6 +40,7 @@ pageContext.setAttribute("members", members);
 	padding: 5px;
 	position: relative;
 }
+
 .showmsg p {
 	position: absolute;
 	right: 5vw;
@@ -50,7 +65,7 @@ width:fit-content;
 	top: 20%;
 	transform: translate(-50%);
 	background-color: white;
-	border: 3px solid black;
+	border: 1px solid black;
 	height: fit-content;
 	width: 60vw;
 	height: fit-content;
@@ -63,11 +78,11 @@ width:fit-content;
 }
 
 .mbpicdiv {
-	height: 250px;
+	height: 300px;
 }
 
 img {
-	max-height:400px;
+	max-height:100%;
 	border-radius: 10px;
 }
 #pic-area {
@@ -77,6 +92,26 @@ img {
 }
 h5 {
 	border-bottom: 1px solid grey;
+}
+div.member-detail-info  {
+	 display: flex;
+    flex-direction: column;
+    width:100%;
+}
+div.member-detail-info i {
+	margin-right: 10px;
+	width: 25px;
+	height:25px;
+	text-align: center;
+	line-height: 25px;
+}
+div.member-detail-info h6 {
+	padding: 0px;
+}
+.member-detail {
+	display:flex;
+	flex-direction: row;
+	justify-content:space-evenly;
 }
 </style>
 </head>
@@ -96,22 +131,29 @@ h5 {
 			</p>
 		</div>
 		<div class="membertable">
-			<table id="memberstable">
+			<table>
 				<thead class="firstTr">
 					<tr>
-						<th>會員編號</th>
-						<th>會員姓名</th>
-						<th>E-MAIL</th>
+						<th><input type="text" id="mb_id" maxlength="10"
+							placeholder="會員編號" style="text-transform: uppercase" autocomplete="off"></th>
+						<th><input type="text" id="mb_name" maxlength="50"
+							placeholder="會員姓名" style="text-transform: uppercase" autocomplete="off"></th>
+						<th><input type="text" id="mb_email" maxlength="50"
+							placeholder="E-MAIL" style="text-transform: uppercase" autocomplete="off"></th>
 						<th>擁有積分</th>
 						<th>帳號狀態</th>
 						<th>會員詳情</th>
 						<th>資料修改</th>
 					</tr>
 				</thead>
+				<%
+					String[] layer = { "odd", "even" };
+				int number = 2;
+				%>
 				<tbody>
 					<%-- <%@ include file="/backend/page.file"%> --%>
 					<c:forEach var="member" items="${members}">
-						<tr>
+						<tr class="<%=layer[number++ % 2]%> ">
 							<td class="mb_id" id="${member.mb_id}">${member.mb_id}</td>
 							<td class="mb_name">${member.mb_name}</td>
 							<td class="mb_email">${member.mb_email}</td>
@@ -144,33 +186,33 @@ h5 {
 			<i class="fas fa-times icon"></i>
 		</div>
 		<h5 style="text-align: center">
-			會員編號：<b id="detail-mbid" style="color: crimson"></b>
+			<i class="far fa-gem"></i>會員編號：<b id="detail-mbid" style="color: crimson"></b>
 		</h5>
-		<div class="memberphoto row">
-			<div class="col-6">
+		<div class="member-detail">
+			<div class="member-detail-info">
 				<h6>
-					會員姓名：<b id="detail-mbname"></b>
+					<i class="fas fa-caret-right"></i>會員姓名：<b id="detail-mbname"></b>
 				</h6>
 				<h6>
-					會員生日：<b id="detail-mbbd"></b>
+					<i class="fas fa-birthday-cake"></i>會員生日：<b id="detail-mbbd"></b>
 				</h6>
 				<h6>
-					聯絡電話：<b id="detail-mbphone"></b>
+					<i class="fas fa-phone"></i>聯絡電話：<b id="detail-mbphone"></b>
 				</h6>
 				<h6>
-					帳號創建日期：<b id="detail-createdate"></b>
+					<i class="fas fa-calendar-week"></i>帳號創建日期：<b id="detail-createdate"></b>
 				</h6>
 				<h6>
-					居住城市：<b id="detail-mbcity"></b>
+					<i class="far fa-building"></i>居住城市：<b id="detail-mbcity"></b>
 				</h6>
 				<h6>
-					居住鄉鎮：<b id="detail-mbtown"></b>
+					<i class="fas fa-igloo"></i>居住鄉鎮：<b id="detail-mbtown"></b>
 				</h6>
 				<h6>
-					詳細地址：<b id="detail-mbaddress"></b>
+					<i class="fas fa-road"></i>詳細地址：<b id="detail-mbaddress"></b>
 				</h6>
 			</div>
-			<div class="col-6 mbpicdiv">
+			<div class="mbpicdiv">
 				<img id="detail-mbpic" src="">
 			</div>
 		</div>
@@ -201,10 +243,6 @@ h5 {
 				oninvalid="this.setCustomValidity('請輸入數字')"
   				oninput="this.setCustomValidity('')"
 				required />
-			 <label for="update-mbemail">電子信箱</label>
-				<input type="email" name="update-mbemail" pattern="^.+[\x40]{1}.+[.]{1}.*$"
-				id="update-mbemail" class="rm-input" max="9" min="1"
-				autocomplete="off" required />
 			 <label for="update-mbcity">居住縣市</label>
 				<input type="text" name="update-mbcity"
 				id="update-mbcity" class="rm-input" max="9" min="1"
@@ -236,7 +274,6 @@ h5 {
 	</div>
 	<script src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/back/member-backend.js"></script>
-	<script src="${pageContext.request.contextPath}/js/datatables.min.js"></script>
 	<script>
 		function showImg(thisimg) {
 			var file = thisimg.files[0];
@@ -273,7 +310,7 @@ h5 {
 			        success: function (msg) {
 			        	if (msg == "success") {
 							Swal.fire({
-								position: "center",
+								position: "center",	
 								title:"修改成功",
 								icon:"success",
 								showConfirmButton: false,
@@ -286,23 +323,6 @@ h5 {
 			        }
 			    });
 			})
-			
-			$('#memberstable').DataTable({
-				language: { 
-	            "sProcessing": "處理中...",
-	            "sLengthMenu": "顯示 _MENU_ 項結果", 
-				"sZeroRecords": "沒有匹配結果", 
-				"sInfo": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項", 
-				"sInfoEmpty": "顯示第 0 至 0 項結果，共 0 項",
-				"sInfoFiltered": "(由 _MAX_ 項結果過濾)",
-				"sInfoPostFix": "", "sSearch": "搜尋:", 
-				"sUrl": "", "sEmptyTable": "表中資料為空", 
-				"sLoadingRecords": "載入中...", 
-				"sInfoThousands": ",", 
-				"oPaginate": { "sFirst": "首頁", "sPrevious": "上頁", "sNext": "下頁", "sLast": "末頁" }, 
-				"oAria": { "sSortAscending": ": 以升序排列此列", "sSortDescending": ": 以降序排列此列" }
-				}
-			});
 		})
 		
 	</script>

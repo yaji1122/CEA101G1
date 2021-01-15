@@ -14,6 +14,7 @@
 BookingOrderService bkodSvc = new BookingOrderService();
 MembersVO member = (MembersVO) session.getAttribute("member");
 List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(member.getMb_id());
+
 Collections.sort(bkodList, new Comparator<BookingOrderVO>() {
 	public int compare(BookingOrderVO o1, BookingOrderVO o2) {
 		LocalDate startDate1 = o1.getDateIn();
@@ -114,6 +115,7 @@ pageContext.setAttribute("history", history);
 										<c:out value="${pkupSvc.getOneByBkNo(booking.bk_no).arrive_datetime.toLocalDateTime().toString().replace(\"T\", \" \")}" default="尚未預約接送"/>
 									</p>
 									<div class="rooms">
+										<% int i = 1; %>
 										<c:forEach var="detail"
 											items="${bkdetailSvc.getAllByBkNo(booking.bk_no)}">
 											<div class="room">
@@ -122,6 +124,9 @@ pageContext.setAttribute("history", history);
 														src="data:image;base64,${rmpicSvc.getOneRandomPic(detail.rm_type)}">
 												</div>
 												<div class="booking-details">
+													<p style="border-bottom:1px solid black;">
+														房間<%= i++ %>
+													</p>
 													<p>
 														<i class="fa fa-calendar"></i>入住日期：${booking.dateIn}
 													</p>
@@ -132,7 +137,7 @@ pageContext.setAttribute("history", history);
 														<i class="far fa-moon"></i>共入住${booking.dateOut.compareTo(booking.dateIn)}晚
 													</p>
 													<p>
-														<i class="fas fa-home"></i>${rmtypeSvc.getOne(detail.rm_type).type_name}
+														<i class="far fa-gem"></i></i>${rmtypeSvc.getOne(detail.rm_type).type_name}
 													</p>
 													<p>
 														<i class="far fa-user"></i>${detail.rm_guest} Guest

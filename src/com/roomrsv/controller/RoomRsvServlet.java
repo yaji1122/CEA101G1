@@ -33,21 +33,25 @@ public class RoomRsvServlet extends HttpServlet {
         super();
     }
     
-	public void init(ServletConfig config) throws ServletException { //移除過期的預定表
-//		rsvCleaner = new TimerTask() {
-//    		@Override
-//			public void run() {
-//				System.out.println(count++);
-//			}
-//		};
-//		
-//		schedule = new Timer();
-//		LocalDate now = Calendar.getInstance().getTime();
-//		now.set(year, month, date);
-//		schedule.scheduleAtFixedRate(rsvCleaner, now, 24*60*60*1000);
+	public void init(ServletConfig config) throws ServletException { //每天移除前天的預定表
+		rsvCleaner = new TimerTask() {
+    		@Override
+			public void run() {
+				RoomRsvService svc = new RoomRsvService();
+				LocalDate beforeYesterday = LocalDate.now().minusDays(2);
+				svc.deleteRsvDate(beforeYesterday);
+				System.out.print("已移除" + beforeYesterday + "之前的預約資料表");
+			}
+		};
+		schedule = new Timer();
+		schedule.scheduleAtFixedRate(rsvCleaner, 0, 24*60*60*1000);
 	}
 
-	public void destroy() {
+	public void destroy() { //kill
+		schedule.cancel();
+		rsvCleaner.cancel();
+		schedule.purge();
+		System.out.print("自我毀滅程序啟動，排程器已摧毀");
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

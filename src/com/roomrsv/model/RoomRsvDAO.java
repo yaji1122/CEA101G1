@@ -27,7 +27,7 @@ public class RoomRsvDAO implements RoomRsvDAO_interface {
 
 	private static final String CREATERSVDATE = "INSERT INTO ROOM_RSV (RSV_DATE, RM_TYPE, RM_LEFT) VALUES (?, ?, ?)";
 	private static final String UPDATE = "UPDATE ROOM_RSV SET RM_LEFT =? WHERE RSV_DATE = ? AND RM_TYPE = ?";
-	private static final String DELETE = "DELETE * FROM ROOM_RSV WHERE RSV_DATE = ?";
+	private static final String DELETE = "DELETE FROM ROOM_RSV WHERE RSV_DATE = ?";
 	private static final String GETONEBYDATENRMTYPE = "SELECT * FROM ROOM_RSV WHERE RSV_DATE = ? AND RM_TYPE = ?";
 	private static final String GETONEDAYBYDATE = "SELECT * FROM ROOM_RSV WHERE RSV_DATE = ?";
 	private static final String GETALL = "SELECT * FROM ROOM_RSV ORDER BY RSV_DATE";
@@ -161,7 +161,7 @@ public class RoomRsvDAO implements RoomRsvDAO_interface {
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(DELETE);
-			pstmt.setObject(1, rsvDate);
+			pstmt.setDate(1, java.sql.Date.valueOf(rsvDate));
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());

@@ -242,7 +242,7 @@ public class ServicesServlet extends HttpServlet {
 				List<ServicesVO> services = servicesService.getAll();
 				for (ServicesVO serv : services) {
 					if (serv.getServ_no().equals(serv_no)) {
-						req.setAttribute("msg", "Opps!服務編號重複");
+						req.setAttribute("msg", "Oops!服務編號重複");
 						String url = "/backend/services/servicesInfo.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url);
 						successView.forward(req, res);

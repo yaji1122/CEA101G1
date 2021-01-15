@@ -135,8 +135,10 @@ table {
 }
 table tr td {
 	text-align: center;
-	padding: 10px 0px;
 	position:relative;
+}
+table tr td:nth-child(5){
+	max-width: 150px;
 }
 table tr.table-head th{
 	padding: 5px;
@@ -146,8 +148,10 @@ table tr.table-head th{
 	text-align: center;
 	font-size: 24px;
 	letter-spacing: 1px;
-	background-color:#008891;
-	padding: 10px;
+	background-color:#1a508b;
+	padding: 5px;
+	border: 2px solid black;
+	color:white
 }
 table tr.list-data:nth-child(odd) {
 	background-color: #e8eae6;
@@ -231,7 +235,8 @@ table tr td span.all-rooms {
 	color:grey;
 	cursor:default;
 	padding: 1px 2px;
-	margin: 0px 5px;
+	display: inline-table;
+	margin: 1.5px 0px;
 		
 }
 table tr td i.member-icon {

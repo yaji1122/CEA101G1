@@ -78,6 +78,10 @@ pageContext.setAttribute("servList", servList);
 .price-total-modal {
 	width: 50%;
 }
+.p-empty-cart{
+    font-size: larger;
+    padding: 35px;
+}
 </style>
 
 </head>
@@ -258,7 +262,7 @@ pageContext.setAttribute("servList", servList);
 												<p>${servicesVO.serv_info}</p>
 											</div>
 											<div class="btn_price-spa">
-												<div class="price-spa">價格:${servicesVO.serv_price}</div>
+												<div class="price-spa">USD${servicesVO.serv_price}</div>
 												<div class="btn-spa">
 													<button type="button"
 														class="btn btn-primary btn-serv-submit"
@@ -435,9 +439,9 @@ pageContext.setAttribute("servList", servList);
 				</tbody>
 			</table>
 		</div>
-		<div class="close-icon cart-content-close">
+		<!-- <div class="close-icon cart-content-close">
 			<i class="fas fa-times icon" style="margin-top: 5%;"></i>
-		</div>
+		</div> -->
 
 		<div class="checkOut-submit">
 			<form name="checkoutForm"
@@ -452,7 +456,7 @@ pageContext.setAttribute("servList", servList);
 		} else {
 	%>
 	<div class="cart-window">
-		<p>您尚未選取服務喔！</p>
+		<div class="p-empty-cart"><p>您尚未選取服務喔！</p></div>
 	</div>
 	<%
 		}

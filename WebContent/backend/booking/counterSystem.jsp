@@ -49,16 +49,16 @@ pageContext.setAttribute("checkeds", checkeds);
 	<div class="wrapper">
 		<div class="header">
 			<div>
-				<h4>現在時間</h4>
+				<h4><i class="far fa-clock"></i>現在時間</h4>
 				<h3><%=LocalDate.now()%><span id="clock"></span></h3>
 			</div>
 			<div>
-				<h4>今日待入住訂單</h4>
-				<h3>${checkIns.size()} 筆</h3>
+				<h4><i class="fas fa-sign-in-alt"></i>今日待入住訂單</h4>
+				<h3 style="color:crimson">${checkIns.size()}</h3>
 			</div>
 			<div>
-				<h4>今日待退房訂單</h4>
-				<h3>${checkOuts.size()} 筆</h3>
+				<h4>今日待退房訂單<i class="fas fa-sign-out-alt"></i></h4>
+				<h3 style="color:green">${checkOuts.size()}</h3>
 			</div>
 			<% 
 				List<BookingOrderVO> list = bkodSvc.getAllByBkStatus(BKSTATUS.CHECKED);
@@ -71,8 +71,8 @@ pageContext.setAttribute("checkeds", checkeds);
 				}
 			%>
 			<div>
-				<h4>當前度假村人數</h4>
-				<h3><%=totalGuest%> 人</h3>
+				<h4><i class="fas fa-users"></i>當前度假村人數</h4>
+				<h3 style="color:#f8dc81"><%=totalGuest%></h3>
 			</div>
 		</div>
 		<div class="main">

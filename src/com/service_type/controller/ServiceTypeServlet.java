@@ -93,7 +93,7 @@ public class ServiceTypeServlet extends HttpServlet {
 			List<ServiceTypeVO> serviceType = serviceTypeService.getAll();
 			for (ServiceTypeVO serv : serviceType) {
 				if (serv.getServ_type_no().equals(serv_type_no)) {
-					req.setAttribute("msg", "Opps!服務類型編號重複");
+					req.setAttribute("msg", "Oops!服務類型編號重複");
 					String url = "/backend/services/servicesInfo.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);

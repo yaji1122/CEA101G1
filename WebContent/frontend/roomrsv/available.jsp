@@ -25,7 +25,7 @@ if (guest == null) guest = "2";
 </head>
 <style>
 	/* Preloder */
-#preloder {
+#preloder0 {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -50,7 +50,7 @@ if (guest == null) guest = "2";
     -webkit-animation: loader 0.8s linear infinite;
 }
 
-#preloaderpic {
+#preloaderpic0 {
     width: 100px;
     height: 100px;
     position: absolute;
@@ -98,8 +98,8 @@ if (guest == null) guest = "2";
 </style>
 <body>
 	 <!-- preloader -->
-	<div id="preloder">
-		<img id="preloaderpic"
+	<div id="preloder0">
+		<img id="preloaderpic0"
 			src="${pageContext.request.contextPath}/img/loading.png" />
 		<div class="loader"></div>
 	</div>
@@ -156,7 +156,7 @@ if (guest == null) guest = "2";
         <script>
         $(window).on("load", function() {
         	$(".loader").delay(400).fadeOut();
-        	$("#preloder").delay(600).fadeOut("slow");
+        	$("#preloder0").delay(600).fadeOut("slow");
         });
         
         $(document).ready(function () {

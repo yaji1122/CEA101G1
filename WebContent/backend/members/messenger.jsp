@@ -40,7 +40,22 @@
 		var members;
 		var chat;
 		var webSocket;
-	
+		
+		// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
+		$(document).on("click", ".person", function(e){
+			let member = $(this).attr("data-mbid");
+			$("#sendMessage").prop("disabled", false);
+			$(".person").removeClass("active");
+			$(this).addClass("active");
+			$(".chat").removeClass("active-chat")
+			let chatBox = document.getElementById("chat-" + member);
+			chatBox.classList.add("active-chat");
+			chatBox.scrollTop = chatBox.scrollHeight;
+			$(this).children(".unread").hide();
+			$(this).children(".unread").text("0");
+		});
+		
+		
 		function connect() {
 			// create a websocket
 			webSocket = new WebSocket(endPointURL);
@@ -56,7 +71,6 @@
 					refreshCustomerList(jsonObj);
 				} else if ("openEmp" === jsonObj.type) { //客服上線
 					refreshCustomerList(jsonObj);
-					 
 						members = {
 				            list: document.querySelector("ul.people"),
 				            all: document.querySelectorAll(".right .person"),
@@ -68,7 +82,6 @@
 				            person: null,
 				            name: document.querySelector(".container .left .top .name"),
 				        };
-				
 				    members.all.forEach((f) => {
 				        f.addEventListener("mousedown", () => {
 				            f.classList.contains("active") || setAciveChat(f);
@@ -77,34 +90,55 @@
 					    
 				} else if ("history" === jsonObj.type) {
 					var messages = JSON.parse(jsonObj.message);
+					let chatBox;
+					let memberID;
+					let empID;
 					for (var i = 0; i < messages.length; i++) {
-						var msg = messages[i];
-						var showMsg = msg.message;
-						var time = msg.time;
-						var sender = msg.sender;
-						var receiver = msg.receiver;
-						var div = document.createElement('div');
+						let msg = messages[i];
+						let showMsg = msg.message;
+						let sender = msg.sender;
+						let receiver = msg.receiver;
+						let time = msg.time;
+						let div = document.createElement("div");
+						let img = document.createElement("img");
+						let span = document.createElement("span");
+						
+						span.append(time);
 						div.classList.add("bubble");
-						let memberID;
-						let empID;
 						if (sender.indexOf("EMP") >= 0){
 							empID = sender.split("-")[0];
 							memberID = receiver.split("-")[0];
 							div.classList.add("me");
+							img.setAttribute("src", "<%=request.getContextPath()%>/emp/emp.do?action=getEmpPic&emp_id=${empVO.emp_id}");
+							img.classList.add("emppic");
+							span.classList.add("emptime");
+							div.append(showMsg);
+							div.append(img);
+							div.append(span);
 						} else {
 							memberID = sender.split("-")[0];
 							empID = receiver.split("-")[0];
 							div.classList.add("you");
+							img.setAttribute("src", "<%=request.getContextPath()%>/MembersServlet?action=getMbPicForChat&mb_id=" + memberID);
+							img.classList.add("memberpic");
+							span.classList.add("membertime");
+							div.append(span);
+							div.append(img);
+							div.append(showMsg);
 						}
-						var chatArea = document.getElementById("chat-"+ memberID);
+						chatBox = document.getElementById("chat-"+ memberID);
 						// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
-						div.innerText = showMsg;
-						chatArea.append(div);
-						chatArea.scrollTop = chatArea.scrollHeight;
+						chatBox.append(div);
+						chatBox.scrollTop = chatBox.scrollHeight;
 					}
-					messagesArea.scrollTop = messagesArea.scrollHeight;
+					showNewestMsg(memberID);
 				} else if ("chat" === jsonObj.type) {
-					var div = document.createElement('div');
+					let showMsg = jsonObj.message;
+					let time = jsonObj.time;
+					let div = document.createElement('div');
+					let img = document.createElement("img");
+					let span = document.createElement("span");
+					span.append(time);
 					div.classList.add("bubble");
 					let empID;
 					let memberID;
@@ -112,17 +146,27 @@
 						empID = jsonObj.sender.split("-")[0];
 						memberID = jsonObj.receiver.split("-")[0];
 						div.classList.add("me");
+						img.setAttribute("src", "<%=request.getContextPath()%>/emp/emp.do?action=getEmpPic&emp_id=${empVO.emp_id}");
+						img.classList.add("emppic");
+						span.classList.add("emptime");
+						div.append(showMsg);
+						div.append(img);
+						div.append(span);
 					} else {
 						memberID = jsonObj.sender.split("-")[0];
 						empID = jsonObj.receiver.split("-")[0];
 						div.classList.add("you");
+						img.setAttribute("src", "<%=request.getContextPath()%>/MembersServlet?action=getMbPicForChat&mb_id=" + memberID);
+						img.classList.add("memberpic");
+						span.classList.add("membertime");
+						div.append(span);
+						div.append(img);
+						div.append(showMsg);
 					}
-					console.log(empID);
-					console.log(memberID)
-					div.innerText = jsonObj.message;
 					let chatArea = document.getElementById("chat-"+ memberID);
 					chatArea.append(div);
 					chatArea.scrollTop = chatArea.scrollHeight;
+					showNewestMsg(memberID);
 				} else if ("close" === jsonObj.type) {
 					refreshCustomerList(jsonObj);
 					let closeMemberID = jsonObj.memberID;
@@ -155,8 +199,8 @@
 			var memberName = $(".person.active").attr("data-mbname");
 			var message = inputMessage.value.trim();
 			var time = new Date();
-			var timeStr = time.getFullYear() + "-" + (time.getMonth()+1) + "-" 
-						+ time.getDate() + " " + time.getHours() + ":" + time.getMinutes();
+			var timeStr = time.getFullYear() + "-" + (time.getMonth()+1).toString().padStart(2, "0") + "-" 
+						+ time.getDate() + " " + time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0");
 			if (message === "") {
 				inputMessage.focus();
 				return;
@@ -176,11 +220,35 @@
 			}
 		}
 		
+		function showNewestMsg(memberID){
+			let memberChats = $("#chat-"+memberID).children(".you").last();
+			let memberBox = $("#"+memberID).children(".preview");
+			let memberTime = $("#"+memberID).children(".time");
+			let unreadMsg = $("#"+memberID).children(".unread");
+			let time = memberChats.children("span").text();
+			let msg = memberChats.html().split(">").slice(-1)[0];
+			if (msg.length > 20) {
+				msg  = msg.slice(0, 20) + "..."
+			} 
+			if (!$("#"+memberID).hasClass("active")){
+				if (unreadMsg.text() == "-1"){
+					let number = parseInt(unreadMsg.text());
+					unreadMsg.text(number+1);
+				} else {
+					unreadMsg.show();
+					let number = parseInt(unreadMsg.text());
+					unreadMsg.text(number+1);
+				}
+			}
+			memberBox.text(msg);
+			memberTime.text(time);
+		}
+		
 		// 有新的客戶上線或離線就更新列表
 		function refreshCustomerList(jsonObj) {
-			var memberIDs = jsonObj.memberIDs;
-			var memberList = document.getElementById("members");
-			var chatArea = document.getElementById("chatArea");
+			let memberIDs = jsonObj.memberIDs;
+			let memberList = document.getElementById("members");
+			let chatArea = document.getElementById("chatArea");
 			memberList.innerHTML = '';
 			for (var i = 0; i < memberIDs.length; i++) {
 				let memberID = memberIDs[i];
@@ -200,34 +268,27 @@
 		                            <span class="name">\${memberName}</span>
 		                            <span class="time"></span>
 		                            <span class="preview"></span>
+		                            <span class="unread">-1</span>
 		                    </li>
 							`;
 						var div = document.createElement("div");
 						div.classList.add("chat");
 						div.setAttribute("id", "chat-" + memberID);
 						chatArea.after(div);
+						let aMember = memberID + "-" + memberName;
+						$("#" + memberID).children(".unread").hide();
+						let jsonObj = {
+								"type" : "history",
+								"sender" : "${empVO.emp_id}-${empVO.emp_name}",
+								"receiver" : aMember,
+								"message" : ""
+							};
+						webSocket.send(JSON.stringify(jsonObj));
 					}
 				})
+				
 			}
 		}
-		// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
-		$(document).on("click", ".person", function(e){
-			$("#sendMessage").prop("disabled", false);
-			var member = $(this).attr("data-mbid");
-			var memberName = $(this).attr("data-mbname")
-			$(".person").removeClass("active");
-			$(this).addClass("active");
-			$(".chat").removeClass("active-chat")
-			$("#chat-" + member).addClass("active-chat");
-			var aMember = member + "-" + memberName;
-			var jsonObj = {
-					"type" : "history",
-					"sender" : "${empVO.emp_id}-${empVO.emp_name}",
-					"receiver" : aMember,
-					"message" : ""
-				};
-			webSocket.send(JSON.stringify(jsonObj));
-		});
 		
 		function disconnect() {
 			webSocket.close();
