@@ -569,7 +569,7 @@
 	                    showConfirmButton: false,
 	                    timer: 1000
 					}).then(function(){
-						location.reload();
+						location.href="<%=request.getContextPath()%>/frontend/meal/meal.jsp";
 					});                 
 				}
 			})
@@ -604,7 +604,7 @@
 	    	                    showConfirmButton: false,
 	    	                    timer: 1000
 	                        }).then(function(){
-	                        	location.reload();
+	                        	location.href="<%=request.getContextPath()%>/frontend/meal/meal.jsp";
 	    					});  
 	                     }				 
 					});  
@@ -640,7 +640,7 @@
 	    	                    showConfirmButton: false,
 	    	                    timer: 1000
 	                        }).then(function(){
-	    						location.reload();
+	                        	location.href="<%=request.getContextPath()%>/frontend/meal/meal.jsp";
 	    					});  
 	                     }				 
 					});  
@@ -683,7 +683,7 @@
 	    	                    showConfirmButton: false,
 	    	                    timer: 1000
 	                        }).then(function(){
-	    						location.reload();
+	                        	location.href="<%=request.getContextPath()%>/frontend/meal/meal.jsp";
 	    					});  
 	                     }				 
 					});  
