@@ -355,11 +355,11 @@ pageContext.setAttribute("servList", servList);
 									</div>
 									<div class="qty-div">
 										<input type="button" class="btn-cart-qty" value="-"
-											onclick="sub();" style="width: 30px; height: 28px;" /> <input
+											onclick="sub();" style="width: 30px; height: 28px;"<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>>   <input
 											id="quantity" name="quantity" value="1" readonly="readonly"
 											style="width: 64px; height: 25px; text-align: center;" /> <input
 											type="button" class="btn-cart-qty" value="+" onclick="add();"
-											style="width: 30px; height: 28px;" />
+											style="width: 30px; height: 28px;"<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>> 
 									</div>
 								</div>
 
