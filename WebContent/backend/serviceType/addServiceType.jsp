@@ -19,6 +19,9 @@ form {
 
 .form-body {
 	padding: 5%;
+	width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>
 <%@ include file="/backend/files/backend_header.file"%>

@@ -28,6 +28,9 @@
 <style>
 .form-body {
 	padding: 5%;
+	width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 

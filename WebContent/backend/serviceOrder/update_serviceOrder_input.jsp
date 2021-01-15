@@ -26,6 +26,9 @@
 <style>
 .form-body {
 	padding: 5%;
+	width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #preview img{
 max-width:300px;
@@ -92,11 +95,11 @@ max-width:300px;
 				class="form-control" id="serv_count" name="serv_count"
 				value="<%=serviceOrderVO.getServ_count()%>" required>
 		</div>
-		<div class="form-group">
+		<%-- <div class="form-group">
 			<label for="locations">服務場所:</label> <input type="text"
 				class="form-control" id="locations" name="locations"
 				value="<%=serviceOrderVO.getLocations()%>" required>
-		</div>
+		</div> --%>
 		<div class="form-group">
 			<label for="total_price">訂單總額:</label> <input type="number"
 				class="form-control" id="total_price" name="total_price"
@@ -106,6 +109,7 @@ max-width:300px;
 		<input type="hidden" name="serv_odno" value="<%=serviceOrderVO.getServ_odno()%>">
 		<input type="hidden" name="bk_no" value="<%=serviceOrderVO.getBk_no()%>">
 		<input type="hidden" name="serv_time" value="<%=serviceOrderVO.getServ_time()%>">
+		<input type="hidden" name="locations" value="<%=serviceOrderVO.getLocations()%>">
 		<input class="btn btn-primary" type="submit" value="送出修改">
 	</form>
 	</div>

@@ -78,6 +78,10 @@ pageContext.setAttribute("servList", servList);
 .price-total-modal {
 	width: 50%;
 }
+.p-empty-cart{
+    font-size: larger;
+    padding: 35px;
+}
 </style>
 
 </head>
@@ -452,7 +456,7 @@ pageContext.setAttribute("servList", servList);
 		} else {
 	%>
 	<div class="cart-window">
-		<p>您尚未選取服務喔！</p>
+		<div class="p-empty-cart"><p>您尚未選取服務喔！</p></div>
 	</div>
 	<%
 		}
