@@ -37,10 +37,10 @@ form {
 				ACTION="${pageContext.request.contextPath}/ServiceTypeServlet"
 				name="form1">
 				<div class="form-group">
-					<label for="serv_type_no">服務類型編號:</label> <input type="text"
+					<%-- <label for="serv_type_no">服務類型編號:</label> <input type="text"
 						class="form-control" id="serv_type_no" name="serv_type_no"
 						value="<%=(serviceTypeVO == null) ? "1" : serviceTypeVO.getServ_type_no()%>"
-						required maxlength="1" pattern="\d+">
+						required maxlength="1" pattern="\d+"> --%>
 				</div>
 
 				<div class="form-group">

@@ -236,19 +236,19 @@ public class ServicesServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String serv_no = req.getParameter("serv_no").trim();
-
-				ServicesService servicesService = new ServicesService();
-				List<ServicesVO> services = servicesService.getAll();
-				for (ServicesVO serv : services) {
-					if (serv.getServ_no().equals(serv_no)) {
-						req.setAttribute("msg", "Oops!服務編號重複");
-						String url = "/backend/services/servicesInfo.jsp";
-						RequestDispatcher successView = req.getRequestDispatcher(url);
-						successView.forward(req, res);
-						return;
-					}
-				}
+//				String serv_no = req.getParameter("serv_no").trim();
+//
+//				ServicesService servicesService = new ServicesService();
+//				List<ServicesVO> services = servicesService.getAll();
+//				for (ServicesVO serv : services) {
+//					if (serv.getServ_no().equals(serv_no)) {
+//						req.setAttribute("msg", "Oops!服務編號重複");
+//						String url = "/backend/services/servicesInfo.jsp";
+//						RequestDispatcher successView = req.getRequestDispatcher(url);
+//						successView.forward(req, res);
+//						return;
+//					}
+//				}
 
 				String serv_name = req.getParameter("serv_name");
 
@@ -272,7 +272,7 @@ public class ServicesServlet extends HttpServlet {
 				serv_ppl = new Integer(req.getParameter("serv_ppl").trim());
 
 				ServicesVO servicesVO = new ServicesVO();
-				servicesVO.setServ_no(serv_no);
+//				servicesVO.setServ_no(serv_no);
 				servicesVO.setServ_type_no(serv_type_no);
 				servicesVO.setServ_status(serv_status);
 				servicesVO.setServ_price(serv_price);
@@ -284,7 +284,7 @@ public class ServicesServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 *****************************************/
 				ServicesService servicesSvc = new ServicesService();
-				servicesVO = servicesSvc.addServices(serv_no, serv_type_no, serv_status, serv_price, serv_pic,
+				servicesVO = servicesSvc.addServices(serv_type_no, serv_status, serv_price, serv_pic,
 						serv_info, serv_name, serv_dura, serv_ppl);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/

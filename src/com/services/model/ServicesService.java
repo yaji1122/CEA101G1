@@ -10,12 +10,11 @@ public class ServicesService {
 		dao = new ServicesDAO();
 	}
 
-	public ServicesVO addServices(String serv_no, String serv_type_no, String serv_status, Integer serv_price,
+	public ServicesVO addServices(String serv_type_no, String serv_status, Integer serv_price,
 			byte[] serv_pic,String serv_info, String serv_name, Integer serv_dura, Integer serv_ppl) {
 
 		ServicesVO servicesVO = new ServicesVO();
 
-		servicesVO.setServ_no(serv_no);
 		servicesVO.setServ_type_no(serv_type_no);
 		servicesVO.setServ_status(serv_status);
 		servicesVO.setServ_price(serv_price);

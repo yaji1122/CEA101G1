@@ -25,7 +25,7 @@ public class ServiceTypeDAO implements ServiceTypeDAO_interface {
 		}
 	}
 	
-	private static final String INSERT_STMT = "INSERT INTO SERVICE_TYPE (SERV_TYPE_NO, SERV_TYPE_NAME) VALUES (?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO SERVICE_TYPE (SERV_TYPE_NO, SERV_TYPE_NAME) VALUES (to_char(SERVTYPENO_SEQ.NEXTVAL), ?)";
 	private static final String GET_ALL_STMT = "SELECT SERV_TYPE_NO, SERV_TYPE_NAME FROM SERVICE_TYPE order by SERV_TYPE_NO";
 	private static final String GET_ONE_STMT = "SELECT SERV_TYPE_NO, SERV_TYPE_NAME FROM SERVICE_TYPE where SERV_TYPE_NO = ?";
 	private static final String DELETE = "DELETE FROM SERVICE_TYPE where SERV_TYPE_NO = ?";
@@ -41,8 +41,7 @@ public class ServiceTypeDAO implements ServiceTypeDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, serviceTypeVO.getServ_type_no());
-			pstmt.setString(2, serviceTypeVO.getServ_type_name());
+			pstmt.setString(1, serviceTypeVO.getServ_type_name());
 
 			pstmt.executeUpdate();
 

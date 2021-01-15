@@ -87,30 +87,30 @@ public class ServiceTypeServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			try {
-			String serv_type_no = req.getParameter("serv_type_no").trim();
+//			String serv_type_no = req.getParameter("serv_type_no").trim();
 			
-			ServiceTypeService serviceTypeService = new ServiceTypeService();
-			List<ServiceTypeVO> serviceType = serviceTypeService.getAll();
-			for (ServiceTypeVO serv : serviceType) {
-				if (serv.getServ_type_no().equals(serv_type_no)) {
-					req.setAttribute("msg", "Oops!服務類型編號重複");
-					String url = "/backend/services/servicesInfo.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url);
-					successView.forward(req, res);
-					return;
-				}
-			}
+//			ServiceTypeService serviceTypeService = new ServiceTypeService();
+//			List<ServiceTypeVO> serviceType = serviceTypeService.getAll();
+//			for (ServiceTypeVO serv : serviceType) {
+//				if (serv.getServ_type_no().equals(serv_type_no)) {
+//					req.setAttribute("msg", "Oops!服務類型編號重複");
+//					String url = "/backend/services/servicesInfo.jsp";
+//					RequestDispatcher successView = req.getRequestDispatcher(url);
+//					successView.forward(req, res);
+//					return;
+//				}
+//			}
 			
 			
 			
 			String serv_type_name = req.getParameter("serv_type_name");
 
 			ServiceTypeVO serviceTypeVO = new ServiceTypeVO();
-			serviceTypeVO.setServ_type_no(serv_type_no);
+//			serviceTypeVO.setServ_type_no(serv_type_no);
 			serviceTypeVO.setServ_type_name(serv_type_name);
 
 			ServiceTypeService serviceTypeSvc = new ServiceTypeService();
-			serviceTypeVO = serviceTypeSvc.addServiceType(serv_type_no, serv_type_name);
+			serviceTypeVO = serviceTypeSvc.addServiceType(serv_type_name);
 
 			String url = "/backend/services/servicesInfo.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);

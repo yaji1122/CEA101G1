@@ -13,10 +13,9 @@ public class ServiceTypeService {
 		dao = new ServiceTypeDAO();
 	}
 	
-	public ServiceTypeVO addServiceType(String serv_type_no, String serv_type_name) {
+	public ServiceTypeVO addServiceType(String serv_type_name) {
 		ServiceTypeVO serviceTypeVO = new ServiceTypeVO();
 		
-		serviceTypeVO.setServ_type_no(serv_type_no);
 		serviceTypeVO.setServ_type_name(serv_type_name);
 		
 		dao.insert(serviceTypeVO);

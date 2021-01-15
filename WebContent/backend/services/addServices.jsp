@@ -27,11 +27,11 @@ max-width:300px;
 	<form METHOD="post"
 		ACTION="${pageContext.request.contextPath}/ServicesServlet"
 		name="form1" enctype="multipart/form-data">
-		<div class="form-group">
+		<%-- <div class="form-group">
 			<label for="serv_no">服務編號:</label> <input type="text"
 				class="form-control" id="serv_no" name="serv_no"
 				value="<%=(servicesVO == null) ? "001" : servicesVO.getServ_no()%>" required maxlength="3" minlength="3" pattern="\d*">
-		</div>
+		</div> --%>
 		<div class="form-group">
 			<label for="serv_type_no">服務類型:</label>
 			<select name="serv_type_no"

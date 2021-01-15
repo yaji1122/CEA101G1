@@ -27,7 +27,7 @@ public class ServicesDAO implements ServicesDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO SERVICES (SERV_NO, SERV_TYPE_NO, SERV_STATUS, SERV_PRICE, SERV_PIC, SERV_INFO, SERV_NAME, SERV_DURA, SERV_PPL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO SERVICES (SERV_NO, SERV_TYPE_NO, SERV_STATUS, SERV_PRICE, SERV_PIC, SERV_INFO, SERV_NAME, SERV_DURA, SERV_PPL) VALUES (LPAD(to_char(SERVNO_SEQ.NEXTVAL), 3, '0'), ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT SERV_NO, SERV_TYPE_NO, SERV_STATUS, SERV_PRICE, SERV_PIC, SERV_INFO, SERV_NAME, SERV_DURA, SERV_PPL FROM SERVICES order by SERV_NO";
 	private static final String GET_ONE_STMT = 
@@ -51,15 +51,14 @@ public class ServicesDAO implements ServicesDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, servicesVO.getServ_no());
-			pstmt.setString(2, servicesVO.getServ_type_no());
-			pstmt.setString(3, servicesVO.getServ_status());
-			pstmt.setInt(4, servicesVO.getServ_price());
-			pstmt.setBytes(5, servicesVO.getServ_pic());
-			pstmt.setString(6, servicesVO.getServ_info());
-			pstmt.setString(7, servicesVO.getServ_name());
-			pstmt.setInt(8, servicesVO.getServ_dura());
-			pstmt.setInt(9, servicesVO.getServ_ppl());
+			pstmt.setString(1, servicesVO.getServ_type_no());
+			pstmt.setString(2, servicesVO.getServ_status());
+			pstmt.setInt(3, servicesVO.getServ_price());
+			pstmt.setBytes(4, servicesVO.getServ_pic());
+			pstmt.setString(5, servicesVO.getServ_info());
+			pstmt.setString(6, servicesVO.getServ_name());
+			pstmt.setInt(7, servicesVO.getServ_dura());
+			pstmt.setInt(8, servicesVO.getServ_ppl());
 
 			pstmt.executeUpdate();
 			

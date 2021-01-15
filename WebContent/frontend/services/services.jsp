@@ -18,6 +18,10 @@ RoomsVO roomsVO = (RoomsVO) request.getAttribute("rooms");
 
 List<ServicesVO> servList = servicesSvc.getAllByServTypeNo(servTypeNo);
 pageContext.setAttribute("servList", servList);
+
+
+
+
 %>
 
 <!DOCTYPE html>
@@ -78,9 +82,10 @@ pageContext.setAttribute("servList", servList);
 .price-total-modal {
 	width: 50%;
 }
-.p-empty-cart{
-    font-size: larger;
-    padding: 35px;
+
+.p-empty-cart {
+	font-size: larger;
+	padding: 35px;
 }
 </style>
 
@@ -355,11 +360,14 @@ pageContext.setAttribute("servList", servList);
 									</div>
 									<div class="qty-div">
 										<input type="button" class="btn-cart-qty" value="-"
-											onclick="sub();" style="width: 30px; height: 28px;"<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>>   <input
-											id="quantity" name="quantity" value="1" readonly="readonly"
+											onclick="sub();" style="width: 30px; height: 28px;"
+											<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>>
+										<input id="quantity" name="quantity" value="1"
+											readonly="readonly"
 											style="width: 64px; height: 25px; text-align: center;" /> <input
 											type="button" class="btn-cart-qty" value="+" onclick="add();"
-											style="width: 30px; height: 28px;"<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>> 
+											style="width: 30px; height: 28px;"
+											<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>>
 									</div>
 								</div>
 
@@ -456,7 +464,9 @@ pageContext.setAttribute("servList", servList);
 		} else {
 	%>
 	<div class="cart-window">
-		<div class="p-empty-cart"><p>您尚未選取服務喔！</p></div>
+		<div class="p-empty-cart">
+			<p>您尚未選取服務喔！</p>
+		</div>
 	</div>
 	<%
 		}
@@ -495,9 +505,55 @@ pageContext.setAttribute("servList", servList);
 			//disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 			//startDate:	        'SYSDATE',  // 起始日
 			//endDate:            'SYSDATE+3',
-			minDate : 'SYSDATE',// 去除今日(不含)之前
-			maxDate : '2021-01-18' // 去除今日(不含)之後
+			//minDate : 'SYSDATE',   // 去除今日(不含)之前
+			//maxDate : '2021-01-18', // 去除今日(不含)之後
 		});
+		// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
+
+		//      1.以下為某一天之前的日期無法選擇
+		//      var somedate1 = new Date('2017-06-15');
+		//      $('#f_date1').datetimepicker({
+		//          beforeShowDay: function(date) {
+		//        	  if (  date.getYear() <  somedate1.getYear() || 
+		//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+		//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+		//              ) {
+		//                   return [false, ""]
+		//              }
+		//              return [true, ""];
+		//      }});
+
+		//      2.以下為某一天之後的日期無法選擇
+		//      var somedate2 = new Date('2017-06-15');
+		//      $('#f_date1').datetimepicker({
+		//          beforeShowDay: function(date) {
+		//        	  if (  date.getYear() >  somedate2.getYear() || 
+		//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+		//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+		//              ) {
+		//                   return [false, ""]
+		//              }
+		//              return [true, ""];
+		//      }});
+
+		//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
+		      var somedate1 = new Date('2021-01-16');
+		      var somedate2 = new Date('2021-01-25');
+		      $('.f_date1').datetimepicker({
+		          beforeShowDay: function(date) {
+		        	  if (  date.getYear() <  somedate1.getYear() || 
+				           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+				           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+				             ||
+				            date.getYear() >  somedate2.getYear() || 
+				           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+				           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+		              ) {
+		                   return [false, ""]
+		              }
+		              return [true, ""];
+		      }});
+		
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script>
