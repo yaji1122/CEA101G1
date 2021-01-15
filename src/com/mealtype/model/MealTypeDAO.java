@@ -21,7 +21,7 @@ public class MealTypeDAO implements MealTypeDAO_interface {
 	}
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO MEAL_TYPE (MEAL_TYPE_NO, TYPE_NAME) VALUES (?, ?)";
+			"INSERT INTO MEAL_TYPE (MEAL_TYPE_NO, TYPE_NAME) VALUES ('TYP' || LPAD(to_char(MEALTYPE_SEQ.NEXTVAL), 2, '0'), ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT MEAL_TYPE_NO, TYPE_NAME FROM MEAL_TYPE ORDER BY MEAL_TYPE_NO";
 	private static final String GET_ONE_STMT = 
@@ -39,8 +39,7 @@ public class MealTypeDAO implements MealTypeDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, mealTypeVO.getMeal_type_no());
-			pstmt.setString(2, mealTypeVO.getType_name());
+			pstmt.setString(1, mealTypeVO.getType_name());
 
 			pstmt.executeUpdate();
 

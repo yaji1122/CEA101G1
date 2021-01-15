@@ -10,10 +10,9 @@ public class MealTypeService {
 		dao = new MealTypeDAO();
 	}
 
-	public MealTypeVO addMealType(String meal_type_no, String type_name) {
+	public MealTypeVO addMealType(String type_name) {
 		MealTypeVO mealTypeVO = new MealTypeVO();
 
-		mealTypeVO.setMeal_type_no(meal_type_no);
 		mealTypeVO.setType_name(type_name);
 		dao.insert(mealTypeVO);
 
