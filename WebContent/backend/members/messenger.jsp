@@ -247,6 +247,7 @@
 		// 有新的客戶上線或離線就更新列表
 		function refreshCustomerList(jsonObj) {
 			let memberIDs = jsonObj.memberIDs;
+			let currentChatMember = $(".container .left .active-chat").eq(0).attr("id")
 			let memberList = document.getElementById("members");
 			let chatArea = document.getElementById("chatArea");
 			memberList.innerHTML = '';
@@ -284,6 +285,10 @@
 								"message" : ""
 							};
 						webSocket.send(JSON.stringify(jsonObj));
+						if (currentChatMember != null) {
+							let id = currentChatMember.split("-")[1];
+							$("#" + id).addClass("active");
+						}
 					}
 				})
 				
