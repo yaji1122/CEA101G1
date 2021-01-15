@@ -13,6 +13,8 @@ import com.act.model.*;
 import com.actorder.model.*;
 import com.bookingorder.model.*;
 import com.members.model.*;
+import com.service_order.model.ServiceOrderService;
+import com.service_order.model.ServiceOrderVO;
 
 @MultipartConfig
 public class ActOrderServlet extends HttpServlet {
@@ -99,6 +101,7 @@ public class ActOrderServlet extends HttpServlet {
 				out.print("fail");
 			}
 		}
+		
 
 		if ("getAllByOdStatus".equals(action)) {
 			try {

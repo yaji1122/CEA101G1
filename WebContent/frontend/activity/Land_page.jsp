@@ -17,7 +17,11 @@
     if(memVO != null){
 	List<ActOrderVO> actorderlist = actOrderSvc.getOrderListByMemId(memVO.getMb_id());
 	pageContext.setAttribute("actorderlist", actorderlist);
+
    }
+%>
+<%
+   
 %>
 
 
@@ -296,12 +300,10 @@
 						<div class="reserve-btn" style="width:150px;height:30px; margin-left:650px;margin-top:-90px;">
 						
 		<FORM METHOD="post" id="act_order_cancel_form" >
-		      
 						    <input type="hidden" name="action" value="cancel">
-						    
 						    <input type="hidden" name="actOdno" value="${actOrderVO.actOdno}">
 						    <button type="submit" class="btn btn-outline-danger"data-toggle="modal"
-						    <c:if test="${actOrderVO.odStatus != 0}">disabled</c:if> >
+						    <c:if test="${actOrderVO.odStatus != 0}">disabled</c:if>>
 								取消活動
 							</button>
 							
@@ -350,6 +352,7 @@
 			let restime = $("#act_time");
 			let resprice = $("#act_price");
 			let resactno = $("#act_no");
+
 		
 			$(".make-res").click(
 					function() {
@@ -363,6 +366,7 @@
 						resprice.val(actprice);
 		
 						let actno = $(this).attr("data-actno");
+						let act_order_no = $(this).atttr("cancel-order");
 						resactno.val(actno);
 		
 					});
