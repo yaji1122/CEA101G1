@@ -156,8 +156,8 @@ td {
 
 										<ul class="dropdown">
 											<li><a
-												href="<%=request.getContextPath()%>/frontend/services?serv_type_no=1">美容美體</a></li>
-											<li><a href="<%=request.getContextPath()%>/frontend/services?serv_type_no=2">各式服務</a></li>
+												href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=1">美容美體</a></li>
+											<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=2">各式服務</a></li>
 										</ul></li>
 									<li><a class="nav-event">已預約服務</a></li>
 									<!-- <li><a class="nav-event cart-nav">購物車</a></li> -->
@@ -212,7 +212,7 @@ td {
 							<FORM METHOD="post"
 								ACTION="${pageContext.request.contextPath}/ServiceOrderServlet"
 								style="margin-bottom: 0px;">
-								<input type="submit" value="取消訂單" class="cancel"
+								<input type="submit" value="取消訂單" class="cancel btn btn-outline-info"
 									<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>>
 								<input type="hidden" name="serv_odno"
 									value="${serviceOrderVO.serv_odno}"> <input

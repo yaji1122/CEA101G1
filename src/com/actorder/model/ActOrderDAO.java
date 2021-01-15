@@ -37,6 +37,9 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 	private static final String UPDATE =
 			"UPDATE ACT_ORDER SET OD_STATUS=?, PPL=?, TOTAL_PRICE=? where ACT_ODNO = ?";
 	
+	private static final String CANCEL_ACT_ORDER =
+			"UPDATE ACT_ORDER SET OD_STATUS='2' where ACT_ODNO = ?";
+	
 	private static final String GETALLBYBKNO = 
 			"SELECT * FROM ACT_ORDER WHERE BK_NO = ?";
 	
@@ -81,6 +84,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 		
 		
 	}
+	
 	@Override
 	public void update(ActOrderVO actOrderVO) {
 		Connection con = null;
@@ -349,6 +353,41 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void cancelActOrder(ActOrderVO actOrderVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(CANCEL_ACT_ORDER);
+			
+			pstmt.setString(1,actOrderVO.getOdStatus());
+			pstmt.setString(2,actOrderVO.getActOdno());
+			
+			pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. "+se.getMessage());
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				}catch(SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				}catch(Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
 	}
 	
 

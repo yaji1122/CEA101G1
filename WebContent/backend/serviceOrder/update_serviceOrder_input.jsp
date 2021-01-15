@@ -14,19 +14,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
+<!-- <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
 	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
 	crossorigin="anonymous" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
 	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-	crossorigin="anonymous">
+	crossorigin="anonymous"> -->
 	<%@ include file="/frontend/files/commonCSS.file"%>
 <style>
-body {
-	margin-left: 30px;
-	margin-right: 30px;
+.form-body {
+	padding: 5%;
+	width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #preview img{
 max-width:300px;
@@ -34,9 +36,13 @@ max-width:300px;
 }
 
 </style>
+<%@ include file="/backend/files/backend_header.file"%>
 <title>修改訂單</title>
 </head>
 <body>
+<%@ include file="/backend/files/backend_sidebar.file"%>
+<div class="container">
+		<div class="form-body">
 	<form METHOD="post"
 		ACTION="${pageContext.request.contextPath}/ServiceOrderServlet"
 		name="form1">
@@ -89,11 +95,11 @@ max-width:300px;
 				class="form-control" id="serv_count" name="serv_count"
 				value="<%=serviceOrderVO.getServ_count()%>" required>
 		</div>
-		<div class="form-group">
+		<%-- <div class="form-group">
 			<label for="locations">服務場所:</label> <input type="text"
 				class="form-control" id="locations" name="locations"
 				value="<%=serviceOrderVO.getLocations()%>" required>
-		</div>
+		</div> --%>
 		<div class="form-group">
 			<label for="total_price">訂單總額:</label> <input type="number"
 				class="form-control" id="total_price" name="total_price"
@@ -103,10 +109,12 @@ max-width:300px;
 		<input type="hidden" name="serv_odno" value="<%=serviceOrderVO.getServ_odno()%>">
 		<input type="hidden" name="bk_no" value="<%=serviceOrderVO.getBk_no()%>">
 		<input type="hidden" name="serv_time" value="<%=serviceOrderVO.getServ_time()%>">
+		<input type="hidden" name="locations" value="<%=serviceOrderVO.getLocations()%>">
 		<input class="btn btn-primary" type="submit" value="送出修改">
 	</form>
-	<%@ include file="/frontend/files/commonJS.file"%>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	</div>
+	</div>
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
 	<script
@@ -116,7 +124,7 @@ max-width:300px;
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
 		integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> -->
     <script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/jquery.datetimepicker.full.min.js"></script>
     <script>
@@ -133,6 +141,7 @@ max-width:300px;
 		//maxDate:           '+1970-01-01'  // 去除今日(不含)之後
 		});
 	</script>
-	
+	<%@ include file="/backend/files/backend_footer.file"%>
+	<%@ include file="/frontend/files/commonJS.file"%>
 </body>
 </html>

@@ -112,7 +112,7 @@
 										<ul class="dropdown">
 											<li><a
 												href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=1">美容美體</a></li>
-											<li><a href="<%=request.getContextPath()%>/frontend/services?serv_type_no=2">各式服務</a></li>
+											<li><a href="<%=request.getContextPath()%>/frontend/services/services.jsp?serv_type_no=2">各式服務</a></li>
 										</ul></li>
 									<li><a href="<%=request.getContextPath()%>/frontend/services/servicesOrderList.jsp" class="nav-event">已預約服務</a></li>
 									<!-- <li><a class="nav-event cart-nav">購物車</a></li> -->
@@ -182,9 +182,9 @@
 					%>
 					<br> <br>
 					<div class="checkout-button">
-						<font color="red"><b>總金額：</b></font> <font color="red"><b><%=amount%></b></font>
+						<font color="red"><b>總金額：USD</b></font> <font color="red"><b><%=amount%></b></font>
 
-						<button type="submit">確定預約</button>
+						<button type="submit" class="btn btn-outline-success">確定預約</button>
 					</div>
 
 				</form>

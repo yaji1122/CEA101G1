@@ -13,6 +13,8 @@ import com.act.model.*;
 import com.actorder.model.*;
 import com.bookingorder.model.*;
 import com.members.model.*;
+import com.service_order.model.ServiceOrderService;
+import com.service_order.model.ServiceOrderVO;
 
 @MultipartConfig
 public class ActOrderServlet extends HttpServlet {
@@ -83,6 +85,23 @@ public class ActOrderServlet extends HttpServlet {
 				out.print("fail");
 			}
 		}
+		
+		if ("cancel".equals(action)) {
+			res.setContentType("utf-8");
+			PrintWriter out = res.getWriter();
+			try {
+				String actOdno = req.getParameter("actOdno");
+				String odStatus = req.getParameter("order_status");
+				
+				ActOrderService actOrderSvc = new ActOrderService();
+				actOrderSvc.cancelActOrder(actOdno, odStatus);
+				out.print("success");
+			} catch (Exception e) {
+				e.printStackTrace();
+				out.print("fail");
+			}
+		}
+		
 
 		if ("getAllByOdStatus".equals(action)) {
 			try {

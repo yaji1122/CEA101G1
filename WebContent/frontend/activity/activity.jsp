@@ -17,7 +17,7 @@
 <title>Insert title here</title>
 </head>
 
-<body>
+<body style="background-image:url('<%=request.getContextPath()%>/img/activity/bg4.png');">
 
      <div class="black" style="height:70px; background-color: rgb(0, 0, 0);">
      
