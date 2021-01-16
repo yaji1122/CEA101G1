@@ -46,7 +46,7 @@
 					<tr>
 						<th scope="col">餐點種類編號</th>
 						<th scope="col">種類名稱</th>
-<!-- 						<th scope="col">修改</th> -->
+						<th scope="col">修改</th>
 						<th scope="col">刪除</th>
 					</tr>
 				</thead>
@@ -55,10 +55,10 @@
 						<tr>
 							<td style="font-size: 16px; text-align: center; padding-top: 5%;">${mealTypeVO.meal_type_no}</td>
 							<td style="font-size: 16px; text-align: center; padding-top: 5%;">${mealTypeVO.type_name}</td>
-<!-- 							<td><input type="hidden" name="meal_type_no" -->
-<%-- 								value="${mealTypeVO.meal_type_no}"> --%>
-<!-- 								<button type="submit" class="update btn btn-info">修改</button>
-								</td> -->
+							<td><input type="hidden" name="meal_type_no"
+								value="${mealTypeVO.meal_type_no}">
+ 								<button type="submit" class="update btn btn-info">修改</button>
+								</td>
 							<td>
 								<form method="post"
 									action="${pageContext.request.contextPath}/MealTypeServlet">
@@ -95,7 +95,7 @@
 				name="action" value="update_meal_type"> <input type="hidden"
 				name="update-mealtype-no" id="update-mealtype-to-servlet">
 			<button type="submit" class="btn btn-success"
-				style="width: 100px; margin: 50px auto; background-color: pink;">更新資料</button>
+				style="width: 100px; margin: 50px auto; background-color: #C4E1FF;">更新資料</button>
 	</form>
 
 	<script>
