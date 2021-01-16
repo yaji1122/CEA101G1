@@ -587,6 +587,7 @@ div.color-info div.colors span {
     		let odno = jsonObj.odno;
     		Command: toastr["info"]( type + "編號為：" + odno, "有一筆新的訂單")
     	};
+    	
     	let clock = $("#clock");
     	clock.text(new Date().toLocaleTimeString());
     	setInterval(function(){

@@ -223,7 +223,7 @@ pageContext.setAttribute("bkno", bk_no.toUpperCase());
 				<tr class="item">
 					<td>${svcSvc.getOneServices(serviceod.serv_no).serv_name}</td>
 					<td>${serviceod.serv_odno}</td>
-					<td>${serviceod.od_time}</td>
+					<td><fmt:formatDate value="${serviceod.od_time}" type="both" dateStyle="medium" timeStyle="medium" /> </td>
 					<td>\$${serviceod.total_price}</td>
 				</tr>
 			</c:forEach>
@@ -236,7 +236,7 @@ pageContext.setAttribute("bkno", bk_no.toUpperCase());
 				<tr class="item">
 					<td>${actSvc.getOneAct(actod.actNo).actName}</td>
 					<td>${actod.actOdno}</td>
-					<td>${actod.odTime}</td>
+					<td><fmt:formatDate value="${actod.odTime}" type="both" dateStyle="medium" timeStyle="medium" /></td>
 					<td>\$${actod.totalPrice}</td>
 				</tr>
 			</c:forEach>
@@ -248,9 +248,6 @@ pageContext.setAttribute("bkno", bk_no.toUpperCase());
 				total += mealodSvc.getAllByBkNo(bk_no.toUpperCase()).stream().mapToInt(e -> e.getTotal_price()).sum();
 				subtotal = total;
 				total += bkodSvc.getOneByBkNo(bk_no.toUpperCase()).getTotal_price();
-				
-				
-				
 			%>
 			<tr class="total">
 				<td colspan="6" style="text-align: right">訂單價格總計(含房費)： USD<span>$<%=total%></span></td>

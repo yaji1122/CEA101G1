@@ -163,19 +163,21 @@ public class MembersServlet extends HttpServlet {
 		}
 
 		if ("update_status".equals(action)) {
+			PrintWriter out = res.getWriter();
 			try {
 				String mb_id = req.getParameter("mb_id").trim();
 				String mb_status = req.getParameter("mb_status").trim();
 				MembersService memberSvc = new MembersService();
 				memberSvc.updateStatus(mb_id, mb_status);
+				out.print("success");
 			} catch (Exception e) {
 				e.printStackTrace();
-				req.setAttribute("msg", "更新失敗");
-				dispatcher.forward(req, res);
+				out.print("fail");
 			}
 		}
 
 		if ("update_picture".equals(action)) {
+			PrintWriter out = res.getWriter();
 			try {
 				String mb_id = req.getParameter("mb_id").trim();
 				is = req.getPart("mb_pic").getInputStream();
@@ -183,23 +185,24 @@ public class MembersServlet extends HttpServlet {
 				is.read(mb_pic);
 				MembersService memberSvc = new MembersService();
 				memberSvc.updateMemPic(mb_id, mb_pic);
+				out.print("success");
 			} catch (Exception e) {
 				e.printStackTrace();
-				req.setAttribute("msg", "更新失敗");
-				dispatcher.forward(req, res);
+				out.print("fail");
 			}
 		}
 
 		if ("update_point".equals(action)) {
+			PrintWriter out = res.getWriter();
 			try {
 				String mb_id = req.getParameter("mb_id").trim();
 				Integer mb_point = new Integer(req.getParameter("mb_point"));
 				MembersService memberSvc = new MembersService();
 				memberSvc.updateMemPoint(mb_id, mb_point);
+				out.print("success");
 			} catch (Exception e) {
 				e.printStackTrace();
-				req.setAttribute("msg", "更新失敗");
-				dispatcher.forward(req, res);
+				out.print("fail");
 			}
 		}
 
@@ -218,8 +221,7 @@ public class MembersServlet extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				req.setAttribute("msg", "更新失敗");
-				dispatcher.forward(req, res);
+				out.print("fail");
 			}
 		}
 		if ("getone_bymbid".equals(action)) {
