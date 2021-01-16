@@ -20,10 +20,13 @@ pageContext.setAttribute("list", list);
 <link href='${pageContext.request.contextPath}/css/datatables.min.css'
 	rel='stylesheet' />
 <style>
-.msg{
-font-size: 30px;
-    color: red;
+.msg {
+	font-size: 30px;
+	color: red;
 }
+
+.table-serv {
+	text-align: center;
 }
 </style>
 <title>服務管理</title>
@@ -37,7 +40,7 @@ font-size: 30px;
 		<%=msg%>
 		<%}%>
 	</div>
-	<table id="myTable">
+	<table id="myTable" class="table-serv">
 		<thead>
 			<tr>
 				<th>服務編號</th>
@@ -75,18 +78,18 @@ font-size: 30px;
 						<FORM METHOD="post"
 							ACTION="${pageContext.request.contextPath}/ServicesServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
-								name="serv_no" value="${servicesVO.serv_no}"> <input
-								type="hidden" name="action" value="getOne_For_Update">
+							<input type="submit" class="btn btn-primary" value="修改">
+							<input type="hidden" name="serv_no" value="${servicesVO.serv_no}">
+							<input type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
 					</td>
 					<td>
 						<FORM METHOD="post"
 							ACTION="${pageContext.request.contextPath}/ServicesServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
-								name="serv_no" value="${servicesVO.serv_no}"> <input
-								type="hidden" name="action" value="delete">
+							<input type="submit" class="btn btn-danger" value="刪除"> <input
+								type="hidden" name="serv_no" value="${servicesVO.serv_no}">
+							<input type="hidden" name="action" value="delete">
 						</FORM>
 					</td>
 				</tr>

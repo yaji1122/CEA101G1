@@ -21,12 +21,16 @@ pageContext.setAttribute("list", list);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href='${pageContext.request.contextPath}/css/datatables.min.css'
 	rel='stylesheet' />
-
+<style>
+.table-order {
+	text-align: center;
+}
+</style>
 <title>服務訂單</title>
 </head>
 <body>
 
-	<table id="myTable">
+	<table id="myTable" class="table-order">
 		<thead>
 			<tr>
 				<th scope="col">訂單編號</th>
@@ -68,8 +72,9 @@ pageContext.setAttribute("list", list);
 						<FORM METHOD="post"
 							ACTION="${pageContext.request.contextPath}/ServiceOrderServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
-								name="serv_odno" value="${serviceOrderVO.serv_odno}"> <input
+							<input type="submit" class="btn btn-primary" value="修改">
+							<input type="hidden" name="serv_odno"
+								value="${serviceOrderVO.serv_odno}"> <input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
 					</td>
@@ -77,8 +82,9 @@ pageContext.setAttribute("list", list);
 						<FORM METHOD="post"
 							ACTION="${pageContext.request.contextPath}/ServiceOrderServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
-								name="serv_odno" value="${serviceOrderVO.serv_odno}"> <input
+							<input type="submit" class="btn btn-danger" value="刪除"> <input
+								type="hidden" name="serv_odno"
+								value="${serviceOrderVO.serv_odno}"> <input
 								type="hidden" name="action" value="delete">
 						</FORM>
 					</td>

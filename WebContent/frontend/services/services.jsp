@@ -8,6 +8,8 @@
 <%@ page import="com.services_cart.model.*"%>
 <%@ page import="com.services_cart.controller.*"%>
 <%@ page import="java.util.stream.Collectors"%>
+<%@ page import="java.time.LocalDate"%>
+<%@ page import="java.time.LocalDateTime"%>
 
 <%
 	ServicesService servicesSvc = new ServicesService();
@@ -19,9 +21,12 @@ RoomsVO roomsVO = (RoomsVO) request.getAttribute("rooms");
 List<ServicesVO> servList = servicesSvc.getAllByServTypeNo(servTypeNo);
 pageContext.setAttribute("servList", servList);
 
+BookingOrderService bkodSvc = new BookingOrderService();
 
-
-
+LocalDate today = LocalDate.now();
+List<BookingOrderVO> checkOuts = bkodSvc.getAllByDateOut(today).stream().filter(e -> e.getBk_status().equals("2"))
+		.collect(Collectors.toList());
+pageContext.setAttribute("checkOuts", checkOuts);
 %>
 
 <!DOCTYPE html>
@@ -99,7 +104,6 @@ pageContext.setAttribute("servList", servList);
 
 	<%
 		String mb_id = member.getMb_id();
-	BookingOrderService bkodSvc = new BookingOrderService();
 	List<BookingOrderVO> bkodList = bkodSvc.getAllByMbId(mb_id);
 	List<BookingOrderVO> newList = bkodList.stream().filter(e -> e.getBk_status().equals(BKSTATUS.CHECKED))
 			.collect(Collectors.toList());
@@ -107,6 +111,9 @@ pageContext.setAttribute("servList", servList);
 	for (BookingOrderVO list : newList) {
 		bk_no = list.getBk_no();
 	}
+	LocalDate dateOut = bkodSvc.getOneByBkNo(bk_no).getDateOut();
+	session.setAttribute("dateOut", dateOut);
+	System.out.print(dateOut);
 
 	RoomsService roomsSvc = new RoomsService();
 	List<RoomsVO> roomList = roomsSvc.getAllByMbId(mb_id);
@@ -117,6 +124,10 @@ pageContext.setAttribute("servList", servList);
 
 	session.setAttribute("roomnoList", roomnoList);
 	%>
+
+	<%-- <% LocalDateTime kk = bkodSvc.checkOut(bk_no); %> --%>
+
+
 
 	<!-- preloader -->
 	<div id="preloder">
@@ -169,7 +180,7 @@ pageContext.setAttribute("servList", servList);
 		</ul>
 	</div>
 	<!-- offcanvas menu end -->
-
+	<div></div>
 	<!-- Header Section Begin -->
 	<header class="header-section nav-fixed">
 		<div class="menu-item">
@@ -281,6 +292,7 @@ pageContext.setAttribute("servList", servList);
 										</div>
 									</div>
 								</div>
+							</div>
 						</c:when>
 						<c:otherwise>
 							<div class="box1and2">
@@ -336,6 +348,8 @@ pageContext.setAttribute("servList", servList);
 						action="${pageContext.request.contextPath}/ServicesCartServlet"
 						method="POST">
 						<div class="modal-body">
+
+
 							<p>請選擇日期時間:</p>
 							<input name="hiredate" class="f_date1 modal-margin" type="text">
 							<div class="form-group modal-margin">
@@ -361,13 +375,12 @@ pageContext.setAttribute("servList", servList);
 									<div class="qty-div">
 										<input type="button" class="btn-cart-qty" value="-"
 											onclick="sub();" style="width: 30px; height: 28px;"
-											<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>>
-										<input id="quantity" name="quantity" value="1"
-											readonly="readonly"
+											<c:if test="${servTypeNo == '2'}">disabled</c:if>> <input
+											id="quantity" name="quantity" value="1" readonly="readonly"
 											style="width: 64px; height: 25px; text-align: center;" /> <input
 											type="button" class="btn-cart-qty" value="+" onclick="add();"
 											style="width: 30px; height: 28px;"
-											<c:if test="${serviceOrderVO.od_status != 0}">disabled</c:if>>
+											<c:if test="${servTypeNo == '2'}">disabled</c:if>>
 									</div>
 								</div>
 
@@ -438,7 +451,7 @@ pageContext.setAttribute("servList", servList);
 									method="POST">
 									<input type="hidden" name="action" value="DELETE"> <input
 										type="hidden" name="del" value="<%=index%>"> <input
-										type="submit" value="刪除">
+										type="submit" class="btn btn-outline-danger" value="刪除">
 								</form>
 							</div></td>
 					</tr>
@@ -456,7 +469,7 @@ pageContext.setAttribute("servList", servList);
 				action="${pageContext.request.contextPath}/ServicesCartServlet"
 				method="POST">
 				<input type="hidden" name="action" value="CHECKOUT"> <input
-					type="submit" value="預約送出">
+					type="submit" class="btn btn-outline-success" value="預約送出">
 			</form>
 		</div>
 	</div>
@@ -505,8 +518,8 @@ pageContext.setAttribute("servList", servList);
 			//disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 			//startDate:	        'SYSDATE',  // 起始日
 			//endDate:            'SYSDATE+3',
-			//minDate : 'SYSDATE',   // 去除今日(不含)之前
-			//maxDate : '2021-01-18', // 去除今日(不含)之後
+			minDate : 'SYSDATE' // 去除今日(不含)之前
+		//maxDate : '2021-01-18', // 去除今日(不含)之後
 		});
 		// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
@@ -524,36 +537,45 @@ pageContext.setAttribute("servList", servList);
 		//      }});
 
 		//      2.以下為某一天之後的日期無法選擇
-		//      var somedate2 = new Date('2017-06-15');
-		//      $('#f_date1').datetimepicker({
-		//          beforeShowDay: function(date) {
-		//        	  if (  date.getYear() >  somedate2.getYear() || 
-		//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-		//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-		//              ) {
-		//                   return [false, ""]
-		//              }
-		//              return [true, ""];
-		//      }});
+		var somedate2 = new Date('${dateOut}');
+		$('.f_date1')
+				.datetimepicker(
+						{
+							beforeShowDay : function(date) {
+								if (date.getYear() > somedate2.getYear()
+										|| (date.getYear() == somedate2
+												.getYear() && date.getMonth() > somedate2
+												.getMonth())
+										|| (date.getYear() == somedate2
+												.getYear()
+												&& date.getMonth() == somedate2
+														.getMonth() && date
+												.getDate() > somedate2
+												.getDate())) {
+									return [ false, "" ]
+								}
+								return [ true, "" ];
+							}
+						});
 
 		//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-		      var somedate1 = new Date('2021-01-16');
-		      var somedate2 = new Date('2021-01-25');
-		      $('.f_date1').datetimepicker({
-		          beforeShowDay: function(date) {
-		        	  if (  date.getYear() <  somedate1.getYear() || 
-				           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-				           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-				             ||
-				            date.getYear() >  somedate2.getYear() || 
-				           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-				           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-		              ) {
-		                   return [false, ""]
-		              }
-		              return [true, ""];
-		      }});
-		
+		/*  var somedate1 = new Date();
+		 var somedate2 = new Date('${dateOut}');
+		 console.log('${dateOut}');
+		 $('.f_date1').datetimepicker({
+		     beforeShowDay: function(date) {
+		   	  if (  date.getYear() <  somedate1.getYear() || 
+		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+		             ||
+		            date.getYear() >  somedate2.getYear() || 
+		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+		         ) {
+		              return [false, ""]
+		         }
+		         return [true, ""];
+		 }}); */
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script>
