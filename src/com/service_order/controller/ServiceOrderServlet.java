@@ -114,8 +114,6 @@ public class ServiceOrderServlet extends HttpServlet {
 
 			String serv_odno = req.getParameter("serv_odno").trim();
 
-			
-
 			ServiceOrderVO serviceOrderVO = new ServiceOrderVO();
 
 			serviceOrderVO.setServ_odno(serv_odno);

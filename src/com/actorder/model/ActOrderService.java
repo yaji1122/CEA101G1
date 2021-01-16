@@ -71,10 +71,9 @@ public class ActOrderService {
     		return dao.getAll().stream().filter(e -> e.getOdStatus().equals(status)).collect(Collectors.toList());
     	}
 	}
-    public ActOrderVO cancelActOrder(String actOdno, String odStatus) {
+    public ActOrderVO cancelActOrder(String actOdno) {
     	ActOrderService actOrdSvc=new ActOrderService();
     	ActOrderVO actOrderVO = actOrdSvc.getOneActOrder(actOdno);
-    	actOrderVO.setOdStatus("2");
     	dao.cancelActOrder(actOrderVO);
 		return actOrderVO;
     }

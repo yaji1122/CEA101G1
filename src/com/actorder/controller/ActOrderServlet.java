@@ -91,10 +91,8 @@ public class ActOrderServlet extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			try {
 				String actOdno = req.getParameter("actOdno");
-				String odStatus = req.getParameter("order_status");
-				
 				ActOrderService actOrderSvc = new ActOrderService();
-				actOrderSvc.cancelActOrder(actOdno, odStatus);
+				actOrderSvc.cancelActOrder(actOdno);
 				out.print("success");
 			} catch (Exception e) {
 				e.printStackTrace();

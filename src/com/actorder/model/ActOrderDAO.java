@@ -364,8 +364,7 @@ public class ActOrderDAO implements ActOrderDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(CANCEL_ACT_ORDER);
 			
-			pstmt.setString(1,actOrderVO.getOdStatus());
-			pstmt.setString(2,actOrderVO.getActOdno());
+			pstmt.setString(1,actOrderVO.getActOdno());
 			
 			pstmt.executeUpdate();
 			

@@ -303,3 +303,31 @@ p {
   
 }
 
+/*取消活動modal*/
+.cancel-order {
+	width:350px;
+	height:550px;
+}
+.list-cancel{
+	margin:0px auto;
+	width:250px;
+	height:400px;
+}
+.list-cancel-img {
+	margin:auto;
+	width:200px;
+	height:150px;
+}
+.list-cancel-img img{
+	margin-top:10px;
+	width:200px;
+	height:150px;
+}
+.list-cancel-context{
+	 text-align:center;
+     margin:0px auto;
+     height:300px;
+}
+.list-cancel-context input{
+	text-align:center;
+}

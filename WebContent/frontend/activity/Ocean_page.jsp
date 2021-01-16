@@ -221,7 +221,7 @@
 		</p>
 		<div class="collapse" id="collapseExample">
 			<c:forEach var="actVO" items="${actlist}">
-				<c:if test="${actVO.actEventNo == 20 || actVO.actStatus == 0}">
+				<c:if test="${actVO.actEventNo == 20 && actVO.actStatus == 1}">
 					<div class="card card-body">
 
 						<div class="list-img">
@@ -248,7 +248,7 @@
 								</div>
 							</div>
 							<button type="button" class="btn btn-outline-dark make-res" id="${actVO.actNo}_btn"
-								data-toggle="modal" data-target="#exampleModalCenter">
+								data-toggle="modal" data-target="#exampleModalCenter"  data-actno="${actVO.actNo}">
 								我要預約</button>
 						</div>
 					</div>
@@ -261,15 +261,15 @@
 			<c:forEach var="actOrderVO" items="${actorderlist}">
 			
 				<div class="collapse multi-collapse" id="multiCollapseExample2">			 
-					<div class="card card-body">
+					<div class="card card-body cancel_list_info">
 					    <div class="list-reserve">
 							<img src="<%=request.getContextPath()%>/ActServlet?actno=${actService.getOneAct(actOrderVO.actNo).actNo}&action=get_actpic">
 							<div class="list-context">
 								<div class="label">
-									<label class="act_name">活動名稱:<span>${actService.getOneAct(actOrderVO.actNo).actName}</span></label>
+									<label class="cancel_act_name">活動名稱:<span>${actService.getOneAct(actOrderVO.actNo).actName}</span></label>
 								</div>
 								<div class="label">
-									<label class="act_time">活動時段:<span>${actService.getOneAct(actOrderVO.actNo).actTime}</span></label>
+									<label class="cancel_act_time">活動時段:<span>${actService.getOneAct(actOrderVO.actNo).actTime}</span></label>
 								</div>
 
 								<div class="line" style="margin-top:-5px;"></div>
@@ -289,16 +289,14 @@
 								</div>
 							</div> 
 						</div>
-						<div class="reserve-btn" style="width:150px;height:30px; margin-left:650px;margin-top:-90px;">
-						    <FORM METHOD="post" id="act_order_cancel_form">
-						    
+						<div class="reserve-btn" style="width:150px;height:30px; margin-left:650px;margin-top:-90px;">				
 						    <input type="hidden" name="action" value="cancel">
-						    <input type="hidden" name="actOdno" value="${actOrderVO.actOdno}">
-						    <button type="submit" class="btn btn-outline-danger"data-toggle="modal"
-						    <c:if test="${actOrderVO.odStatus != 0}">disabled</c:if>>
-								取消活動
+						    <input type="hidden" name="actOdno" >
+						    <button type="submit" class="btn btn-outline-danger cancel_info"data-toggle="modal" data-target="#exampleModal" 
+						    <c:if test="${actOrderVO.odStatus != 0}">disabled</c:if> data-odno="${actOrderVO.actOdno}">
+								我要取消
 							</button>
-	                     </FORM>
+	                    
 						</div>
 				 </div>
 				 
@@ -307,6 +305,48 @@
 			</c:forEach>
 		</div>
 	</div>
+	<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	                   <jsp:useBean id="actorderSvc" scope="page" class="com.actorder.model.ActOrderService" />
+                            <div class="modal-dialog" role="document">
+                               <div class="modal-content cancel-order">
+                                 <div class="modal-header">
+                                   <h5 class="modal-title" id="exampleModalLabel">取消明細</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                 </div>
+                                     <div class="list-cancel">
+                                     
+                                     <div class="list-cancel-img">
+                                         <img src="#">
+                                     </div>
+                                     <br>
+                                     <div class="list-cancel-context">
+							             <label class="res-act-name">活動名稱: </label> 
+							                 <input type="text" id="cancel_act_name" readonly >
+							                 <br>
+							             <label class="res-act-date" >活動時段: </label> 
+							                 <input type="text" id="cancel_act_time" readonly>
+							                 <br>
+							                 <br>
+							             <label class="res-act-date">活動狀態: </label>
+							                 <span>進行中</span> 		                 
+							                 <br>
+						             </div>						            						        
+                                     </div>                                 
+                                    
+                                 <div class="modal-footer">                          
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                     <FORM METHOD="post" id="act_order_cancel_form">                                       
+                                       <button type="submit" class="btn btn-primary">確認取消活動</button>
+                                       <input type="hidden" name="action" value="cancel">                                      
+                                       <input type="hidden" name="actOdno"  id="act_odno">                                      
+                                     </FORM>
+                                 </div>
+                                 
+                                </div>                               
+                             </div>                            
+                         </div>
 </div>
 	<!--container-->
 
@@ -358,6 +398,25 @@
 				
 			});
 			
+			let res_cancel_name = $("#cancel_act_name");
+			let res_cancel_time = $("#cancel_act_time");
+			let res_act_odno = $("#act_odno");
+		
+			$(".cancel_info").click(
+					function() {
+						let from_cancel_list_info = $(this).parents(".cancel_list_info");
+						let cancel_actname = from_cancel_list_info.find(".cancel_act_name span").text();
+						let cancel_acttime = from_cancel_list_info.find(".cancel_act_time span").text();
+						
+						res_cancel_name.val(cancel_actname);
+						res_cancel_time.val(cancel_acttime);
+						
+						let act_odno = $(this).attr("data-odno");
+						res_act_odno.val(act_odno);
+		
+		
+					});
+			
 			$("#inputGroupSelect02").change(function(){
 				let num = $("#inputGroupSelect02").val();
 				if(num !== "") {
@@ -395,9 +454,9 @@
                                 showConfirmButton: false,
                                 timer: 1500,
                             });
-//                             setTimeout(function () {
-//                                 location.reload();
-//                             }, 1400);
+                             setTimeout(function () {
+                             location.reload();
+                             }, 1400);
                         }else {
                             Swal.fire({
                                 position: "top-end",
@@ -431,9 +490,9 @@
 												showConfirmButton : false,
 												timer : 1500,
 											});
-									//                             setTimeout(function () {
-									//                                 location.reload();
-									//                             }, 1400);
+									setTimeout(function () {
+									location.reload();
+									}, 1400);
 								} else {
 									Swal.fire({
 												position : "top-end",
