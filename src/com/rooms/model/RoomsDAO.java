@@ -50,7 +50,7 @@ public class RoomsDAO implements RoomsDAO_interface {
 			String rm_type = rmvo.getRm_type();
 			rm_no = rmvo.getRm_no();
 			
-			if (rm_no == null) { // 如果沒有自訂房號，自動新增
+			if (rm_no.equals("")) { // 如果沒有自訂房號，自動新增
 				for (int i = 0; i < 100; i++) {
 					List<RoomsVO> list = getAllByRmType(rm_type);
 					List<String> rm_no_list = new ArrayList<>();

@@ -34,7 +34,6 @@ public class RoomsServlet extends HttpServlet {
 				String rm_type = req.getParameter("rm_type");
 				RoomsService rmSvc = new RoomsService();
 				RoomsVO rmvo = rmSvc.addRoom(rm_type, "");
-				RoomTypeService rmtypeSvc = new RoomTypeService();
 				req.setAttribute("msg", "新增的房號為" + rmvo.getRm_no());
 				dispatcher.forward(req, res);
 			} catch (Exception e) {

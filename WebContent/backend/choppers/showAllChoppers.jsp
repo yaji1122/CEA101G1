@@ -78,7 +78,7 @@ background-color:white;
 						</c:choose>
 						</select>
 						</td>
-						<td style="display: none" id="chop_info">${chopvo.chop_info}</td>
+						<td style="display: none" class="chop_info">${chopvo.chop_info}</td>
 						<td>
 							<button class="showpic btn btn-info" value="${pageContext.request.contextPath}/ChopperServlet?chop_no=${chopvo.chop_no}&action=get_choppic">查看圖片</button>
 						</td>
@@ -164,9 +164,9 @@ background-color:white;
 			let children = tr.children();
 			$("#update-chop-no").text(children.eq(0).text());
 			$("#update-chopno").val(children.eq(0).text());
-			$("#update-chopname").val(children.eq(1).text());
+			$("#update-chopname").val(children.eq(1).text());	
 			$("#update-chopprice").val(children.eq(2).text());
-			$("#update-chopinfo").text($("#chop_info").text());
+			$("#update-chopinfo").text(children.eq(4).text());
 		})
 	</script>
 </body>

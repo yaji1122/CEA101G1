@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	pageContext.setAttribute("templname", request.getParameter("temp-lname"));
+pageContext.setAttribute("templname", request.getParameter("temp-lname"));
 pageContext.setAttribute("tempfname", request.getParameter("temp-fname"));
 pageContext.setAttribute("tempemail", request.getParameter("temp-email"));
 pageContext.setAttribute("temppassword", request.getParameter("temp-password"));
@@ -459,7 +459,7 @@ max-height: 100%;
 	        data.append("email", email);
 	        data.append("action", "email_confirm");
 	        let xhr = new XMLHttpRequest();
-	        xhr.open("post", "<%=request.getContextPath()%>/CEA101G1/MembersServlet");
+	        xhr.open("post", "<%=request.getContextPath()%>/MembersServlet");
 	        xhr.onload = function () {
 	            if (xhr.readyState === xhr.DONE) {
 	                if (xhr.status === 200) {
