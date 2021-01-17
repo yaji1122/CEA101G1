@@ -4,38 +4,6 @@
     var steps = $("fieldset").length;
 
     setProgressBar(current);
-
-    $("#mb_email").blur(function (event) {
-		let input = $(this);
-        let email = $(this).val();
-        let data = new FormData();
-        data.append("email", email);
-        data.append("action", "email_confirm");
-        let xhr = new XMLHttpRequest();
-        xhr.open("post", "http://localhost:8080/CEA101G1/MembersServlet");
-        xhr.onload = function () {
-            if (xhr.readyState === xhr.DONE) {
-                if (xhr.status === 200) {
-					console.log("Status 200")
-                    if (xhr.responseText === "used") {
-						console.log("got msg")
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "error",
-                            title: "Email重複",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-						input.val("");
-                    }
-                }
-            }
-        };
-        xhr.send(data);
-    });
-
-    
-	
 	
     $(".previous").click(function () {
         current_fs = $(this).parents("fieldset");

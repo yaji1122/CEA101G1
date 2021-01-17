@@ -451,7 +451,36 @@ max-height: 100%;
 		    };
 		    xhr.send(data);
 		});
-
+		
+		$("#mb_email").blur(function (event) {
+			let input = $(this);
+	        let email = $(this).val();
+	        let data = new FormData();
+	        data.append("email", email);
+	        data.append("action", "email_confirm");
+	        let xhr = new XMLHttpRequest();
+	        xhr.open("post", "<%=request.getContextPath()%>/CEA101G1/MembersServlet");
+	        xhr.onload = function () {
+	            if (xhr.readyState === xhr.DONE) {
+	                if (xhr.status === 200) {
+						console.log("Status 200")
+	                    if (xhr.responseText === "used") {
+							console.log("got msg")
+	                        Swal.fire({
+	                            position: "top-end",
+	                            icon: "error",
+	                            title: "Email重複",
+	                            showConfirmButton: false,
+	                            timer: 1500,
+	                        });
+							input.val("");
+	                    }
+	                }
+	            }
+	        };
+	        xhr.send(data);
+	    });
+		
 		$(".next").click(function () {
 			if ($(this).hasClass("form1next")){
 				if (!$("#customCheck1").prop("checked")) {
