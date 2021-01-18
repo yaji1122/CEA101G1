@@ -92,6 +92,9 @@ pageContext.setAttribute("checkOuts", checkOuts);
 	font-size: larger;
 	padding: 35px;
 }
+.spa-para{
+text-align: justify;
+}
 </style>
 
 </head>
@@ -302,11 +305,11 @@ pageContext.setAttribute("checkOuts", checkOuts);
 											<div class="spa-title">
 												<p>${servicesVO.serv_name}</p>
 											</div>
-											<div class="spa-info">
+											<div class="spa-para">
 												<p>${servicesVO.serv_info}</p>
 											</div>
 											<div class="btn_price-spa">
-												<div class="price-spa">價格:${servicesVO.serv_price}</div>
+												<div class="price-spa">USD${servicesVO.serv_price}</div>
 												<div class="btn-spa">
 													<button type="button"
 														class="btn btn-primary btn-serv-submit"
@@ -469,7 +472,7 @@ pageContext.setAttribute("checkOuts", checkOuts);
 				action="${pageContext.request.contextPath}/ServicesCartServlet"
 				method="POST">
 				<input type="hidden" name="action" value="CHECKOUT"> <input
-					type="submit" class="btn btn-outline-success" value="預約送出">
+					type="submit" class="btn btn-outline-success" value="下一步，確認訂單">
 			</form>
 		</div>
 	</div>
