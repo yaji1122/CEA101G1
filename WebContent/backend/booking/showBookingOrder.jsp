@@ -255,7 +255,7 @@ table.bookingOrderTable a.cancel i {
 	    });
 	    let iframe = document.getElementById("myIframe");
 	    iframe.onload = function(){
-	        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+	        iframe.style.height = '70vh';
 	        iframe.style.width = iframe.contentWindow.document.body.scrollWidth + 'px';
 	    }
 	    $("#order_status").niceSelect();

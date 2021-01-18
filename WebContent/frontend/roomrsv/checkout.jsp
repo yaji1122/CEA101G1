@@ -43,6 +43,7 @@ if (bookingCart != null) {
 	href="<%=request.getContextPath()%>/css/front/style-for-all.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/front/booking.css" />
+<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 <title>戴蒙訂房系統</title>
 </head>
 <%@ include file="/frontend/files/loginCSS.file"%>
@@ -232,7 +233,6 @@ if (bookingCart != null) {
 		<button class="leave-payment">取消付款</button>
 		<%@ include file="/frontend/files/addCreditCard.file"%>
 	</div>
-	<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/front/creditCard.js"></script>

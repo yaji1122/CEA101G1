@@ -22,6 +22,9 @@ color:gold;
 .chop-update-form {
 background-color:white;
 }
+.insert {
+display:block;
+}
 </style>
 <body>
 	<div class="showmsg">
@@ -115,7 +118,7 @@ background-color:white;
 				<input type="file" accept="image/*" name="update-choppic" onchange="showImg(this)"/>
 			</div>
 			<div id="pic-area">
-				<img id="show">
+				<img style="max-width:100%" id="show">
 			</div>
 			<input name="action" value="update_chopper" style="display: none">
 			<input id="update-chopno" name="update-chopno" type="text" style="display: none">

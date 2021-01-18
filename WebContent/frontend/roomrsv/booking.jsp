@@ -36,6 +36,7 @@ pageContext.setAttribute("infoJson", infoJson);
 	href="<%=request.getContextPath()%>/css/front/style-for-all.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/front/booking.css" />
+<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 <title>戴蒙訂房系統</title>
 </head>
 <%@ include file="/frontend/files/loginCSS.file"%>
@@ -309,7 +310,6 @@ pageContext.setAttribute("infoJson", infoJson);
 			</div>
 		</div>
 	</div>
-	<script src="<%=request.getContextPath()%>/js/jquery-3.5.1.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/js/jquery.nice-select.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

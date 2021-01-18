@@ -303,6 +303,15 @@ pageContext.setAttribute("checkeds", checkeds);
 	        let roomArr = [];
 	        for (let i = 0; i < selects.length; i++) {
 	            let rm_no = selects.eq(i).children(".selected").text();
+	            if (rm_no == ""){
+	            	Swal.fire({
+	                    position: "center",
+	                    title: "房號未選取",
+	                    icon: "error",
+	                    text: "請選取房號",
+	                });
+	                return;
+	            }
 	            if (roomArr.indexOf(rm_no) < 0) {
 	                roomArr.push(rm_no);
 	            } else {

@@ -13,13 +13,13 @@
 		text-align:center;
 	}
 </style>
-<body>
+<body style="max-height:70vh">
 	<div class="info-display member-info">
 		<h4 style="text-align: center">
 			會員編號 <span>${membervo.mb_id}</span>
 		</h4>
 		<div>
-			<img
+			<img style="max-width:60%"
 				src="${pageContext.request.contextPath}/MembersServlet?action=getone_mbpic&mb_id=${membervo.mb_id}">
 		</div>
 		<h4>
