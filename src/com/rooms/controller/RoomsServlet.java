@@ -5,8 +5,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
-
-import com.bookingorder.model.BookingOrderService;
 import com.rooms.model.*;
 import com.roomtype.model.RoomTypeService;
 import javax.servlet.*;
@@ -27,7 +25,6 @@ public class RoomsServlet extends HttpServlet {
 		res.setContentType("text; charset=utf-8");
 		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action").trim();
-
 		if ("insert_room".equals(action)) {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("backend/rooms/roomInfo.jsp");
 			try {

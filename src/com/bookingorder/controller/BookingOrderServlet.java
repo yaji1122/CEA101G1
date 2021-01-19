@@ -72,7 +72,7 @@ public class BookingOrderServlet extends HttpServlet {
 				Set<String> group =  groupMap.keySet();
 				HttpSession userSession = req.getSession();
 				BookingOrderService bkodSvc = new BookingOrderService();
-				Set<javax.websocket.Session> wsSessions = (Set<javax.websocket.Session>) userSession.getAttribute("wsSessions");
+				Set<javax.websocket.Session> wsSessions = (Set<javax.websocket.Session>) userSession.getServletContext().getAttribute("wsSessions");
 				List<BookingOrderVO> bkodList = new ArrayList<>();
 				for (String date: group) { //依照日期不同建立訂單
 					Integer totalPrice = 0;

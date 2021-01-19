@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
@@ -25,7 +27,8 @@ public class NotifyWS {
 		distributor.add(userSession);
 		this.newConfig = config;
 		HttpSession httpSession = (HttpSession) newConfig.getUserProperties().get("httpSession");
-		httpSession.setAttribute("wsSessions", distributor);
+		ServletContext ctx = httpSession.getServletContext();
+		ctx.setAttribute("wsSessions", distributor);
 		String text = String.format("Session ID = %s", userSession.getId());
 		System.out.println(text);
 	}
@@ -48,13 +51,6 @@ public class NotifyWS {
 	public void onError(Session userSession, Throwable e) {
 		System.out.println("Error: " + e.toString());
 		e.printStackTrace();
-	}
-	
-	public void sendNotify(String type, String odno, Set<Session> sessions) {
-		JSONObject data = new JSONObject();
-		data.put("type", type);
-		data.put("odno", odno);
-		sessions.forEach(e -> e.getAsyncRemote().sendText(data.toString()));
 	}
 }
 
