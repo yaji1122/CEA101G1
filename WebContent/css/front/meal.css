@@ -474,6 +474,7 @@ body {
 
 .snip1268 img {
 	width: 100%;
+	height: auto;
 	vertical-align: top;
 	-webkit-transition: opacity 0.35s;
 	transition: opacity 0.35s;
